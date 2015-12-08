@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$//TASP.iml" filepath="$PROJECT_DIR$//TASP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TASP.iml" filepath="$PROJECT_DIR$/TASP.iml" />
       <module fileurl="file://$PROJECT_DIR$/../TASPDoors/TASPDoors.iml" filepath="$PROJECT_DIR$/../TASPDoors/TASPDoors.iml" />
     </modules>
   </component>

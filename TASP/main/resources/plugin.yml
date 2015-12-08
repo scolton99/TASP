@@ -1,0 +1,32 @@
+name: TASP
+version: 0.0.1
+main: tech.spencercolton.tasp.TASP
+commands:
+    killall:
+        description: Kill all entities of a given type in a given radius.
+        permission: tasp.killall
+        permission-message: You do not have permisssion to do that.
+        usage: Invalid syntax. /killall [entity] [radius]
+    setspeed:
+        description: Set the speed of a player.
+        permission: tasp.setspeed
+        permission-message: You do not have permission to do that.
+        usage: Invalid syntax. /setspeed <speed> [player]
+permissions:
+    tasp.*:
+        description: OP access to TASP plugin.
+        default: op
+        children:
+            tasp.setspeed: true
+            tasp.killall: true
+    tasp.setspeed:
+        description: Set the speed of a player.
+        default: op
+    tasp.setspeed.others:
+        description: Set the speed of another player.
+        default: op
+        children:
+            tasp.setspeed: true
+    tasp.killall:
+        description: Kill all entites of a given type in a given radius.
+        default: op
