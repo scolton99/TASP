@@ -16,10 +16,13 @@ public class Person extends OfflinePerson {
 
     private HashMap<String, Object> stats = new HashMap<>();
 
+    private PlayerData data;
+
     public Person(Player p) {
         super(p);
         this.name = p.getName();
         this.uid = p.getUniqueId();
+        this.data = new PlayerData(this);
         // ...
         people.add(this);
         UIDpeople.put(this.uid, this);
@@ -50,22 +53,20 @@ public class Person extends OfflinePerson {
         this.stats.put(s, o);
     }
 
-    private boolean isNewPlayer(String p) {
-        if(PlayerData.)
-    }
-
-    private Person loadPerson(String s) {
-        if(people.containsKey()) {
-
-        }
-    }
-
     public Player getPlayer() {
         return Bukkit.getPlayer(this.uid);
     }
 
     public String getName() {
-        return this.name;
+        return getPlayer().getName();
+    }
+
+    public PlayerData getData() {
+        return this.data;
+    }
+
+    public void save() {
+        this.data.writeData();
     }
 
 }

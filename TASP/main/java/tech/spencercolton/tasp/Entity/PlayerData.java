@@ -4,34 +4,47 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Warning;
 import org.bukkit.entity.Player;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tech.spencercolton.tasp.TASP;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Date;
 
 public class PlayerData {
 
-    private String name;
     private JSONObject data;
 
+    private Person p;
+
     public PlayerData(Person p) {
-        this.name = p.getName();
+        this.p = p;
         if(dataExists(p)) {
             this.data = loadData();
         } else {
-            this.data = genData();
+            genData();
         }
     }
 
     public String getString(String s) {
-        return null;
+        return (String)this.data.get(s);
     }
 
+    public Integer getInt(String s) {
+        return (Integer)(this.data.get(s));
+    }
+
+    public Float getFloat(String s) {
+        return (Float)(this.data.get(s));
+    }
+
+    public JSONArray getArray(String s) {
+        return (JSONArray)(this.data.get(s));
+    }
+
+    @Deprecated
     @Warning(reason = "Data from this function should not be treated as current")
     public static boolean dataExists(String s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
@@ -51,12 +64,18 @@ public class PlayerData {
         return dataExists(p.getName());
     }
 
-    private JSONObject genData() {
-
+    @SuppressWarnings("unchecked")
+    private void genData() {
+        this.data = new JSONObject();
+        this.data.put("lastName", this.p.getName());
+        this.data.put("UUID", this.p.getPlayer().getUniqueId());
+        this.data.put("firstSeen", new Date().toString());
+        this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
+        writeData();
     }
 
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + name + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + p.getPlayer().getUniqueId().toString() + ".json");
         if(!f.exists())
             return null;
 
@@ -68,6 +87,19 @@ public class PlayerData {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean writeData() {
+        try (FileWriter f = new FileWriter(getPlayerDataPath())) {
+            f.write(this.data.toJSONString());
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    private String getPlayerDataPath() {
+        return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getPlayer().getUniqueId().toString() + ".json";
     }
 
 }
