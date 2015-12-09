@@ -64,5 +64,9 @@ public class Person extends OfflinePerson {
         return Bukkit.getPlayer(this.uid);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
 }
 
