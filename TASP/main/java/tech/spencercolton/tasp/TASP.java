@@ -1,23 +1,37 @@
 package tech.spencercolton.tasp;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
+import tech.spencercolton.tasp.Entity.Person;
+
+import java.io.File;
 
 public class TASP extends JavaPlugin {
 
-        @Override
-        public void onEnable() {
-            getLogger().info("Loading TASP plugin...");
-            initCommands();
-        }
+    private static File dataFolder;
 
-        @Override
-        public void onDisable() {
-            getLogger().info("Disabling TASP plugin...");
+    @Override
+    public void onEnable() {
+        getLogger().info("Loading TASP plugin...");
+        dataFolder = this.getDataFolder();
+        initCommands();
+        for(Player p: getServer().getOnlinePlayers()) {
+            new Person(p);
         }
+    }
 
-        private void initCommands() {
-            Command.populateList();
-        }
+    @Override
+    public void onDisable() {
+        getLogger().info("Disabling TASP plugin...");
+    }
+
+    private void initCommands() {
+        Command.populateList();
+    }
+
+    public static File dataFolder() {
+        return dataFolder;
+    }
 
 }
