@@ -3,7 +3,6 @@ package tech.spencercolton.tasp.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Warning;
-import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,6 +19,8 @@ public class PlayerData {
     private Person p;
 
     public PlayerData(Person p) {
+        if(!p.getOfflinePlayer().isOnline())
+            return;
         this.p = p;
         if(dataExists(p)) {
             this.data = loadData();
@@ -44,8 +45,7 @@ public class PlayerData {
         return (JSONArray)(this.data.get(s));
     }
 
-    @Deprecated
-    @Warning(reason = "Data from this function should not be treated as current")
+    @Warning(reason = "Data from this function directly should not be treated as current")
     public static boolean dataExists(String s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
         p1 += "/players/" + s + ".json";
@@ -56,26 +56,27 @@ public class PlayerData {
         Data from the next two functions can be treated as current information because the user must
         be logged in to access either of them.
      */
-    public static boolean dataExists(Person p) {
-        return dataExists(p.getName());
+    public static boolean dataExists(OfflinePerson p) {
+        return dataExists(p.getOfflinePlayer().getUniqueId().toString());
     }
 
-    public static boolean dataExists(Player p) {
-        return dataExists(p.getName());
+    public static boolean dataExists(OfflinePlayer p) {
+        return dataExists(p.getUniqueId().toString());
     }
 
     @SuppressWarnings("unchecked")
     private void genData() {
         this.data = new JSONObject();
         this.data.put("lastName", this.p.getName());
-        this.data.put("UUID", this.p.getPlayer().getUniqueId());
+        this.data.put("UUID", this.p.getOfflinePlayer().getUniqueId());
         this.data.put("firstSeen", new Date().toString());
-        this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
+        if(p.getOfflinePlayer().isOnline())
+            this.data.put("lastIP", this.p.getOfflinePlayer().getPlayer().getAddress().getHostString());
         writeData();
     }
 
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + p.getPlayer().getUniqueId().toString() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + p.getOfflinePlayer().getUniqueId().toString() + ".json");
         if(!f.exists())
             return null;
 
@@ -99,7 +100,8 @@ public class PlayerData {
     }
 
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getPlayer().getUniqueId().toString() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
     }
+
 
 }

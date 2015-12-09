@@ -1,8 +1,10 @@
 package tech.spencercolton.tasp.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -13,6 +15,8 @@ import java.util.List;
 public class KillallCmd extends TASPCommand {
 
     public static final String name = "killall";
+    public static final String syntax = "/killall [entity] [radius] OR /killall [entity]";
+    public static final String consoleSyntax = "/killall [entity] [world]";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
@@ -86,47 +90,49 @@ public class KillallCmd extends TASPCommand {
         eanimal.add(EntityType.VILLAGER);
         eanimal.add(EntityType.WOLF);
 
-        if(sender instanceof Player) {
-            List<EntityType> ets = new ArrayList<>();
-            ets.add(EntityType.BAT);
-            ets.add(EntityType.BLAZE);
-            ets.add(EntityType.CAVE_SPIDER);
-            ets.add(EntityType.CHICKEN);
-            ets.add(EntityType.COW);
-            ets.add(EntityType.CREEPER);
-            ets.add(EntityType.ENDER_DRAGON);
-            ets.add(EntityType.ENDERMAN);
-            ets.add(EntityType.ENDERMITE);
-            ets.add(EntityType.GHAST);
-            ets.add(EntityType.GIANT);
-            ets.add(EntityType.GUARDIAN);
-            ets.add(EntityType.HORSE);
-            ets.add(EntityType.IRON_GOLEM);
-            ets.add(EntityType.MAGMA_CUBE);
-            ets.add(EntityType.MUSHROOM_COW);
-            ets.add(EntityType.OCELOT);
-            ets.add(EntityType.PIG);
-            ets.add(EntityType.PIG_ZOMBIE);
-            ets.add(EntityType.RABBIT);
-            ets.add(EntityType.SHEEP);
-            ets.add(EntityType.SILVERFISH);
-            ets.add(EntityType.SKELETON);
-            ets.add(EntityType.SLIME);
-            ets.add(EntityType.SNOWMAN);
-            ets.add(EntityType.SPIDER);
-            ets.add(EntityType.SQUID);
-            ets.add(EntityType.VILLAGER);
-            ets.add(EntityType.WITCH);
-            ets.add(EntityType.WITHER);
-            ets.add(EntityType.WOLF);
-            ets.add(EntityType.ZOMBIE);
+        List<EntityType> ets = new ArrayList<>();
+        ets.add(EntityType.BAT);
+        ets.add(EntityType.BLAZE);
+        ets.add(EntityType.CAVE_SPIDER);
+        ets.add(EntityType.CHICKEN);
+        ets.add(EntityType.COW);
+        ets.add(EntityType.CREEPER);
+        ets.add(EntityType.ENDER_DRAGON);
+        ets.add(EntityType.ENDERMAN);
+        ets.add(EntityType.ENDERMITE);
+        ets.add(EntityType.GHAST);
+        ets.add(EntityType.GIANT);
+        ets.add(EntityType.GUARDIAN);
+        ets.add(EntityType.HORSE);
+        ets.add(EntityType.IRON_GOLEM);
+        ets.add(EntityType.MAGMA_CUBE);
+        ets.add(EntityType.MUSHROOM_COW);
+        ets.add(EntityType.OCELOT);
+        ets.add(EntityType.PIG);
+        ets.add(EntityType.PIG_ZOMBIE);
+        ets.add(EntityType.RABBIT);
+        ets.add(EntityType.SHEEP);
+        ets.add(EntityType.SILVERFISH);
+        ets.add(EntityType.SKELETON);
+        ets.add(EntityType.SLIME);
+        ets.add(EntityType.SNOWMAN);
+        ets.add(EntityType.SPIDER);
+        ets.add(EntityType.SQUID);
+        ets.add(EntityType.VILLAGER);
+        ets.add(EntityType.WITCH);
+        ets.add(EntityType.WITHER);
+        ets.add(EntityType.WOLF);
+        ets.add(EntityType.ZOMBIE);
 
-            List<String> pets = new ArrayList<>();
-            pets.add("all");
-            pets.add("monster");
-            pets.add("animal");
-            for(EntityType et: ets)
-                pets.add(et.toString().toLowerCase());
+        List<String> pets = new ArrayList<>();
+        pets.add("all");
+        pets.add("monster");
+        pets.add("animal");
+
+        for(EntityType et: ets)
+            pets.add(et.toString().toLowerCase());
+
+        if(sender instanceof Player) {
             switch(args.length){
                 case 0:
                     World w = ((Player)sender).getWorld();
@@ -140,14 +146,14 @@ public class KillallCmd extends TASPCommand {
                         }
                     }
 
-                    sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + count + ChatColor.GOLD + " entities.");
+                    sendCountMessage(sender, count, w.getName());
                     return;
                 case 1:
                     World w2 = ((Player)sender).getWorld();
                     int cxt = 0;
 
                     if(!pets.contains(args[0].toLowerCase())) {
-                        sender.sendMessage(ChatColor.RED + "Error executing command.  Format: /killall [entity] [radius] OR /killall [entity]");
+                        Command.sendSyntaxError(sender, this);
                         return;
                     } else {
                         List<Entity> eties = w2.getEntities();
@@ -173,7 +179,7 @@ public class KillallCmd extends TASPCommand {
                                 cxt++;
                             }
                         }
-                        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + cxt + ChatColor.GOLD + " entities.");
+                        sendCountMessage(sender, cxt, w2.getName());
                     }
                     return;
                 case 2:
@@ -222,16 +228,86 @@ public class KillallCmd extends TASPCommand {
                                 }
                             }
                         } else {
-                            sender.sendMessage(ChatColor.RED + "Error executing command.  Format: /killall [entity] [radius] OR /killall [entity]");
+                            Command.sendSyntaxError(sender, this);
                             return;
                         }
-                        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + czt + ChatColor.GOLD + " entities.");
+                        sendCountMessage(sender, czt, w3.getName());
                     } catch(NumberFormatException e) {
-                        sender.sendMessage(ChatColor.RED + "Error executing command.  Format: /killall [entity] [radius] OR /killall [entity]");
+                        Command.sendSyntaxError(sender, this);
                     }
             }
 
+        } else if (sender instanceof ConsoleCommandSender) {
+            switch(args.length) {
+                case 0:
+                    World w = Bukkit.getWorlds().get(0);
+                    int count = 0;
+
+                    for(Entity g : w.getEntities()) {
+                        if(!banList.contains(g.getType())) {
+                            g.remove();
+                            count++;
+                        }
+                    }
+                    sendCountMessage(sender, count, w.getName());
+                    return;
+                case 1:
+                    World w2 = Bukkit.getWorld(args[0]);
+                    int ccx = 0;
+
+                    if(w2 == null) {
+                        sender.sendMessage(ChatColor.RED + "World \"" + args[0] + "\" does not seem to exist.");
+                        return;
+                    }
+
+                    if(!pets.contains(args[0])) {
+                        Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
+                    }
+
+                    for(Entity x : w2.getEntities()) {
+                        switch(args[0]) {
+                            case "all":
+                                if(!banList.contains(x.getType())) {
+                                    x.remove();
+                                    ccx++;
+                                }
+                                break;
+                            case "monster":
+                                if(!banList.contains(x.getType()) && emonster.contains(x.getType())) {
+                                    x.remove();
+                                    ccx++;
+                                }
+                                break;
+                            case "animal":
+                                if(!banList.contains(x.getType()) && eanimal.contains(x.getType())) {
+                                    x.remove();
+                                    ccx++;
+                                }
+                                break;
+                            default:
+                                if(x.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(x.getType())) {
+                                    x.remove();
+                                    ccx++;
+                                }
+                                break;
+                        }
+                    }
+
+                    sendCountMessage(sender, ccx, w2.getName());
+            }
         }
+    }
+
+    private void sendCountMessage(CommandSender sender, int count, String world) {
+        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + count + " entities in world " + world  + ".");
+    }
+
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public String getConsoleSyntax() {
+        return consoleSyntax;
     }
 
 }

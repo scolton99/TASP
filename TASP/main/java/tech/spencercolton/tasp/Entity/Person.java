@@ -57,8 +57,14 @@ public class Person extends OfflinePerson {
         return Bukkit.getPlayer(this.uid);
     }
 
+    @Override
     public String getName() {
         return getPlayer().getName();
+    }
+
+    @Override
+    public UUID getUid() {
+        return this.uid;
     }
 
     public PlayerData getData() {
@@ -67,6 +73,14 @@ public class Person extends OfflinePerson {
 
     public void save() {
         this.data.writeData();
+    }
+
+    public void reloadData() {
+        this.data = new PlayerData(this);
+    }
+
+    public void setData(String s, Object o) {
+
     }
 
 }
