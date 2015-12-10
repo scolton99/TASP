@@ -12,7 +12,11 @@ commands:
         permission: tasp.setspeed
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /setspeed <speed> [player]"
-
+    fly:
+        description: Enable or disable fly mode for a player.
+        permission: tasp.fly
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /fly [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -31,3 +35,11 @@ permissions:
     tasp.killall:
         description: Kill all entites of a given type in a given radius.
         default: op
+    tasp.fly:
+        description: Set fly mode of a player.
+        default: op
+    tasp.fly.others:
+        description: Set the fly mode of another player.
+        default: op
+        children:
+            tasp.fly: true

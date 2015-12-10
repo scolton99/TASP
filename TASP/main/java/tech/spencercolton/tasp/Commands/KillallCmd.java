@@ -12,12 +12,68 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@link TASPCommand} object containing the runtime information for the {@code killall} command.
+ *
+ * <table summary="Properties">
+ *     <tr>
+ *         <th style="font-weight:bold;">Property</th>
+ *         <th style="font-weight:bold;">Value</th>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Name
+ *         </td>
+ *         <td>
+ *             {@value name}
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Permission
+ *         </td>
+ *         <td>
+ *             {@code tasp.killall}
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Syntax
+ *         </td>
+ *         <td>
+ *             {@value syntax}
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Console Syntax
+ *         </td>
+ *         <td>
+ *             {@value consoleSyntax}
+ *         </td>
+ *     </tr>
+ * </table>
+ */
 public class KillallCmd extends TASPCommand {
 
+    /**
+     * String containing the command's name.
+     */
     public static final String name = "killall";
+
+    /**
+     * String containing the command's syntax.
+     */
     public static final String syntax = "/killall [entity] [radius] OR /killall [entity]";
+
+    /**
+     * String containing the command's console syntax.
+     */
     public static final String consoleSyntax = "/killall [entity] [world]";
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void execute(CommandSender sender, String[] args) {
         List<EntityType> banList = new ArrayList<>();
@@ -252,40 +308,37 @@ public class KillallCmd extends TASPCommand {
                     sendCountMessage(sender, count, w.getName());
                     return;
                 case 1:
-                    World w2 = Bukkit.getWorld(args[0]);
                     int ccx = 0;
 
-                    if(w2 == null) {
-                        sender.sendMessage(ChatColor.RED + "World \"" + args[0] + "\" does not seem to exist.");
-                        return;
-                    }
+                    World w2 = Bukkit.getWorlds().get(0);
 
                     if(!pets.contains(args[0])) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
                     }
 
+
                     for(Entity x : w2.getEntities()) {
-                        switch(args[0]) {
+                        switch (args[0]) {
                             case "all":
-                                if(!banList.contains(x.getType())) {
+                                if (!banList.contains(x.getType())) {
                                     x.remove();
                                     ccx++;
                                 }
                                 break;
                             case "monster":
-                                if(!banList.contains(x.getType()) && emonster.contains(x.getType())) {
+                                if (!banList.contains(x.getType()) && emonster.contains(x.getType())) {
                                     x.remove();
                                     ccx++;
                                 }
                                 break;
                             case "animal":
-                                if(!banList.contains(x.getType()) && eanimal.contains(x.getType())) {
+                                if (!banList.contains(x.getType()) && eanimal.contains(x.getType())) {
                                     x.remove();
                                     ccx++;
                                 }
                                 break;
                             default:
-                                if(x.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(x.getType())) {
+                                if (x.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(x.getType())) {
                                     x.remove();
                                     ccx++;
                                 }
@@ -294,18 +347,77 @@ public class KillallCmd extends TASPCommand {
                     }
 
                     sendCountMessage(sender, ccx, w2.getName());
+
+                    return;
+                case 2:
+                    World w3 = Bukkit.getWorld(args[1]);
+
+                    int ccz = 0;
+
+                    if(w3 == null) {
+                        sender.sendMessage(ChatColor.RED + "World \"" + args[1] + "\" does not seem to exist.");
+                        return;
+                    }
+
+                    if(!pets.contains(args[0])) {
+                        Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
+                    }
+
+                    for(Entity y : w3.getEntities()) {
+                        switch(args[0]) {
+                            case "all":
+                                if(!banList.contains(y.getType())) {
+                                    y.remove();
+                                    ccz++;
+                                }
+                                break;
+                            case "monster":
+                                if(!banList.contains(y.getType()) && emonster.contains(y.getType())) {
+                                    y.remove();
+                                    ccz++;
+                                }
+                                break;
+                            case "animal":
+                                if(!banList.contains(y.getType()) && eanimal.contains(y.getType())) {
+                                    y.remove();
+                                    ccz++;
+                                }
+                                break;
+                            default:
+                                if(y.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(y.getType())) {
+                                    y.remove();
+                                    ccz++;
+                                }
+                                break;
+                        }
+                    }
+
+                    sendCountMessage(sender, ccz, w3.getName());
             }
         }
     }
 
+    /**
+     * Method that sends a message regarding the number of entities killed via this command.
+     *
+     * @param sender The person to whom the message will be sent.
+     * @param count The number of entities killed.
+     * @param world The name of the world in which the entities were killed.
+     */
     private void sendCountMessage(CommandSender sender, int count, String world) {
-        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + count + " entities in world " + world  + ".");
+        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + count + ChatColor.GOLD + " entities in world " + ChatColor.DARK_RED + world + ChatColor.GOLD + ".");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getSyntax() {
         return syntax;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public String getConsoleSyntax() {
         return consoleSyntax;
     }

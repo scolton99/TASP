@@ -2,7 +2,6 @@ package tech.spencercolton.tasp.Entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Warning;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,13 +10,34 @@ import tech.spencercolton.tasp.TASP;
 
 import java.io.*;
 import java.util.Date;
+import java.util.UUID;
 
+/**
+ * This class is designed to hold data about a player or person.  The data is read from JSON files stored in a
+ * {@code players} directory under the plugin's main directory.  The class also provides various methods for reading and
+ * manipulating the data.
+ *
+ * @author Spencer Colton
+ * @since 0.0.1-001
+ */
 public class PlayerData {
 
+    /**
+     * The object holding the player's data.
+     */
     private JSONObject data;
 
+    /**
+     * The {@link Person} for whom this object holds data.
+     */
     private Person p;
 
+    /**
+     * Constructs a new PlayerData object by loading data for the player from the player's JSON file, or creating a new
+     * JSON file in the case that it doesn't exist.
+     *
+     * @param p The {@link Person} for whom this object holds data.
+     */
     public PlayerData(Person p) {
         if(!p.getOfflinePlayer().isOnline())
             return;
@@ -29,41 +49,93 @@ public class PlayerData {
         }
     }
 
+    /**
+     * Gets a data value from the JSONObject in the form of a {@code String}.
+     *
+     * @param s The property to get the value of.
+     * @return The property's value.
+     */
+    @SuppressWarnings("unused")
     public String getString(String s) {
         return (String)this.data.get(s);
     }
 
+    /**
+     * Gets a data value from the JSONObject in the form of an {@code int}.
+     *
+     * @param s The property to get the value of.
+     * @return The property's value.
+     */
+    @SuppressWarnings("unused")
     public Integer getInt(String s) {
         return (Integer)(this.data.get(s));
     }
 
+    /**
+     * Gets a data value from the JSONObject in the form of a {@code float}.
+     *
+     * @param s The property to get the value of.
+     * @return The property's value.
+     */
+    @SuppressWarnings("unused")
     public Float getFloat(String s) {
         return (Float)(this.data.get(s));
     }
 
+    /**
+     * Gets a data value from the JSONObject in the form of a {@code JSONArray}.
+     *
+     * @param s The property to get the value of.
+     * @return The property's value.
+     */
+    @SuppressWarnings("unused")
     public JSONArray getArray(String s) {
         return (JSONArray)(this.data.get(s));
     }
 
-    @Warning(reason = "Data from this function directly should not be treated as current")
-    public static boolean dataExists(String s) {
+    public JSONObject getObject(String s) {
+
+    }
+
+    /**
+     * Checks to see if a data file exists for a certain unique ID.
+     *
+     * @param s The unique ID to be checked.
+     * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
+     */
+    private static boolean dataExists(UUID s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
         p1 += "/players/" + s + ".json";
         return new File(p1).exists();
     }
 
-    /*
-        Data from the next two functions can be treated as current information because the user must
-        be logged in to access either of them.
+    /**
+     * Checks to see if a data file exists for a certain person.
+     *
+     * @param p The person to be checked.
+     * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
+     * @see #dataExists(OfflinePlayer)
      */
     public static boolean dataExists(OfflinePerson p) {
-        return dataExists(p.getOfflinePlayer().getUniqueId().toString());
+        return dataExists(p.getOfflinePlayer().getUniqueId());
     }
 
+    /**
+     * Checks to see if a data file exists for a certain player.
+     *
+     * @param p The player to be checked.
+     * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
+     * @see #dataExists(OfflinePerson)
+     */
+    @SuppressWarnings("unused")
     public static boolean dataExists(OfflinePlayer p) {
-        return dataExists(p.getUniqueId().toString());
+        return dataExists(p.getUniqueId());
     }
 
+    /**
+     * Generates a bare-bones JSONObject to hold the player's data, then writes it to a file named after the player's
+     * unique ID.
+     */
     @SuppressWarnings("unchecked")
     private void genData() {
         this.data = new JSONObject();
@@ -75,6 +147,12 @@ public class PlayerData {
         writeData();
     }
 
+    /**
+     * Loads a player's data from the JSON file with their unique ID.
+     *
+     * @return {@code null} if there was a parse error if the file was not found, or a {@code JSONObject} with data if
+     * not.
+     */
     private JSONObject loadData() {
         File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + p.getOfflinePlayer().getUniqueId().toString() + ".json");
         if(!f.exists())
@@ -90,6 +168,11 @@ public class PlayerData {
         }
     }
 
+    /**
+     * Takes the player's current dataset and writes it to a JSON file bearing his or her unique ID.
+     *
+     * @return {@code true} if the data was successfully written, {@code false} if not.
+     */
     public boolean writeData() {
         try (FileWriter f = new FileWriter(getPlayerDataPath())) {
             f.write(this.data.toJSONString());
@@ -99,9 +182,13 @@ public class PlayerData {
         }
     }
 
+    /**
+     * Gets the player's data-file path.
+     *
+     * @return The path of the player's data file, in the form of a {@code String}.
+     */
     private String getPlayerDataPath() {
         return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
     }
-
 
 }

@@ -10,10 +10,46 @@ import tech.spencercolton.tasp.Listeners.LogoutListener;
 
 import java.io.File;
 
+/**
+ * Main class for the TASP plugin.
+ * <p>
+ *     Performs setup for various pieces
+ *     (generating data-folder, loading commands and {@link java.util.EventListener}s, etc.).
+ *     Also contains code for dealing with server reloads (i.e., loading the plugin when there
+ *     are already players online).
+ * </p>
+ * <p>
+ *     In the future, this class will be the linking point for all
+ *     other plugins made to work with TASP.  They will not work
+ *     if this plugin is not present on the server.
+ * </p>
+ *
+ * @author Spencer Colton
+ * @version 0.0.1-001
+ * @since 0.0.1-001
+ */
 public class TASP extends JavaPlugin {
 
+    /**
+     * A {@link java.io.File} object representing this plugin's data folder.
+     * <p>
+     *     Generated at runtime by the {@link #onEnable() onEnable} method so that
+     *     the variable becomes static and is accessable via static reference by
+     *     other components of the plugin.
+     * </p>
+     */
     private static File dataFolder;
 
+    /**
+     * Main method called by the server to enable the plugin.
+     * Currently performs the following duties:
+     * <ul>
+     *     <li>Sets the value of the {@link #dataFolder dataFolder} variable.</li>
+     *     <li>Registers the commands to be used by the plugin.</li>
+     *     <li>Registers listeners with the server.</li>
+     *     <li>Iterates through players currently online and generates {@link Person Person} objects for them.</li>
+     * </ul>
+     */
     @Override
     public void onEnable() {
         getLogger().info("Loading TASP plugin...");
@@ -25,31 +61,76 @@ public class TASP extends JavaPlugin {
         }
     }
 
+    /**
+     * Method called by the server to disable the plugin.
+     * <p>
+     *     Currently has no duty except to announce to the console that the plugin is being disabled.
+     * </p>
+     */
     @Override
     public void onDisable() {
         getLogger().info("Disabling TASP plugin...");
     }
 
+    /**
+     * Registers commands found in the {@code plugin.yml} with their executors.
+     * <p>
+     *     All commands are executed by the {@link tech.spencercolton.tasp.Commands.Command} class.
+     * </p>
+     *
+     * @see Command
+     */
     private void initCommands() {
         this.getCommand("setspeed").setExecutor(new Command());
         this.getCommand("killall").setExecutor(new Command());
+        this.getCommand("fly").setExecutor((new Command()));
     }
 
+    /**
+     * Registers events found in the {@link tech.spencercolton.tasp.Listeners} package with the server.
+     * Currently listens on the following events:
+     * <ul>
+     *     <li>{@link org.bukkit.event.player.PlayerJoinEvent}</li>
+     *     <li>{@link org.bukkit.event.player.PlayerQuitEvent}</li>
+     * </ul>
+     */
     private void initListeners() {
         getServer().getPluginManager().registerEvents(new LoginListener(), this);
         getServer().getPluginManager().registerEvents(new LogoutListener(), this);
     }
 
+    /**
+     * Fetches the cached copy of the plugin's data directory.
+     * <p>
+     *     This value should be refreshed when the plugin is reloaded, but should (almost) never change.
+     * </p>
+     * @return A {@link File} object referencing the location of the plugin's data directory.
+     */
     public static File dataFolder() {
         return dataFolder;
     }
 
+    /**
+     * Iterates through all players on the server and reloads their data from file.
+     * <p>
+     *     Internally makes a call to the {@link #refreshPlayer(Player)} method.
+     * </p>
+     */
+    @SuppressWarnings("unused")
     public static void refreshPlayers() {
         for(Player p : Bukkit.getOnlinePlayers()) {
             refreshPlayer(p);
         }
     }
 
+    /**
+     * Reloads a player's data from file in the case that something goes awry with the ephemeral data.
+     * <p>
+     *     Causes the {@link tech.spencercolton.tasp.Entity.PlayerData} object contained within the player to be
+     *     reloaded from the JSON file containing key-value pairs about the player.
+     * </p>
+     * @param p The player whose data is to be reloaded.
+     */
     public static void refreshPlayer(Player p) {
         Person.get(p).reloadData();
     }
