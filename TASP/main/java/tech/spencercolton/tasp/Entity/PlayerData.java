@@ -10,6 +10,7 @@ import tech.spencercolton.tasp.TASP;
 
 import java.io.*;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -91,10 +92,6 @@ public class PlayerData {
     @SuppressWarnings("unused")
     public JSONArray getArray(String s) {
         return (JSONArray)(this.data.get(s));
-    }
-
-    public JSONObject getObject(String s) {
-
     }
 
     /**
@@ -189,6 +186,16 @@ public class PlayerData {
      */
     private String getPlayerDataPath() {
         return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
+    }
+
+    /**
+     * Fetches a {@link JSONObject} in the form of a {@link Map} from the specified name in the ephemeral data object.
+     *
+     * @param s The name of the object to fetch.
+     * @return A {@link Map} corresponding the object with that name.
+     */
+    public Map getMap(String s) {
+        return (Map)this.data.get(s);
     }
 
 }

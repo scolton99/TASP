@@ -4,7 +4,6 @@
     <root id="archive" name="TASP.jar">
       <element id="module-output" name="TASP" />
       <element id="library" level="project" name="spigot-1.8.8" />
-      <element id="library" level="project" name="json-simple-1.1.1" />
       <element id="dir-copy" path="$PROJECT_DIR$/main/resources" />
     </root>
   </artifact>

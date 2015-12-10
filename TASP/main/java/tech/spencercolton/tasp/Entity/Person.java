@@ -2,6 +2,7 @@ package tech.spencercolton.tasp.Entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -194,11 +195,32 @@ public class Person extends OfflinePerson {
      * @param o The new value.
      */
     public void setDataPoint(String s, Object o) {
-        this.data.
+
     }
 
+    /**
+     * Fetches the player's home from their data object, or returns {@code null} if the player has no home set.
+     *
+     * @return A {@link Location} containing the coordinates, pitch, world, and yaw of the player's home location,
+     * or {@code null} if the player has no home set.
+     */
     public Location getHome() {
+        Map h = this.data.getMap("home");
 
+        if(h == null)
+            return null;
+
+        World w = Bukkit.getWorld(UUID.fromString((String)h.get("world")));
+        if(w == null)
+            return null;
+
+        float x = (Float)h.get("x");
+        float y = (Float)h.get("y");
+        float z = (Float)h.get("z");
+        float pitch = (Float)h.get("pitch");
+        float yaw = (Float)h.get("yaw");
+
+        return new Location(w, x, y, z, yaw, pitch);
     }
 
 }

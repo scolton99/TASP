@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -85,9 +86,18 @@ public class HomeCmd extends TASPCommand {
 
         Person p2 = Person.get(p);
 
-        JSONObject homeData = p2.getData().g;
+        Location l = p2.getHome();
 
-        Location l = new Location(p2.getData().getString())
+        if(l == null) {
+            sendNoHomeMessage(sender);
+            return;
+        }
+
+        if(l.getWorld().equals(p.getWorld())) {
+            p.teleport(l);
+        } else {
+            sendWorldMessage(sender);
+        }
 
     }
 
@@ -105,6 +115,14 @@ public class HomeCmd extends TASPCommand {
     @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
+    }
+
+    private void sendWorldMessage(CommandSender s) {
+        s.sendMessage(ChatColor.RED + "You could not be teleported to your home because it is not in this world.");
+    }
+
+    private void sendNoHomeMessage(CommandSender s) {
+        s.sendMessage(ChatColor.RED + "You could not be sent home because you have not set your home.  Use /sethome first.");
     }
 
 }
