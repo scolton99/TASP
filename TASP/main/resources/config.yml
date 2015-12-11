@@ -7,3 +7,42 @@
 #        _______\/\\\________\/\\\_______\/\\\___/\\\______\//\\\___\/\\\_____________  
 #         _______\/\\\________\/\\\_______\/\\\__\///\\\\\\\\\\\/____\/\\\_____________ 
 #          _______\///_________\///________\///_____\///////////______\///______________
+#
+#
+# ====================================WELCOME TO TASP====================================
+# That Awesome Spigot Plugin is designed to make your life easier by providing for you
+# many commands that should be essential to any server that, for some reason, have not
+# yet been implemented by the Spigot platform.
+#
+# Although many of the commands implemented by TASP are indeed present in other plugins,
+# the main goal of TASP is to combine these commands and features in a more cohesive,
+# up-to-date way.
+# 
+# TASP is developed and maintained by Minecraft user pavilion99 (whose name will never
+# change)
+# Please shoot me an email at me@spencercolton.tech to inform me of issues in my 
+# software!
+#
+# This open-source project is lovingly hosted on GitHub 
+# (https://github.com/pavilion99/TASP)
+#
+# Let's get to the fun stuff, shall we?
+
+
+# ╔═════════════════════════════════════════════════════════════════════════════════════╗
+# ║                              BASIC TASP CUSTOMIZATIONS                              ║
+# ╚═════════════════════════════════════════════════════════════════════════════════════╝
+# Let's make this thing pretty!  Setup your colors here.  The primary color is used in 
+# the static part of any message (Your home was set to) and the secondary color is used
+# for the parts that change (x y z).
+# Acceptable colors: AQUA, BLACK, BLUE, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN,
+#                    DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE
+#                    YELLOW
+# Defaults:
+#   primary-color: GOLD
+#   secondary-color: DARK_RED
+primary-color: GOLD
+secondary-color: DARK_RED
+# Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH, 
+# and UNDERLINE! The game code will default them to GOLD for the primary color and 
+# DARK_RED for the secondary color.
