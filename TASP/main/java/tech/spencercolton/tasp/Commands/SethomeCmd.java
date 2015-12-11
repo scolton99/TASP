@@ -6,11 +6,56 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Config;
 
+/**
+ * The {@link TASPCommand} object containing the runtime information for the {@code sethome} command.
+ *
+ * <table summary="Properties">
+ *     <tr>
+ *         <th style="font-weight:bold;">Property</th>
+ *         <th style="font-weight:bold;">Value</th>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Name
+ *         </td>
+ *         <td>
+ *             {@value name}
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Permission
+ *         </td>
+ *         <td>
+ *             {@value permission}
+ *             <br>
+ *             {@code tasp.sethome.others}
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Syntax
+ *         </td>
+ *         <td>
+ *             /sethome [player]
+ *         </td>
+ *     </tr>
+ *     <tr>
+ *         <td>
+ *             Console Syntax
+ *         </td>
+ *         <td>
+ *             /setspeed &lt;player&gt;
+ *         </td>
+ *     </tr>
+ * </table>
+ */
 public class SethomeCmd extends TASPCommand {
 
-    public static final String syntax = "/sethome";
-    public static final String consoleSyntax = null;
+    public static final String syntax = "/sethome [player]";
+    public static final String consoleSyntax = "/sethome <player>";
     public static final String name = "sethome";
     public static final String permission = "tasp.sethome";
 
@@ -40,7 +85,7 @@ public class SethomeCmd extends TASPCommand {
     }
 
     private void sendHomeMessage(CommandSender s, Location l) {
-        s.sendMessage(Config.c1() + "Your home location was set to " + ChatColor.DARK_RED + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + ".");
+        s.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + ".");
     }
 
 }

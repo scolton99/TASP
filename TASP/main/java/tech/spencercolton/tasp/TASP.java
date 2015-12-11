@@ -2,6 +2,7 @@ package tech.spencercolton.tasp;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
@@ -43,6 +44,11 @@ public class TASP extends JavaPlugin {
     private static File dataFolder;
 
     /**
+     *
+     */
+    public static Plugin TASPPerms_link;
+
+    /**
      * Main method called by the server to enable the plugin.
      * Currently performs the following duties:
      * <ul>
@@ -68,7 +74,11 @@ public class TASP extends JavaPlugin {
 
         saveDefaultConfig();
 
-        new Config(this.getConfig());
+        Config.loadConfig(this.getConfig());
+        TASPPerms_link = Bukkit.getPluginManager().getPlugin("TASPPerms");
+        if(TASPPerms_link != null) {
+            getLogger().info("TASP connected with TASPPerms!");
+        }
     }
 
     /**
