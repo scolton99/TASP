@@ -7,6 +7,8 @@ import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.LoginListener;
 import tech.spencercolton.tasp.Listeners.LogoutListener;
+import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.io.File;
 
@@ -48,6 +50,8 @@ public class TASP extends JavaPlugin {
      *     <li>Registers the commands to be used by the plugin.</li>
      *     <li>Registers listeners with the server.</li>
      *     <li>Iterates through players currently online and generates {@link Person Person} objects for them.</li>
+     *     <li>Creates the "players" directory under the plugin's data folder.</li>
+     *     <li>Writes the default configuration file if none exists already.</li>
      * </ul>
      */
     @Override
@@ -59,17 +63,23 @@ public class TASP extends JavaPlugin {
         for(Player p: getServer().getOnlinePlayers()) {
             new Person(p);
         }
+        File f = new File(dataFolder().getAbsolutePath() + "\\players\\");
+        f.mkdirs();
+
+        saveDefaultConfig();
+
+        new Config(this.getConfig());
     }
 
     /**
      * Method called by the server to disable the plugin.
      * <p>
-     *     Currently has no duty except to announce to the console that the plugin is being disabled.
+     *     Currently has no duty except to save the server's configuration.
      * </p>
      */
     @Override
     public void onDisable() {
-        getLogger().info("Disabling TASP plugin...");
+        saveConfig();
     }
 
     /**
@@ -84,6 +94,8 @@ public class TASP extends JavaPlugin {
         this.getCommand("setspeed").setExecutor(new Command());
         this.getCommand("killall").setExecutor(new Command());
         this.getCommand("fly").setExecutor((new Command()));
+        this.getCommand("home").setExecutor(new Command());
+        this.getCommand("sethome").setExecutor(new Command());
     }
 
     /**
@@ -126,7 +138,7 @@ public class TASP extends JavaPlugin {
     /**
      * Reloads a player's data from file in the case that something goes awry with the ephemeral data.
      * <p>
-     *     Causes the {@link tech.spencercolton.tasp.Entity.PlayerData} object contained within the player to be
+     *     Causes the {@link PlayerData} object contained within the player to be
      *     reloaded from the JSON file containing key-value pairs about the player.
      * </p>
      * @param p The player whose data is to be reloaded.

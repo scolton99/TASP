@@ -17,6 +17,16 @@ commands:
         permission: tasp.fly
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /fly [player]"
+    home:
+        description: Teleport a player home.
+        permission: tasp.home
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /home"
+    sethome:
+        description: Sets the home of a player.
+        permission: tasp.sethome
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /sethome"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -43,3 +53,9 @@ permissions:
         default: op
         children:
             tasp.fly: true
+    tasp.home:
+        description: Teleport a player home.
+        default: true
+    tasp.home:
+        description: Sets the home of a player.
+        default: true

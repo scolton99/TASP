@@ -131,14 +131,14 @@ public class FlyCmd extends TASPCommand {
 
 
     private void sendFlyingMessage(CommandSender sender, boolean flying) {
-        sender.sendMessage(ChatColor.GOLD + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + ChatColor.GOLD + ".");
+        sender.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + ".");
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying, String n) {
-        sender.sendMessage(ChatColor.GOLD + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + ChatColor.GOLD + " for " + ChatColor.DARK_RED + n + ChatColor.GOLD + ".");
+        sender.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + " for " + ChatColor.DARK_RED + n + Config.c1() + ".");
         Player p = Bukkit.getPlayer(n);
         if(p != null)
-            p.sendMessage(ChatColor.GOLD + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + ChatColor.GOLD + " by " + ChatColor.DARK_RED + sender.getName() + ChatColor.GOLD + ".");
+            p.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + " by " + ChatColor.DARK_RED + sender.getName() + Config.c1() + ".");
     }
 
 }

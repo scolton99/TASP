@@ -83,7 +83,7 @@ public class SetspeedCmd extends TASPCommand{
             return;
         }
 
-        if(args.length == 0) {
+        if((args.length == 0) || (args.length == 1 && args[0].equalsIgnoreCase("default"))) {
             Player p = (Player)sender;
             p.setFlySpeed(0.1f);
             p.setWalkSpeed(0.2f);
@@ -108,16 +108,12 @@ public class SetspeedCmd extends TASPCommand{
                     return;
                 }
 
-                Person.get(p).setData("speed", i);
-
                 p.setFlySpeed(i/2);
                 p.setWalkSpeed(i);
 
                 sendSpeedMessage(sender, Float.parseFloat(args[0]), p.getDisplayName());
             } else {
                 Player p = (Player) sender;
-
-                Person.get(p).setData("speed", Float.parseFloat(args[0]));
 
                 sendSpeedMessage(sender, Float.parseFloat(args[0]));
 
@@ -152,7 +148,7 @@ public class SetspeedCmd extends TASPCommand{
      * @param speed The new speed.
      */
     private void sendSpeedMessage(CommandSender p, Float speed) {
-        p.sendMessage(ChatColor.GOLD + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + ChatColor.GOLD + ".");
+        p.sendMessage(Config.c1() + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + ".");
     }
 
     /**
@@ -163,10 +159,10 @@ public class SetspeedCmd extends TASPCommand{
      * @param n The other player.
      */
     private void sendSpeedMessage(CommandSender p, Float speed, String n) {
-        p.sendMessage(ChatColor.DARK_RED + n + ChatColor.GOLD + "'s speed was set to " + ChatColor.DARK_RED + speed.toString() + ChatColor.GOLD + ".");
+        p.sendMessage(ChatColor.DARK_RED + n + Config.c1() + "'s speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + ".");
         Player z = Bukkit.getPlayer(n);
         if(z != null)
-            z.sendMessage(ChatColor.GOLD + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + ChatColor.GOLD + " by " + ChatColor.DARK_RED + p.getName() + ChatColor.GOLD + ".");
+            z.sendMessage(Config.c1() + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + " by " + ChatColor.DARK_RED + p.getName() + Config.c1() + ".");
     }
 
 }

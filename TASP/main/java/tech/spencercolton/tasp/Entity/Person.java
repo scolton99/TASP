@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.util.*;
 
@@ -214,13 +215,27 @@ public class Person extends OfflinePerson {
         if(w == null)
             return null;
 
-        float x = (Float)h.get("x");
-        float y = (Float)h.get("y");
-        float z = (Float)h.get("z");
-        float pitch = (Float)h.get("pitch");
-        float yaw = (Float)h.get("yaw");
+        double x = (double)h.get("x");
+        double y = (double)h.get("y");
+        double z = (double)h.get("z");
+        float pitch = (float)h.get("pitch");
+        float yaw = (float)h.get("yaw");
 
         return new Location(w, x, y, z, yaw, pitch);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setHome(Location l) {
+        Map m = new HashMap();
+
+        m.put("world", l.getWorld().getUID().toString());
+        m.put("x", l.getX());
+        m.put("y", l.getY());
+        m.put("z", l.getZ());
+        m.put("pitch", l.getPitch());
+        m.put("yaw", l.getYaw());
+
+        this.data.setObject("home", m);
     }
 
 }

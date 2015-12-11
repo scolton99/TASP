@@ -405,7 +405,7 @@ public class KillallCmd extends TASPCommand {
      * @param world The name of the world in which the entities were killed.
      */
     private void sendCountMessage(CommandSender sender, int count, String world) {
-        sender.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.DARK_RED + count + ChatColor.GOLD + " entities in world " + ChatColor.DARK_RED + world + ChatColor.GOLD + ".");
+        sender.sendMessage(Config.c1() + "Killed " + ChatColor.DARK_RED + count + Config.c1() + " entities in world " + ChatColor.DARK_RED + world + Config.c1() + ".");
     }
 
     /**

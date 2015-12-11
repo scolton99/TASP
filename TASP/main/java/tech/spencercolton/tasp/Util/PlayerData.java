@@ -1,11 +1,14 @@
-package tech.spencercolton.tasp.Entity;
+package tech.spencercolton.tasp.Util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.spencercolton.tasp.Entity.OfflinePerson;
+import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 
 import java.io.*;
@@ -137,7 +140,7 @@ public class PlayerData {
     private void genData() {
         this.data = new JSONObject();
         this.data.put("lastName", this.p.getName());
-        this.data.put("UUID", this.p.getOfflinePlayer().getUniqueId());
+        this.data.put("UUID", this.p.getOfflinePlayer().getUniqueId().toString());
         this.data.put("firstSeen", new Date().toString());
         if(p.getOfflinePlayer().isOnline())
             this.data.put("lastIP", this.p.getOfflinePlayer().getPlayer().getAddress().getHostString());
@@ -156,8 +159,8 @@ public class PlayerData {
             return null;
 
         JSONParser p = new JSONParser();
-        try {
-            return (JSONObject) (p.parse(new FileReader(f)));
+        try (FileReader fa = new FileReader(f)){
+            return (JSONObject) (p.parse(fa));
         } catch(IOException|ParseException e) {
             Bukkit.getLogger().warning("Error parsing player data:");
             e.printStackTrace();
@@ -171,10 +174,14 @@ public class PlayerData {
      * @return {@code true} if the data was successfully written, {@code false} if not.
      */
     public boolean writeData() {
-        try (FileWriter f = new FileWriter(getPlayerDataPath())) {
+        try {
+            FileWriter f = new FileWriter(new File(getPlayerDataPath()));
             f.write(this.data.toJSONString());
+            f.close();
             return true;
         } catch (IOException e) {
+            e.printStackTrace();
+            Bukkit.getLogger().warning(ChatColor.RED + "Couldn't write player data for player " + p.getName() + " with filename " + getPlayerDataPath());
             return false;
         }
     }
@@ -185,7 +192,7 @@ public class PlayerData {
      * @return The path of the player's data file, in the form of a {@code String}.
      */
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "/players/" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
     }
 
     /**
@@ -196,6 +203,12 @@ public class PlayerData {
      */
     public Map getMap(String s) {
         return (Map)this.data.get(s);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setObject(String s, Map m) {
+        this.data.put(s, m);
+        writeData();
     }
 
 }
