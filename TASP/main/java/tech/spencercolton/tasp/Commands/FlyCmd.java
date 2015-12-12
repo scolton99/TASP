@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Util.Config;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code fly} command.
@@ -131,14 +132,14 @@ public class FlyCmd extends TASPCommand {
 
 
     private void sendFlyingMessage(CommandSender sender, boolean flying) {
-        sender.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + ".");
+        sender.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + ".");
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying, String n) {
-        sender.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + " for " + ChatColor.DARK_RED + n + Config.c1() + ".");
+        sender.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + " for " + Config.c2() + n + Config.c1() + ".");
         Player p = Bukkit.getPlayer(n);
         if(p != null)
-            p.sendMessage(Config.c1() + "Flying was " + ChatColor.DARK_RED + (flying ? "enabled" : "disabled") + Config.c1() + " by " + ChatColor.DARK_RED + sender.getName() + Config.c1() + ".");
+            p.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + " by " + Config.c2() + sender.getName() + Config.c1() + ".");
     }
 
 }

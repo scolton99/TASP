@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Config;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code setspeed} command.
@@ -148,7 +149,7 @@ public class SetspeedCmd extends TASPCommand{
      * @param speed The new speed.
      */
     private void sendSpeedMessage(CommandSender p, Float speed) {
-        p.sendMessage(Config.c1() + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + ".");
+        p.sendMessage(Config.c1() + "Your speed was set to " + Config.c2() + speed.toString() + Config.c1() + ".");
     }
 
     /**
@@ -159,10 +160,10 @@ public class SetspeedCmd extends TASPCommand{
      * @param n The other player.
      */
     private void sendSpeedMessage(CommandSender p, Float speed, String n) {
-        p.sendMessage(ChatColor.DARK_RED + n + Config.c1() + "'s speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + ".");
+        p.sendMessage(Config.c2() + n + Config.c1() + "'s speed was set to " + Config.c2() + speed.toString() + Config.c1() + ".");
         Player z = Bukkit.getPlayer(n);
         if(z != null)
-            z.sendMessage(Config.c1() + "Your speed was set to " + ChatColor.DARK_RED + speed.toString() + Config.c1() + " by " + ChatColor.DARK_RED + p.getName() + Config.c1() + ".");
+            z.sendMessage(Config.c1() + "Your speed was set to " + Config.c2() + speed.toString() + Config.c1() + " by " + Config.c2() + p.getName() + Config.c1() + ".");
     }
 
 }
