@@ -114,23 +114,6 @@ public class FlyCmd extends TASPCommand {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-
     private void sendFlyingMessage(CommandSender sender, boolean flying) {
         sender.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + ".");
     }

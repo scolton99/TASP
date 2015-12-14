@@ -41,8 +41,10 @@
 # Defaults:
 #   primary-color: GOLD
 #   secondary-color: DARK_RED
+#   error-color: RED
 primary-color: GOLD
 secondary-color: DARK_RED
+error-color: RED
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH, 
 # and UNDERLINE! The game code will default them to GOLD for the primary color and 
 # DARK_RED for the secondary color.

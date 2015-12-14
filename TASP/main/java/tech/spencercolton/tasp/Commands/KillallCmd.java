@@ -409,18 +409,4 @@ public class KillallCmd extends TASPCommand {
         sender.sendMessage(Config.c1() + "Killed " + Config.c2() + count + Config.c1() + " entities in world " + Config.c2() + world + Config.c1() + ".");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getSyntax() {
-        return syntax;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 }

@@ -82,6 +82,7 @@ public class Command implements CommandExecutor{
         cmds.put(SetspeedCmd.name.toLowerCase(), new SetspeedCmd());
         cmds.put(FlyCmd.name.toLowerCase(), new FlyCmd());
         cmds.put(SethomeCmd.name.toLowerCase(), new SethomeCmd());
+        cmds.put(GodCmd.name.toLowerCase(), new GodCmd());
     }
 
     /**

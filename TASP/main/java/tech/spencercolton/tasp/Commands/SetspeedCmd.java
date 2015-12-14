@@ -127,22 +127,6 @@ public class SetspeedCmd extends TASPCommand{
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    /**
      * Sends a player a nmessage informing him or her that his or her speed has been changed.
      *
      * @param p The player to send the message to.

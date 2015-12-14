@@ -97,6 +97,10 @@ public class PlayerData {
         return (JSONArray)(this.data.get(s));
     }
 
+    public Boolean getBoolean(String s) {
+        return (Boolean)(this.data.get(s));
+    }
+
     /**
      * Checks to see if a data file exists for a certain unique ID.
      *
@@ -210,5 +214,17 @@ public class PlayerData {
         this.data.put(s, m);
         writeData();
     }
+
+    @SuppressWarnings("unchecked")
+    public void setString(String s, String h) {
+        this.data.put(s, h);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setBoolean(String s, boolean b) {
+        this.data.put(s, b);
+    }
+
+
 
 }

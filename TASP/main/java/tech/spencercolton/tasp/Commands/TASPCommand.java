@@ -14,6 +14,10 @@ import org.bukkit.command.ConsoleCommandSender;
  */
 public abstract class TASPCommand {
 
+    public static final String syntax = "{{MISSING SYNTAX}}";
+    public static final String consoleSyntax = "{{MISSING CONSOLE SYNTAX}}";
+    public static final String permission = "{{MISSING PERMISSION}}";
+
     /**
      * Contains the logic used to process a command.
      * <p>
@@ -37,7 +41,9 @@ public abstract class TASPCommand {
      *
      * @return The in-game syntax for the command, in a human-readable {@code String}.
      */
-    public abstract String getSyntax();
+    public String getSyntax() {
+        return syntax;
+    }
 
     /**
      * Returns the command's expected console syntax in the form a human-readable {@code String}.
@@ -49,6 +55,11 @@ public abstract class TASPCommand {
      * @return {@code null} if the command cannot be run from the console, or a human-readable {@code String} with
      * the command's console syntax.
      */
-    public abstract String getConsoleSyntax();
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
 
+    public String getPermission() {
+        return permission;
+    }
 }

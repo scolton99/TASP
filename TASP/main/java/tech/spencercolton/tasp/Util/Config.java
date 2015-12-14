@@ -31,6 +31,16 @@ public class Config {
         }
     }
 
+    public static ChatColor err() {
+        ChatColor c = ChatColor.valueOf(s.getString("error-color"));
+
+        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+            return c;
+        } else {
+            return ChatColor.DARK_RED;
+        }
+    }
+
     public String getString(String path) {
         return (String)get(path);
     }

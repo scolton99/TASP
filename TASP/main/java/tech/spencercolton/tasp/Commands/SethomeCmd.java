@@ -76,14 +76,6 @@ public class SethomeCmd extends TASPCommand {
         sendHomeMessage(sender, p.getHome());
     }
 
-    public String getSyntax() {
-        return syntax;
-    }
-
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
     private void sendHomeMessage(CommandSender s, Location l) {
         s.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + ".");
     }

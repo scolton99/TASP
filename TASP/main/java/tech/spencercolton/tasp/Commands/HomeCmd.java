@@ -101,22 +101,6 @@ public class HomeCmd extends TASPCommand {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
     private void sendWorldMessage(CommandSender s) {
         s.sendMessage(ChatColor.RED + "You could not be teleported to your home because it is not in this world.");
     }

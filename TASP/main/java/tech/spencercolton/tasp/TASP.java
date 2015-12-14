@@ -8,6 +8,7 @@ import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.LoginListener;
 import tech.spencercolton.tasp.Listeners.LogoutListener;
+import tech.spencercolton.tasp.Listeners.PlayerDamageListener;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.PlayerData;
 
@@ -106,6 +107,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("fly").setExecutor((new Command()));
         this.getCommand("home").setExecutor(new Command());
         this.getCommand("sethome").setExecutor(new Command());
+        this.getCommand("god").setExecutor(new Command());
     }
 
     /**
@@ -119,6 +121,7 @@ public class TASP extends JavaPlugin {
     private void initListeners() {
         getServer().getPluginManager().registerEvents(new LoginListener(), this);
         getServer().getPluginManager().registerEvents(new LogoutListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
     }
 
     /**

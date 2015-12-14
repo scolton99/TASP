@@ -27,6 +27,11 @@ commands:
         permission: tasp.sethome
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /sethome"
+    god:
+        description: Sets god mode to enabled or disabled for a player.
+        permission: tasp.god
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /god [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -59,3 +64,11 @@ permissions:
     tasp.home:
         description: Sets the home of a player.
         default: true
+    tasp.god:
+        description: Set the god mode of a player.
+        default: op
+    tasp.god.others:
+        description: Set the god mode of another player.
+        default: op
+        children:
+            tasp.god: true
