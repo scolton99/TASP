@@ -10,8 +10,8 @@ public class TASPDoors extends JavaPlugin {
         Plugin TASP = getServer().getPluginManager().getPlugin("TASP");
 
         if(TASP == null) {
-            getLogger().severe(ChatColor.RED + "Unable to load TASP Doors plugin because the TASP main plugin is missing!");
-            getLogger().severe(ChatColor.RED + "Install the TASP main plugin before trying again.");
+            getLogger().severe(Config.err() + "Unable to load TASP Doors plugin because the TASP main plugin is missing!");
+            getLogger().severe(Config.err() + "Install the TASP main plugin before trying again.");
             getServer().getPluginManager().disablePlugin(this);
         }
     }

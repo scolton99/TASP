@@ -72,7 +72,7 @@ public class GodCmd extends TASPCommand {
     }
 
     private void sendPlayerError(CommandSender sender, String p) {
-        sender.sendMessage(ChatColor.RED + "Couldn't find player " + p);
+        sender.sendMessage(Config.err() + "Couldn't find player " + p);
     }
 
     private void sendGodMessage(Player p, boolean t) {

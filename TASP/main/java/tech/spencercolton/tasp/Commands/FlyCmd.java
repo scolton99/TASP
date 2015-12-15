@@ -84,7 +84,7 @@ public class FlyCmd extends TASPCommand {
             Player p = Bukkit.getPlayer(args[0]);
 
             if(p == null) {
-                sender.sendMessage(ChatColor.RED + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
+                sender.sendMessage(Config.err() + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
                 return;
             }
 
@@ -104,7 +104,7 @@ public class FlyCmd extends TASPCommand {
                 case 1:
                     Player p2 = Bukkit.getPlayer(args[0]);
                     if(p2 == null) {
-                        sender.sendMessage(ChatColor.RED + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
+                        sender.sendMessage(Config.err() + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
                         return;
                     }
                     p2.setAllowFlight(true);

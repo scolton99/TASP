@@ -185,7 +185,7 @@ public class PlayerData {
             return true;
         } catch (IOException e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning(ChatColor.RED + "Couldn't write player data for player " + p.getName() + " with filename " + getPlayerDataPath());
+            Bukkit.getLogger().warning(Config.err() + "Couldn't write player data for player " + p.getName() + " with filename " + getPlayerDataPath());
             return false;
         }
     }
@@ -218,13 +218,13 @@ public class PlayerData {
     @SuppressWarnings("unchecked")
     public void setString(String s, String h) {
         this.data.put(s, h);
+        writeData();
     }
 
     @SuppressWarnings("unchecked")
     public void setBoolean(String s, boolean b) {
         this.data.put(s, b);
+        writeData();
     }
-
-
 
 }

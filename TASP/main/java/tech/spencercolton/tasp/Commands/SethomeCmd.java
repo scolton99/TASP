@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -47,7 +48,7 @@ import tech.spencercolton.tasp.Util.Config;
  *             Console Syntax
  *         </td>
  *         <td>
- *             /setspeed &lt;player&gt;
+ *             null
  *         </td>
  *     </tr>
  * </table>
@@ -55,7 +56,7 @@ import tech.spencercolton.tasp.Util.Config;
 public class SethomeCmd extends TASPCommand {
 
     public static final String syntax = "/sethome [player]";
-    public static final String consoleSyntax = "/sethome <player>";
+    public static final String consoleSyntax = null;
     public static final String name = "sethome";
     public static final String permission = "tasp.sethome";
 
@@ -65,7 +66,7 @@ public class SethomeCmd extends TASPCommand {
             return;
         }
 
-        if(args.length != 0) {
+        if(args.length > 1) {
             Command.sendSyntaxError(sender, this);
             return;
         }
@@ -78,6 +79,16 @@ public class SethomeCmd extends TASPCommand {
 
     private void sendHomeMessage(CommandSender s, Location l) {
         s.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + ".");
+    }
+
+    private void sendHomeMessage(CommandSender s, Location l, String o) {
+
+        Player p = Bukkit.getPlayer(o);
+
+        if(o == null)
+            return;
+
+        o.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + " by " + Config.c2() + ((Player)s).getDisplayName() + Config.c1() + ".");
     }
 
 }

@@ -102,11 +102,11 @@ public class HomeCmd extends TASPCommand {
     }
 
     private void sendWorldMessage(CommandSender s) {
-        s.sendMessage(ChatColor.RED + "You could not be teleported to your home because it is not in this world.");
+        s.sendMessage(Config.err() + "You could not be teleported to your home because it is not in this world.");
     }
 
     private void sendNoHomeMessage(CommandSender s) {
-        s.sendMessage(ChatColor.RED + "You could not be sent home because you have not set your home.  Use /sethome first.");
+        s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
     }
 
 }

@@ -96,7 +96,7 @@ public class SetspeedCmd extends TASPCommand{
             float i = Float.parseFloat(args[0]);
 
             if(i <= 0F || i >  50F) {
-                sender.sendMessage(ChatColor.RED + "Speed must be between 0 and 50 (Default 10)");
+                sender.sendMessage(Config.err() + "Speed must be between 0 and 50 (Default 10)");
                 return;
             }
 
@@ -105,7 +105,7 @@ public class SetspeedCmd extends TASPCommand{
             if(args.length == 2) {
                 Player p = Bukkit.getPlayer(args[1]);
                 if(p == null) {
-                    sender.sendMessage(ChatColor.RED + "Couldn't find player " + args[1]);
+                    sender.sendMessage(Config.err() + "Couldn't find player " + args[1]);
                     return;
                 }
 

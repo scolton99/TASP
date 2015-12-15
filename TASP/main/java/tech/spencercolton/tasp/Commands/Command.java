@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import tech.spencercolton.tasp.Util.Config;
 
 import java.util.HashMap;
 
@@ -107,7 +108,7 @@ public class Command implements CommandExecutor{
     public static void sendConsoleError(ConsoleCommandSender s, String command) {
         if(!command.equals("this command"))
             command = "\"" + command + "\"";
-        s.sendMessage(ChatColor.RED + "Sorry, " + command + " can only be run in-game.");
+        s.sendMessage(Config.err() + "Sorry, " + command + " can only be run in-game.");
     }
 
     /**
@@ -117,7 +118,7 @@ public class Command implements CommandExecutor{
      * @param c The command that was executed incorrectly.
      */
     public static void sendSyntaxError(CommandSender s, TASPCommand c) {
-        s.sendMessage(ChatColor.RED + "Invalid syntax! Try: " + c.getSyntax());
+        s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getSyntax());
     }
 
     /**
@@ -127,7 +128,7 @@ public class Command implements CommandExecutor{
      * @param c The command that was executed incorrectly.
      */
     public static void sendConsoleSyntaxError(ConsoleCommandSender s, TASPCommand c) {
-        s.sendMessage(ChatColor.RED + "Invalid syntax! Try: " + c.getConsoleSyntax());
+        s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getConsoleSyntax());
     }
 
 }

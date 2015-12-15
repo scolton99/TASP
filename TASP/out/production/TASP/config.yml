@@ -29,9 +29,9 @@
 # Let's get to the fun stuff, shall we?
 
 
-# ╔═════════════════════════════════════════════════════════════════════════════════════╗
+# ╔══════════════════════════════════════════════════╗
 # ║                              BASIC TASP CUSTOMIZATIONS                              ║
-# ╚═════════════════════════════════════════════════════════════════════════════════════╝
+# ╚═════ ════════════════════════════════════════════╝
 # Let's make this thing pretty!  Setup your colors here.  The primary color is used in 
 # the static part of any message (Your home was set to) and the secondary color is used
 # for the parts that change (x y z).
@@ -41,8 +41,10 @@
 # Defaults:
 #   primary-color: GOLD
 #   secondary-color: DARK_RED
+#   error-color: RED
 primary-color: GOLD
 secondary-color: DARK_RED
+error-color: RED
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH, 
 # and UNDERLINE! The game code will default them to GOLD for the primary color and 
 # DARK_RED for the secondary color.

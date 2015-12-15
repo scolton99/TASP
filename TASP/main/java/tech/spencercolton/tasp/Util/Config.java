@@ -37,7 +37,7 @@ public class Config {
         if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
-            return ChatColor.DARK_RED;
+            return ChatColor.RED;
         }
     }
 

@@ -356,7 +356,7 @@ public class KillallCmd extends TASPCommand {
                     int ccz = 0;
 
                     if(w3 == null) {
-                        sender.sendMessage(ChatColor.RED + "World \"" + args[1] + "\" does not seem to exist.");
+                        sender.sendMessage(Config.err() + "World \"" + args[1] + "\" does not seem to exist.");
                         return;
                     }
 
