@@ -17,10 +17,18 @@
 # Although many of the commands implemented by TASP are indeed present in other plugins,
 # the main goal of TASP is to combine these commands and features in a more cohesive,
 # up-to-date way.
+#
+# This plugin is highly customizable but that does not mean in any way that it is not for
+# the faint-of-heart.  The plugin is designed to be incredibly user friendly.  It works
+# out-of-the-box, no setup required, but also contains a myriad of configuration settings
+# for those who wish to make it their own.  Should you find yourself lost in config 
+# files,
+# "Ctrl+F" (or "Command+F") is definitely your friend :)
 # 
 # TASP is developed and maintained by Minecraft user pavilion99 (whose name will never
 # change, but in the event that it does, his UUID is 
 # c6e3040f-1288-4a1b-a59c-44fbf248931c)
+#
 # Please shoot me an email at me@spencercolton.tech to inform me of issues in my 
 # software!
 #
@@ -49,3 +57,43 @@ error-color: RED
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH, 
 # and UNDERLINE! The game code will default them to GOLD for the primary color and 
 # DARK_RED for the secondary color.
+#
+# ═════════════════════════════════Transparency Settings═════════════════════════════════
+# Sometimes, you want the players to feel all at home and cozy with their commands.
+# Sometimes, you don't want the players to see any response at all after they run a
+# command.  In this case, you can change what commands display a message here.
+# Certain commands can be run on other people by players with higher permissions.  These
+# commands can be set to only send a message to nobody, only the person that ran the
+# command, or to both the person who ran the command and the person that it affected.
+# The governing of this is as follows:
+# command: true if messages are to be sent, false if not
+# command.others: true if messages are to be sent to who was affected, false if not
+# For example:
+#   setspeed: true
+#   setspeed.others: false
+# Any person who runs the setspeed command will receive a message, but if that person
+# used "setspeed" on another player (/setspeed [otherplayer]), that "otherplayer" will 
+# not receive a message that their speed has been changed.
+# By default, all messages are turned on.
+command-messages:
+    setspeed: true
+    setspeed.others: true
+    
+    killall: true
+    
+    fly: true
+    fly.others: true
+    
+    home: true
+    
+    sethome: true
+    sethome.others: true
+    
+    god: true
+    god.others: true
+#
+# ═════════════════════════════════Message Customization═════════════════════════════════
+# (Almost) any message that is displayed in-game can be changed here.  Because most 
+# messages have parts that are variable, 
+command-message-text:
+    setspeed: ""
