@@ -51,9 +51,9 @@
 #   primary-color: GOLD
 #   secondary-color: DARK_RED
 #   error-color: RED
-primary-color: GOLD
-secondary-color: DARK_RED
-error-color: RED
+primary-color: 'GOLD'
+secondary-color: 'DARK_RED'
+error-color: 'RED'
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH, 
 # and UNDERLINE! The game code will default them to GOLD for the primary color and 
 # DARK_RED for the secondary color.
@@ -94,6 +94,21 @@ command-messages:
 #
 # ═════════════════════════════════Message Customization═════════════════════════════════
 # (Almost) any message that is displayed in-game can be changed here.  Because most 
-# messages have parts that are variable, 
+# messages have parts that are variable, the variables that can be moved or eliminated
+# are shown above each command.  You'll get the hang of it, I promise.  Hang in there!
+# For each command, {0} is equivalent to the primary text color that you set above, and
+# {1} is the secondary text color that you set above.  So, in case you don't know
+# anything about Minecraft formatting, whereever you put the {0}, text will start being
+# that color, and it won't stop being that color until you put a {1}, or vice versa.
 command-message-text:
-    setspeed: ""
+    # {2}: The new speed.
+    setspeed: '{0} Your speed was set to {1} {2} {0}.'
+    # {2}: The player whose speed was changed
+    # {3}: Their new speed
+    setspeed.others.s: '{1} {2}{1}''s speed was set to {1} {3} {0}.'
+    # {2}: The new speed.
+    # {3}: The person who set the new speed.
+    setspeed.others.r: '{0} Your speed was set to {1} {2} {0} by {1} {3}.'
+
+
+

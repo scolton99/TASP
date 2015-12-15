@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 
 import java.util.HashMap;
@@ -53,6 +54,29 @@ public class Command implements CommandExecutor{
      */
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         String s = cmd.getName();
+
+        TASPCommand c = getCommand(s.toLowerCase());
+        if(c == null)
+            return false;
+
+        boolean hasPermission = false;
+
+        if(sender instanceof Player) {
+            Player p = (Player)sender;
+            if(c.predictOthers(args))
+                if(p.hasPermission(c.getPermission() + ".others"))
+                    hasPermission = true;
+            else
+                if(p.hasPermission(c.getPermission()))
+                    hasPermission = true;
+        } else if(sender instanceof ConsoleCommandSender) {
+            hasPermission = true;
+        }
+
+        if(!hasPermission) {
+            sendPermissionError(sender);
+            return true;
+        }
 
         return executeCommand(s, sender, args);
     }
@@ -129,6 +153,21 @@ public class Command implements CommandExecutor{
      */
     public static void sendConsoleSyntaxError(ConsoleCommandSender s, TASPCommand c) {
         s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getConsoleSyntax());
+    }
+
+    public static void sendPermissionError(CommandSender s) {
+        s.sendMessage(Config.err() + "You do not have permission to do that.");
+    }
+
+    private TASPCommand getCommand(String s) {
+        return cmds.get(s);
+    }
+
+    public static boolean messageEnabled(TASPCommand c, boolean others) {
+        if(others)
+            return Config.getBoolean("command-messages." + c.getName() + ".others");
+        else
+            return Config.getBoolean("command-messages." + c.getName());
     }
 
 }

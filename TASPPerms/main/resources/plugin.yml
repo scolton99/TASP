@@ -1,0 +1,4 @@
+name: TASPPerms
+version: 0.0.1
+main: tech.spencercolton.tasp.taspperms.TASPPerms
+depend: [TASP]

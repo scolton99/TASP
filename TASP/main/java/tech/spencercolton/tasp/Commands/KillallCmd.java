@@ -409,4 +409,8 @@ public class KillallCmd extends TASPCommand {
         sender.sendMessage(Config.c1() + "Killed " + Config.c2() + count + Config.c1() + " entities in world " + Config.c2() + world + Config.c1() + ".");
     }
 
+    public boolean predictOthers(String[] s) {
+        return false;
+    }
+
 }

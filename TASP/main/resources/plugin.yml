@@ -1,6 +1,7 @@
 name: TASP
 version: 0.0.1
 main: tech.spencercolton.tasp.TASP
+loadbefore: [TASPDoors, TASPPerms]
 commands:
     killall:
         description: "Kill all entities of a given type in a given radius."

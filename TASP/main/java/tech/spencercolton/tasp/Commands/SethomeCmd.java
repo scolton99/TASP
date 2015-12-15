@@ -66,7 +66,7 @@ public class SethomeCmd extends TASPCommand {
             return;
         }
 
-        if(args.length > 1) {
+        if(args.length != 0) {
             Command.sendSyntaxError(sender, this);
             return;
         }
@@ -85,10 +85,14 @@ public class SethomeCmd extends TASPCommand {
 
         Player p = Bukkit.getPlayer(o);
 
-        if(o == null)
+        if(p == null)
             return;
 
-        o.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + " by " + Config.c2() + ((Player)s).getDisplayName() + Config.c1() + ".");
+        p.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + " by " + Config.c2() + ((Player)s).getDisplayName() + Config.c1() + ".");
+    }
+
+    public boolean predictOthers(String[] args) {
+        return false;
     }
 
 }

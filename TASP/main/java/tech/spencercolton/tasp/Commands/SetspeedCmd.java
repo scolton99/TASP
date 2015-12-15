@@ -7,6 +7,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.M;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code setspeed} command.
@@ -68,6 +69,8 @@ public class SetspeedCmd extends TASPCommand{
      * String containing the command's console syntax.
      */
     public static final String consoleSyntax = "/setspeed <speed> <player>";
+
+    public static final String permission = "tasp.setspeed";
 
     /**
      * {@inheritDoc}
@@ -133,7 +136,8 @@ public class SetspeedCmd extends TASPCommand{
      * @param speed The new speed.
      */
     private void sendSpeedMessage(CommandSender p, Float speed) {
-        p.sendMessage(Config.c1() + "Your speed was set to " + Config.c2() + speed.toString() + Config.c1() + ".");
+        if(Command.messageEnabled(this, false))
+            p.sendMessage(M.m("setspeed", Float.toString(speed)));
     }
 
     /**
@@ -144,10 +148,21 @@ public class SetspeedCmd extends TASPCommand{
      * @param n The other player.
      */
     private void sendSpeedMessage(CommandSender p, Float speed, String n) {
-        p.sendMessage(Config.c2() + n + Config.c1() + "'s speed was set to " + Config.c2() + speed.toString() + Config.c1() + ".");
+        if(Command.messageEnabled(this, false))
+            p.sendMessage(M.m("setspeed.others.s", n, speed.toString()));
         Player z = Bukkit.getPlayer(n);
         if(z != null)
-            z.sendMessage(Config.c1() + "Your speed was set to " + Config.c2() + speed.toString() + Config.c1() + " by " + Config.c2() + p.getName() + Config.c1() + ".");
+            if(Command.messageEnabled(this, true))
+                z.sendMessage(M.m("setspeed.others.r", speed.toString(), p.getName()));
+    }
+
+    public boolean predictOthers(String[] args) {
+        if(args.length < 2)
+            return false;
+
+        Player p = Bukkit.getPlayer(args[1]);
+
+        return p != null;
     }
 
 }

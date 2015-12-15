@@ -14,6 +14,7 @@ import org.bukkit.command.ConsoleCommandSender;
  */
 public abstract class TASPCommand {
 
+    public static final String name = "{{MISSING NAME}}";
     public static final String syntax = "{{MISSING SYNTAX}}";
     public static final String consoleSyntax = "{{MISSING CONSOLE SYNTAX}}";
     public static final String permission = "{{MISSING PERMISSION}}";
@@ -61,5 +62,11 @@ public abstract class TASPCommand {
 
     public String getPermission() {
         return permission;
+    }
+
+    public abstract boolean predictOthers(String[] s);
+
+    public String getName() {
+        return name;
     }
 }

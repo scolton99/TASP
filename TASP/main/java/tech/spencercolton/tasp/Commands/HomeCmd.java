@@ -7,6 +7,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Config;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code home} command.
@@ -107,6 +108,10 @@ public class HomeCmd extends TASPCommand {
 
     private void sendNoHomeMessage(CommandSender s) {
         s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
+    }
+
+    public boolean predictOthers(String[] args) {
+        return false;
     }
 
 }

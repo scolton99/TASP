@@ -41,20 +41,24 @@ public class Config {
         }
     }
 
-    public String getString(String path) {
+    public static String getString(String path) {
         return (String)get(path);
     }
 
-    public Object get(String path) {
+    public static Object get(String path) {
         return s.get(path);
     }
 
-    public int getInt(String path) {
+    public static int getInt(String path) {
         return (int)s.get(path);
     }
 
-    public float getFloat(String path) {
+    public static float getFloat(String path) {
         return (float)s.get(path);
+    }
+
+    public static boolean getBoolean(String path) {
+        return (boolean)s.get(path);
     }
 
 }

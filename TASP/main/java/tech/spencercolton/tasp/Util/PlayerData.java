@@ -12,9 +12,7 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 
 import java.io.*;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * This class is designed to hold data about a player or person.  The data is read from JSON files stored in a
@@ -146,6 +144,9 @@ public class PlayerData {
         this.data.put("lastName", this.p.getName());
         this.data.put("UUID", this.p.getOfflinePlayer().getUniqueId().toString());
         this.data.put("firstSeen", new Date().toString());
+        if(TASP.TASPPerms_link != null) {
+            this.data.put("permissions", new ArrayList<>());
+        }
         if(p.getOfflinePlayer().isOnline())
             this.data.put("lastIP", this.p.getOfflinePlayer().getPlayer().getAddress().getHostString());
         writeData();
@@ -225,6 +226,16 @@ public class PlayerData {
     public void setBoolean(String s, boolean b) {
         this.data.put(s, b);
         writeData();
+    }
+
+    public List getList(String s) {
+        return (List)this.data.get(s);
+    }
+
+
+
+    public List getPermissions() {
+        return (List)this.data.get("permissions");
     }
 
 }

@@ -83,4 +83,13 @@ public class GodCmd extends TASPCommand {
         p.sendMessage(Config.c1() + "God mode was " + Config.c2() + (t ? "enabled" : "disabled") + Config.c1() + " by " + Config.c2() + other.getDisplayName() + Config.c1() + ".");
     }
 
+    public boolean predictOthers(String[] s) {
+        if(s.length > 0) {
+            Player p = Bukkit.getPlayer(s[0]);
+            if(p != null)
+                return true;
+        }
+        return false;
+    }
+
 }

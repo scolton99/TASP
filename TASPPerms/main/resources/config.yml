@@ -1,0 +1,27 @@
+#  __/\\\\\\\\\\\\\\\______/\\\\\\\\\_________/\\\\\\\\\\\_____/\\\\\\\\\\\\\___
+#   _\///////\\\/////_____/\\\\\\\\\\\\\_____/\\\/////////\\\__\/\\\/////////\\\_
+#    _______\/\\\_________/\\\/////////\\\___\//\\\______\///___\/\\\_______\/\\\_
+#     _______\/\\\________\/\\\_______\/\\\____\////\\\__________\/\\\\\\\\\\\\\/__
+#      _______\/\\\________\/\\\\\\\\\\\\\\\_______\////\\\_______\/\\\/////////____
+#       _______\/\\\________\/\\\/////////\\\__________\////\\\____\/\\\_____________
+#        _______\/\\\________\/\\\_______\/\\\___/\\\______\//\\\___\/\\\_____________
+#         _______\/\\\________\/\\\_______\/\\\__\///\\\\\\\\\\\/____\/\\\_____________
+#          _______\///_________\///________\///_____\///////////______\///______________
+#
+#
+# ====================================WELCOME TO TASP====================================
+# Because I love you and I think that you should be treated like a person that actually
+# knows what he or she is doing, I'm going to go ahead and assume that you've already
+# flipped through and skimmed the main configuration file for TASP, or at least that you
+# have a general idea about how YAML files work.
+# For that reason, I don't have to write a giant preface to this file!! YAY!!
+#
+# TASPPerms works like just about every other permissions plugin that you've used.  The
+# only reason I even bothered to make it is so that a) it comes with the TASP suite, and
+# b) I wanted to prove to myself that I am capable of making such a thing.
+#
+# Let's get started.
+#
+# ╔═════════════════════════════════════════════════════════════════════════════════════╗
+# ║                                        GROUPS                                       ║
+# ╚═════════════════════════════════════════════════════════════════════════════════════╝

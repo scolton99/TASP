@@ -76,10 +76,8 @@ public class TASP extends JavaPlugin {
         saveDefaultConfig();
 
         Config.loadConfig(this.getConfig());
-        TASPPerms_link = Bukkit.getPluginManager().getPlugin("TASPPerms");
-        if(TASPPerms_link != null) {
-            getLogger().info("TASP connected with TASPPerms!");
-        }
+
+        loadInteractions();
     }
 
     /**
@@ -158,6 +156,11 @@ public class TASP extends JavaPlugin {
      */
     public static void refreshPlayer(Player p) {
         Person.get(p).reloadData();
+    }
+
+    private void loadInteractions() {
+        TASPPerms_link = Bukkit.getPluginManager().getPlugin("TASPPerms");
+
     }
 
 }

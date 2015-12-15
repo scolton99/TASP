@@ -125,4 +125,13 @@ public class FlyCmd extends TASPCommand {
             p.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + " by " + Config.c2() + sender.getName() + Config.c1() + ".");
     }
 
+    public boolean predictOthers(String[] args) {
+        if(args.length > 0) {
+            Player p = Bukkit.getPlayer(args[0]);
+            if(p != null)
+                return true;
+        }
+        return false;
+    }
+
 }
