@@ -1,6 +1,7 @@
 name: TASP
 version: 0.0.1
 main: tech.spencercolton.tasp.TASP
+loadbefore: [TASPDoors, TASPPerms]
 commands:
     killall:
         description: "Kill all entities of a given type in a given radius."
@@ -35,10 +36,15 @@ commands:
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
-        default: op
         children:
-            tasp.setspeed: true
-            tasp.killall: true
+          tasp.setspeed: true
+          tasp.setspeed.others: true
+          tasp.killall: true
+          tasp.fly: true
+          tasp.fly.others: true
+          tasp.home: true
+          tasp.god: true
+          tasp.god.others: true
     tasp.setspeed:
         description: Set the speed of a player.
         default: op
@@ -60,9 +66,6 @@ permissions:
             tasp.fly: true
     tasp.home:
         description: Teleport a player home.
-        default: true
-    tasp.home:
-        description: Sets the home of a player.
         default: true
     tasp.god:
         description: Set the god mode of a player.

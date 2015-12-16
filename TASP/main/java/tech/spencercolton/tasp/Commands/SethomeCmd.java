@@ -8,6 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.M;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code sethome} command.
@@ -78,21 +79,38 @@ public class SethomeCmd extends TASPCommand {
     }
 
     private void sendHomeMessage(CommandSender s, Location l) {
-        s.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + ".");
+        s.sendMessage(M.m("command-message-text.sethome", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ())));
     }
 
     private void sendHomeMessage(CommandSender s, Location l, String o) {
 
         Player p = Bukkit.getPlayer(o);
 
-        if(p == null)
-            return;
+        assert p != null;
 
-        p.sendMessage(Config.c1() + "Your home location was set to " + Config.c2() + l.getX() + " " + l.getY() + " " + l.getZ() + Config.c1() + " by " + Config.c2() + ((Player)s).getDisplayName() + Config.c1() + ".");
+        s.sendMessage(M.m("command-message-text.sethome-others-s", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), p.getDisplayName()));
+
+        p.sendMessage(M.m("command-message-text.sethome-others-r", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), s.getName()));
     }
 
     public boolean predictOthers(String[] args) {
         return false;
+    }
+
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

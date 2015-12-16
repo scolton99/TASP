@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 import tech.spencercolton.tasp.Util.Config;
 
 import java.util.HashMap;
@@ -63,9 +64,11 @@ public class Command implements CommandExecutor{
 
         if(sender instanceof Player) {
             Player p = (Player)sender;
-            if(c.predictOthers(args))
-                if(p.hasPermission(c.getPermission() + ".others"))
+            if(c.predictOthers(args)) {
+                if (p.hasPermission(c.getPermission() + ".others")) {
                     hasPermission = true;
+                }
+            }
             else
                 if(p.hasPermission(c.getPermission()))
                     hasPermission = true;
@@ -164,6 +167,7 @@ public class Command implements CommandExecutor{
     }
 
     public static boolean messageEnabled(TASPCommand c, boolean others) {
+        Bukkit.getLogger().info("command-messages." + c.getName());
         if(others)
             return Config.getBoolean("command-messages." + c.getName() + ".others");
         else

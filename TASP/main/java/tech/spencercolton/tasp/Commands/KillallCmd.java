@@ -9,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.M;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -406,11 +407,27 @@ public class KillallCmd extends TASPCommand {
      * @param world The name of the world in which the entities were killed.
      */
     private void sendCountMessage(CommandSender sender, int count, String world) {
-        sender.sendMessage(Config.c1() + "Killed " + Config.c2() + count + Config.c1() + " entities in world " + Config.c2() + world + Config.c1() + ".");
+        sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
     }
 
     public boolean predictOthers(String[] s) {
         return false;
+    }
+
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

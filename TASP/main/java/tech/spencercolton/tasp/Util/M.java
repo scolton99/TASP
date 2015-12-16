@@ -1,5 +1,7 @@
 package tech.spencercolton.tasp.Util;
 
+import org.bukkit.Bukkit;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,8 +32,9 @@ public class M {
         if(newStrs.contains(str)) {
             newStrs.remove(str);
         }
-
-        return MessageFormat.format(finStr, Config.c1(), Config.c2(), newStrs.toArray(new String[0]));
+        newStrs.add(0, Config.c2().toString());
+        newStrs.add(0, Config.c1().toString());
+        return MessageFormat.format(finStr, newStrs.toArray(new String[0]));
     }
 
 }

@@ -137,7 +137,7 @@ public class SetspeedCmd extends TASPCommand{
      */
     private void sendSpeedMessage(CommandSender p, Float speed) {
         if(Command.messageEnabled(this, false))
-            p.sendMessage(M.m("setspeed", Float.toString(speed)));
+            p.sendMessage(M.m("command-message-text.setspeed", speed.toString()));
     }
 
     /**
@@ -149,11 +149,11 @@ public class SetspeedCmd extends TASPCommand{
      */
     private void sendSpeedMessage(CommandSender p, Float speed, String n) {
         if(Command.messageEnabled(this, false))
-            p.sendMessage(M.m("setspeed.others.s", n, speed.toString()));
+            p.sendMessage(M.m("command-message-text.setspeed-others-s", n, speed.toString()));
         Player z = Bukkit.getPlayer(n);
         if(z != null)
             if(Command.messageEnabled(this, true))
-                z.sendMessage(M.m("setspeed.others.r", speed.toString(), p.getName()));
+                z.sendMessage(M.m("command-message-text.setspeed-others-r", speed.toString(), p.getName()));
     }
 
     public boolean predictOthers(String[] args) {
@@ -163,6 +163,22 @@ public class SetspeedCmd extends TASPCommand{
         Player p = Bukkit.getPlayer(args[1]);
 
         return p != null;
+    }
+
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public String getName() {
+        return name;
     }
 
 }

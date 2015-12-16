@@ -134,4 +134,20 @@ public class FlyCmd extends TASPCommand {
         return false;
     }
 
+    public String getSyntax() {
+        return syntax;
+    }
+
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public String getName() {
+        return name;
+    }
+
 }

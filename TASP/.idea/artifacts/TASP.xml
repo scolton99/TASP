@@ -3,7 +3,6 @@
     <output-path>$PROJECT_DIR$/../../Server/plugins</output-path>
     <root id="archive" name="TASP.jar">
       <element id="module-output" name="TASP" />
-      <element id="library" level="project" name="spigot-1.8.8" />
       <element id="dir-copy" path="$PROJECT_DIR$/main/resources" />
     </root>
   </artifact>

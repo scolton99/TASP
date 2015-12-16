@@ -42,9 +42,7 @@ public abstract class TASPCommand {
      *
      * @return The in-game syntax for the command, in a human-readable {@code String}.
      */
-    public String getSyntax() {
-        return syntax;
-    }
+    public abstract String getSyntax();
 
     /**
      * Returns the command's expected console syntax in the form a human-readable {@code String}.
@@ -56,17 +54,11 @@ public abstract class TASPCommand {
      * @return {@code null} if the command cannot be run from the console, or a human-readable {@code String} with
      * the command's console syntax.
      */
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
+    public abstract String getConsoleSyntax();
 
-    public String getPermission() {
-        return permission;
-    }
+    public abstract String getPermission();
 
     public abstract boolean predictOthers(String[] s);
 
-    public String getName() {
-        return name;
-    }
+    public abstract String getName();
 }
