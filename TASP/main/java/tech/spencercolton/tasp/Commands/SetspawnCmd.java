@@ -19,9 +19,9 @@ public class SetspawnCmd extends TASPCommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender) {
-            if(args.length != 4) {
-                Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
+        if (sender instanceof ConsoleCommandSender) {
+            if (args.length != 4) {
+                Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
                 return;
             }
 
@@ -32,21 +32,21 @@ public class SetspawnCmd extends TASPCommand {
 
                 World w = Bukkit.getWorld(args[3]);
 
-                if(w == null) {
-                    sendWorldNotFoundMessage(sender, args[3]);
+                if (w == null) {
+                    Command.sendWorldMessage(sender, args[3]);
                     return;
                 }
-                
+
                 w.setSpawnLocation(x, y, z);
                 sendSpawnSetMessage(sender, x, y, z, w.getName());
-            } catch(NumberFormatException e) {
-                Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
+            } catch (NumberFormatException e) {
+                Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
             }
         } else {
-            switch(args.length) {
+            switch (args.length) {
                 case 0:
-                    Location l = ((Player)sender).getLocation();
-                    World w = ((Player)sender).getWorld();
+                    Location l = ((Player) sender).getLocation();
+                    World w = ((Player) sender).getWorld();
 
                     w.setSpawnLocation(l.getBlockX(), l.getBlockY(), l.getBlockZ());
                     sendSpawnSetMessage(sender, l.getBlockX(), l.getBlockY(), l.getBlockZ(), w.getName());
@@ -57,11 +57,11 @@ public class SetspawnCmd extends TASPCommand {
                         int y = Integer.parseInt(args[1]);
                         int z = Integer.parseInt(args[2]);
 
-                        World w2 = ((Player)sender).getWorld();
+                        World w2 = ((Player) sender).getWorld();
 
                         w2.setSpawnLocation(x, y, z);
                         sendSpawnSetMessage(sender, x, y, z, w2.getName());
-                    } catch(NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
                     }
                     break;
@@ -73,14 +73,14 @@ public class SetspawnCmd extends TASPCommand {
 
                         World w2 = Bukkit.getWorld(args[3]);
 
-                        if(w2 == null) {
-                            sendWorldNotFoundMessage(sender, args[3]);
+                        if (w2 == null) {
+                            Command.sendWorldMessage(sender, args[3]);
                             return;
                         }
 
                         w2.setSpawnLocation(x, y, z);
                         sendSpawnSetMessage(sender, x, y, z, w2.getName());
-                    } catch(NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
                     }
                     break;
@@ -89,10 +89,6 @@ public class SetspawnCmd extends TASPCommand {
                     break;
             }
         }
-    }
-
-    private void sendWorldNotFoundMessage(CommandSender s, String w) {
-        s.sendMessage(Config.err() + "Couldn't find world \"" + w + "\"");
     }
 
     private void sendSpawnSetMessage(CommandSender s, int x, int y, int z, String world) {
@@ -121,7 +117,7 @@ public class SetspawnCmd extends TASPCommand {
     }
 
     @Override
-    public boolean predictOthers(String[] args) {
+    public boolean predictOthers(CommandSender sender, String[] args) {
         return false;
     }
 

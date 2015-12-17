@@ -38,6 +38,11 @@ commands:
         permission: tasp.setspawn
         permission-message: You do not have permission to do that
         usage: "Invalid syntax. /setspawn [<x> <y> <z>] [world]"
+    gamemode:
+        description: Change a player''s gamemode.
+        permission: tasp.gamemode
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /gamemode <mode> [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -83,3 +88,11 @@ permissions:
     tasp.setspawn:
         description: Sets the spawnpoint of a world.
         default: op
+    tasp.gamemode:
+        description: Sets a player's gamemode.
+        default: op
+    tasp.gamemode.others:
+        description: Sets the gamemode of another player.
+        default: op
+        children:
+            tasp.gamemode: true

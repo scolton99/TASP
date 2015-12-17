@@ -58,7 +58,7 @@ public abstract class TASPCommand {
 
     public abstract String getPermission();
 
-    public abstract boolean predictOthers(String[] s);
+    public abstract boolean predictOthers(CommandSender sender, String[] s);
 
     public abstract String getName();
 }

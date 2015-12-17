@@ -62,7 +62,7 @@ public class Command implements CommandExecutor{
 
         if(sender instanceof Player) {
             Player p = (Player)sender;
-            if(c.predictOthers(args)) {
+            if(c.predictOthers(sender, args)) {
                 if (p.hasPermission(c.getPermission() + ".others")) {
                     hasPermission = true;
                 }
@@ -171,6 +171,14 @@ public class Command implements CommandExecutor{
             return Config.getBoolean("command-messages." + c.getName() + ".others");
         else
             return Config.getBoolean("command-messages." + c.getName());
+    }
+
+    public static void sendWorldMessage(CommandSender sender, String world) {
+        sender.sendMessage(Config.err() + "Couldn't find world \"" + world + "\"");
+    }
+
+    public static void sendPlayerMessage(CommandSender s, String p) {
+        s.sendMessage(Config.err() + "Couldn't find player \"" + p + "\"");
     }
 
 }

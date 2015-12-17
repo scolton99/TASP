@@ -59,6 +59,8 @@ public class Person extends OfflinePerson {
      */
     private PlayerData data;
 
+    private Person lastMessaged;
+
     /**
      * Constructs a person object from a player object.
      * <p>

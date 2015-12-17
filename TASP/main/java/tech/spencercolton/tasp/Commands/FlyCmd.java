@@ -138,13 +138,8 @@ public class FlyCmd extends TASPCommand {
             p.sendMessage(M.m("command-message-text.fly-others-r", (flying ? "enabled" : "disabled"), sender.getName()));
     }
 
-    public boolean predictOthers(String[] args) {
-        if(args.length > 0) {
-            Player p = Bukkit.getPlayer(args[0]);
-            if(p != null)
-                return true;
-        }
-        return false;
+    public boolean predictOthers(CommandSender sender, String[] args) {
+        return args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender);
     }
 
     public String getSyntax() {
