@@ -148,12 +148,18 @@ public class SetspeedCmd extends TASPCommand{
      * @param n The other player.
      */
     private void sendSpeedMessage(CommandSender p, Float speed, String n) {
+        Player z = Bukkit.getPlayer(n);
+        assert z != null;
+
+        if(z.equals(p)) {
+            sendSpeedMessage(p, speed);
+            return;
+        }
+
         if(Command.messageEnabled(this, false))
             p.sendMessage(M.m("command-message-text.setspeed-others-s", n, speed.toString()));
-        Player z = Bukkit.getPlayer(n);
-        if(z != null)
-            if(Command.messageEnabled(this, true))
-                z.sendMessage(M.m("command-message-text.setspeed-others-r", speed.toString(), p.getName()));
+        if(Command.messageEnabled(this, true))
+            z.sendMessage(M.m("command-message-text.setspeed-others-r", speed.toString(), p.getName()));
     }
 
     public boolean predictOthers(String[] args) {

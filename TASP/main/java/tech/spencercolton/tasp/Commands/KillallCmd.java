@@ -407,7 +407,8 @@ public class KillallCmd extends TASPCommand {
      * @param world The name of the world in which the entities were killed.
      */
     private void sendCountMessage(CommandSender sender, int count, String world) {
-        sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
+        if(Command.messageEnabled(this, false))
+            sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
     }
 
     public boolean predictOthers(String[] s) {

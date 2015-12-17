@@ -1,11 +1,11 @@
 package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.M;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code fly} command.
@@ -109,20 +109,33 @@ public class FlyCmd extends TASPCommand {
                     }
                     p2.setAllowFlight(true);
                     p2.setFlying(!p2.isFlying());
-                    sendFlyingMessage(sender, p2.isFlying(), p2.getDisplayName());
+
+                    if(!p2.equals(sender))
+                        sendFlyingMessage(sender, p2.isFlying(), p2.getDisplayName());
+                    else
+                        sendFlyingMessage(sender, ((Player)sender).isFlying());
             }
         }
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying) {
-        sender.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + ".");
+        if(Command.messageEnabled(this, false))
+            sender.sendMessage(M.m("command-message-text.fly", (flying ? "enabled" : "disabled")));
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying, String n) {
-        sender.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + " for " + Config.c2() + n + Config.c1() + ".");
         Player p = Bukkit.getPlayer(n);
-        if(p != null)
-            p.sendMessage(Config.c1() + "Flying was " + Config.c2() + (flying ? "enabled" : "disabled") + Config.c1() + " by " + Config.c2() + sender.getName() + Config.c1() + ".");
+        assert p != null;
+
+        if(sender.equals(p)) {
+            sendFlyingMessage(sender, flying);
+            return;
+        }
+
+        if(Command.messageEnabled(this, false))
+            sender.sendMessage(M.m("command-message-text.fly-others-s", (flying ? "enabled" : "disabled"), n));
+        if(Command.messageEnabled(this, true))
+            p.sendMessage(M.m("command-message-text.fly-others-r", (flying ? "enabled" : "disabled"), sender.getName()));
     }
 
     public boolean predictOthers(String[] args) {

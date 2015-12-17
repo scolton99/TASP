@@ -7,6 +7,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.M;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +61,17 @@ public class GodCmd extends TASPCommand {
                     if(gods.contains(p2)) {
                         p2.getData().setBoolean("god", false);
                         gods.remove(p2);
-                        sendGodMessage(p2.getPlayer(), false, (Player)sender);
+                        if(!p2.equals(sender))
+                            sendGodMessage(p2.getPlayer(), false, (Player)sender);
+                        else
+                            sendGodMessage(p2.getPlayer(), false);
                     } else {
                         p2.getData().setBoolean("god", true);
                         gods.add(p2);
-                        sendGodMessage(p2.getPlayer(), true, (Player)sender);
+                        if(!p2.equals(sender))
+                            sendGodMessage(p2.getPlayer(), true, (Player)sender);
+                        else
+                            sendGodMessage(p2.getPlayer(), true);
                     }
                     break;
             }
@@ -76,11 +83,20 @@ public class GodCmd extends TASPCommand {
     }
 
     private void sendGodMessage(Player p, boolean t) {
-        p.sendMessage(Config.c1() + "God mode was " + Config.c2() + (t ? "enabled" : "disabled") + Config.c1() + ".");
+        if(Command.messageEnabled(this, false))
+            p.sendMessage(M.m("command-message-text.god", (t ? "enabled" : "disabled")));
     }
 
     private void sendGodMessage(Player p, boolean t, Player other) {
-        p.sendMessage(Config.c1() + "God mode was " + Config.c2() + (t ? "enabled" : "disabled") + Config.c1() + " by " + Config.c2() + other.getDisplayName() + Config.c1() + ".");
+        if(p.equals(other)) {
+            sendGodMessage(p, t);
+            return;
+        }
+
+        if(Command.messageEnabled(this, false))
+            other.sendMessage(M.m("command-message-text.god-others-s", (t ? "enabled" : "disabled"), p.getDisplayName()));
+        if(Command.messageEnabled(this, true))
+            p.sendMessage(M.m("command-message-text.god-others-r", (t ? "enabled" : "disabled"), other.getDisplayName()));
     }
 
     public boolean predictOthers(String[] s) {

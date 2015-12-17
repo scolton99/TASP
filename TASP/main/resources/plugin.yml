@@ -33,6 +33,11 @@ commands:
         permission: tasp.god
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /god [player]"
+    setspawn:
+        description: Sets the spawnpoint of a world.
+        permission: tasp.setspawn
+        permission-message: You do not have permission to do that
+        usage: "Invalid syntax. /setspawn [<x> <y> <z>] [world]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -75,3 +80,6 @@ permissions:
         default: op
         children:
             tasp.god: true
+    tasp.setspawn:
+        description: Sets the spawnpoint of a world.
+        default: op

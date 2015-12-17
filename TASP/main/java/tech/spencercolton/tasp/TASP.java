@@ -29,7 +29,7 @@ import java.io.File;
  * </p>
  *
  * @author Spencer Colton
- * @version 0.0.1-002
+ * @version 0.0.1-003
  * @since 0.0.1-001
  */
 public class TASP extends JavaPlugin {
@@ -88,7 +88,6 @@ public class TASP extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        saveConfig();
     }
 
     /**
@@ -100,12 +99,14 @@ public class TASP extends JavaPlugin {
      * @see Command
      */
     private void initCommands() {
-        this.getCommand("setspeed").setExecutor(new Command());
-        this.getCommand("killall").setExecutor(new Command());
-        this.getCommand("fly").setExecutor((new Command()));
-        this.getCommand("home").setExecutor(new Command());
-        this.getCommand("sethome").setExecutor(new Command());
-        this.getCommand("god").setExecutor(new Command());
+        Command c = new Command();
+        this.getCommand("setspeed").setExecutor(c);
+        this.getCommand("killall").setExecutor(c);
+        this.getCommand("fly").setExecutor((c));
+        this.getCommand("home").setExecutor(c);
+        this.getCommand("sethome").setExecutor(c);
+        this.getCommand("god").setExecutor(c);
+        this.getCommand("setspawn").setExecutor(c);
     }
 
     /**
