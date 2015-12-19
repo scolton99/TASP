@@ -112,6 +112,8 @@ public class Command implements CommandExecutor{
         cmds.put(SetspawnCmd.name.toLowerCase(), new SetspeedCmd());
         cmds.put(TimeCmd.name.toLowerCase(), new TimeCmd());
         cmds.put(TopCmd.name.toLowerCase(), new TopCmd());
+        cmds.put(AFKCmd.name.toLowerCase(), new AFKCmd());
+        cmds.put(XYZCmd.name.toLowerCase(), new XYZCmd());
     }
 
     /**

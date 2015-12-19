@@ -53,6 +53,11 @@ commands:
         permission: tasp.top
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /top"
+    afk:
+        description: Set yourself AFK.
+        permission: tasp.afk
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /afk [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -112,3 +117,11 @@ permissions:
     tasp.top:
         description: Go to the highest block in this column.
         default: op
+    tasp.afk:
+        description: Set yourself AFK.
+        default: true
+    tasp.afk.others:
+        description: Check if a player is AFK.
+        default: true
+        children:
+            tasp.afk: true

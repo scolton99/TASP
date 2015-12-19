@@ -110,6 +110,8 @@ public class TASP extends JavaPlugin {
         this.getCommand("gamemode").setExecutor(c);
         this.getCommand("time").setExecutor(c);
         this.getCommand("top").setExecutor(c);
+        this.getCommand("afk").setExecutor(c);
+        this.getCommand("xyz").setExecutor(c);
     }
 
     /**

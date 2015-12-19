@@ -60,6 +60,7 @@ public class Person extends OfflinePerson {
     private PlayerData data;
 
     private Person lastMessaged;
+    private boolean afk;
 
     /**
      * Constructs a person object from a player object.
@@ -238,6 +239,14 @@ public class Person extends OfflinePerson {
         m.put("yaw", l.getYaw());
 
         this.data.setObject("home", m);
+    }
+
+    public boolean isAfk() {
+        return afk;
+    }
+
+    public void setAfk(boolean afk) {
+        this.afk = afk;
     }
 
 }
