@@ -99,10 +99,10 @@ public class GodCmd extends TASPCommand {
             p.sendMessage(M.m("command-message-text.god-others-r", (t ? "enabled" : "disabled"), other.getDisplayName()));
     }
 
-    public boolean predictOthers(String[] s) {
+    public boolean predictOthers(CommandSender sender, String[] s) {
         if(s.length > 0) {
             Player p = Bukkit.getPlayer(s[0]);
-            if(p != null)
+            if(p != null && !p.equals(sender))
                 return true;
         }
         return false;

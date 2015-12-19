@@ -110,6 +110,7 @@ public class Command implements CommandExecutor{
         cmds.put(SethomeCmd.name.toLowerCase(), new SethomeCmd());
         cmds.put(GodCmd.name.toLowerCase(), new GodCmd());
         cmds.put(SetspawnCmd.name.toLowerCase(), new SetspeedCmd());
+        cmds.put(TimeCmd.name.toLowerCase(), new TimeCmd());
     }
 
     /**
@@ -180,5 +181,7 @@ public class Command implements CommandExecutor{
     public static void sendPlayerMessage(CommandSender s, String p) {
         s.sendMessage(Config.err() + "Couldn't find player \"" + p + "\"");
     }
+
+    private boolean extraPermissionHandler(){return false;}
 
 }

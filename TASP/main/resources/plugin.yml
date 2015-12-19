@@ -43,6 +43,11 @@ commands:
         permission: tasp.gamemode
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /gamemode <mode> [player]"
+    time:
+        description: View or change the world time.
+        permission: tasp.time
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax.  /time [newTime]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -96,3 +101,6 @@ permissions:
         default: op
         children:
             tasp.gamemode: true
+    tasp.time:
+        description: View the current world time.
+        default: true

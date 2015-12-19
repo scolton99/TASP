@@ -33,6 +33,21 @@ commands:
         permission: tasp.god
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /god [player]"
+    setspawn:
+        description: Sets the spawnpoint of a world.
+        permission: tasp.setspawn
+        permission-message: You do not have permission to do that
+        usage: "Invalid syntax. /setspawn [<x> <y> <z>] [world]"
+    gamemode:
+        description: Change a player''s gamemode.
+        permission: tasp.gamemode
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /gamemode <mode> [player]"
+    time:
+        description: View or change the world time.
+        permission: tasp.time
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax.  /time [newTime]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -75,3 +90,17 @@ permissions:
         default: op
         children:
             tasp.god: true
+    tasp.setspawn:
+        description: Sets the spawnpoint of a world.
+        default: op
+    tasp.gamemode:
+        description: Sets a player's gamemode.
+        default: op
+    tasp.gamemode.others:
+        description: Sets the gamemode of another player.
+        default: op
+        children:
+            tasp.gamemode: true
+    tasp.time:
+        description: View the current world time.
+        default: true

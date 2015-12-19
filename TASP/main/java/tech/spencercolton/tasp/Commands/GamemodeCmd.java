@@ -5,10 +5,8 @@ import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -166,7 +164,7 @@ public class GamemodeCmd extends TASPCommand {
 
     @Override
     public boolean predictOthers(CommandSender sender, String[] args) {
-        return args.length <= 1 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender);
+        return args.length >= 1 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender);
     }
 
 }

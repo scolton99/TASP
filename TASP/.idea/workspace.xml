@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="614d1399-9aa6-48fc-98fa-0ff28f798aa4" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TimeCmd.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/FlyCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/FlyCmd.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspawnCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspawnCmd.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TASPCommand.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TASPCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java" afterPath="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/resources/config.yml" afterPath="$PROJECT_DIR$/main/resources/config.yml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main/resources/plugin.yml" afterPath="$PROJECT_DIR$/main/resources/plugin.yml" />
@@ -41,11 +43,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="config.yml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="config.yml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main/resources/config.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="13.5">
-              <caret line="91" column="23" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.6031746">
+              <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -55,73 +57,89 @@
         <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="109" column="51" selection-start-line="109" selection-start-column="51" selection-end-line="109" selection-end-column="51" />
+              <caret line="110" column="47" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GamemodeCmd.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java">
+      <file leaf-file-name="TimeCmd.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TimeCmd.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="121" column="57" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
+              <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#1044#1045#0" expanded="true" />
+                <element signature="e#1071#1072#0" expanded="true" />
+                <element signature="e#1118#1119#0" expanded="true" />
+                <element signature="e#1147#1148#0" expanded="true" />
+                <element signature="e#1201#1202#0" expanded="true" />
+                <element signature="e#1237#1238#0" expanded="true" />
+                <element signature="e#1288#1289#0" expanded="true" />
+                <element signature="e#1321#1322#0" expanded="true" />
+                <element signature="e#1408#1409#0" expanded="true" />
+                <element signature="e#1436#1437#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="plugin.yml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main/resources/plugin.yml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.18650794">
-              <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
+            <state vertical-scroll-proportion="-17.75">
+              <caret line="49" column="49" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Person.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java">
+      <file leaf-file-name="HomeCmd.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
-              <folding>
-                <element signature="e#5811#5841#0" expanded="true" />
-              </folding>
+              <caret line="112" column="55" selection-start-line="112" selection-start-column="55" selection-end-line="112" selection-end-column="55" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SetspawnCmd.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspawnCmd.java">
+      <file leaf-file-name="SetspeedCmd.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="119" column="55" selection-start-line="119" selection-start-column="55" selection-end-line="119" selection-end-column="55" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3878#3879#0" expanded="true" />
-                <element signature="e#3907#3908#0" expanded="true" />
-                <element signature="e#3961#3962#0" expanded="true" />
-                <element signature="e#3997#3998#0" expanded="true" />
-                <element signature="e#4048#4049#0" expanded="true" />
-                <element signature="e#4081#4082#0" expanded="true" />
-                <element signature="e#4126#4127#0" expanded="true" />
-                <element signature="e#4153#4154#0" expanded="true" />
-                <element signature="e#4240#4241#0" expanded="true" />
-                <element signature="e#4268#4269#0" expanded="true" />
-              </folding>
+              <caret line="171" column="5" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FlyCmd.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/FlyCmd.java">
+      <file leaf-file-name="GodCmd.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="140" column="71" selection-start-line="140" selection-start-column="71" selection-end-line="140" selection-end-column="71" />
+              <caret line="101" column="55" selection-start-line="101" selection-start-column="55" selection-end-line="101" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="KillallCmd.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="413" column="55" selection-start-line="413" selection-start-column="55" selection-end-line="413" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="M.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Util/M.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -133,9 +151,9 @@
         <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="64" column="39" selection-start-line="64" selection-start-column="39" selection-end-line="64" selection-end-column="39" />
+              <caret line="112" column="60" selection-start-line="112" selection-start-column="60" selection-end-line="112" selection-end-column="60" />
               <folding>
-                <element signature="e#4601#4628#0" expanded="true" />
+                <element signature="e#4662#4689#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -184,24 +202,25 @@
         <option value="$PROJECT_DIR$/../TASPPerms/main/resources/config.yml" />
         <option value="$PROJECT_DIR$/../TASPPerms/main/java/tech/spencercolton/tasp/taspperms/Util/Config.java" />
         <option value="$PROJECT_DIR$/../TASPPerms/main/java/tech/spencercolton/tasp/taspperms/TASPPerms.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Util/M.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Listeners/LoginListener.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TASPCommand.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspawnCmd.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/FlyCmd.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java" />
-        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java" />
-        <option value="$PROJECT_DIR$/main/resources/config.yml" />
-        <option value="$PROJECT_DIR$/main/resources/plugin.yml" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SuCmd.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java" />
         <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SudoCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java" />
+        <option value="$PROJECT_DIR$/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java" />
+        <option value="$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TimeCmd.java" />
+        <option value="$PROJECT_DIR$/main/resources/config.yml" />
       </list>
     </option>
   </component>
@@ -883,24 +902,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="69" y="23" width="1371" height="877" extended-state="6" />
-    <editor active="true" />
+    <frame x="69" y="23" width="1371" height="877" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36138615" sideWeight="0.45052084" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3615222" sideWeight="0.5494792" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24215901" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2822757" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3615222" sideWeight="0.45052084" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -923,7 +942,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -985,7 +1004,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#11231#11232#0" expanded="false" />
+            <element signature="e#11393#11394#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1005,7 +1024,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="100" column="0" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
           <folding>
-            <element signature="e#4601#4628#0" expanded="true" />
+            <element signature="e#4662#4689#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1015,8 +1034,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="104" column="22" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="22" />
           <folding>
-            <element signature="e#3018#3019#0" expanded="true" />
-            <element signature="e#3045#3046#0" expanded="true" />
+            <element signature="e#3040#3041#0" expanded="false" />
+            <element signature="e#3067#3068#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1057,8 +1076,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="98" column="35" selection-start-line="98" selection-start-column="35" selection-end-line="98" selection-end-column="35" />
           <folding>
-            <element signature="e#4916#4917#0" expanded="true" />
-            <element signature="e#4945#4946#0" expanded="true" />
+            <element signature="e#4959#4960#0" expanded="false" />
+            <element signature="e#4988#4989#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1076,7 +1095,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="81" column="48" selection-start-line="81" selection-start-column="48" selection-end-line="81" selection-end-column="48" />
           <folding>
-            <element signature="e#4601#4628#0" expanded="true" />
+            <element signature="e#4662#4689#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1085,9 +1104,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1142,8 +1159,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="126" column="5" selection-start-line="126" selection-start-column="5" selection-end-line="126" selection-end-column="5" />
           <folding>
-            <element signature="e#4916#4917#0" expanded="true" />
-            <element signature="e#4945#4946#0" expanded="true" />
+            <element signature="e#4959#4960#0" expanded="false" />
+            <element signature="e#4988#4989#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1229,13 +1246,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Util/M.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="9" selection-start-line="33" selection-start-column="9" selection-end-line="33" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$PROJECT_DIR$/lib/spigot-1.8.8.jar!/org/bukkit/Location.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.095398426">
@@ -1243,68 +1253,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5">
-          <caret line="104" column="52" selection-start-line="104" selection-start-column="52" selection-end-line="104" selection-end-column="52" />
-          <folding>
-            <element signature="e#3018#3019#0" expanded="true" />
-            <element signature="e#3045#3046#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="155" column="19" selection-start-line="155" selection-start-column="19" selection-end-line="155" selection-end-column="19" />
-          <folding>
-            <element signature="e#4916#4917#0" expanded="true" />
-            <element signature="e#4945#4946#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6296296">
-          <caret line="410" column="12" selection-start-line="410" selection-start-column="12" selection-end-line="410" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Listeners/LoginListener.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="68" column="40" selection-start-line="68" selection-start-column="40" selection-end-line="68" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="312" column="0" selection-start-line="312" selection-start-column="0" selection-end-line="312" selection-end-column="0" />
-          <folding>
-            <element signature="e#11231#11232#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TASPCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1329,6 +1281,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TASPCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="224" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="244" selection-end-column="0" />
+          <folding>
+            <element signature="e#5811#5841#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SethomeCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.980769">
+          <caret line="291" column="71" selection-start-line="291" selection-start-column="71" selection-end-line="291" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/FlyCmd.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1339,56 +1317,106 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="64" column="39" selection-start-line="64" selection-start-column="39" selection-end-line="64" selection-end-column="39" />
-          <folding>
-            <element signature="e#4601#4628#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GamemodeCmd.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="57" selection-start-line="121" selection-start-column="57" selection-end-line="121" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/resources/config.yml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="13.5">
-          <caret line="91" column="23" selection-start-line="91" selection-start-column="23" selection-end-line="91" selection-end-column="23" />
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java">
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/Command.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="109" column="51" selection-start-line="109" selection-start-column="51" selection-end-line="109" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Entity/Person.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="32" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
+          <caret line="112" column="60" selection-start-line="112" selection-start-column="60" selection-end-line="112" selection-end-column="60" />
           <folding>
-            <element signature="e#5811#5841#0" expanded="true" />
+            <element signature="e#4662#4689#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main/resources/plugin.yml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18650794">
-          <caret line="62" column="19" selection-start-line="62" selection-start-column="19" selection-end-line="62" selection-end-column="19" />
+        <state vertical-scroll-proportion="-17.75">
+          <caret line="49" column="49" selection-start-line="49" selection-start-column="49" selection-end-line="49" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/HomeCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="112" column="55" selection-start-line="112" selection-start-column="55" selection-end-line="112" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/SetspeedCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="171" column="5" selection-start-line="171" selection-start-column="5" selection-end-line="171" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/GodCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="55" selection-start-line="101" selection-start-column="55" selection-end-line="101" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/KillallCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="413" column="55" selection-start-line="413" selection-start-column="55" selection-end-line="413" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Util/M.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/TASP.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="110" column="47" selection-start-line="110" selection-start-column="47" selection-end-line="110" selection-end-column="47" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/java/tech/spencercolton/tasp/Commands/TimeCmd.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1044#1045#0" expanded="true" />
+            <element signature="e#1071#1072#0" expanded="true" />
+            <element signature="e#1118#1119#0" expanded="true" />
+            <element signature="e#1147#1148#0" expanded="true" />
+            <element signature="e#1201#1202#0" expanded="true" />
+            <element signature="e#1237#1238#0" expanded="true" />
+            <element signature="e#1288#1289#0" expanded="true" />
+            <element signature="e#1321#1322#0" expanded="true" />
+            <element signature="e#1408#1409#0" expanded="true" />
+            <element signature="e#1436#1437#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6031746">
+          <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
           <folding />
         </state>
       </provider>

@@ -110,7 +110,7 @@ public class HomeCmd extends TASPCommand {
         s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
     }
 
-    public boolean predictOthers(String[] args) {
+    public boolean predictOthers(CommandSender sender, String[] args) {
         return false;
     }
 

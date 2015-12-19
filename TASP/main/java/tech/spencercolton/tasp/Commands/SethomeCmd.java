@@ -289,8 +289,8 @@ public class SethomeCmd extends TASPCommand {
     }
 
 
-    public boolean predictOthers(String[] args) {
-        return false;
+    public boolean predictOthers(CommandSender sender, String[] args) {
+        return (!(sender instanceof ConsoleCommandSender)) && args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender);
     }
 
     public String getSyntax() {

@@ -411,7 +411,7 @@ public class KillallCmd extends TASPCommand {
             sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
     }
 
-    public boolean predictOthers(String[] s) {
+    public boolean predictOthers(CommandSender sender, String[] s) {
         return false;
     }
 
