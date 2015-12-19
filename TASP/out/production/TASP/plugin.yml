@@ -48,6 +48,11 @@ commands:
         permission: tasp.time
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax.  /time [newTime]"
+    top:
+        description: Go to the highest block in this column.
+        permission: tasp.top
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /top"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -104,3 +109,6 @@ permissions:
     tasp.time:
         description: View the current world time.
         default: true
+    tasp.top:
+        description: Go to the highest block in this column.
+        default: op

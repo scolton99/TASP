@@ -109,6 +109,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("setspawn").setExecutor(c);
         this.getCommand("gamemode").setExecutor(c);
         this.getCommand("time").setExecutor(c);
+        this.getCommand("top").setExecutor(c);
     }
 
     /**

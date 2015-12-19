@@ -111,6 +111,7 @@ public class Command implements CommandExecutor{
         cmds.put(GodCmd.name.toLowerCase(), new GodCmd());
         cmds.put(SetspawnCmd.name.toLowerCase(), new SetspeedCmd());
         cmds.put(TimeCmd.name.toLowerCase(), new TimeCmd());
+        cmds.put(TopCmd.name.toLowerCase(), new TopCmd());
     }
 
     /**
@@ -158,6 +159,11 @@ public class Command implements CommandExecutor{
         s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getConsoleSyntax());
     }
 
+    public static void sendConsoleSyntaxError(CommandSender s, TASPCommand c) {
+        assert s instanceof ConsoleCommandSender;
+        sendConsoleSyntaxError((ConsoleCommandSender)s, c);
+    }
+
     public static void sendPermissionError(CommandSender s) {
         s.sendMessage(Config.err() + "You do not have permission to do that.");
     }
@@ -167,11 +173,14 @@ public class Command implements CommandExecutor{
     }
 
     public static boolean messageEnabled(TASPCommand c, boolean others) {
-        Bukkit.getLogger().info("command-messages." + c.getName());
         if(others)
             return Config.getBoolean("command-messages." + c.getName() + ".others");
         else
             return Config.getBoolean("command-messages." + c.getName());
+    }
+
+    public static boolean messageEnabled(String s) {
+        return Config.getBoolean("command-messages." + s);
     }
 
     public static void sendWorldMessage(CommandSender sender, String world) {

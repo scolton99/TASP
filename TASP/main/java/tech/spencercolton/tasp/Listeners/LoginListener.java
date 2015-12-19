@@ -26,7 +26,8 @@ public class LoginListener implements Listener {
 
         assert a != null;
 
-        if(a.getData().getBoolean("god"))
+        Boolean b = a.getData().getBoolean("god");
+        if(b != null && b)
             GodCmd.gods.add(a);
     }
 
