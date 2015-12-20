@@ -25,7 +25,7 @@ public class XYZCmd extends TASPCommand {
     }
 
     private void sendPosMessage(CommandSender sender, int x, int y, int z) {
-        sender.sendMessage(M.m("xyz", Integer.toString(x), Integer.toString(y), Integer.toString(z)));
+        sender.sendMessage(M.m("command-message-text.xyz", Integer.toString(x), Integer.toString(y), Integer.toString(z)));
     }
 
     @Override

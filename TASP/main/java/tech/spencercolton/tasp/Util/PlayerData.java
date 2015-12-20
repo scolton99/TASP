@@ -107,7 +107,7 @@ public class PlayerData {
      */
     private static boolean dataExists(UUID s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
-        p1 += "/players/" + s + ".json";
+        p1 += "\\players\\" + s + ".json";
         return new File(p1).exists();
     }
 
@@ -148,7 +148,7 @@ public class PlayerData {
             this.data.put("permissions", new ArrayList<>());
         }
         if(p.getOfflinePlayer().isOnline())
-            this.data.put("lastIP", this.p.getOfflinePlayer().getPlayer().getAddress().getHostString());
+            this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
         writeData();
     }
 
@@ -159,7 +159,7 @@ public class PlayerData {
      * not.
      */
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "/players/" + p.getOfflinePlayer().getUniqueId().toString() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + p.getOfflinePlayer().getUniqueId().toString() + ".json");
         if(!f.exists())
             return null;
 
@@ -181,7 +181,7 @@ public class PlayerData {
     public boolean writeData() {
         try {
             FileWriter f = new FileWriter(new File(getPlayerDataPath()));
-            f.write(this.data.toJSONString());
+            f.write(this.data.toString());
             f.close();
             return true;
         } catch (IOException e) {
@@ -232,10 +232,14 @@ public class PlayerData {
         return (List)this.data.get(s);
     }
 
-
-
     public List getPermissions() {
         return (List)this.data.get("permissions");
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setList(String s, List l) {
+        this.data.put(s, l);
+        writeData();
     }
 
 }

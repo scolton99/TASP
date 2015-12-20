@@ -55,6 +55,9 @@ primary-color: 'GOLD'
 secondary-color: 'DARK_RED'
 error-color: 'RED'
 
+# How long should it take before a player is labeled "afk," in minutes?  Set to 0 for no limit.
+afk-timeout: 10
+
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
 # DARK_RED for the secondary color.
@@ -92,6 +95,8 @@ command-messages:
   gamemode-others: true
   time-set: true
   top: true
+  muted: true
+  muted-r: true
 
 broadcast-afk: true
 # ---------------------------------------------------------------------------------------
@@ -173,3 +178,11 @@ command-message-text:
   # {3}: The y position of the player
   # {4}: The z position of the player
   xyz: '{0}You are currently at {1}{2} {3} {4}{0}.'
+  # {2}: the player who was muted
+  # {3}: the word "muted" or "unmuted"
+  muted-s: '{0}Player {1}{2}{0} was {1}{3}{0}.'
+  # {2}: The player who did the muting
+  # {3}: The word "muted" or "unmuted"
+  muted-r: '{0}You were {1}{3}{0} by {1}{2}{0}.'
+  # {2}: A time, in milliseconds.
+  ping: '{0}Your ping is {1}{2}ms{0}.'

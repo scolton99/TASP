@@ -5,10 +5,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
+import tech.spencercolton.tasp.Commands.GodCmd;
+import tech.spencercolton.tasp.Commands.MuteCmd;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Listeners.LoginListener;
-import tech.spencercolton.tasp.Listeners.LogoutListener;
-import tech.spencercolton.tasp.Listeners.PlayerDamageListener;
+import tech.spencercolton.tasp.Listeners.*;
+import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.PlayerData;
 
@@ -64,18 +65,19 @@ public class TASP extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("Loading TASP plugin...");
+
+        saveDefaultConfig();
+
+        Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
         initCommands();
         initListeners();
         for(Player p: getServer().getOnlinePlayers()) {
             new Person(p);
+            loadPerson(Person.get(p));
         }
         File f = new File(dataFolder().getAbsolutePath() + "\\players\\");
         f.mkdirs();
-
-        saveDefaultConfig();
-
-        Config.loadConfig(this.getConfig());
 
         loadInteractions();
     }
@@ -88,6 +90,9 @@ public class TASP extends JavaPlugin {
      */
     @Override
     public void onDisable() {
+        for(Person p : Person.people) {
+            p.getData().writeData();
+        }
     }
 
     /**
@@ -112,6 +117,11 @@ public class TASP extends JavaPlugin {
         this.getCommand("top").setExecutor(c);
         this.getCommand("afk").setExecutor(c);
         this.getCommand("xyz").setExecutor(c);
+        this.getCommand("mute").setExecutor(c);
+        this.getCommand("me").setExecutor(c);
+        this.getCommand("msg").setExecutor(c);
+        this.getCommand("reply").setExecutor(c);
+        this.getCommand("ping").setExecutor(c);
     }
 
     /**
@@ -126,6 +136,8 @@ public class TASP extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new LoginListener(), this);
         getServer().getPluginManager().registerEvents(new LogoutListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
     }
 
     /**
@@ -167,6 +179,23 @@ public class TASP extends JavaPlugin {
     private void loadInteractions() {
         TASPPerms_link = Bukkit.getPluginManager().getPlugin("TASPPerms");
 
+    }
+
+    public static void loadPerson(Person a) {
+        new AFKTimer(a);
+
+        Boolean b = a.getData().getBoolean("god");
+        if(b != null && b)
+            GodCmd.gods.add(a);
+
+        b = a.getData().getBoolean("muted");
+        if(b != null && b)
+            MuteCmd.muted.add(a);
+    }
+
+    public static void unloadPerson(Person a) {
+        AFKTimer.timers.get(a).cancel();
+        AFKTimer.timers.remove(a);
     }
 
 }

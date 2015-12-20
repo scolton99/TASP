@@ -31,6 +31,7 @@ commands:
     god:
         description: Sets god mode to enabled or disabled for a player.
         permission: tasp.god
+        aliases: [buddha]
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /god [player]"
     setspawn:
@@ -41,6 +42,7 @@ commands:
     gamemode:
         description: Change a player''s gamemode.
         permission: tasp.gamemode
+        aliases: [gm]
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /gamemode <mode> [player]"
     time:
@@ -53,6 +55,43 @@ commands:
         permission: tasp.top
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /top"
+    afk:
+        description: Set yourself AFK.
+        permission: tasp.afk
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /afk [player]"
+    xyz:
+        description: Get your position in the world.
+        permission: tasp.xyz
+        permission-message: You do not have permission to do that.
+        usage: "Invalid syntax. /xyz"
+    mute:
+        description: Stop a player from talking.
+        permission: tasp.mute
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /mute <player>"
+    me:
+        description: Perform an action.
+        permission: tasp.me
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /me <action>"
+    msg:
+        description: Send a private message.
+        aliases: [message, send, tell]
+        permission: tasp.msg
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /msg <player> <message>"
+    reply:
+        description: Reply to a private message.
+        aliases: [r]
+        permision: tasp.msg
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /r <message>"
+    ping:
+        description: Checks a player's ping.
+        permission: tasp.ping
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /ping"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -112,3 +151,26 @@ permissions:
     tasp.top:
         description: Go to the highest block in this column.
         default: op
+    tasp.afk:
+        description: Set yourself AFK.
+        default: true
+    tasp.afk.others:
+        description: Check if a player is AFK.
+        default: true
+        children:
+            tasp.afk: true
+    tasp.xyz:
+        description: Get your position in world.
+        default: true
+    tasp.mute:
+        description: Stop a player from talking.
+        default: op
+    tasp.me:
+        description: Perform an action
+        default: true
+    tasp.msg:
+        description: Send a private message.
+        default: true
+    tasp.ping:
+        description: Check a player's ping.
+        default: true

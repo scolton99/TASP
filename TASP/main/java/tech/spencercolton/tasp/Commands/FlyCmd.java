@@ -70,6 +70,8 @@ public class FlyCmd extends TASPCommand {
      */
     public static final String consoleSyntax = "/fly <user>";
 
+    public static final String permission = "tasp.fly";
+
     /**
      * {@inheritDoc}
      */

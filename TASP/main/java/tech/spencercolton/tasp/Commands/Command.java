@@ -7,7 +7,11 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A class for managing {@link TASPCommand}s and general command maintenance.
@@ -26,7 +30,7 @@ public class Command implements CommandExecutor{
      *     Populated when the Command is instantiated.
      * </p>
      */
-    private static HashMap<String,TASPCommand> cmds = new HashMap<>();
+    private static ConcurrentHashMap<String,TASPCommand> cmds = new ConcurrentHashMap<>();
 
     /**
      * Not designed as a constructor, but as a convenient way for the class to populate the {@link #cmds} field
@@ -91,11 +95,10 @@ public class Command implements CommandExecutor{
      * @return {@code true} if the command was found in the list of available commands, else {@code false}.
      */
     private boolean executeCommand(String name, CommandSender sender, String[] args) {
-        if(cmds.keySet().contains(name.toLowerCase())) {
+        if(Collections.list(cmds.keys()).contains(name.toLowerCase())) {
             cmds.get(name.toLowerCase()).execute(sender, args);
             return true;
         }
-        Bukkit.getLogger().info("Command: " + name);
         return false;
     }
 
@@ -114,6 +117,21 @@ public class Command implements CommandExecutor{
         cmds.put(TopCmd.name.toLowerCase(), new TopCmd());
         cmds.put(AFKCmd.name.toLowerCase(), new AFKCmd());
         cmds.put(XYZCmd.name.toLowerCase(), new XYZCmd());
+        cmds.put(MuteCmd.name.toLowerCase(), new MuteCmd());
+        cmds.put(MeCmd.name.toLowerCase(), new MeCmd());
+        cmds.put(MessageCmd.name.toLowerCase(), new MessageCmd());
+        cmds.put(ReplyCmd.name.toLowerCase(), new ReplyCmd());
+        cmds.put(PingCmd.name.toLowerCase(), new PingCmd());
+
+        Collection<TASPCommand> coll = cmds.values();
+
+        for(TASPCommand c : coll) {
+            if(c.getAliases() == null)
+                continue;
+            for(String g : c.getAliases()) {
+                cmds.put(g, c);
+            }
+        }
     }
 
     /**

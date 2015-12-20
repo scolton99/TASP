@@ -61,4 +61,8 @@ public class Config {
         return (boolean)s.get(path);
     }
 
+    public static int AFKTime() {
+        return 1200 * (int)s.get("afk-timeout");
+    }
+
 }

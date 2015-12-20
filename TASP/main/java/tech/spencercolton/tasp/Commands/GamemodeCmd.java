@@ -123,7 +123,10 @@ public class GamemodeCmd extends TASPCommand {
         }
     }
 
-
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("gm");
+    }
 
     private void sendGamemodeMessage(CommandSender s, String p) {
         if(Command.messageEnabled(this, false))

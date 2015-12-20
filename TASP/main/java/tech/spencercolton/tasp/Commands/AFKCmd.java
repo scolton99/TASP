@@ -37,7 +37,8 @@ public class AFKCmd extends TASPCommand {
                     Command.sendPlayerMessage(sender, args[0]);
                     return;
                 }
-                sender.sendMessage(Config.c2() + p2.getPlayer().getDisplayName() + Config.c1() + " is " + (p2.isAfk() ? "not " : "") + "AFK.");
+                sender.sendMessage(Config.c2() + p2.getPlayer().getDisplayName() + Config.c1() + " is " + (!p2.isAfk() ? "not " : "") + "AFK.");
+                return;
             default:
                 if(sender instanceof ConsoleCommandSender)
                     Command.sendConsoleSyntaxError(sender, this);
@@ -46,7 +47,7 @@ public class AFKCmd extends TASPCommand {
         }
     }
 
-    private void broadcastAFKMessage(Person p) {
+    public static void broadcastAFKMessage(Person p) {
         if(!Config.getBoolean("broadcast-afk"))
             return;
 

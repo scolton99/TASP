@@ -10,6 +10,7 @@ import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GodCmd extends TASPCommand {
@@ -106,6 +107,11 @@ public class GodCmd extends TASPCommand {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public List<String> getAliases() {
+        return Arrays.asList("buddha");
     }
 
     public String getSyntax() {

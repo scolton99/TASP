@@ -3,7 +3,9 @@ package tech.spencercolton.tasp.Entity;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Commands.MuteCmd;
 import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.util.*;
@@ -31,7 +33,7 @@ public class Person extends OfflinePerson {
     /**
      * Holds a constant list of players who are currently online on the server.
      */
-    private static List<Person> people = new ArrayList<>();
+    public static List<Person> people = new ArrayList<>();
 
     /**
      * Links each unique ID to a person object.
@@ -59,8 +61,9 @@ public class Person extends OfflinePerson {
      */
     private PlayerData data;
 
-    private Person lastMessaged;
+    private CommandSender lastMessaged;
     private boolean afk;
+    private String ip;
 
     /**
      * Constructs a person object from a player object.
@@ -247,6 +250,52 @@ public class Person extends OfflinePerson {
 
     public void setAfk(boolean afk) {
         this.afk = afk;
+    }
+
+    public boolean isMuted() {
+        return MuteCmd.muted.contains(this);
+    }
+
+    public void mute() {
+        MuteCmd.muted.add(this);
+        this.data.setBoolean("muted", true);
+    }
+
+    public void unmute() {
+        MuteCmd.muted.remove(this);
+        this.data.setBoolean("muted", false);
+    }
+
+    public void setMuted(boolean b) {
+        if(b)
+            MuteCmd.muted.add(this);
+        else
+            MuteCmd.muted.remove(this);
+
+        this.data.setBoolean("muted", b);
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<Person> getBlockedPlayers() {
+        return this.data.getList("blocked");
+    }
+
+    public void blockPlayer(Person p) {
+        List<Person> ps = getBlockedPlayers();
+        ps.add(p);
+        this.data.setList("blocked", ps);
+    }
+
+    public boolean isPlayerBlocked(Person p) {
+        return this.getBlockedPlayers().contains(p);
+    }
+
+    public CommandSender getLastMessaged() {
+        return this.lastMessaged;
+    }
+
+    public void setLastMessaged(CommandSender p) {
+        this.lastMessaged = p;
     }
 
 }

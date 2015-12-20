@@ -4,7 +4,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import tech.spencercolton.tasp.Commands.GodCmd;
+import tech.spencercolton.tasp.Commands.MuteCmd;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.TASP;
 
 /**
  * Main listener class for player login events.
@@ -26,9 +28,7 @@ public class LoginListener implements Listener {
 
         assert a != null;
 
-        Boolean b = a.getData().getBoolean("god");
-        if(b != null && b)
-            GodCmd.gods.add(a);
+        TASP.loadPerson(a);
     }
 
 }

@@ -3,6 +3,8 @@ package tech.spencercolton.tasp.Commands;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
+import java.util.List;
+
 /**
  * Global superclass for all specific TASP commands.
  * <p>
@@ -61,4 +63,9 @@ public abstract class TASPCommand {
     public abstract boolean predictOthers(CommandSender sender, String[] s);
 
     public abstract String getName();
+
+    public List<String> getAliases() {
+        return null;
+    }
+
 }
