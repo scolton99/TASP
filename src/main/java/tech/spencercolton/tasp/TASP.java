@@ -30,7 +30,7 @@ import java.io.File;
  * </p>
  *
  * @author Spencer Colton
- * @version 0.0.1-003
+ * @version 0.0.3
  * @since 0.0.1-001
  */
 public class TASP extends JavaPlugin {

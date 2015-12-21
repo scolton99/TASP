@@ -34,7 +34,7 @@ public class M {
         }
         newStrs.add(0, Config.c2().toString());
         newStrs.add(0, Config.c1().toString());
-        return MessageFormat.format(finStr, newStrs.toArray(new String[0]));
+        return MessageFormat.format(finStr, newStrs.toArray(new String[newStrs.size()]));
     }
 
 }

@@ -1,0 +1,192 @@
+#  __/\\\\\\\\\\\\\\\______/\\\\\\\\\_________/\\\\\\\\\\\_____/\\\\\\\\\\\\\___        
+#   _\///////\\\/////_____/\\\\\\\\\\\\\_____/\\\/////////\\\__\/\\\/////////\\\_       
+#    _______\/\\\_________/\\\/////////\\\___\//\\\______\///___\/\\\_______\/\\\_      
+#     _______\/\\\________\/\\\_______\/\\\____\////\\\__________\/\\\\\\\\\\\\\/__     
+#      _______\/\\\________\/\\\\\\\\\\\\\\\_______\////\\\_______\/\\\/////////____    
+#       _______\/\\\________\/\\\/////////\\\__________\////\\\____\/\\\_____________   
+#        _______\/\\\________\/\\\_______\/\\\___/\\\______\//\\\___\/\\\_____________  
+#         _______\/\\\________\/\\\_______\/\\\__\///\\\\\\\\\\\/____\/\\\_____________ 
+#          _______\///_________\///________\///_____\///////////______\///______________
+
+
+# ---------------------------------------------------------------------------------------
+# |                                   WELCOME TO TASP                                   |
+# ---------------------------------------------------------------------------------------
+# That Awesome Spigot Plugin is designed to make your life easier by providing for you
+# many commands that should be essential to any server that, for some reason, have not
+# yet been implemented by the Spigot platform.
+
+# Although many of the commands implemented by TASP are indeed present in other plugins,
+# the main goal of TASP is to combine these commands and features in a more cohesive,
+# up-to-date way.
+
+# This plugin is highly customizable but that does not mean in any way that it is not for
+# the faint-of-heart.  The plugin is designed to be incredibly user friendly.  It works
+# out-of-the-box, no setup required, but also contains a myriad of configuration settings
+# for those who wish to make it their own.  Should you find yourself lost in config
+# files, "Ctrl+F" (or "Command+F") is definitely your friend :)
+
+# TASP is developed and maintained by Minecraft user pavilion99 (whose name will never
+# change, but in the event that it does, his UUID is
+# c6e3040f-1288-4a1b-a59c-44fbf248931c)
+
+# Please shoot me an email at me@spencercolton.tech to inform me of issues in my
+# software!
+
+# This open-source project is lovingly hosted on GitHub
+# (https://github.com/pavilion99/TASP)
+
+# Let's get to the fun stuff, shall we?
+
+# ---------------------------------------------------------------------------------------
+# |                                 BASIC CONFIGURATION                                 |
+# ---------------------------------------------------------------------------------------
+# Let's make this thing pretty!  Setup your colors here.  The primary color is used in
+# the static part of any message (Your home was set to) and the secondary color is used
+# for the parts that change (x y z).
+# Acceptable colors: AQUA, BLACK, BLUE, DARK_AQUA, DARK_BLUE, DARK_GRAY, DARK_GREEN,
+#                    DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE
+#                    YELLOW
+# Defaults:
+#   primary-color: GOLD
+#   secondary-color: DARK_RED
+#   error-color: RED
+primary-color: 'GOLD'
+secondary-color: 'DARK_RED'
+error-color: 'RED'
+
+# How long should it take before a player is labeled "afk," in minutes?  Set to 0 for no limit.
+afk-timeout: 10
+
+# Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
+# and UNDERLINE! The game code will default them to GOLD for the primary color and
+# DARK_RED for the secondary color.
+
+# ---------------------------------------------------------------------------------------
+# |                              TRANSPARENCY CONFIGURATION                             |
+# ---------------------------------------------------------------------------------------
+# Sometimes, you want the players to feel all at home and cozy with their commands.
+# Sometimes, you don't want the players to see any response at all after they run a
+# command.  In this case, you can change what commands display a message here.
+# Certain commands can be run on other people by players with higher permissions.  These
+# commands can be set to only send a message to nobody, only the person that ran the
+# command, or to both the person who ran the command and the person that it affected.
+# The governing of this is as follows:
+# command: true if messages are to be sent, false if not
+# command.others: true if messages are to be sent to who was affected, false if not
+# For example:
+#   setspeed: true
+#   setspeed-others: false
+# Any person who runs the setspeed command will receive a message, but if that person
+# used "setspeed" on another player (/setspeed [otherplayer]), that "otherplayer" will
+# not receive a message that their speed has been changed.
+# By default, all messages are turned on.
+command-messages:
+  setspeed: true
+  setspeed-others: true
+  killall: true
+  fly: true
+  fly-others: true
+  sethome: true
+  sethome-others: true
+  god: true
+  god-others: true
+  gamemode: true
+  gamemode-others: true
+  time-set: true
+  top: true
+  muted: true
+  muted-r: true
+  block: true
+  block-r: true
+
+broadcast-afk: true
+# ---------------------------------------------------------------------------------------
+# |                                MESSAGE CUSTOMIZATION                                |
+# ---------------------------------------------------------------------------------------
+# (Almost) any message that is displayed in-game can be changed here.  Because most 
+# messages have parts that are variable, the variables that can be moved or eliminated
+# are shown above each command.  You'll get the hang of it, I promise.  Hang in there!
+# For each command, {0} is equivalent to the primary text color that you set above, and
+# {1} is the secondary text color that you set above.  So, in case you don't know
+# anything about Minecraft formatting, whereever you put the {0}, text will start being
+# that color, and it won't stop being that color until you put a {1}, or vice versa.
+command-message-text:
+  # {2}: The new speed.
+  setspeed: '{0}Your speed was set to {1}{2}{0}.'
+  # {2}: The player whose speed was changed
+  # {3}: Their new speed
+  setspeed-others-s: '{1}{2}{0}''''s speed was set to {1}{3}{0}.'
+  # {2}: The new speed.
+  # {3}: The person who set the new speed.
+  setspeed-others-r: '{0}Your speed was set to {1}{2}{0} by {1}{3}.'
+  # {2}: The x position of the new home
+  # {3}: The y position of the new home
+  # {4}: The z position of the new home
+  sethome: '{0}Your home location was set to {1}{2} {3} {4}{0}.'
+  # {2}: The x position of the new home
+  # {3}: The y position of the new home
+  # {4}: The z position of the new home
+  # {5}: The person whose home was set
+  sethome-others-s: '{1}{5}{0}''''s home location was set to {1}{2} {3} {4}{0}.'
+  # {2}: The x position of the new home
+  # {3}: The y position of the new home
+  # {4}: The z position of the new home
+  # {5}: The person who set the new home
+  sethome-others-r: '{0}Your home location was set to {1}{2} {3} {4}{0} by {1}{5}{0}.'
+  # {2}: The number of entities removed.
+  # {3]: The world in which the entities were removed.
+  killall: '{0}Killed {1}{2}{0} entites in world {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  god: '{0}God mode was {1}{2}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player for whom god mode was changed
+  god-others-s: '{0}God mode was {1}{2}{0} for {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player who changed God mode
+  god-others-r: '{0}God mode was {1}{2}{0} by {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  fly: '{0}Flying was {1}{2}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player for whom flying was changed
+  fly-others-s: '{0}Flying was {1}{2}{0} for {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player who changed God mode
+  fly-others-r: '{0}Flying was {1}{2}{0} by {1}{3}{0}.'
+  # {2}: the x coordinate
+  # {3}: the y coordinate
+  # {4}: the z coordinate
+  # {5}: the world name
+  setspawn: '{0}World spawn was set to {1}{2} {3} {4}{0} in {1}{5}{0}.'
+  # {2}: the gamemode
+  gamemode: '{0}Your gamemode was set to {1}{2}{0}.'
+  # {2}: the gamemode
+  # {3}: the person whose gamemode was set
+  gamemode-others-s: '{1}{3}{0}''''s gamemode was set to {1}{2}{0}.'
+  # {2}: the gamemode
+  # {3}: the person who set the gamemode
+  gamemode-others-r: '{0}Your gamemode was set to {1}{2}{0} by {1}{3}{0}.'
+  # {2}: the time
+  # {3}: The Bukkit time (in ticks)
+  # {4}: The world name
+  time: '{0}Current world time: {1}{2}{0}.'
+  # {2}: the new time
+  # {3}: The Bukkit time (in ticks)
+  # {4}: The world name
+  time-set: '{0}New world time: {1}{2}{0}.'
+  # {2}: The y value of the new location
+  top: '{0}Teleported to top.'
+  # {2}: The x position of the player
+  # {3}: The y position of the player
+  # {4}: The z position of the player
+  xyz: '{0}You are currently at {1}{2} {3} {4}{0}.'
+  # {2}: the player who was muted
+  # {3}: the word "muted" or "unmuted"
+  muted-s: '{0}Player {1}{2}{0} was {1}{3}{0}.'
+  # {2}: The player who did the muting
+  # {3}: The word "muted" or "unmuted"
+  muted-r: '{0}You were {1}{3}{0} by {1}{2}{0}.'
+  # {2}: The player who was blocked
+  block: '{0}You blocked {1}{2}{0}.'
+  # {2}: The player who did the blocking.
+  block-r: '{0}You were blocked by {1}{2}{0}.  You can no longer send messages to him or her.'
