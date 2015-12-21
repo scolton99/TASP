@@ -9,7 +9,7 @@
     <version>0.0.3</version>
     <repositories>
         <repository>
-            <id>spitgot-repo</id>
+            <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
         </repository>
     </repositories>
