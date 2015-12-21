@@ -32,11 +32,15 @@ public class AFKCmd extends TASPCommand {
                     broadcastAFKMessage(pers);
                 return;
             case 1:
-                Person p2 = Person.get(args[0]);
-                if(p2 == null) {
+                Player tmp = Bukkit.getPlayer(args[0]);
+
+                if(tmp == null) {
                     Command.sendPlayerMessage(sender, args[0]);
                     return;
                 }
+                Person p2 = Person.get(tmp);
+
+                assert p2 != null;
                 sender.sendMessage(Config.c2() + p2.getPlayer().getDisplayName() + Config.c1() + " is " + (!p2.isAfk() ? "not " : "") + "AFK.");
                 return;
             default:
