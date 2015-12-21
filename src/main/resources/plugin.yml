@@ -102,6 +102,11 @@ commands:
         permission: tasp.tasp
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /tasp [option]"
+    broadcast:
+        description: Broadcast a message.
+        permission: tasp.broadcast
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax.  /broadcast <message>"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -187,3 +192,6 @@ permissions:
     tasp.block:
         description: Block a player.
         default: true
+    tasp.broadcast:
+        description: Broadcast a message.
+        default: op

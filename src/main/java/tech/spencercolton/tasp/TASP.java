@@ -125,6 +125,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("reply").setExecutor(c);
         this.getCommand("block").setExecutor(c);
         this.getCommand("unblock").setExecutor(c);
+        this.getCommand("broadcast").setExecutor(c);
     }
 
     /**

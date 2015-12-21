@@ -116,6 +116,7 @@ public class Command implements CommandExecutor{
         cmds.put(BlockCmd.name.toLowerCase(), new BlockCmd());
         cmds.put(TASPCmd.name.toLowerCase(), new TASPCmd());
         cmds.put(UnblockCmd.name.toLowerCase(), new UnblockCmd());
+        cmds.put(BroadcastCmd.name.toLowerCase(), new BroadcastCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
