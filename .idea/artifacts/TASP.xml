@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="TASP">
-    <output-path>$PROJECT_DIR$/../../Server/plugins</output-path>
-    <root id="archive" name="TASP.jar">
-      <element id="module-output" name="TASP" />
-      <element id="dir-copy" path="$PROJECT_DIR$/main/resources" />
-    </root>
-  </artifact>
-</component>
