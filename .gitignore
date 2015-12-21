@@ -46,6 +46,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-TASP/.idea
-TASP/out
+TASP/.idea/
+TASP/out/
 *.class
