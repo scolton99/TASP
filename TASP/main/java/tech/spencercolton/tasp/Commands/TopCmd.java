@@ -61,9 +61,4 @@ public class TopCmd extends TASPCommand {
         return consoleSyntax;
     }
 
-    @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-       return false;
-    }
-
 }

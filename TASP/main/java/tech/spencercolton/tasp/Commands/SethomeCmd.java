@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
 /**
@@ -61,6 +60,7 @@ public class SethomeCmd extends TASPCommand {
     public static final String name = "sethome";
     public static final String permission = "tasp.sethome";
 
+    @Override
     public void execute(CommandSender sender, String[] args) {
         if(sender instanceof ConsoleCommandSender) {
             if (args.length < 4 || args.length > 7) {
@@ -76,7 +76,7 @@ public class SethomeCmd extends TASPCommand {
                         Player p = Bukkit.getPlayer(args[0]);
 
                         if (p == null) {
-                            sendPlayerNotFoundMessage(sender, args[0]);
+                            Command.sendPlayerMessage(sender, args[0]);
                             return;
                         }
 
@@ -97,12 +97,12 @@ public class SethomeCmd extends TASPCommand {
                         Player p = Bukkit.getPlayer(args[0]);
 
                         if (p == null) {
-                            sendPlayerNotFoundMessage(sender, args[0]);
+                            Command.sendPlayerMessage(sender, args[0]);
                             return;
                         }
 
                         if (w == null) {
-                            sendWorldNotFoundMessage(sender, args[4]);
+                            Command.sendWorldMessage(sender, args[4]);
                             return;
                         }
 
@@ -125,12 +125,12 @@ public class SethomeCmd extends TASPCommand {
                         Player p = Bukkit.getPlayer(args[0]);
 
                         if (p == null) {
-                            sendPlayerNotFoundMessage(sender, args[0]);
+                            Command.sendPlayerMessage(sender, args[0]);
                             return;
                         }
 
                         if (w == null) {
-                            sendWorldNotFoundMessage(sender, args[4]);
+                            Command.sendPlayerMessage(sender, args[4]);
                             return;
                         }
 
@@ -183,7 +183,7 @@ public class SethomeCmd extends TASPCommand {
                     World w = Bukkit.getWorld(args[3]);
 
                     if(w == null) {
-                        sendWorldNotFoundMessage(sender, args[3]);
+                        Command.sendWorldMessage(sender, args[3]);
                         return;
                     }
 
@@ -205,12 +205,12 @@ public class SethomeCmd extends TASPCommand {
                     Player v = Bukkit.getPlayer(args[4]);
 
                     if(w == null) {
-                        sendWorldNotFoundMessage(sender, args[3]);
+                        Command.sendWorldMessage(sender, args[3]);
                         return;
                     }
 
                     if(v == null) {
-                        sendPlayerNotFoundMessage(sender, args[4]);
+                        Command.sendPlayerMessage(sender, args[4]);
                     }
 
                     Person.get(v).setHome(new Location(w, x, y, z));
@@ -235,12 +235,12 @@ public class SethomeCmd extends TASPCommand {
                     Float pitch = Float.parseFloat(args[6]);
 
                     if(w == null) {
-                        sendWorldNotFoundMessage(sender, args[3]);
+                        Command.sendWorldMessage(sender, args[3]);
                         return;
                     }
 
                     if(v == null) {
-                        sendPlayerNotFoundMessage(sender, args[4]);
+                        Command.sendPlayerMessage(sender, args[4]);
                     }
 
                     Person.get(v).setHome(new Location(w, x, y, z, yaw, pitch));
@@ -280,31 +280,27 @@ public class SethomeCmd extends TASPCommand {
             p.sendMessage(M.m("command-message-text.sethome-others-r", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), s.getName()));
     }
 
-    private void sendPlayerNotFoundMessage(CommandSender s, String p) {
-        s.sendMessage(Config.err() + "Couldn't find player \"" + p + "\"");
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String[] args) {
+        return (args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender)) ? permission + ".others" : permission;
     }
 
-    private void sendWorldNotFoundMessage(CommandSender s, String w) {
-        s.sendMessage(Config.err() + "Couldn't find world \"" + w + "\"");
-    }
-
-
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return (!(sender instanceof ConsoleCommandSender)) && args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender);
-    }
-
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

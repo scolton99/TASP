@@ -77,7 +77,9 @@ public class TASP extends JavaPlugin {
             loadPerson(Person.get(p));
         }
         File f = new File(dataFolder().getAbsolutePath() + "\\players\\");
-        f.mkdirs();
+        if(!f.mkdirs()) {
+            Bukkit.getLogger().severe("Failed to make directories for the successful usage of TASP.");
+        }
 
         loadInteractions();
     }
@@ -121,7 +123,8 @@ public class TASP extends JavaPlugin {
         this.getCommand("me").setExecutor(c);
         this.getCommand("msg").setExecutor(c);
         this.getCommand("reply").setExecutor(c);
-        this.getCommand("ping").setExecutor(c);
+        this.getCommand("block").setExecutor(c);
+        this.getCommand("unblock").setExecutor(c);
     }
 
     /**

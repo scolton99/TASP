@@ -1,7 +1,7 @@
 name: TASP
 version: 0.0.1
 main: tech.spencercolton.tasp.TASP
-loadbefore: [TASPDoors, TASPPerms]
+loadbefore: [TASPLocks, TASPPerms, TASPEconomy, TASPBackup]
 commands:
     killall:
         description: "Kill all entities of a given type in a given radius."
@@ -87,11 +87,21 @@ commands:
         permision: tasp.msg
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /r <message>"
-    ping:
-        description: Checks a player's ping.
-        permission: tasp.ping
+    block:
+        description: Block a player.
+        permission: tasp.block
         permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /ping"
+        usage: "Invalid syntax. /block <player>"
+    unblock:
+        description: Unblock a player.
+        permission: tasp.block
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /unblock <player>"
+    tasp:
+        description: TASP administrative command.
+        permission: tasp.tasp
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /tasp [option]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -173,4 +183,7 @@ permissions:
         default: true
     tasp.ping:
         description: Check a player's ping.
+        default: true
+    tasp.block:
+        description: Block a player.
         default: true

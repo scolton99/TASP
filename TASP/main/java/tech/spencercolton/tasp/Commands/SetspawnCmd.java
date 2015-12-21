@@ -5,9 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.craftbukkit.v1_8_R3.generator.InternalChunkGenerator;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
 public class SetspawnCmd extends TASPCommand {
@@ -114,11 +112,6 @@ public class SetspawnCmd extends TASPCommand {
     @Override
     public String getName() {
         return name;
-    }
-
-    @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return false;
     }
 
 }

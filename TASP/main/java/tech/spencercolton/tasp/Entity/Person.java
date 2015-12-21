@@ -18,12 +18,7 @@ import java.util.*;
  * @since 0.0.1-001
  */
 @SuppressWarnings("unused")
-public class Person extends OfflinePerson {
-
-    /**
-     * Hold's the player's name.
-     */
-    private final String name;
+public class Person {
 
     /**
      * Hold's the player's unique id.
@@ -39,11 +34,6 @@ public class Person extends OfflinePerson {
      * Links each unique ID to a person object.
      */
     private static HashMap<UUID, Person> UIDpeople = new HashMap<>();
-
-    /**
-     * Links each name to a person object.
-     */
-    private static HashMap<String, Person> namePeople = new HashMap<>();
 
     /**
      * Holds the players statistics.
@@ -74,14 +64,11 @@ public class Person extends OfflinePerson {
      * @param p The player from which to generate a new Person.
      */
     public Person(Player p) {
-        super(p);
-        this.name = p.getName();
         this.uid = p.getUniqueId();
         this.data = new PlayerData(this);
         // ...
         people.add(this);
         UIDpeople.put(this.uid, this);
-        namePeople.put(this.name, this);
     }
 
     /**
@@ -104,16 +91,6 @@ public class Person extends OfflinePerson {
     }
 
     /**
-     * Using a player's name, returns the associated person object.
-     *
-     * @param name The name to be checked.
-     * @return The {@link Person} associated with that name.
-     */
-    public static Person get(String name) {
-        return namePeople.get(name);
-    }
-
-    /**
      * Using a player object, returns the associated person object.
      *
      * @param p The player to be checked.
@@ -121,30 +98,6 @@ public class Person extends OfflinePerson {
      */
     public static Person get(Player p) {
         return UIDpeople.get(p.getUniqueId());
-    }
-
-    /**
-     * Gets a player's stat by its name.
-     *
-     * @deprecated This value will soon be replaced by the new {@link PlayerData} model.
-     * @param s The name of the property.
-     * @return The property's value.
-     */
-    @Deprecated
-    public Object getStat(String s) {
-        return stats.get(s);
-    }
-
-    /**
-     * Sets a player's stat by its name.
-     *
-     * @deprecated This value will soon be replaced by the new {@link PlayerData} model.
-     * @param s The name of the property.
-     * @param o The new value.
-     */
-    @Deprecated
-    public void setStat(String s, Object o) {
-        this.stats.put(s, o);
     }
 
     /**
@@ -159,7 +112,6 @@ public class Person extends OfflinePerson {
     /**
      * {@inheritDoc}
      */
-    @Override
     public String getName() {
         return getPlayer().getName();
     }
@@ -167,7 +119,6 @@ public class Person extends OfflinePerson {
     /**
      * {@inheritDoc}
      */
-    @Override
     public UUID getUid() {
         return this.uid;
     }
@@ -276,18 +227,18 @@ public class Person extends OfflinePerson {
     }
 
     @SuppressWarnings("unchecked")
-    public List<Person> getBlockedPlayers() {
-        return this.data.getList("blocked");
+    public List<String> getBlockedPlayers() {
+        return this.data.getList("blocked") == null ? new ArrayList<String>() : this.data.getList("blocked");
     }
 
     public void blockPlayer(Person p) {
-        List<Person> ps = getBlockedPlayers();
-        ps.add(p);
+        List<String> ps = getBlockedPlayers();
+        ps.add(p.getUid().toString());
         this.data.setList("blocked", ps);
     }
 
     public boolean isPlayerBlocked(Person p) {
-        return this.getBlockedPlayers().contains(p);
+        return this.getBlockedPlayers().contains(p.getUid().toString());
     }
 
     public CommandSender getLastMessaged() {

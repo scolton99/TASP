@@ -16,11 +16,6 @@ import java.util.List;
  */
 public abstract class TASPCommand {
 
-    public static final String name = "{{MISSING NAME}}";
-    public static final String syntax = "{{MISSING SYNTAX}}";
-    public static final String consoleSyntax = "{{MISSING CONSOLE SYNTAX}}";
-    public static final String permission = "{{MISSING PERMISSION}}";
-
     /**
      * Contains the logic used to process a command.
      * <p>
@@ -60,7 +55,9 @@ public abstract class TASPCommand {
 
     public abstract String getPermission();
 
-    public abstract boolean predictOthers(CommandSender sender, String[] s);
+    public String predictRequiredPermission(CommandSender sender, String[] s) {
+        return this.getPermission();
+    }
 
     public abstract String getName();
 

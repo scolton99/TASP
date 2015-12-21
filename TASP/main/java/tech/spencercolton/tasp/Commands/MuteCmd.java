@@ -69,11 +69,6 @@ public class MuteCmd extends TASPCommand {
         return consoleSyntax;
     }
 
-    @Override
-    public boolean predictOthers(CommandSender s, String[] args) {
-        return false;
-    }
-
 }
 
 

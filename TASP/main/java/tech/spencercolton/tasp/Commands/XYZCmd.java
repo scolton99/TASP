@@ -48,9 +48,4 @@ public class XYZCmd extends TASPCommand {
         return name;
     }
 
-    @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return false;
-    }
-
 }

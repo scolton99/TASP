@@ -1,13 +1,10 @@
 package tech.spencercolton.tasp.Util;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.spencercolton.tasp.Entity.OfflinePerson;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 
@@ -41,8 +38,6 @@ public class PlayerData {
      * @param p The {@link Person} for whom this object holds data.
      */
     public PlayerData(Person p) {
-        if(!p.getOfflinePlayer().isOnline())
-            return;
         this.p = p;
         if(dataExists(p)) {
             this.data = loadData();
@@ -116,22 +111,9 @@ public class PlayerData {
      *
      * @param p The person to be checked.
      * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
-     * @see #dataExists(OfflinePlayer)
      */
-    public static boolean dataExists(OfflinePerson p) {
-        return dataExists(p.getOfflinePlayer().getUniqueId());
-    }
-
-    /**
-     * Checks to see if a data file exists for a certain player.
-     *
-     * @param p The player to be checked.
-     * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
-     * @see #dataExists(OfflinePerson)
-     */
-    @SuppressWarnings("unused")
-    public static boolean dataExists(OfflinePlayer p) {
-        return dataExists(p.getUniqueId());
+    public static boolean dataExists(Person p) {
+        return dataExists(p.getUid());
     }
 
     /**
@@ -142,13 +124,12 @@ public class PlayerData {
     private void genData() {
         this.data = new JSONObject();
         this.data.put("lastName", this.p.getName());
-        this.data.put("UUID", this.p.getOfflinePlayer().getUniqueId().toString());
+        this.data.put("UUID", this.p.getUid().toString());
         this.data.put("firstSeen", new Date().toString());
         if(TASP.TASPPerms_link != null) {
             this.data.put("permissions", new ArrayList<>());
         }
-        if(p.getOfflinePlayer().isOnline())
-            this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
+        this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
         writeData();
     }
 
@@ -159,7 +140,7 @@ public class PlayerData {
      * not.
      */
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + p.getOfflinePlayer().getUniqueId().toString() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + p.getUid().toString() + ".json");
         if(!f.exists())
             return null;
 
@@ -197,7 +178,7 @@ public class PlayerData {
      * @return The path of the player's data file, in the form of a {@code String}.
      */
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getOfflinePlayer().getUniqueId().toString() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid().toString() + ".json";
     }
 
     /**
@@ -216,7 +197,7 @@ public class PlayerData {
         writeData();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "unused"})
     public void setString(String s, String h) {
         this.data.put(s, h);
         writeData();
@@ -230,10 +211,6 @@ public class PlayerData {
 
     public List getList(String s) {
         return (List)this.data.get(s);
-    }
-
-    public List getPermissions() {
-        return (List)this.data.get("permissions");
     }
 
     @SuppressWarnings("unchecked")

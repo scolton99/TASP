@@ -78,8 +78,8 @@ public class AFKCmd extends TASPCommand {
     }
 
     @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return args.length == 1 && Bukkit.getPlayer(args[0]) != null;
+    public String predictRequiredPermission(CommandSender sender, String[] args) {
+        return (args.length == 1 && Bukkit.getPlayer(args[0]) != null) ? permission + ".others" : permission;
     }
 
 }

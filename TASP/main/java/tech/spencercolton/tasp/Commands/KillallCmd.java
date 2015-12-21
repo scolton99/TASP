@@ -1,7 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -72,6 +71,8 @@ public class KillallCmd extends TASPCommand {
      * String containing the command's console syntax.
      */
     public static final String consoleSyntax = "/killall [entity] [world]";
+
+    public static final String permission = "tasp.killall";
 
     /**
      * {@inheritDoc}
@@ -411,22 +412,22 @@ public class KillallCmd extends TASPCommand {
             sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
     }
 
-    public boolean predictOthers(CommandSender sender, String[] s) {
-        return false;
-    }
-
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

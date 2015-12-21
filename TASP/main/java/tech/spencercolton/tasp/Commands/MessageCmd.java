@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 
-import java.io.Console;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,8 +42,13 @@ public class MessageCmd extends TASPCommand {
             Person p2 = Person.get((Player)p);
             Person p1 = Person.get((Player) sender);
 
-            if (p1.isPlayerBlocked(p2)) {
+            if (p2.isPlayerBlocked(p1)) {
                 sendBlockedMessage(sender, p2.getPlayer().getDisplayName());
+                return;
+            }
+
+            if(p1.isPlayerBlocked(p2)) {
+                sendYouBlockedMessage(sender, p2.getPlayer().getDisplayName());
                 return;
             }
         }
@@ -84,6 +88,10 @@ public class MessageCmd extends TASPCommand {
         s.sendMessage(Config.err() + name + " has blocked you.");
     }
 
+    private void sendYouBlockedMessage(CommandSender s, String name) {
+        s.sendMessage(Config.err() + "You have blocked " + name);
+    }
+
     @Override
     public List<String> getAliases() {
         return Arrays.asList("message", "send", "tell");
@@ -105,12 +113,8 @@ public class MessageCmd extends TASPCommand {
     }
 
     @Override
-    public boolean predictOthers(CommandSender sender, String[] s) {
-        return false;
-    }
-
-    @Override
     public String getName() {
         return name;
     }
+
 }

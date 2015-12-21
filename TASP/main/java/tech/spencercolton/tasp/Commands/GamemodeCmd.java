@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.M;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GamemodeCmd extends TASPCommand {
@@ -125,12 +126,12 @@ public class GamemodeCmd extends TASPCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("gm");
+        return Collections.singletonList("gm");
     }
 
     private void sendGamemodeMessage(CommandSender s, String p) {
         if(Command.messageEnabled(this, false))
-            s.sendMessage(M.m("command-message-text.gamemode", s.getName(), p));
+            s.sendMessage(M.m("command-message-text.gamemode", p));
     }
 
     private void sendGamemodeMessage(CommandSender s, String p, Player x) {
@@ -166,8 +167,8 @@ public class GamemodeCmd extends TASPCommand {
     }
 
     @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return args.length >= 1 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender);
+    public String predictRequiredPermission(CommandSender sender, String[] args) {
+        return (args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender)) ? permission + ".others" : permission;
     }
 
 }

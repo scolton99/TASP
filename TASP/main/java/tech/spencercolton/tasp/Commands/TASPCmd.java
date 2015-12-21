@@ -1,18 +1,14 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
 
 public class TASPCmd extends TASPCommand {
 
     /**
      * String containing the command's name.
      */
-    public static final String name = "fly";
+    public static final String name = "tasp";
 
 
     /**
@@ -26,6 +22,8 @@ public class TASPCmd extends TASPCommand {
      */
     public static final String consoleSyntax = syntax;
 
+    public static final String permission = "tasp.tasp";
+
     /**
      * {@inheritDoc}
      */
@@ -34,22 +32,22 @@ public class TASPCmd extends TASPCommand {
 
     }
 
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return false;
-    }
-
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

@@ -1,6 +1,5 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -9,6 +8,7 @@ import tech.spencercolton.tasp.Util.Config;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ReplyCmd extends TASPCommand {
@@ -41,7 +41,7 @@ public class ReplyCmd extends TASPCommand {
 
         List<String> argz = new ArrayList<>(Arrays.asList(args));
         argz.add(0, last.getName());
-        new MessageCmd().execute(sender, argz.toArray(new String[0]));
+        new MessageCmd().execute(sender, argz.toArray(new String[argz.size()]));
     }
 
     private void sendNoLastMessage(CommandSender sender) {
@@ -50,7 +50,7 @@ public class ReplyCmd extends TASPCommand {
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("r");
+        return Collections.singletonList("r");
     }
 
     @Override
@@ -66,11 +66,6 @@ public class ReplyCmd extends TASPCommand {
     @Override
     public String getPermission() {
         return permission;
-    }
-
-    @Override
-    public boolean predictOthers(CommandSender sender, String[] s) {
-        return false;
     }
 
     @Override

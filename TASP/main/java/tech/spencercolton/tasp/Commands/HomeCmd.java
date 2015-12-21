@@ -1,11 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONObject;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 
@@ -68,6 +66,8 @@ public class HomeCmd extends TASPCommand {
      */
     public static final String consoleSyntax = null;
 
+    public static final String permission = "tasp.home";
+
     /**
      * {@inheritDoc}
      */
@@ -110,22 +110,22 @@ public class HomeCmd extends TASPCommand {
         s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
     }
 
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return false;
-    }
-
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

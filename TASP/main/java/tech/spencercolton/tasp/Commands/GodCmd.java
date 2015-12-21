@@ -11,6 +11,7 @@ import tech.spencercolton.tasp.Util.M;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class GodCmd extends TASPCommand {
@@ -22,6 +23,7 @@ public class GodCmd extends TASPCommand {
 
     public static List<Person> gods = new ArrayList<>();
 
+    @Override
     public void execute(CommandSender sender, String[] args) {
         if(sender instanceof ConsoleCommandSender) {
             if(args.length != 1) {
@@ -100,32 +102,32 @@ public class GodCmd extends TASPCommand {
             p.sendMessage(M.m("command-message-text.god-others-r", (t ? "enabled" : "disabled"), other.getDisplayName()));
     }
 
-    public boolean predictOthers(CommandSender sender, String[] s) {
-        if(s.length > 0) {
-            Player p = Bukkit.getPlayer(s[0]);
-            if(p != null && !p.equals(sender))
-                return true;
-        }
-        return false;
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String[] s) {
+        return (s.length > 0 && Bukkit.getPlayer(s[0]) != null && !Bukkit.getPlayer(s[0]).equals(sender)) ? permission + ".others" : permission;
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("buddha");
+        return Collections.singletonList("buddha");
     }
 
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

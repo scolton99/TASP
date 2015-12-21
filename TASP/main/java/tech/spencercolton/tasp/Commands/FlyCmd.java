@@ -140,22 +140,27 @@ public class FlyCmd extends TASPCommand {
             p.sendMessage(M.m("command-message-text.fly-others-r", (flying ? "enabled" : "disabled"), sender.getName()));
     }
 
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender);
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String[] args) {
+        return (args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender)) ? permission + ".others" : permission;
     }
 
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

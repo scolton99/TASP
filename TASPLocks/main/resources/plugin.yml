@@ -1,0 +1,3 @@
+version: 0.0.1
+name: TASP Doors
+main: tech.spencercolton.tasp.tasplocks.TASPLocks

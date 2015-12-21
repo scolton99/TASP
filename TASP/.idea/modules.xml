@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TASP.iml" filepath="$PROJECT_DIR$/TASP.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../TASPDoors/TASPDoors.iml" filepath="$PROJECT_DIR$/../TASPDoors/TASPDoors.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../TASPLocks/TASPLocks.iml" filepath="$PROJECT_DIR$/../TASPLocks/TASPLocks.iml" />
       <module fileurl="file://$PROJECT_DIR$/../TASPPerms/TASPPerms.iml" filepath="$PROJECT_DIR$/../TASPPerms/TASPPerms.iml" />
     </modules>
   </component>

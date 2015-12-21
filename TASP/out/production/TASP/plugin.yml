@@ -87,11 +87,11 @@ commands:
         permision: tasp.msg
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /r <message>"
-    ping:
-        description: Checks a player's ping.
-        permission: tasp.ping
+    block:
+        description: Block a player.
+        permission: tasp.block
         permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /ping"
+        usage: "Invalid syntax. /block <player>"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -173,4 +173,7 @@ permissions:
         default: true
     tasp.ping:
         description: Check a player's ping.
+        default: true
+    tasp.block:
+        description: Block a player.
         default: true

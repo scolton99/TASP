@@ -1,6 +1,5 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -9,8 +8,6 @@ import tech.spencercolton.tasp.Util.Config;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -66,13 +63,7 @@ public class Command implements CommandExecutor{
 
         if(sender instanceof Player) {
             Player p = (Player)sender;
-            if(c.predictOthers(sender, args)) {
-                if (p.hasPermission(c.getPermission() + ".others")) {
-                    hasPermission = true;
-                }
-            }
-            else
-                if(p.hasPermission(c.getPermission()))
+            if(p.hasPermission(c.predictRequiredPermission(sender, args)))
                     hasPermission = true;
         } else if(sender instanceof ConsoleCommandSender) {
             hasPermission = true;
@@ -121,7 +112,10 @@ public class Command implements CommandExecutor{
         cmds.put(MeCmd.name.toLowerCase(), new MeCmd());
         cmds.put(MessageCmd.name.toLowerCase(), new MessageCmd());
         cmds.put(ReplyCmd.name.toLowerCase(), new ReplyCmd());
-        cmds.put(PingCmd.name.toLowerCase(), new PingCmd());
+        cmds.put(GamemodeCmd.name.toLowerCase(), new GamemodeCmd());
+        cmds.put(BlockCmd.name.toLowerCase(), new BlockCmd());
+        cmds.put(TASPCmd.name.toLowerCase(), new TASPCmd());
+        cmds.put(UnblockCmd.name.toLowerCase(), new UnblockCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -142,7 +136,6 @@ public class Command implements CommandExecutor{
      *
      * @param s A console command sender to whom the message will be sent.
      */
-    @SuppressWarnings("unused")
     public static void sendConsoleError(ConsoleCommandSender s) {
         sendConsoleError(s, "this command");
     }
@@ -194,7 +187,7 @@ public class Command implements CommandExecutor{
 
     public static boolean messageEnabled(TASPCommand c, boolean others) {
         if(others)
-            return Config.getBoolean("command-messages." + c.getName() + ".others");
+            return Config.getBoolean("command-messages." + c.getName() + "-others");
         else
             return Config.getBoolean("command-messages." + c.getName());
     }
@@ -210,7 +203,5 @@ public class Command implements CommandExecutor{
     public static void sendPlayerMessage(CommandSender s, String p) {
         s.sendMessage(Config.err() + "Couldn't find player \"" + p + "\"");
     }
-
-    private boolean extraPermissionHandler(){return false;}
 
 }

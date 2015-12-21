@@ -5,10 +5,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
-import java.io.Console;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -92,31 +90,6 @@ public class TimeCmd extends TASPCommand {
                     Command.sendWorldMessage(sender, args[0]);
                 }
         }
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        return false;
     }
 
     private void sendTimeMessage(CommandSender sender, String time, String bukkitTime, String name) {
@@ -231,6 +204,7 @@ public class TimeCmd extends TASPCommand {
         return finH2 + ":" + finMin2 + " " + ampm2;
     }
 
+    @SuppressWarnings("MagicConstant")
     private String prettyPlayerDate(Calendar c) {
         String ampm = c.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
         int min = c.get(Calendar.MINUTE);
@@ -238,6 +212,26 @@ public class TimeCmd extends TASPCommand {
         int hour = c.get(Calendar.HOUR);
         String hourFin = hour == 0 ? "12" : Integer.toString(hour);
         return hourFin + ":" + minFin + " " + ampm;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getSyntax() {
+        return syntax;
+    }
+
+    @Override
+    public String getConsoleSyntax() {
+        return consoleSyntax;
+    }
+
+    @Override
+    public String getPermission() {
+        return permission;
     }
 
 }

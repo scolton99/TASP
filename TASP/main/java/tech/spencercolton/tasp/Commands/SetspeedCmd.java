@@ -1,11 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
@@ -162,27 +160,27 @@ public class SetspeedCmd extends TASPCommand{
             z.sendMessage(M.m("command-message-text.setspeed-others-r", speed.toString(), p.getName()));
     }
 
-    public boolean predictOthers(CommandSender sender, String[] args) {
-        if(args.length < 2)
-            return false;
-
-        Player p = Bukkit.getPlayer(args[1]);
-
-        return p != null && !p.equals(sender);
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String[] args) {
+        return (args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender)) ? permission + ".others" : permission;
     }
 
+    @Override
     public String getSyntax() {
         return syntax;
     }
 
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
     }
 
+    @Override
     public String getPermission() {
         return permission;
     }
 
+    @Override
     public String getName() {
         return name;
     }

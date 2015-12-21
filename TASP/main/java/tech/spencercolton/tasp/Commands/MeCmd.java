@@ -44,12 +44,8 @@ public class MeCmd extends TASPCommand {
     }
 
     @Override
-    public boolean predictOthers(CommandSender sender, String[] s) {
-        return false;
-    }
-
-    @Override
     public String getName() {
         return name;
     }
+
 }
