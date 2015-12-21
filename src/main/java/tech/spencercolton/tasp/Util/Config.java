@@ -31,6 +31,27 @@ public class Config {
         }
     }
 
+    public static ChatColor c3() {
+        ChatColor c = ChatColor.valueOf(s.getString("tertiary-color"));
+
+        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+            return c;
+        } else {
+            return ChatColor.GREEN;
+        }
+    }
+
+    public static ChatColor c4() {
+        ChatColor c = ChatColor.valueOf(s.getString("quaternary-color"));
+
+        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+            return c;
+        } else {
+            return ChatColor.AQUA;
+        }
+    }
+
+
     public static ChatColor err() {
         ChatColor c = ChatColor.valueOf(s.getString("error-color"));
 

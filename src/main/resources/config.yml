@@ -53,10 +53,14 @@
 #   error-color: RED
 primary-color: 'GOLD'
 secondary-color: 'DARK_RED'
+tertiary-color: 'GREEN'
+quaternary-color: 'AQUA'
 error-color: 'RED'
 
 # How long should it take before a player is labeled "afk," in minutes?  Set to 0 for no limit.
 afk-timeout: 10
+
+broadcast-prefix: NOTICE
 
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
