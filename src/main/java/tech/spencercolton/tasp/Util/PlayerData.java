@@ -29,7 +29,7 @@ public class PlayerData {
     /**
      * The {@link Person} for whom this object holds data.
      */
-    private Person p;
+    private final Person p;
 
     /**
      * Constructs a new PlayerData object by loading data for the player from the player's JSON file, or creating a new
@@ -40,9 +40,9 @@ public class PlayerData {
     public PlayerData(Person p) {
         this.p = p;
         if(dataExists(p)) {
-            this.data = loadData();
+            this.data = this.loadData();
         } else {
-            genData();
+            this.genData();
         }
     }
 
@@ -54,7 +54,7 @@ public class PlayerData {
      */
     @SuppressWarnings("unused")
     public String getString(String s) {
-        return (String)this.data.get(s);
+        return (String) this.data.get(s);
     }
 
     /**
@@ -65,7 +65,7 @@ public class PlayerData {
      */
     @SuppressWarnings("unused")
     public Integer getInt(String s) {
-        return (Integer)(this.data.get(s));
+        return (Integer) this.data.get(s);
     }
 
     /**
@@ -76,7 +76,7 @@ public class PlayerData {
      */
     @SuppressWarnings("unused")
     public Float getFloat(String s) {
-        return (Float)(this.data.get(s));
+        return (Float) this.data.get(s);
     }
 
     /**
@@ -87,11 +87,11 @@ public class PlayerData {
      */
     @SuppressWarnings("unused")
     public JSONArray getArray(String s) {
-        return (JSONArray)(this.data.get(s));
+        return (JSONArray) this.data.get(s);
     }
 
     public Boolean getBoolean(String s) {
-        return (Boolean)(this.data.get(s));
+        return (Boolean) this.data.get(s);
     }
 
     /**
@@ -112,7 +112,7 @@ public class PlayerData {
      * @param p The person to be checked.
      * @return {@code true} if the data-file exists, and {@code false} if the data-file does not exist.
      */
-    public static boolean dataExists(Person p) {
+    private static boolean dataExists(Person p) {
         return dataExists(p.getUid());
     }
 
@@ -130,7 +130,7 @@ public class PlayerData {
             this.data.put("permissions", new ArrayList<>());
         }
         this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
-        writeData();
+        this.writeData();
     }
 
     /**
@@ -140,13 +140,13 @@ public class PlayerData {
      * not.
      */
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + p.getUid().toString() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json");
         if(!f.exists())
             return null;
 
         JSONParser p = new JSONParser();
         try (FileReader fa = new FileReader(f)){
-            return (JSONObject) (p.parse(fa));
+            return (JSONObject) p.parse(fa);
         } catch(IOException|ParseException e) {
             Bukkit.getLogger().warning("Error parsing player data:");
             e.printStackTrace();
@@ -156,19 +156,15 @@ public class PlayerData {
 
     /**
      * Takes the player's current dataset and writes it to a JSON file bearing his or her unique ID.
-     *
-     * @return {@code true} if the data was successfully written, {@code false} if not.
      */
-    public boolean writeData() {
+    public void writeData() {
         try {
-            FileWriter f = new FileWriter(new File(getPlayerDataPath()));
+            FileWriter f = new FileWriter(new File(this.getPlayerDataPath()));
             f.write(this.data.toString());
             f.close();
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning(Config.err() + "Couldn't write player data for player " + p.getName() + " with filename " + getPlayerDataPath());
-            return false;
+            Bukkit.getLogger().warning(Config.err() + "Couldn't write player data for player " + this.p.getName() + " with filename " + this.getPlayerDataPath());
         }
     }
 
@@ -178,7 +174,7 @@ public class PlayerData {
      * @return The path of the player's data file, in the form of a {@code String}.
      */
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid().toString() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json";
     }
 
     /**
@@ -188,35 +184,35 @@ public class PlayerData {
      * @return A {@link Map} corresponding the object with that name.
      */
     public Map getMap(String s) {
-        return (Map)this.data.get(s);
+        return (Map) this.data.get(s);
     }
 
     @SuppressWarnings("unchecked")
     public void setObject(String s, Map m) {
         this.data.put(s, m);
-        writeData();
+        this.writeData();
     }
 
     @SuppressWarnings({"unchecked", "unused"})
     public void setString(String s, String h) {
         this.data.put(s, h);
-        writeData();
+        this.writeData();
     }
 
     @SuppressWarnings("unchecked")
     public void setBoolean(String s, boolean b) {
         this.data.put(s, b);
-        writeData();
+        this.writeData();
     }
 
     public List getList(String s) {
-        return (List)this.data.get(s);
+        return (List) this.data.get(s);
     }
 
     @SuppressWarnings("unchecked")
     public void setList(String s, List l) {
         this.data.put(s, l);
-        writeData();
+        this.writeData();
     }
 
 }

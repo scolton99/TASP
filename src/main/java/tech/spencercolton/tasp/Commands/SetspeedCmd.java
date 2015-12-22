@@ -61,20 +61,23 @@ public class SetspeedCmd extends TASPCommand{
     /**
      * String containing the command's syntax.
      */
-    public static final String syntax = "/setspeed <speed> [player]";
+    private static final String syntax = "/setspeed <speed> [player]";
 
     /**
      * String containing the command's console syntax.
      */
-    public static final String consoleSyntax = "/setspeed <speed> <player>";
+    private static final String consoleSyntax = "/setspeed <speed> <player>";
 
-    public static final String permission = "tasp.setspeed";
+    private static final String permission = "tasp.setspeed";
 
-    /**
-     * {@inheritDoc}
-     */
+    private static final float DEFAULT_FLY_SPEED = 0.1F;
+    private static final float DEFAULT_WALK_SPEED = 0.2F;
+    private static final float MAX_SPEED = 50.0F;
+    private static final float DEFAULT_CUSTOM_SPEED = 5.0F;
+    private static final int CONVERSION_FACTOR = 50;
+
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             Command.sendConsoleError((ConsoleCommandSender)sender, name);
             return;
@@ -85,23 +88,23 @@ public class SetspeedCmd extends TASPCommand{
             return;
         }
 
-        if((args.length == 0) || (args.length == 1 && args[0].equalsIgnoreCase("default"))) {
+        if(args.length == 0 || 1 == args.length && args[0].equalsIgnoreCase("default")) {
             Player p = (Player)sender;
-            p.setFlySpeed(0.1f);
-            p.setWalkSpeed(0.2f);
-            sendSpeedMessage(sender, 5.0F);
+            p.setFlySpeed(DEFAULT_FLY_SPEED);
+            p.setWalkSpeed(DEFAULT_WALK_SPEED);
+            this.sendSpeedMessage(sender, DEFAULT_CUSTOM_SPEED);
             return;
         }
 
         try {
             float i = Float.parseFloat(args[0]);
 
-            if(i <= 0F || i >  50F) {
+            if(i <= 0F || i > MAX_SPEED) {
                 sender.sendMessage(Config.err() + "Speed must be between 0 and 50 (Default 10)");
                 return;
             }
 
-            i /= 50;
+            i /= CONVERSION_FACTOR;
 
             if(args.length == 2) {
                 Player p = Bukkit.getPlayer(args[1]);
@@ -113,11 +116,11 @@ public class SetspeedCmd extends TASPCommand{
                 p.setFlySpeed(i/2);
                 p.setWalkSpeed(i);
 
-                sendSpeedMessage(sender, Float.parseFloat(args[0]), p.getDisplayName());
+                this.sendSpeedMessage(sender, Float.parseFloat(args[0]), p.getDisplayName());
             } else {
                 Player p = (Player) sender;
 
-                sendSpeedMessage(sender, Float.parseFloat(args[0]));
+                this.sendSpeedMessage(sender, Float.parseFloat(args[0]));
 
                 p.setFlySpeed(i/2);
                 p.setWalkSpeed(i);
@@ -128,7 +131,7 @@ public class SetspeedCmd extends TASPCommand{
     }
 
     /**
-     * Sends a player a nmessage informing him or her that his or her speed has been changed.
+     * Sends a player a message informing him or her that his or her speed has been changed.
      *
      * @param p The player to send the message to.
      * @param speed The new speed.
@@ -139,7 +142,7 @@ public class SetspeedCmd extends TASPCommand{
     }
 
     /**
-     * Sends a player a nmessage informing him or her that another player's speed has been changed.
+     * Sends a player a message informing him or her that another player's speed has been changed.
      *
      * @param p The player to send the message to.
      * @param speed The new speed.
@@ -150,7 +153,7 @@ public class SetspeedCmd extends TASPCommand{
         assert z != null;
 
         if(z.equals(p)) {
-            sendSpeedMessage(p, speed);
+            this.sendSpeedMessage(p, speed);
             return;
         }
 
@@ -161,8 +164,8 @@ public class SetspeedCmd extends TASPCommand{
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] args) {
-        return (args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender)) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender) ? permission + ".others" : permission;
     }
 
     @Override

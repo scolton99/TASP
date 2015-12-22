@@ -2,10 +2,10 @@ package tech.spencercolton.tasp.Entity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Commands.MuteCmd;
 import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.util.*;
@@ -28,20 +28,12 @@ public class Person {
     /**
      * Holds a constant list of players who are currently online on the server.
      */
-    public static List<Person> people = new ArrayList<>();
+    private static final List<Person> people = new ArrayList<>();
 
     /**
      * Links each unique ID to a person object.
      */
-    private static HashMap<UUID, Person> UIDpeople = new HashMap<>();
-
-    /**
-     * Holds the players statistics.
-     *
-     * @deprecated This value will soon be replaced by the new {@link PlayerData} model.
-     */
-    @Deprecated
-    private HashMap<String, Object> stats = new HashMap<>();
+    private static final Map<UUID, Person> UIDpeople = new HashMap<>();
 
     /**
      * Holds the player's data.
@@ -54,6 +46,7 @@ public class Person {
     private CommandSender lastMessaged;
     private boolean afk;
     private String ip;
+    private final HashMap<Material, List<String>> pts = new HashMap<>();
 
     /**
      * Constructs a person object from a player object.
@@ -113,7 +106,7 @@ public class Person {
      * {@inheritDoc}
      */
     public String getName() {
-        return getPlayer().getName();
+        return this.getPlayer().getName();
     }
 
     /**
@@ -147,23 +140,14 @@ public class Person {
     }
 
     /**
-     * Sets a certain property of this player to a certain value.
-     *
-     * @param s The property name.
-     * @param o The new value.
-     */
-    public void setDataPoint(String s, Object o) {
-
-    }
-
-    /**
      * Fetches the player's home from their data object, or returns {@code null} if the player has no home set.
      *
      * @return A {@link Location} containing the coordinates, pitch, world, and yaw of the player's home location,
      * or {@code null} if the player has no home set.
      */
+    @SuppressWarnings("unchecked")
     public Location getHome() {
-        Map h = this.data.getMap("home");
+        Map<String, Object> h = this.data.getMap("home");
 
         if(h == null)
             return null;
@@ -183,7 +167,7 @@ public class Person {
 
     @SuppressWarnings("unchecked")
     public void setHome(Location l) {
-        Map m = new HashMap();
+        Map<String, Object> m = new HashMap();
 
         m.put("world", l.getWorld().getUID().toString());
         m.put("x", l.getX());
@@ -196,7 +180,7 @@ public class Person {
     }
 
     public boolean isAfk() {
-        return afk;
+        return this.afk;
     }
 
     public void setAfk(boolean afk) {
@@ -204,36 +188,35 @@ public class Person {
     }
 
     public boolean isMuted() {
-        return MuteCmd.muted.contains(this);
+        Boolean b = this.getData().getBoolean("muted");
+        return !(b == null || !b);
     }
 
     public void mute() {
-        MuteCmd.muted.add(this);
         this.data.setBoolean("muted", true);
     }
 
     public void unmute() {
-        MuteCmd.muted.remove(this);
         this.data.setBoolean("muted", false);
     }
 
     public void setMuted(boolean b) {
-        if(b)
-            MuteCmd.muted.add(this);
-        else
-            MuteCmd.muted.remove(this);
-
         this.data.setBoolean("muted", b);
     }
 
-    @SuppressWarnings("unchecked")
     public List<String> getBlockedPlayers() {
-        return this.data.getList("blocked") == null ? new ArrayList<String>() : this.data.getList("blocked");
+        return this.data.getList("blocked") == null ? new ArrayList<>() : this.data.getList("blocked");
     }
 
     public void blockPlayer(Person p) {
-        List<String> ps = getBlockedPlayers();
+        List<String> ps = this.getBlockedPlayers();
         ps.add(p.getUid().toString());
+        this.data.setList("blocked", ps);
+    }
+
+    public void unblockPlayer(Person p) {
+        List<String> ps = this.getBlockedPlayers();
+        ps.remove(p.getUid().toString());
         this.data.setList("blocked", ps);
     }
 
@@ -247,6 +230,65 @@ public class Person {
 
     public void setLastMessaged(CommandSender p) {
         this.lastMessaged = p;
+    }
+
+    @SuppressWarnings("unchecked")
+    public Map<String, List<String>> getPowertools() {
+        return this.data.getMap("powertools");
+    }
+
+    public void setPowertool(Material m, String cmdLine) {
+        Map<String, List<String>> x = this.getPowertools();
+
+        Map<String, List<String>> map;
+        if(x == null)
+            map = new HashMap<>();
+        else
+            map = new HashMap<>(x);
+
+        List<String> z = map.get(m.name().toLowerCase());
+        List<String> list;
+        if(z == null)
+            list = new ArrayList<>();
+        else
+            list = new ArrayList<>(z);
+        list.add(cmdLine);
+        map.put(m.name().toLowerCase(), list);
+        this.data.setObject("powertools", map);
+    }
+
+    public List<String> getPowertool(Material m) {
+        Map<String, List<String>> x = this.getPowertools();
+        if(x == null)
+            return null;
+
+        return x.get(m.name().toLowerCase());
+    }
+
+    public void clearPowertool(Material m) {
+        Map<String, List<String>> x = this.getPowertools();
+        if(x == null)
+            return;
+        x.remove(m.name().toLowerCase());
+    }
+
+    public static void unloadPerson(Person a) {
+        people.remove(a);
+        UIDpeople.remove(a.getUid());
+    }
+
+    public boolean isStalker() {
+        Boolean b = this.getData().getBoolean("stalker");
+        return !(b == null || !b);
+    }
+
+    public boolean isGod() {
+        Boolean b = this.getData().getBoolean("god");
+        return !(b == null || !b);
+    }
+
+    public void setGod(boolean b) {
+        this.data.setBoolean("god", b);
     }
 
 }

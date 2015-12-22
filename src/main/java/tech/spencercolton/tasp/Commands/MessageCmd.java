@@ -1,10 +1,12 @@
 package tech.spencercolton.tasp.Commands;
 
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
 import tech.spencercolton.tasp.Util.Config;
 
 import java.util.Arrays;
@@ -12,15 +14,15 @@ import java.util.List;
 
 public class MessageCmd extends TASPCommand {
 
-    public static final String syntax = "/msg <player> <message>";
-    public static final String consoleSyntax = syntax;
-    public static final String permission = "tasp.msg";
+    private static final String syntax = "/msg <player> <message>";
+    private static final String consoleSyntax = syntax;
+    private static final String permission = "tasp.msg";
     public static final String name = "msg";
 
     public static CommandSender consoleLast;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
 
         if (args.length < 2) {
             Command.sendSyntaxError(sender, this);
@@ -43,30 +45,30 @@ public class MessageCmd extends TASPCommand {
             Person p1 = Person.get((Player) sender);
 
             if (p2.isPlayerBlocked(p1)) {
-                sendBlockedMessage(sender, p2.getPlayer().getDisplayName());
+                this.sendBlockedMessage(sender, p2.getPlayer().getDisplayName());
                 return;
             }
 
             if(p1.isPlayerBlocked(p2)) {
-                sendYouBlockedMessage(sender, p2.getPlayer().getDisplayName());
+                this.sendYouBlockedMessage(sender, p2.getPlayer().getDisplayName());
                 return;
             }
         }
 
-        String msg = Config.c1() + "Message: " + Config.c2();
+        String msg = "";
         List<String> arg = Arrays.asList(args);
 
         for(int i = 1; i < arg.size(); i++) {
             msg += arg.get(i);
-            if(!((i + 1) >= arg.size()))
+            if(!(i + 1 >= arg.size()))
                 msg += " ";
         }
 
-        p.sendMessage(Config.c1() + "From: " + Config.c2() + sender.getName());
-        p.sendMessage(msg);
+        p.sendMessage(Config.c3() + "[ <- " + Config.c1() + sender.getName() + Config.c3() + "] " + ChatColor.WHITE + msg);
 
-        sender.sendMessage(Config.c1() + "To: " + Config.c2() + p.getName());
-        sender.sendMessage(msg);
+        sender.sendMessage(Config.c3() + "[ -> " + Config.c1() + p.getName() + Config.c3() + "] " + ChatColor.WHITE + msg);
+
+        Bukkit.getServer().getPluginManager().callEvent(new PersonSendMessageEvent(sender, p, msg));
 
         if(sender instanceof ConsoleCommandSender) {
             consoleLast = p;

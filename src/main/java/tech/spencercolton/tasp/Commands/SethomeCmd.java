@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.M;
@@ -55,13 +56,13 @@ import tech.spencercolton.tasp.Util.M;
  */
 public class SethomeCmd extends TASPCommand {
 
-    public static final String syntax = "/sethome [<x> <y> <z>] [world] [player] [<yaw> <pitch>]";
-    public static final String consoleSyntax = "/sethome <player> <x> <y> <z> [world] [<yaw> <pitch>]";
+    private static final String syntax = "/sethome [<x> <y> <z>] [world] [player] [<yaw> <pitch>]";
+    private static final String consoleSyntax = "/sethome <player> <x> <y> <z> [world] [<yaw> <pitch>]";
     public static final String name = "sethome";
-    public static final String permission = "tasp.sethome";
+    private static final String permission = "tasp.sethome";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             if (args.length < 4 || args.length > 7) {
                 Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
@@ -82,7 +83,7 @@ public class SethomeCmd extends TASPCommand {
 
                         Location l = new Location(p.getWorld(), x, y, z);
                         Person.get(p).setHome(l);
-                        sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
+                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
                         return;
                     } catch (NumberFormatException e) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
@@ -108,7 +109,7 @@ public class SethomeCmd extends TASPCommand {
 
                         Location l = new Location(w, x, y, z);
                         Person.get(p).setHome(l);
-                        sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
+                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
                         return;
                     } catch (NumberFormatException e) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
@@ -136,7 +137,7 @@ public class SethomeCmd extends TASPCommand {
 
                         Location l = new Location(w, x, y, z, yaw, pitch);
                         Person.get(p).setHome(l);
-                        sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
+                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
                         return;
                     } catch (NumberFormatException e) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
@@ -156,9 +157,9 @@ public class SethomeCmd extends TASPCommand {
         switch(args.length) {
             case 0:
                 Person p = Person.get((Player)sender);
-                p.setHome(((Player)sender).getLocation());
+                p.setHome(((Entity) sender).getLocation());
 
-                sendHomeMessage(sender, p.getHome());
+                this.sendHomeMessage(sender, p.getHome());
                 return;
             case 3:
                 Person p2 = Person.get((Player)sender);
@@ -166,9 +167,9 @@ public class SethomeCmd extends TASPCommand {
                     Double x = Double.parseDouble(args[0]);
                     Double y = Double.parseDouble(args[1]);
                     Double z = Double.parseDouble(args[2]);
-                    p2.setHome(new Location(((Player) sender).getWorld(), x, y, z));
+                    p2.setHome(new Location(((Entity) sender).getWorld(), x, y, z));
 
-                    sendHomeMessage(sender, p2.getHome());
+                    this.sendHomeMessage(sender, p2.getHome());
                     return;
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
@@ -189,7 +190,7 @@ public class SethomeCmd extends TASPCommand {
 
                     p3.setHome(new Location(w, x, y, z));
 
-                    sendHomeMessage(sender, p3.getHome());
+                    this.sendHomeMessage(sender, p3.getHome());
                     return;
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
@@ -217,7 +218,7 @@ public class SethomeCmd extends TASPCommand {
 
                     assert v != null;
 
-                    sendHomeMessage(sender, p4.getHome(), v.getName());
+                    this.sendHomeMessage(sender, p4.getHome(), v.getName());
                     return;
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
@@ -247,7 +248,7 @@ public class SethomeCmd extends TASPCommand {
 
                     assert v != null;
 
-                    sendHomeMessage(sender, p5.getHome(), v.getName());
+                    this.sendHomeMessage(sender, p5.getHome(), v.getName());
                     return;
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
@@ -270,7 +271,7 @@ public class SethomeCmd extends TASPCommand {
         assert p != null;
 
         if(p.equals(s)) {
-            sendHomeMessage(s, l);
+            this.sendHomeMessage(s, l);
             return;
         }
 
@@ -281,8 +282,8 @@ public class SethomeCmd extends TASPCommand {
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] args) {
-        return (args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender)) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender) ? permission + ".others" : permission;
     }
 
     @Override

@@ -5,18 +5,18 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import tech.spencercolton.tasp.Util.M;
 
 public class SetspawnCmd extends TASPCommand {
 
-    public static final String syntax = "/setspawn [<x> <y> <z>] [world]";
-    public static final String consoleSyntax = "/setspawn <x> <y> <z> <world>";
+    private static final String syntax = "/setspawn [<x> <y> <z>] [world]";
+    private static final String consoleSyntax = "/setspawn <x> <y> <z> <world>";
     public static final String name = "setspawn";
-    public static final String permission = "tasp.setspawn";
+    private static final String permission = "tasp.setspawn";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender) {
             if (args.length != 4) {
                 Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
@@ -36,18 +36,18 @@ public class SetspawnCmd extends TASPCommand {
                 }
 
                 w.setSpawnLocation(x, y, z);
-                sendSpawnSetMessage(sender, x, y, z, w.getName());
+                this.sendSpawnSetMessage(sender, x, y, z, w.getName());
             } catch (NumberFormatException e) {
                 Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
             }
         } else {
             switch (args.length) {
                 case 0:
-                    Location l = ((Player) sender).getLocation();
-                    World w = ((Player) sender).getWorld();
+                    Location l = ((Entity) sender).getLocation();
+                    World w = ((Entity) sender).getWorld();
 
                     w.setSpawnLocation(l.getBlockX(), l.getBlockY(), l.getBlockZ());
-                    sendSpawnSetMessage(sender, l.getBlockX(), l.getBlockY(), l.getBlockZ(), w.getName());
+                    this.sendSpawnSetMessage(sender, l.getBlockX(), l.getBlockY(), l.getBlockZ(), w.getName());
                     break;
                 case 3:
                     try {
@@ -55,10 +55,10 @@ public class SetspawnCmd extends TASPCommand {
                         int y = Integer.parseInt(args[1]);
                         int z = Integer.parseInt(args[2]);
 
-                        World w2 = ((Player) sender).getWorld();
+                        World w2 = ((Entity) sender).getWorld();
 
                         w2.setSpawnLocation(x, y, z);
-                        sendSpawnSetMessage(sender, x, y, z, w2.getName());
+                        this.sendSpawnSetMessage(sender, x, y, z, w2.getName());
                     } catch (NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
                     }
@@ -77,7 +77,7 @@ public class SetspawnCmd extends TASPCommand {
                         }
 
                         w2.setSpawnLocation(x, y, z);
-                        sendSpawnSetMessage(sender, x, y, z, w2.getName());
+                        this.sendSpawnSetMessage(sender, x, y, z, w2.getName());
                     } catch (NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
                     }

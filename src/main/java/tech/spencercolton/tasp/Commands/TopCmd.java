@@ -10,12 +10,13 @@ import tech.spencercolton.tasp.Util.M;
 public class TopCmd extends TASPCommand {
 
     public static final String name = "top";
-    public static final String syntax = "/top";
-    public static final String consoleSyntax = null;
-    public static final String permission = "tasp.top";
+    private static final String syntax = "/top";
+    private static final String consoleSyntax = null;
+    private static final String permission = "tasp.top";
+    private static final int WORLD_HEIGHT = 256;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             Command.sendConsoleError((ConsoleCommandSender)sender);
             return;
@@ -26,11 +27,11 @@ public class TopCmd extends TASPCommand {
         int x = l.getBlockX();
         int z = l.getBlockZ();
         World w = p.getWorld();
-        for(int y = 256; y >= 0; y--) {
+        for(int y = WORLD_HEIGHT; y >= 0; y--) {
             Block b = w.getBlockAt(x, y, z);
             if(b.getType() != Material.AIR) {
                 p.teleport(new Location(w, l.getX(), b.getY() + 1, l.getZ(), l.getYaw(), l.getPitch()));
-                sendTopMessage(sender, b.getY() + 1);
+                this.sendTopMessage(sender, b.getY() + 1);
                 return;
             }
         }

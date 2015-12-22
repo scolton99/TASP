@@ -14,12 +14,12 @@ import java.util.List;
 public class ReplyCmd extends TASPCommand {
 
     public static final String name = "reply";
-    public static final String permission = "tasp.msg";
-    public static final String syntax = "/reply <message>";
-    public static final String consoleSyntax = syntax;
+    private static final String permission = "tasp.msg";
+    private static final String syntax = "/reply <message>";
+    private static final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
 
         if (args.length == 0) {
             Command.sendSyntaxError(sender, this);
@@ -35,7 +35,7 @@ public class ReplyCmd extends TASPCommand {
         }
 
         if(last == null) {
-            sendNoLastMessage(sender);
+            this.sendNoLastMessage(sender);
             return;
         }
 

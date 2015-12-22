@@ -6,20 +6,15 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.M;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MuteCmd extends TASPCommand {
 
-    public static final String permission = "tasp.mute";
-    public static final String syntax = "/mute <player>";
-    public static final String consoleSyntax = syntax;
+    private static final String permission = "tasp.mute";
+    private static final String syntax = "/mute <player>";
+    private static final String consoleSyntax = syntax;
     public static final String name = "mute";
 
-    public static List<Person> muted = new ArrayList<>();
-
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         switch(args.length) {
             case 1:
                 Player p = Bukkit.getPlayer(args[0]);
@@ -33,7 +28,7 @@ public class MuteCmd extends TASPCommand {
                 Person b = Person.get(p);
                 b.setMuted(!b.isMuted());
 
-                sendMutedMessage(sender, b.isMuted(), b);
+                this.sendMutedMessage(sender, b.isMuted(), b);
 
                 break;
             default:
@@ -44,9 +39,9 @@ public class MuteCmd extends TASPCommand {
 
     private void sendMutedMessage(CommandSender sender, boolean muted, Person p) {
         if(Command.messageEnabled("muted"))
-            sender.sendMessage(M.m("command-message-text.muted-s", p.getPlayer().getDisplayName(), (muted ? "muted" : "unmuted")));
+            sender.sendMessage(M.m("command-message-text.muted-s", p.getPlayer().getDisplayName(), muted ? "muted" : "unmuted"));
         if(Command.messageEnabled("muted-r"))
-            sender.sendMessage(M.m("command-message-text.muted-r", sender.getName(), (muted ? "muted" : "unmuted")));
+            sender.sendMessage(M.m("command-message-text.muted-r", sender.getName(), muted ? "muted" : "unmuted"));
     }
 
     @Override

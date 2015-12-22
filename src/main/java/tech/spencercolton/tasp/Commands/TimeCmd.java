@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.Entity;
 import tech.spencercolton.tasp.Util.M;
 
 import java.text.ParseException;
@@ -15,40 +15,50 @@ import java.util.Date;
 public class TimeCmd extends TASPCommand {
 
     public static final String name = "time";
-    public static final String permission = "tasp.time";
-    public static final String syntax = "/time [time | world] [time]";
-    public static final String consoleSyntax = syntax;
+    private static final String permission = "tasp.time";
+    private static final String syntax = "/time [time | world] [time]";
+    private static final String consoleSyntax = syntax;
+    private static final int TICKS_IN_DAY = 24000;
+    private static final long NOON = 6000L;
+    private static final long NIGHT = 12000L;
+    private static final long MIDNIGHT = 18000L;
+    private static final float MINUTES_TO_TICKS_FACTOR = 50.0F/3.0F;
+    private static final int HOURS_TO_TICKS_FACTOR = 1000;
+    private static final int DAY_RESET_NUMBER = 18000;
+    private static final int HOURS_IN_DAY = 24;
+    private static final int AM_PM_BREAK = 12;
+    private static final float MINUTES_IN_HOUR = 60.0F;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         switch(args.length) {
             case 0:
-                World w = (sender instanceof ConsoleCommandSender) ? Bukkit.getWorlds().get(0) : ((Player)sender).getWorld();
+                World w = sender instanceof ConsoleCommandSender ? Bukkit.getWorlds().get(0) : ((Entity) sender).getWorld();
                 long g = w.getTime();
-                String t = niceFormatTime(g);
-                sendTimeMessage(sender, t, Long.toString(g), w.getName());
+                String t = this.niceFormatTime(g);
+                this.sendTimeMessage(sender, t, Long.toString(g), w.getName());
                 return;
             case 1:
                 World w2 = Bukkit.getWorld(args[0]);
 
                 if(w2 != null) {
                     long g2 = w2.getTime();
-                    String t2 = niceFormatTime(g2);
-                    sendTimeMessage(sender, t2, Long.toString(g2), w2.getName());
+                    String t2 = this.niceFormatTime(g2);
+                    this.sendTimeMessage(sender, t2, Long.toString(g2), w2.getName());
                     return;
                 } else {
-                    w2 = sender instanceof ConsoleCommandSender ? Bukkit.getWorlds().get(0) : ((Player)sender).getWorld();
+                    w2 = sender instanceof ConsoleCommandSender ? Bukkit.getWorlds().get(0) : ((Entity) sender).getWorld();
 
                     try {
                         int a = Integer.parseInt(args[0]);
-                        if( a < 0 || a >= 24000) {
+                        if( a < 0 || a >= TICKS_IN_DAY) {
                             Command.sendSyntaxError(sender, this);
                             return;
                         }
                         w2.setTime(a);
-                        sendTimeSetMessage(sender, niceFormatTime(a), Long.toString(a), w2.getName());
+                        this.sendTimeSetMessage(sender, this.niceFormatTime(a), Long.toString(a), w2.getName());
                     } catch (NumberFormatException e) {
-                        Long nt = timeToBukkitTime(args[0]);
+                        Long nt = this.timeToBukkitTime(args[0]);
 
                         if(nt == null) {
                             Command.sendSyntaxError(sender, this);
@@ -57,7 +67,7 @@ public class TimeCmd extends TASPCommand {
 
                         w2.setTime(nt);
 
-                        sendTimeSetMessage(sender, prettyPlayerDate(getCalFromString(args[0])), Long.toString(nt), w2.getName());
+                        this.sendTimeSetMessage(sender, this.prettyPlayerDate(this.getCalFromString(args[0])), Long.toString(nt), w2.getName());
                         return;
                     }
                 }
@@ -68,14 +78,14 @@ public class TimeCmd extends TASPCommand {
                 if(w3 != null) {
                     try {
                         int a = Integer.parseInt(args[1]);
-                        if( a < 0 || a >= 24000) {
+                        if( a < 0 || a >= TICKS_IN_DAY) {
                             Command.sendSyntaxError(sender, this);
                             return;
                         }
                         w3.setTime(a);
-                        sendTimeSetMessage(sender, niceFormatTime(a), Long.toString(a), w3.getName());
+                        this.sendTimeSetMessage(sender, this.niceFormatTime(a), Long.toString(a), w3.getName());
                     } catch (NumberFormatException e) {
-                        Long nt = timeToBukkitTime(args[1]);
+                        Long nt = this.timeToBukkitTime(args[1]);
 
                         if(nt == null) {
                             Command.sendSyntaxError(sender, this);
@@ -84,7 +94,7 @@ public class TimeCmd extends TASPCommand {
 
                         w3.setTime(nt);
 
-                        sendTimeSetMessage(sender, prettyPlayerDate(getCalFromString(args[1])), Long.toString(nt), w3.getName());
+                        this.sendTimeSetMessage(sender, this.prettyPlayerDate(this.getCalFromString(args[1])), Long.toString(nt), w3.getName());
                     }
                 } else {
                     Command.sendWorldMessage(sender, args[0]);
@@ -103,13 +113,13 @@ public class TimeCmd extends TASPCommand {
 
     private Long timeToBukkitTime(String s) {
         if(s.equals("noon"))
-            return (long)6000;
+            return NOON;
         if(s.equals("night"))
-            return (long)12000;
+            return NIGHT;
         if(s.equals("midnight"))
-            return (long)18000;
+            return MIDNIGHT;
         if(s.equals("day"))
-            return (long)0;
+            return 0L;
 
         SimpleDateFormat f2 = new SimpleDateFormat("hh:mma");
         SimpleDateFormat f = new SimpleDateFormat("HH:mm");
@@ -118,20 +128,20 @@ public class TimeCmd extends TASPCommand {
             Calendar c = Calendar.getInstance();
             c.setTime(d);
             int xz = c.get(Calendar.MINUTE);
-            int yz = xz * 50 / 3;
+            int yz = (int)(xz * MINUTES_TO_TICKS_FACTOR);
             int gz = c.get(Calendar.HOUR_OF_DAY);
-            int hz = (gz >= 6) ? (gz-6)*1000 : 18000 + 1000*gz;
-            return (long)(yz + hz);
+            int hz = (gz >= 6) ? ((gz - 6) * HOURS_TO_TICKS_FACTOR) : (DAY_RESET_NUMBER + (1000 * gz));
+            return (long) (yz + hz);
         } catch(ParseException e) {
             try {
                 Date d = f.parse(s);
                 Calendar c = Calendar.getInstance();
                 c.setTime(d);
                 int xz = c.get(Calendar.MINUTE);
-                int yz = xz * 50 / 3;
+                int yz = (int)(xz * MINUTES_TO_TICKS_FACTOR);
                 int gz = c.get(Calendar.HOUR_OF_DAY);
-                int hz = (gz >= 6) ? (gz-6)*1000 : 18000 + 1000*gz;
-                return (long)(yz + hz);
+                int hz = (gz >= 6) ? ((gz - 6) * 1000) : (18000 + (1000 * gz));
+                return (long) (yz + hz);
             } catch (ParseException e2) {
                 return null;
             }
@@ -185,20 +195,20 @@ public class TimeCmd extends TASPCommand {
     }
 
     private String niceFormatTime(long time) {
-        long x2 = (time/1000);
+        long x2 = time/1000;
         x2 += 6;
-        if(x2 >= 24) {
-            x2 -= 24;
+        if(x2 >= HOURS_IN_DAY) {
+            x2 -= HOURS_IN_DAY;
         }
         long m2 = time % 1000;
-        long min2 = (long)(((float)m2)/1000 * 60);
+        long min2 = (long) (((float) m2 / HOURS_TO_TICKS_FACTOR) * MINUTES_IN_HOUR);
         String ampm2 = "AM";
-        if(x2 > 12) {
-            x2 %= 12;
+        if(x2 > AM_PM_BREAK) {
+            x2 %= AM_PM_BREAK;
             ampm2 = "PM";
         }
         if(x2 == 0)
-            x2 = 12;
+            x2 = AM_PM_BREAK;
         String finH2 = Long.toString(x2);
         String finMin2 = min2 < 10 ? "0" + Long.toString(min2) : Long.toString(min2);
         return finH2 + ":" + finMin2 + " " + ampm2;

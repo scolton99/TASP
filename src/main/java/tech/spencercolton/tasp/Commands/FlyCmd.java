@@ -62,21 +62,21 @@ public class FlyCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
-    public static final String syntax = "/fly [user]";
+    private static final String syntax = "/fly [user]";
 
 
     /**
      * String containing the command's console syntax.
      */
-    public static final String consoleSyntax = "/fly <user>";
+    private static final String consoleSyntax = "/fly <user>";
 
-    public static final String permission = "tasp.fly";
+    private static final String permission = "tasp.fly";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             if(args.length != 1) {
                 Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
@@ -94,14 +94,14 @@ public class FlyCmd extends TASPCommand {
 
             p.setFlying(!p.isFlying());
 
-            sendFlyingMessage(sender, p.isFlying(), p.getDisplayName());
+            this.sendFlyingMessage(sender, p.isFlying(), p.getDisplayName());
         } else {
             switch(args.length) {
                 case 0:
                     Player p = (Player)sender;
                     p.setAllowFlight(true);
                     p.setFlying(!p.isFlying());
-                    sendFlyingMessage(sender, p.isFlying());
+                    this.sendFlyingMessage(sender, p.isFlying());
                     return;
                 case 1:
                     Player p2 = Bukkit.getPlayer(args[0]);
@@ -113,16 +113,16 @@ public class FlyCmd extends TASPCommand {
                     p2.setFlying(!p2.isFlying());
 
                     if(!p2.equals(sender))
-                        sendFlyingMessage(sender, p2.isFlying(), p2.getDisplayName());
+                        this.sendFlyingMessage(sender, p2.isFlying(), p2.getDisplayName());
                     else
-                        sendFlyingMessage(sender, ((Player)sender).isFlying());
+                        this.sendFlyingMessage(sender, ((Player)sender).isFlying());
             }
         }
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying) {
         if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fly", (flying ? "enabled" : "disabled")));
+            sender.sendMessage(M.m("command-message-text.fly", flying ? "enabled" : "disabled"));
     }
 
     private void sendFlyingMessage(CommandSender sender, boolean flying, String n) {
@@ -130,19 +130,19 @@ public class FlyCmd extends TASPCommand {
         assert p != null;
 
         if(sender.equals(p)) {
-            sendFlyingMessage(sender, flying);
+            this.sendFlyingMessage(sender, flying);
             return;
         }
 
         if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fly-others-s", (flying ? "enabled" : "disabled"), n));
+            sender.sendMessage(M.m("command-message-text.fly-others-s", flying ? "enabled" : "disabled", n));
         if(Command.messageEnabled(this, true))
-            p.sendMessage(M.m("command-message-text.fly-others-r", (flying ? "enabled" : "disabled"), sender.getName()));
+            p.sendMessage(M.m("command-message-text.fly-others-r", flying ? "enabled" : "disabled", sender.getName()));
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] args) {
-        return (args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender)) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender) ? permission + ".others" : permission;
     }
 
     @Override

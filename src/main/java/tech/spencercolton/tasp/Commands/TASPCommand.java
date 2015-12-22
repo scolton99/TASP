@@ -14,7 +14,7 @@ import java.util.List;
  * @author Spencer Colton
  * @since 0.0.1-001
  */
-public abstract class TASPCommand {
+abstract class TASPCommand {
 
     /**
      * Contains the logic used to process a command.
@@ -28,7 +28,7 @@ public abstract class TASPCommand {
      * @param sender To be supplied by the {@link Command class}
      * @param args To be supplied by the {@link Command class}
      */
-    public abstract void execute(CommandSender sender, String[] args);
+    public abstract void execute(CommandSender sender, String... args);
 
     /**
      * Returns the command's expected in-game syntax in the form a human-readable {@code String}.
@@ -53,9 +53,9 @@ public abstract class TASPCommand {
      */
     public abstract String getConsoleSyntax();
 
-    public abstract String getPermission();
+    protected abstract String getPermission();
 
-    public String predictRequiredPermission(CommandSender sender, String[] s) {
+    public String predictRequiredPermission(CommandSender sender, String... s) {
         return this.getPermission();
     }
 

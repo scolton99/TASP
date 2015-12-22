@@ -1,7 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -9,22 +8,18 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class GodCmd extends TASPCommand {
 
     public static final String name = "god";
-    public static final String syntax = "/god [player]";
-    public static final String consoleSyntax = "/god <player>";
-    public static final String permission = "tasp.god";
-
-    public static List<Person> gods = new ArrayList<>();
+    private static final String syntax = "/god [player]";
+    private static final String consoleSyntax = "/god <player>";
+    private static final String permission = "tasp.god";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             if(args.length != 1) {
                 Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
@@ -32,49 +27,43 @@ public class GodCmd extends TASPCommand {
             }
 
             Person p = Person.get(Bukkit.getPlayer(args[0]));
-            if(gods.contains(p)) {
-                p.getData().setBoolean("god", false);
-                gods.remove(p);
+            if(p.isGod()) {
+                p.setGod(false);
             } else {
-                p.getData().setBoolean("god", true);
-                gods.add(p);
+                p.setGod(true);
             }
         } else {
             switch(args.length) {
                 case 0:
                     Person p = Person.get((Player)sender);
-                    if(gods.contains(p)) {
-                        p.getData().setBoolean("god", false);
-                        gods.remove(p);
-                        sendGodMessage(p.getPlayer(), false);
+                    if(p.isGod()) {
+                        p.setGod(false);
+                        this.sendGodMessage(p.getPlayer(), false);
                     } else {
-                        p.getData().setBoolean("god", true);
-                        gods.add(p);
-                        sendGodMessage(p.getPlayer(), true);
+                        p.setGod(true);
+                        this.sendGodMessage(p.getPlayer(), true);
                     }
                     return;
                 case 1:
                     Person p2 = Person.get(Bukkit.getPlayer(args[0]));
 
                     if(p2 == null) {
-                        sendPlayerError(sender, args[0]);
+                        this.sendPlayerError(sender, args[0]);
                         return;
                     }
 
-                    if(gods.contains(p2)) {
-                        p2.getData().setBoolean("god", false);
-                        gods.remove(p2);
+                    if(p2.isGod()) {
+                        p2.setGod(false);
                         if(!p2.equals(sender))
-                            sendGodMessage(p2.getPlayer(), false, (Player)sender);
+                            this.sendGodMessage(p2.getPlayer(), false, (Player)sender);
                         else
-                            sendGodMessage(p2.getPlayer(), false);
+                            this.sendGodMessage(p2.getPlayer(), false);
                     } else {
-                        p2.getData().setBoolean("god", true);
-                        gods.add(p2);
+                        p2.setGod(true);
                         if(!p2.equals(sender))
-                            sendGodMessage(p2.getPlayer(), true, (Player)sender);
+                            this.sendGodMessage(p2.getPlayer(), true, (Player)sender);
                         else
-                            sendGodMessage(p2.getPlayer(), true);
+                            this.sendGodMessage(p2.getPlayer(), true);
                     }
                     break;
             }
@@ -87,24 +76,24 @@ public class GodCmd extends TASPCommand {
 
     private void sendGodMessage(Player p, boolean t) {
         if(Command.messageEnabled(this, false))
-            p.sendMessage(M.m("command-message-text.god", (t ? "enabled" : "disabled")));
+            p.sendMessage(M.m("command-message-text.god", t ? "enabled" : "disabled"));
     }
 
     private void sendGodMessage(Player p, boolean t, Player other) {
         if(p.equals(other)) {
-            sendGodMessage(p, t);
+            this.sendGodMessage(p, t);
             return;
         }
 
         if(Command.messageEnabled(this, false))
-            other.sendMessage(M.m("command-message-text.god-others-s", (t ? "enabled" : "disabled"), p.getDisplayName()));
+            other.sendMessage(M.m("command-message-text.god-others-s", t ? "enabled" : "disabled", p.getDisplayName()));
         if(Command.messageEnabled(this, true))
-            p.sendMessage(M.m("command-message-text.god-others-r", (t ? "enabled" : "disabled"), other.getDisplayName()));
+            p.sendMessage(M.m("command-message-text.god-others-r", t ? "enabled" : "disabled", other.getDisplayName()));
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] s) {
-        return (s.length > 0 && Bukkit.getPlayer(s[0]) != null && !Bukkit.getPlayer(s[0]).equals(sender)) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... s) {
+        return s.length > 0 && Bukkit.getPlayer(s[0]) != null && !Bukkit.getPlayer(s[0]).equals(sender) ? permission + ".others" : permission;
     }
 
     @Override

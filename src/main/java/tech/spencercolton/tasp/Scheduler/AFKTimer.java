@@ -8,28 +8,28 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class AFKTimer extends BukkitRunnable {
 
-    public static HashMap<Person, BukkitTask> timers = new HashMap<>();
+    public static final Map<Person, BukkitTask> timers = new HashMap<>();
 
-    Person p;
-    int time;
+    private final Person p;
 
     public AFKTimer(Person p, int time) {
         this.p = p;
-        this.time = time;
         timers.put(p, this.runTaskLater(Bukkit.getPluginManager().getPlugin("TASP"), time));
     }
 
     public AFKTimer(Person p) {
-        this(p, Config.AFKTime());
+        this(p, Config.afkTime());
     }
 
+    @Override
     public void run() {
         if(!this.p.isAfk()) {
             this.p.setAfk(true);
-            AFKCmd.broadcastAFKMessage(p);
+            AFKCmd.broadcastAFKMessage(this.p);
         }
     }
 

@@ -12,6 +12,7 @@ import tech.spencercolton.tasp.Util.M;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code killall} command.
@@ -65,20 +66,20 @@ public class KillallCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
-    public static final String syntax = "/killall [entity] [radius] OR /killall [entity]";
+    private static final String syntax = "/killall [entity] [radius] OR /killall [entity]";
 
     /**
      * String containing the command's console syntax.
      */
-    public static final String consoleSyntax = "/killall [entity] [world]";
+    private static final String consoleSyntax = "/killall [entity] [world]";
 
-    public static final String permission = "tasp.killall";
+    private static final String permission = "tasp.killall";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         List<EntityType> banList = new ArrayList<>();
         banList.add(EntityType.ARMOR_STAND);
         banList.add(EntityType.ARROW);
@@ -188,13 +189,12 @@ public class KillallCmd extends TASPCommand {
         pets.add("monster");
         pets.add("animal");
 
-        for(EntityType et: ets)
-            pets.add(et.toString().toLowerCase());
+        pets.addAll(ets.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));
 
         if(sender instanceof Player) {
             switch(args.length){
                 case 0:
-                    World w = ((Player)sender).getWorld();
+                    World w = ((Entity) sender).getWorld();
                     int count = 0;
 
                     List<Entity> es = w.getEntities();
@@ -205,10 +205,10 @@ public class KillallCmd extends TASPCommand {
                         }
                     }
 
-                    sendCountMessage(sender, count, w.getName());
+                    this.sendCountMessage(sender, count, w.getName());
                     return;
                 case 1:
-                    World w2 = ((Player)sender).getWorld();
+                    World w2 = ((Entity) sender).getWorld();
                     int cxt = 0;
 
                     if(!pets.contains(args[0].toLowerCase())) {
@@ -238,7 +238,7 @@ public class KillallCmd extends TASPCommand {
                                 cxt++;
                             }
                         }
-                        sendCountMessage(sender, cxt, w2.getName());
+                        this.sendCountMessage(sender, cxt, w2.getName());
                     }
                     return;
                 case 2:
@@ -247,7 +247,7 @@ public class KillallCmd extends TASPCommand {
                         a = Integer.parseInt(args[1]);
                         String ET = args[0];
 
-                        World w3 = ((Player)sender).getWorld();
+                        World w3 = ((Entity) sender).getWorld();
 
                         List<String> valid = new ArrayList<>();
                         valid.add("all");
@@ -266,7 +266,7 @@ public class KillallCmd extends TASPCommand {
                             for(Entity ex: eties) {
                                 if(banList.contains(ex.getType()))
                                     continue;
-                                if(ex.getLocation().distance(((Player)sender).getLocation()) > a)
+                                if(ex.getLocation().distance(((Entity) sender).getLocation()) > a)
                                     continue;
                                 if(args[0].equalsIgnoreCase("all")) {
                                     ex.remove();
@@ -290,7 +290,7 @@ public class KillallCmd extends TASPCommand {
                             Command.sendSyntaxError(sender, this);
                             return;
                         }
-                        sendCountMessage(sender, czt, w3.getName());
+                        this.sendCountMessage(sender, czt, w3.getName());
                     } catch(NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
                     }
@@ -308,7 +308,7 @@ public class KillallCmd extends TASPCommand {
                             count++;
                         }
                     }
-                    sendCountMessage(sender, count, w.getName());
+                    this.sendCountMessage(sender, count, w.getName());
                     return;
                 case 1:
                     int ccx = 0;
@@ -349,7 +349,7 @@ public class KillallCmd extends TASPCommand {
                         }
                     }
 
-                    sendCountMessage(sender, ccx, w2.getName());
+                    this.sendCountMessage(sender, ccx, w2.getName());
 
                     return;
                 case 2:
@@ -395,7 +395,7 @@ public class KillallCmd extends TASPCommand {
                         }
                     }
 
-                    sendCountMessage(sender, ccz, w3.getName());
+                    this.sendCountMessage(sender, ccz, w3.getName());
             }
         }
     }

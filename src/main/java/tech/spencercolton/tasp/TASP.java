@@ -5,8 +5,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
-import tech.spencercolton.tasp.Commands.GodCmd;
-import tech.spencercolton.tasp.Commands.MuteCmd;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
@@ -36,10 +34,10 @@ import java.io.File;
 public class TASP extends JavaPlugin {
 
     /**
-     * A {@link java.io.File} object representing this plugin's data folder.
+     * A {@link File} object representing this plugin's data folder.
      * <p>
      *     Generated at runtime by the {@link #onEnable() onEnable} method so that
-     *     the variable becomes static and is accessable via static reference by
+     *     the variable becomes static and is accessible via static reference by
      *     other components of the plugin.
      * </p>
      */
@@ -64,24 +62,25 @@ public class TASP extends JavaPlugin {
      */
     @Override
     public void onEnable() {
-        getLogger().info("Loading TASP plugin...");
+        this.getLogger().info("Loading TASP plugin...");
 
-        saveDefaultConfig();
+        this.saveDefaultConfig();
+        this.reloadConfig();
 
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
-        initCommands();
-        initListeners();
-        for(Player p: getServer().getOnlinePlayers()) {
+        this.initCommands();
+        this.initListeners();
+        for(Player p: this.getServer().getOnlinePlayers()) {
             new Person(p);
             loadPerson(Person.get(p));
         }
-        File f = new File(dataFolder().getAbsolutePath() + "\\players\\");
-        if(!f.mkdirs()) {
-            Bukkit.getLogger().severe("Failed to make directories for the successful usage of TASP.");
+        File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
+        if(f.mkdirs()) {
+            Bukkit.getLogger().info("Directories were created for TASP.");
         }
 
-        loadInteractions();
+        this.loadInteractions();
     }
 
     /**
@@ -92,7 +91,7 @@ public class TASP extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        for(Person p : Person.people) {
+        for(Person p : Person.getPeople()) {
             p.getData().writeData();
         }
     }
@@ -100,7 +99,7 @@ public class TASP extends JavaPlugin {
     /**
      * Registers commands found in the {@code plugin.yml} with their executors.
      * <p>
-     *     All commands are executed by the {@link tech.spencercolton.tasp.Commands.Command} class.
+     *     All commands are executed by the {@link Command} class.
      * </p>
      *
      * @see Command
@@ -109,7 +108,7 @@ public class TASP extends JavaPlugin {
         Command c = new Command();
         this.getCommand("setspeed").setExecutor(c);
         this.getCommand("killall").setExecutor(c);
-        this.getCommand("fly").setExecutor((c));
+        this.getCommand("fly").setExecutor(c);
         this.getCommand("home").setExecutor(c);
         this.getCommand("sethome").setExecutor(c);
         this.getCommand("god").setExecutor(c);
@@ -126,6 +125,16 @@ public class TASP extends JavaPlugin {
         this.getCommand("block").setExecutor(c);
         this.getCommand("unblock").setExecutor(c);
         this.getCommand("broadcast").setExecutor(c);
+        this.getCommand("powertool").setExecutor(c);
+        this.getCommand("powertooltoggle").setExecutor(c);
+        this.getCommand("stalker").setExecutor(c);
+        this.getCommand("info").setExecutor(c);
+        this.getCommand("tasp").setExecutor(c);
+        this.getCommand("srvinfo").setExecutor(c);
+        this.getCommand("stahp").setExecutor(c);
+        this.getCommand("shock").setExecutor(c);
+        this.getCommand("burn").setExecutor(c);
+        this.getCommand("feed").setExecutor(c);
     }
 
     /**
@@ -137,11 +146,13 @@ public class TASP extends JavaPlugin {
      * </ul>
      */
     private void initListeners() {
-        getServer().getPluginManager().registerEvents(new LoginListener(), this);
-        getServer().getPluginManager().registerEvents(new LogoutListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
-        getServer().getPluginManager().registerEvents(new MoveListener(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        this.getServer().getPluginManager().registerEvents(new LoginListener(), this);
+        this.getServer().getPluginManager().registerEvents(new LogoutListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerDamageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new MoveListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PersonSendMessageListener(), this);
     }
 
     /**
@@ -163,9 +174,7 @@ public class TASP extends JavaPlugin {
      */
     @SuppressWarnings("unused")
     public static void refreshPlayers() {
-        for(Player p : Bukkit.getOnlinePlayers()) {
-            refreshPlayer(p);
-        }
+        Bukkit.getOnlinePlayers().forEach(TASP::refreshPlayer);
     }
 
     /**
@@ -176,7 +185,7 @@ public class TASP extends JavaPlugin {
      * </p>
      * @param p The player whose data is to be reloaded.
      */
-    public static void refreshPlayer(Player p) {
+    private static void refreshPlayer(Player p) {
         Person.get(p).reloadData();
     }
 
@@ -187,19 +196,17 @@ public class TASP extends JavaPlugin {
 
     public static void loadPerson(Person a) {
         new AFKTimer(a);
-
-        Boolean b = a.getData().getBoolean("god");
-        if(b != null && b)
-            GodCmd.gods.add(a);
-
-        b = a.getData().getBoolean("muted");
-        if(b != null && b)
-            MuteCmd.muted.add(a);
     }
 
     public static void unloadPerson(Person a) {
         AFKTimer.timers.get(a).cancel();
         AFKTimer.timers.remove(a);
+        Person.unloadPerson(a);
+    }
+
+    public static void reload() {
+        Bukkit.getPluginManager().getPlugin("TASP").onDisable();
+        Bukkit.getPluginManager().getPlugin("TASP").onEnable();
     }
 
 }

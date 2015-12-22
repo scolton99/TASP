@@ -3,7 +3,7 @@ package tech.spencercolton.tasp.Commands;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.S;
+import tech.spencercolton.tasp.Util.M;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class BroadcastCmd extends TASPCommand {
 
-    public static final String syntax = "/broadcast <message>";
+    private static final String syntax = "/broadcast <message>";
     public static final String name = "broadcast";
-    public static final String permission = "tasp.broadcast";
-    public static final String consoleSyntax = syntax;
+    private static final String permission = "tasp.broadcast";
+    private static final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(args.length == 0) {
             Command.sendSyntaxError(sender, this);
             return;
@@ -29,11 +29,11 @@ public class BroadcastCmd extends TASPCommand {
         List<String> arg = Arrays.asList(args);
         for(int i = 0; i < arg.size(); i++) {
             fin += arg.get(i);
-            if(!((i + 1) >= arg.size()))
+            if(!(i + 1 >= arg.size()))
                 fin += " ";
         }
 
-        Bukkit.broadcastMessage(Config.c1() + "[" + Config.c4() + S.s("broadcast-prefix") + Config.c1() + "] " + Config.c3() + fin);
+        Bukkit.broadcastMessage(Config.c1() + "[" + Config.c4() + M.u("broadcast-prefix") + Config.c1() + "] " + Config.c3() + fin);
     }
 
     @Override

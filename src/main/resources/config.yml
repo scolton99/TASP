@@ -62,6 +62,10 @@ afk-timeout: 10
 
 broadcast-prefix: NOTICE
 
+info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, IP]
+
+default-burn-time: 30
+
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
 # DARK_RED for the secondary color.
@@ -103,8 +107,23 @@ command-messages:
   muted-r: true
   block: true
   block-r: true
+  unblock: true
+  unblock-r: true
+  setspawn: true
+  powertool: true
+  powertool-remove: true
+  powertooltoggle: true
+  stalker: true
+  stalker-others: true
+  shock: true
+  shock-others: true
+  burn: true
+  burn-others: true
+  feed: true
+  feed-others: true
 
 broadcast-afk: true
+broadcast-powertool-toggle: true
 # ---------------------------------------------------------------------------------------
 # |                                MESSAGE CUSTOMIZATION                                |
 # ---------------------------------------------------------------------------------------
@@ -194,3 +213,43 @@ command-message-text:
   block: '{0}You blocked {1}{2}{0}.'
   # {2}: The player who did the blocking.
   block-r: '{0}You were blocked by {1}{2}{0}.  You can no longer send messages to him or her.'
+  # {2}: The player who was unblocked
+  unblock: '{0}You unblocked {1}{2}{0}.'
+  # {2}: The player who did the unblocking.
+  unblock-r: '{0}You were unblocked by {1}{2}{0}.'
+  # {2}: The material
+  # {3}: The command line
+  powertool: '{0}Material {1}{2}{0} was assigned command {1}{3}{0}.'
+  # {2}: The material
+  powertool-remove: '{0}All powertools for {1}{2}{0} were disabled.'
+  # {2}: The word "enabled" or "disabled"
+  powertooltoggle: '{0}You {1}{2}{0} powertools.'
+  # {2}: The word "enabled" or "disabled"
+  stalker: '{0}Stalker mode was {1}{2}{0}.'
+  # {2}: The word "enabled" or "disabled"
+  # {3}: The player for whom stalking was toggled
+  stalker-s: '{0}Stalker mode was {1}{2}{0} for {1}{3}{0}.'
+  # {2}: The word "enabled" or "disabled"
+  # {3}: The player who toggled stalker mode
+  stalker-s: '{0}Stalker mode was {1}{2}{0} by {1}{3}{0}.'
+  shock: '{0}You were shocked!'
+  # {2}: The player who was shocked.
+  shock-s: '{0}Shocked {1}{2}{0}.'
+  # {2}: The player who did the shocking
+  shock-r: '{1}{2}{0} shocked you!'
+  # {2}: The amount of time
+  burn: '{0}You set yourself on fire for {1}{2}{0} seconds.'
+  # {2}: The amount of time
+  # {3}: The player being burned
+  burn-s: '{0}You set {1}{3}{0} on fire for {1}{2}{0} seconds.'
+  # {2}: The amount of time
+  # {3}: The player who did the burning
+  burn-r: '{0}You were set on fire by {1}{3}{0} for {1}{2}{0} seconds.'
+  # {2}: The amount of hunger taken away
+  feed: '{0}Your hunger was reduced by {1}{2}{0}.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who was fed
+  feed-s: '{1}{3}{0}''''s hunger was reduced by {1}{2}{0}.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who did the feeding
+  feed-r: '{0}Your hunger was reduced by {1}{2}{0} by {1}{3}{0}.'

@@ -8,6 +8,7 @@ import tech.spencercolton.tasp.TASP;
 
 public class LogoutListener implements Listener {
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onEvent(PlayerQuitEvent e) {
         TASP.unloadPerson(Person.get(e.getPlayer()));

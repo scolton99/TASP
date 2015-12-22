@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
 public class BlockCmd extends TASPCommand {
@@ -18,18 +19,18 @@ public class BlockCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
-    public static final String syntax = "/block <user>";
+    private static final String syntax = "/block <user>";
 
 
     /**
      * String containing the command's console syntax.
      */
-    public static final String consoleSyntax = "/block <user>";
+    private static final String consoleSyntax = "/block <user>";
 
-    public static final String permission = "tasp.block";
+    private static final String permission = "tasp.block";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             Command.sendConsoleError((ConsoleCommandSender)sender);
             return;
@@ -48,9 +49,15 @@ public class BlockCmd extends TASPCommand {
 
         Person ps = Person.get(p);
         Person pa = Person.get((Player)sender);
-        pa.blockPlayer(ps);
 
-        sendBlockedMessage(sender, ps);
+        if(!pa.isPlayerBlocked(ps))
+            pa.blockPlayer(ps);
+        else {
+            this.sendAlreadyBlockedMessage(sender, ps);
+            return;
+        }
+
+        this.sendBlockedMessage(sender, ps);
     }
 
     private void sendBlockedMessage(CommandSender sender, Person p) {
@@ -58,6 +65,10 @@ public class BlockCmd extends TASPCommand {
             sender.sendMessage(M.m("command-message-text.block", p.getPlayer().getDisplayName()));
         if(Command.messageEnabled("block-r"))
             p.getPlayer().sendMessage(M.m("command-message-text.block-r", sender.getName()));
+    }
+
+    private void sendAlreadyBlockedMessage(CommandSender sender, Person p) {
+        sender.sendMessage(Config.err() + p.getPlayer().getDisplayName() + " is already blocked.");
     }
 
     @Override

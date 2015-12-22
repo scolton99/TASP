@@ -59,20 +59,20 @@ public class HomeCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
-    public static final String syntax = "/home";
+    private static final String syntax = "/home";
 
     /**
      * String containing the command's console syntax.
      */
-    public static final String consoleSyntax = null;
+    private static final String consoleSyntax = null;
 
-    public static final String permission = "tasp.home";
+    private static final String permission = "tasp.home";
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
             Command.sendConsoleError((ConsoleCommandSender)sender, name);
             return;
@@ -90,14 +90,14 @@ public class HomeCmd extends TASPCommand {
         Location l = p2.getHome();
 
         if(l == null) {
-            sendNoHomeMessage(sender);
+            this.sendNoHomeMessage(sender);
             return;
         }
 
         if(l.getWorld().equals(p.getWorld())) {
             p.teleport(l);
         } else {
-            sendWorldMessage(sender);
+            this.sendWorldMessage(sender);
         }
 
     }

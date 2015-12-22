@@ -13,13 +13,13 @@ import java.util.List;
 
 public class GamemodeCmd extends TASPCommand {
 
-    public static final String syntax = "/gamemode <mode> [player]";
-    public static final String consoleSyntax = "/gamemode <mode> <player>";
+    private static final String syntax = "/gamemode <mode> [player]";
+    private static final String consoleSyntax = "/gamemode <mode> <player>";
     public static final String name = "gamemode";
-    public static final String permission = "tasp.gamemode";
+    private static final String permission = "tasp.gamemode";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         String[] aargs = {"1", "0", "2", "survival", "creative", "adventure", "a", "c", "s"};
         List<String> accept = Arrays.asList(aargs);
 
@@ -57,7 +57,7 @@ public class GamemodeCmd extends TASPCommand {
                     p.setGameMode(GameMode.SURVIVAL);
                     break;
             }
-            sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase(), p);
+            this.sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase(), p);
         } else {
             if(args.length > 2 || args.length < 1) {
                 Command.sendSyntaxError(sender, this);
@@ -90,7 +90,7 @@ public class GamemodeCmd extends TASPCommand {
                             p.setGameMode(GameMode.SURVIVAL);
                             break;
                     }
-                    sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase());
+                    this.sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase());
                     break;
                 case 2:
                     Player p2 = Bukkit.getPlayer(args[1]);
@@ -115,7 +115,7 @@ public class GamemodeCmd extends TASPCommand {
                             p2.setGameMode(GameMode.SURVIVAL);
                             break;
                     }
-                    sendGamemodeMessage(sender, p2.getGameMode().toString().toLowerCase(), p2);
+                    this.sendGamemodeMessage(sender, p2.getGameMode().toString().toLowerCase(), p2);
                     break;
                 default:
                     Command.sendSyntaxError(sender, this);
@@ -136,7 +136,7 @@ public class GamemodeCmd extends TASPCommand {
 
     private void sendGamemodeMessage(CommandSender s, String p, Player x) {
         if(x.equals(s)) {
-            sendGamemodeMessage(s, p);
+            this.sendGamemodeMessage(s, p);
             return;
         }
 
@@ -167,8 +167,8 @@ public class GamemodeCmd extends TASPCommand {
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] args) {
-        return (args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender)) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return args.length >= 2 && Bukkit.getPlayer(args[1]) != null && !Bukkit.getPlayer(args[1]).equals(sender) ? permission + ".others" : permission;
     }
 
 }

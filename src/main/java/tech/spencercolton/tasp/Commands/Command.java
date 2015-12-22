@@ -6,9 +6,13 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A class for managing {@link TASPCommand}s and general command maintenance.
@@ -27,7 +31,7 @@ public class Command implements CommandExecutor{
      *     Populated when the Command is instantiated.
      * </p>
      */
-    private static ConcurrentHashMap<String,TASPCommand> cmds = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String,TASPCommand> cmds = new ConcurrentHashMap<>();
 
     /**
      * Not designed as a constructor, but as a convenient way for the class to populate the {@link #cmds} field
@@ -41,7 +45,7 @@ public class Command implements CommandExecutor{
      * The server-required {@code onCommand} method that passes only the required information to command processors.
      * <p>
      *     Because the server-required arguments were verbose and often unnecessary, TASP implements a new class for
-     *     command processing that transfers all of the necessary argments to a more simple command executor that
+     *     command processing that transfers all of the necessary arguments to a more simple command executor that
      *     does not return a boolean value, as it expected that all relevant information will be supplied directly to
      *     the user in the form of messages.
      * </p>
@@ -52,10 +56,11 @@ public class Command implements CommandExecutor{
      * @param args The command's arguments, supplied by the server.
      * @return {@code true} if the command was found in the list of available commands, else {@code false}.
      */
+    @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         String s = cmd.getName();
 
-        TASPCommand c = getCommand(s.toLowerCase());
+        TASPCommand c = this.getCommand(s.toLowerCase());
         if(c == null)
             return false;
 
@@ -74,7 +79,7 @@ public class Command implements CommandExecutor{
             return true;
         }
 
-        return executeCommand(s, sender, args);
+        return this.executeCommand(s, sender, args);
     }
 
     /**
@@ -85,7 +90,7 @@ public class Command implements CommandExecutor{
      * @param args The arguments of the command, supplied by the player.
      * @return {@code true} if the command was found in the list of available commands, else {@code false}.
      */
-    private boolean executeCommand(String name, CommandSender sender, String[] args) {
+    private boolean executeCommand(String name, CommandSender sender, String... args) {
         if(Collections.list(cmds.keys()).contains(name.toLowerCase())) {
             cmds.get(name.toLowerCase()).execute(sender, args);
             return true;
@@ -103,7 +108,7 @@ public class Command implements CommandExecutor{
         cmds.put(FlyCmd.name.toLowerCase(), new FlyCmd());
         cmds.put(SethomeCmd.name.toLowerCase(), new SethomeCmd());
         cmds.put(GodCmd.name.toLowerCase(), new GodCmd());
-        cmds.put(SetspawnCmd.name.toLowerCase(), new SetspeedCmd());
+        cmds.put(SetspawnCmd.name.toLowerCase(), new SetspawnCmd());
         cmds.put(TimeCmd.name.toLowerCase(), new TimeCmd());
         cmds.put(TopCmd.name.toLowerCase(), new TopCmd());
         cmds.put(AFKCmd.name.toLowerCase(), new AFKCmd());
@@ -117,6 +122,15 @@ public class Command implements CommandExecutor{
         cmds.put(TASPCmd.name.toLowerCase(), new TASPCmd());
         cmds.put(UnblockCmd.name.toLowerCase(), new UnblockCmd());
         cmds.put(BroadcastCmd.name.toLowerCase(), new BroadcastCmd());
+        cmds.put(PowertoolCmd.name.toLowerCase(), new PowertoolCmd());
+        cmds.put(PowertoolToggleCmd.name.toLowerCase(), new PowertoolToggleCmd());
+        cmds.put(StalkerCmd.name.toLowerCase(), new StalkerCmd());
+        cmds.put(InfoCmd.name.toLowerCase(), new InfoCmd());
+        cmds.put(SrvInfoCmd.name.toLowerCase(), new SrvInfoCmd());
+        cmds.put(StahpCmd.name.toLowerCase(), new StahpCmd());
+        cmds.put(ShockCmd.name.toLowerCase(), new ShockCmd());
+        cmds.put(BurnCmd.name.toLowerCase(), new BurnCmd());
+        cmds.put(FeedCmd.name.toLowerCase(), new FeedCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -178,7 +192,7 @@ public class Command implements CommandExecutor{
         sendConsoleSyntaxError((ConsoleCommandSender)s, c);
     }
 
-    public static void sendPermissionError(CommandSender s) {
+    private static void sendPermissionError(CommandSender s) {
         s.sendMessage(Config.err() + "You do not have permission to do that.");
     }
 
@@ -203,6 +217,39 @@ public class Command implements CommandExecutor{
 
     public static void sendPlayerMessage(CommandSender s, String p) {
         s.sendMessage(Config.err() + "Couldn't find player \"" + p + "\"");
+    }
+
+    public static List<String> processQuotedArguments(String... args) {
+        String larg = "";
+        for(int i = 0; i < args.length; i++) {
+            larg += args[i];
+            if(!((i + 1) >= args.length))
+                larg += " ";
+        }
+
+        List<String> newArgs = new ArrayList<>();
+        Pattern r = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
+        Matcher rm = r.matcher(larg);
+        while(rm.find()) {
+            if(rm.group(1) != null) {
+                newArgs.add(rm.group(1));
+            } else if(rm.group(2) != null) {
+                newArgs.add(rm.group(2));
+            } else {
+                newArgs.add(rm.group());
+            }
+        }
+
+        return newArgs;
+    }
+
+    public static String getDisplayName(CommandSender sender) {
+        if(sender instanceof ConsoleCommandSender) {
+            return sender.getName();
+        }
+
+        Player p = (Player)sender;
+        return p.getDisplayName();
     }
 
 }

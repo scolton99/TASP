@@ -11,6 +11,7 @@ import tech.spencercolton.tasp.Util.Config;
 
 public class MoveListener implements Listener {
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onEvent(PlayerMoveEvent e) {
         Person p = Person.get(e.getPlayer());
@@ -20,7 +21,7 @@ public class MoveListener implements Listener {
         } else {
             BukkitTask k = AFKTimer.timers.get(p);
             k.cancel();
-            new AFKTimer(p, Config.AFKTime());
+            new AFKTimer(p, Config.afkTime());
         }
     }
 

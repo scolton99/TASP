@@ -9,13 +9,13 @@ import tech.spencercolton.tasp.Util.Config;
 
 public class AFKCmd extends TASPCommand {
 
-    public static final String syntax = "/afk [person]";
+    private static final String syntax = "/afk [person]";
     public static final String name = "afk";
-    public static final String consoleSyntax = "/afk <person>";
-    public static final String permission = "tasp.afk";
+    private static final String consoleSyntax = "/afk <person>";
+    private static final String permission = "tasp.afk";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String... args) {
         switch(args.length) {
             case 0:
                 if(sender instanceof ConsoleCommandSender) {
@@ -82,8 +82,8 @@ public class AFKCmd extends TASPCommand {
     }
 
     @Override
-    public String predictRequiredPermission(CommandSender sender, String[] args) {
-        return (args.length == 1 && Bukkit.getPlayer(args[0]) != null) ? permission + ".others" : permission;
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return args.length == 1 && Bukkit.getPlayer(args[0]) != null ? permission + ".others" : permission;
     }
 
 }

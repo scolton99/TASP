@@ -3,8 +3,11 @@ package tech.spencercolton.tasp.Util;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.List;
+
 public class Config {
 
+    private static final int TICKS_PER_MINUTE = 1200;
     private static FileConfiguration s;
 
     public static void loadConfig(FileConfiguration s1) {
@@ -63,27 +66,23 @@ public class Config {
     }
 
     public static String getString(String path) {
-        return (String)get(path);
-    }
-
-    public static Object get(String path) {
-        return s.get(path);
-    }
-
-    public static int getInt(String path) {
-        return (int)s.get(path);
-    }
-
-    public static float getFloat(String path) {
-        return (float)s.get(path);
+        return s.getString(path);
     }
 
     public static boolean getBoolean(String path) {
-        return (boolean)s.get(path);
+        return s.getBoolean(path);
     }
 
-    public static int AFKTime() {
-        return 1200 * (int)s.get("afk-timeout");
+    public static List<String> getListString(String path) {
+        return s.getStringList(path);
+    }
+
+    public static int afkTime() {
+        return TICKS_PER_MINUTE * (int) s.get("afk-timeout");
+    }
+
+    public static int getInt(String path) {
+        return s.getInt(path);
     }
 
 }
