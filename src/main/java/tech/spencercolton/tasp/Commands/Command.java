@@ -132,6 +132,12 @@ public class Command implements CommandExecutor{
         cmds.put(BurnCmd.name.toLowerCase(), new BurnCmd());
         cmds.put(FeedCmd.name.toLowerCase(), new FeedCmd());
         cmds.put(StarveCmd.name.toLowerCase(), new StarveCmd());
+        cmds.put(HealCmd.name.toLowerCase(), new HealCmd());
+        cmds.put(HurtCmd.name.toLowerCase(), new HurtCmd());
+        cmds.put(FOMCmd.name.toLowerCase(), new FOMCmd());
+        cmds.put(PotionCmd.name.toLowerCase(), new PotionCmd());
+        cmds.put(AntidoteCmd.name.toLowerCase(), new AntidoteCmd());
+        cmds.put(BuddhaCmd.name.toLowerCase(), new BuddhaCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -191,6 +197,13 @@ public class Command implements CommandExecutor{
     public static void sendConsoleSyntaxError(CommandSender s, TASPCommand c) {
         assert s instanceof ConsoleCommandSender;
         sendConsoleSyntaxError((ConsoleCommandSender)s, c);
+    }
+
+    public static void sendGenericSyntaxError(CommandSender s, TASPCommand c) {
+        if(s instanceof ConsoleCommandSender)
+            sendConsoleSyntaxError(s, c);
+        else
+            sendSyntaxError(s, c);
     }
 
     private static void sendPermissionError(CommandSender s) {

@@ -97,11 +97,6 @@ public class GodCmd extends TASPCommand {
     }
 
     @Override
-    public List<String> getAliases() {
-        return Collections.singletonList("buddha");
-    }
-
-    @Override
     public String getSyntax() {
         return syntax;
     }

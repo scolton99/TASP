@@ -31,7 +31,6 @@ commands:
     god:
         description: Sets god mode to enabled or disabled for a player.
         permission: tasp.god
-        aliases: [buddha]
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /god [player]"
     setspawn:
@@ -154,12 +153,45 @@ commands:
         description: Feed a player.
         permission: tasp.feed
         permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /feed [amount] [player]"
+        usage: "Invalid syntax. /feed [player] [amount]"
     starve:
         description: Starve a player.
         permission: tasp.feed
         permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /starve [amount] [player]"
+        usage: "Invalid syntax. /starve [player] [amount]"
+    heal:
+        description: Heal a player.
+        permission: tasp.heal
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /heal [player] [amount]"
+    hurt:
+        description: Hurt a player.
+        permission: tasp.heal
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /hurt [player] [amount]"
+    fom:
+        description: Make a player a friend of monsters.
+        permission: tasp.fom
+        aliases: [disabletarget]
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /fom [player]"
+    potion:
+        description: Give a player certain potion effects.
+        permission: tasp.potion
+        aliases: [effect]
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /potion <potion> [strength] [duration] [player]"
+    antidote:
+        description: Cure all status effects.
+        permission: tasp.antidote
+        aliases: [cleareffects]
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /antidote [player]"
+    buddha:
+        description: Don't allow death.
+        permission: tasp.buddha
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /buddha [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.
@@ -271,4 +303,19 @@ permissions:
         default: op
     tasp.feed:
         description: Feed a player.
+        default: op
+    tasp.heal:
+        description: Heal a player.
+        default: op
+    tasp.fom:
+        description: Make a player a friend of monsters.
+        default: op
+    tasp.potion:
+        description: Give a player certain potion effects.
+        default: op
+    tasp.antidote:
+        description: Cure all status effects.
+        default: op
+    tasp.buddha:
+        description: Don't allow death.
         default: op

@@ -25,6 +25,7 @@ public class MoveListener implements Listener {
         }
         if(p.isGod()) {
             p.getPlayer().setExhaustion(0.0F);
+            p.getPlayer().setSaturation(20.0F);
         }
     }
 

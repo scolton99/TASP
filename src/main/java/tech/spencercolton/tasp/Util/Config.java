@@ -85,4 +85,12 @@ public class Config {
         return s.getInt(path);
     }
 
+    public static char getColorCode() {
+        return s.getString("color-code").charAt(0);
+    }
+
+    public static boolean coloredText() {
+        return s.getBoolean("color-text");
+    }
+
 }

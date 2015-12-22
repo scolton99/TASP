@@ -22,7 +22,14 @@ public class PlayerDamageListener implements Listener {
 
         if(p.isGod()) {
             p.getPlayer().setExhaustion(0.0F);
+            p.getPlayer().setSaturation(20.0F);
             e.setCancelled(true);
+        }
+
+        if(p.isBuddha()) {
+            double d = p.getPlayer().getHealth();
+            if(e.getDamage() >= d)
+                e.setDamage(d - 0.5D);
         }
     }
 

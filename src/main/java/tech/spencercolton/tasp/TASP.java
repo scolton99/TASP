@@ -91,9 +91,7 @@ public class TASP extends JavaPlugin {
      */
     @Override
     public void onDisable() {
-        for(Person p : Person.getPeople()) {
-            p.getData().writeData();
-        }
+        Person.getPeople().stream().forEach(Person::writeData);
     }
 
     /**
@@ -136,6 +134,12 @@ public class TASP extends JavaPlugin {
         this.getCommand("burn").setExecutor(c);
         this.getCommand("feed").setExecutor(c);
         this.getCommand("starve").setExecutor(c);
+        this.getCommand("heal").setExecutor(c);
+        this.getCommand("hurt").setExecutor(c);
+        this.getCommand("fom").setExecutor(c);
+        this.getCommand("potion").setExecutor(c);
+        this.getCommand("antidote").setExecutor(c);
+        this.getCommand("buddha").setExecutor(c);
     }
 
     /**
@@ -154,6 +158,7 @@ public class TASP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new PersonSendMessageListener(), this);
+        this.getServer().getPluginManager().registerEvents(new EntityTargetListener(), this);
     }
 
     /**

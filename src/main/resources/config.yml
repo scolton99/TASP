@@ -62,9 +62,12 @@ afk-timeout: 10
 
 broadcast-prefix: NOTICE
 
-info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, IP]
+info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, FLYING, FOM, BUDDHA, IP]
 
 default-burn-time: 30
+
+color-text: true
+color-code: '&'
 
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
@@ -123,6 +126,18 @@ command-messages:
   feed-others: true
   starve: true
   starve-others: true
+  heal: true
+  heal-others: true
+  hurt: true
+  hurt-others: true
+  fom: true
+  fom-other: true
+  potion: true
+  potion-others: true
+  antidote: true
+  antidote-others: true
+  buddha: true
+  buddha-others: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
@@ -233,7 +248,7 @@ command-message-text:
   stalker-s: '{0}Stalker mode was {1}{2}{0} for {1}{3}{0}.'
   # {2}: The word "enabled" or "disabled"
   # {3}: The player who toggled stalker mode
-  stalker-s: '{0}Stalker mode was {1}{2}{0} by {1}{3}{0}.'
+  stalker-r: '{0}Stalker mode was {1}{2}{0} by {1}{3}{0}.'
   shock: '{0}You were shocked!'
   # {2}: The player who was shocked.
   shock-s: '{0}Shocked {1}{2}{0}.'
@@ -248,18 +263,69 @@ command-message-text:
   # {3}: The player who did the burning
   burn-r: '{0}You were set on fire by {1}{3}{0} for {1}{2}{0} seconds.'
   # {2}: The amount of hunger taken away
-  feed: '{0}Your hunger was reduced by {1}{2}{0}.'
+  feed: '{0}Your hunger was reduced by {1}{2}{0} shanks.'
   # {2}: The amount of hunger taken away
   # {3}: The player who was fed
-  feed-s: '{1}{3}{0}''''s hunger was reduced by {1}{2}{0}.'
+  feed-s: '{1}{3}{0}''''s hunger was reduced by {1}{2}{0} shanks.'
   # {2}: The amount of hunger taken away
   # {3}: The player who did the feeding
-  feed-r: '{0}Your hunger was reduced by {1}{2}{0} by {1}{3}{0}.'
+  feed-r: '{0}Your hunger was reduced by {1}{2}{0} shanks by {1}{3}{0}.'
   # {2}: The amount of hunger added
-  starve: '{0}Your hunger was increased by {1}{2}{0}.'
+  starve: '{0}Your hunger was increased by {1}{2}{0} shanks.'
   # {2}: The amount of hunger added
   # {3}: The player who was starved
-  starve-s: '{1}{3}{0}''''s hunger was increased by {1}{2}{0}.'
+  starve-s: '{1}{3}{0}''''s hunger was increased by {1}{2}{0} shanks.'
   # {2}: The amount of hunger added
   # {3}: The player who did the starving
-  starve-r: '{0}Your hunger was increased by {1}{2}{0} by {1}{3}{0}.'
+  starve-r: '{0}Your hunger was increased by {1}{2}{0} shanks by {1}{3}{0}.'
+  # {2}: The amount of hunger taken away
+  heal: '{0}Your health was increased by {1}{2}{0} hearts.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who was fed
+  heal-s: '{1}{3}{0}''''s health was increased by {1}{2}{0} hearts.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who did the feeding
+  heal-r: '{0}Your health was increased by {1}{2}{0} hearts by {1}{3}{0}.'
+  # {2}: The amount of hunger taken away
+  hurt: '{0}Your health was decreased by {1}{2}{0} hearts.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who was fed
+  hurt-s: '{1}{3}{0}''''s health was decreased by {1}{2}{0} hearts.'
+  # {2}: The amount of hunger taken away
+  # {3}: The player who did the feeding
+  hurt-r: '{0}Your health was decreased by {1}{2}{0} hearts by {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  fom: '{0}FOM mode was {1}{2}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player for whom FOM mode was changed
+  fom-s: '{0}FOM mode was {1}{2}{0} for {1}{3}{0}.'
+  # {2}: the word "enabled" or "disabled"
+  # {3}: the player FOM changed God mode
+  fom-r: '{0}FOM mode was {1}{2}{0} by {1}{3}{0}.'
+  # {2}: The potion type
+  # {3}: The strength
+  # {4}: The duration (seconds)
+  potion: '{0}You gave yourself {1}{2} {3}{0} for {1}{4}{0} seconds.'
+  # {2}: The potion type
+  # {3}: The strength
+  # {4}: The duration (seconds)
+  # {5}: The player who was given the effect
+  potion-s: '{0}You gave {1}{5} {2} {3}{0} for {1}{4}{0} seconds.'
+  # {2}: The potion type
+  # {3}: The strength
+  # {4}: The duration (seconds)
+  # {5}: The player who gave the effect.
+  potion-r: '{0}You were given {1}{2} {3}{0} for {1}{4}{0} seconds by {1}{5}{0}.'
+  antidote: '{0}All of your status effects were cleared.'
+  # {2}: The person whose effects were cleared
+  antidote-s: '{0}All of {1}{2}{0}''''s status effects were cleared.'
+  # {3}: The person who cleared the effects
+  antidote-r: '{0}All of your status effects were cleared by {1}{2}{0}.'
+  # {2}: The word "enabled" or "disabled"
+  buddha: '{0}Buddha mode was {1}{2}{0}.'
+  # {2}: The word "enabled" or "disabled"
+  # {3}: The player for whom buddha was toggled
+  buddha-s: '{0}Buddha mode was {1}{2}{0} for {1}{3}{0}.'
+  # {2}: The word "enabled" or "disabled"
+  # {3}: The player who toggled buddha mode
+  buddha-s: '{0}Buddha mode was {1}{2}{0} by {1}{3}{0}.'

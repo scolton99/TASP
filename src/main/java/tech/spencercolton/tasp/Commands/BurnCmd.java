@@ -36,6 +36,10 @@ public class BurnCmd extends TASPCommand {
         if(args.length == 2) {
             try {
                 x = Integer.parseInt(args[1]) * TICKS_PER_SECOND;
+                if(x < 0) {
+                    sender.sendMessage(Config.err() + "Amount must be positive.");
+                    return;
+                }
             } catch(NumberFormatException e) {
                 Command.sendSyntaxError(sender, this);
                 return;

@@ -18,7 +18,7 @@ public class PersonSendMessageListener implements Listener {
     @EventHandler
     @SuppressWarnings("unused")
     public void onEvent(PersonSendMessageEvent e) {
-        Predicate<Person> allStalkers = p -> p.getData().getBoolean("stalker") != null && p.getData().getBoolean("stalker");
+        Predicate<Person> allStalkers = Person::isStalker;
 
         this.relay(Person.getPeople(), allStalkers, e);
     }

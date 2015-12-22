@@ -27,14 +27,13 @@ public class StalkerCmd extends TASPCommand {
 
                 Person p = Person.get((Player)sender);
 
-                Boolean b = p.getData().getBoolean("stalker");
-                if(b == null || !b)
-                    p.getData().setBoolean("stalker", true);
+                Boolean b = p.isStalker();
+                if(b)
+                    p.setStalker(false);
                 else
-                    p.getData().setBoolean("stalker", false);
+                    p.setStalker(true);
 
-                assert p.getData().getBoolean("stalker") != null;
-                this.sendStalkerMessage(sender, p.getData().getBoolean("stalker"));
+                this.sendStalkerMessage(sender, p.isStalker());
                 break;
             case 1:
                 Player p2 = Bukkit.getPlayer(args[0]);
@@ -47,14 +46,13 @@ public class StalkerCmd extends TASPCommand {
                 Person p3 = Person.get(p2);
                 assert p3 != null;
 
-                Boolean b2 = p3.getData().getBoolean("stalker");
-                if(b2 == null || !b2)
-                    p3.getData().setBoolean("stalker", true);
+                Boolean b2 = p3.isStalker();
+                if(b2)
+                    p3.setStalker(false);
                 else
-                    p3.getData().setBoolean("stalker", false);
+                    p3.setStalker(true);
 
-                assert p3.getData().getBoolean("stalker") != null;
-                this.sendStalkerMessage(sender, p3.getData().getBoolean("stalker"), p3);
+                this.sendStalkerMessage(sender, p3.isStalker(), p3);
                 break;
             default:
                 if(sender instanceof ConsoleCommandSender) {

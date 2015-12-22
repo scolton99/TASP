@@ -117,15 +117,6 @@ public class Person {
     }
 
     /**
-     * Gets the data associated with this Person.
-     *
-     * @return The player's data object.
-     */
-    public PlayerData getData() {
-        return this.data;
-    }
-
-    /**
      * Writes this person's data to file.
      */
     public void save() {
@@ -177,31 +168,6 @@ public class Person {
         m.put("yaw", l.getYaw());
 
         this.data.setObject("home", m);
-    }
-
-    public boolean isAfk() {
-        return this.afk;
-    }
-
-    public void setAfk(boolean afk) {
-        this.afk = afk;
-    }
-
-    public boolean isMuted() {
-        Boolean b = this.getData().getBoolean("muted");
-        return !(b == null || !b);
-    }
-
-    public void mute() {
-        this.data.setBoolean("muted", true);
-    }
-
-    public void unmute() {
-        this.data.setBoolean("muted", false);
-    }
-
-    public void setMuted(boolean b) {
-        this.data.setBoolean("muted", b);
     }
 
     public List<String> getBlockedPlayers() {
@@ -277,19 +243,74 @@ public class Person {
         UIDpeople.remove(a.getUid());
     }
 
+    public void writeData() {
+        this.data.writeData();
+    }
+
+    /* */
     public boolean isStalker() {
-        Boolean b = this.getData().getBoolean("stalker");
+        Boolean b = this.data.getBoolean("stalker");
         return !(b == null || !b);
     }
 
+    public void setStalker(boolean b) {
+        this.data.setBoolean("stalker", b);
+    }
+    /* */
+
+    /* */
     public boolean isGod() {
-        Boolean b = this.getData().getBoolean("god");
+        Boolean b = this.data.getBoolean("god");
         return !(b == null || !b);
     }
 
     public void setGod(boolean b) {
         this.data.setBoolean("god", b);
     }
+    /* */
+
+    /* */
+    public boolean isFOM() {
+        Boolean b = this.data.getBoolean("fom");
+        return !(b == null || !b);
+    }
+
+    public void setFOM(boolean b) {
+        this.data.setBoolean("fom", b);
+    }
+    /* */
+
+    /* */
+    public boolean isAfk() {
+        return this.afk;
+    }
+
+    public void setAfk(boolean afk) {
+        this.afk = afk;
+    }
+    /* */
+
+    /* */
+    public boolean isMuted() {
+        Boolean b = this.data.getBoolean("muted");
+        return !(b == null || !b);
+    }
+
+    public void setMuted(boolean b) {
+        this.data.setBoolean("muted", b);
+    }
+    /* */
+
+    /* */
+    public boolean isBuddha() {
+        Boolean b = this.data.getBoolean("buddha");
+        return !(b == null || !b);
+    }
+
+    public void setBuddha(boolean b) {
+        this.data.setBoolean("buddha", b);
+    }
+    /* */
 
 }
 

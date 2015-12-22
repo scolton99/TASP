@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Listeners;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -21,6 +22,9 @@ public class ChatListener implements Listener {
             p.getPlayer().sendMessage(Config.err() + "You are muted.  Other players will not see your message.");
             return;
         }
+
+        if(Config.coloredText() && p.getPlayer().hasPermission("tasp.chat.color"))
+            e.setMessage(ChatColor.translateAlternateColorCodes(Config.getColorCode(), e.getMessage()));
 
         if(p.isAfk()) {
             p.setAfk(false);
