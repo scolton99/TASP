@@ -155,6 +155,11 @@ commands:
         permission: tasp.feed
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /feed [amount] [player]"
+    starve:
+        description: Starve a player.
+        permission: tasp.feed
+        permission-message: You do not have permission to do this.
+        usage: "Invalid syntax. /starve [amount] [player]"
 permissions:
     tasp.*:
         description: OP access to TASP plugin.

@@ -121,6 +121,8 @@ command-messages:
   burn-others: true
   feed: true
   feed-others: true
+  starve: true
+  starve-others: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
@@ -253,3 +255,11 @@ command-message-text:
   # {2}: The amount of hunger taken away
   # {3}: The player who did the feeding
   feed-r: '{0}Your hunger was reduced by {1}{2}{0} by {1}{3}{0}.'
+  # {2}: The amount of hunger added
+  starve: '{0}Your hunger was increased by {1}{2}{0}.'
+  # {2}: The amount of hunger added
+  # {3}: The player who was starved
+  starve-s: '{1}{3}{0}''''s hunger was increased by {1}{2}{0}.'
+  # {2}: The amount of hunger added
+  # {3}: The player who did the starving
+  starve-r: '{0}Your hunger was increased by {1}{2}{0} by {1}{3}{0}.'

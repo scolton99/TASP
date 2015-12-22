@@ -8,14 +8,14 @@ import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
 /**
- * @author Spencer Colton
+ * Created by scolton17 on 12/22/15.
  */
-public class FeedCmd extends TASPCommand {
+public class StarveCmd extends TASPCommand {
 
-    private static final String syntax = "/feed [amount] [player]";
-    public static final String name = "feed";
+    private static final String syntax = "/starve [amount] [player]";
+    public static final String name = "starve";
+    private static final String consoleSyntax = "/starve <player> [amount]";
     private static final String permission = "tasp.feed";
-    private static final String consoleSyntax = "/feed <player> [amount]";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
@@ -23,9 +23,9 @@ public class FeedCmd extends TASPCommand {
             switch (args.length) {
                 case 1:
                     Player p = Bukkit.getPlayer(args[0]);
-                    p.setFoodLevel(20);
-                    p.setSaturation(20.0F);
-                    sendFedMessage(sender, 20, p);
+                    p.setFoodLevel(0);
+                    p.setSaturation(0);
+                    sendStarvedMessage(sender, 20, p);
                     return;
                 case 2:
                     Player p2 = Bukkit.getPlayer(args[0]);
@@ -35,9 +35,9 @@ public class FeedCmd extends TASPCommand {
                             sender.sendMessage(Config.err() + "Amount must be positive.");
                             return;
                         }
-                        p2.setFoodLevel(p2.getFoodLevel() + x);
-                        p2.setSaturation(x);
-                        sendFedMessage(sender, x, p2);
+                        p2.setFoodLevel(p2.getFoodLevel() - x);
+                        p2.setSaturation(0);
+                        sendStarvedMessage(sender, x, p2);
                         return;
                     } catch (NumberFormatException e) {
                         Command.sendConsoleSyntaxError(sender, this);
@@ -52,17 +52,17 @@ public class FeedCmd extends TASPCommand {
         switch(args.length) {
             case 0:
                 Player p = (Player)sender;
-                p.setFoodLevel(20);
-                sendFedMessage(sender, 20);
-                p.setSaturation(20.0F);
+                p.setFoodLevel(0);
+                p.setSaturation(0);
+                sendStarvedMessage(sender, 20);
                 return;
             case 1:
                 Player p2 = (Player)sender;
                 try {
                     int x = Integer.parseInt(args[0]);
-                    p2.setFoodLevel(p2.getFoodLevel() + x);
-                    p2.setSaturation(x);
-                    sendFedMessage(sender, x, p2);
+                    p2.setFoodLevel(p2.getFoodLevel() - x);
+                    p2.setSaturation(0);
+                    sendStarvedMessage(sender, x, p2);
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
                 }
@@ -79,40 +79,30 @@ public class FeedCmd extends TASPCommand {
                         sender.sendMessage(Config.err() + "Amount must be positive.");
                         return;
                     }
-                    p3.setFoodLevel(p3.getFoodLevel() + x);
-                    p3.setSaturation(x);
-                    sendFedMessage(sender, x, p3);
+                    p3.setSaturation(0);
+                    p3.setFoodLevel(p3.getFoodLevel() - x);
+                    sendStarvedMessage(sender, x, p3);
                 } catch(NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
                 }
         }
     }
 
-    private void sendFedMessage(CommandSender sender, int amount) {
+    private void sendStarvedMessage(CommandSender sender, int amount) {
         if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.feed", Integer.toString(amount)));
+            sender.sendMessage(M.m("command-message-text.starve", Integer.toString(amount)));
     }
 
-    private void sendFedMessage(CommandSender sender, int amount, Player other) {
+    private void sendStarvedMessage(CommandSender sender, int amount, Player other) {
         if(sender.equals(other)) {
-            sendFedMessage(sender, amount);
+            sendStarvedMessage(sender, amount);
             return;
         }
 
         if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.feed-s", Integer.toString(amount), other.getDisplayName()));
+            sender.sendMessage(M.m("command-message-text.starve-s", Integer.toString(amount), other.getDisplayName()));
         if(Command.messageEnabled(this, true))
-            other.sendMessage(M.m("command-message-text.feed-r", Integer.toString(amount), Command.getDisplayName(sender)));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
+            other.sendMessage(M.m("command-message-text.starve-r", Integer.toString(amount), Command.getDisplayName(sender)));
     }
 
     @Override
@@ -121,8 +111,18 @@ public class FeedCmd extends TASPCommand {
     }
 
     @Override
+    public String getPermission() {
+        return permission;
+    }
+
+    @Override
     public String getConsoleSyntax() {
         return consoleSyntax;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

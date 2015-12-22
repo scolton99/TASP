@@ -131,6 +131,7 @@ public class Command implements CommandExecutor{
         cmds.put(ShockCmd.name.toLowerCase(), new ShockCmd());
         cmds.put(BurnCmd.name.toLowerCase(), new BurnCmd());
         cmds.put(FeedCmd.name.toLowerCase(), new FeedCmd());
+        cmds.put(StarveCmd.name.toLowerCase(), new StarveCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

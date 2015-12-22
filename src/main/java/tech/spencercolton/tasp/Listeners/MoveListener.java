@@ -23,6 +23,9 @@ public class MoveListener implements Listener {
             k.cancel();
             new AFKTimer(p, Config.afkTime());
         }
+        if(p.isGod()) {
+            p.getPlayer().setExhaustion(0.0F);
+        }
     }
 
 }

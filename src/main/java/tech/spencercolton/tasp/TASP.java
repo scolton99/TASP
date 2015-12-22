@@ -135,6 +135,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("shock").setExecutor(c);
         this.getCommand("burn").setExecutor(c);
         this.getCommand("feed").setExecutor(c);
+        this.getCommand("starve").setExecutor(c);
     }
 
     /**

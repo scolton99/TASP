@@ -21,6 +21,7 @@ public class PlayerDamageListener implements Listener {
             return;
 
         if(p.isGod()) {
+            p.getPlayer().setExhaustion(0.0F);
             e.setCancelled(true);
         }
     }
