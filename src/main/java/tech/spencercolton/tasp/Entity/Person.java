@@ -138,7 +138,7 @@ public class Person {
      */
     @SuppressWarnings("unchecked")
     public Location getHome() {
-        Map<String, Object> h = this.data.getMap("home");
+        Map h = this.data.getMap("home");
 
         if(h == null)
             return null;
@@ -147,25 +147,25 @@ public class Person {
         if(w == null)
             return null;
 
-        double x = (double)h.get("x");
-        double y = (double)h.get("y");
-        double z = (double)h.get("z");
-        float pitch = (float)h.get("pitch");
-        float yaw = (float)h.get("yaw");
+        double x = Double.parseDouble((String)h.get("x"));
+        double y = Double.parseDouble((String)h.get("y"));
+        double z = Double.parseDouble((String)h.get("z"));
+        float pitch = Float.parseFloat((String)h.get("pitch"));
+        float yaw = Float.parseFloat((String)h.get("yaw"));
 
         return new Location(w, x, y, z, yaw, pitch);
     }
 
     @SuppressWarnings("unchecked")
     public void setHome(Location l) {
-        Map<String, Object> m = new HashMap();
+        Map m = new HashMap();
 
         m.put("world", l.getWorld().getUID().toString());
-        m.put("x", l.getX());
-        m.put("y", l.getY());
-        m.put("z", l.getZ());
-        m.put("pitch", l.getPitch());
-        m.put("yaw", l.getYaw());
+        m.put("x", Double.toString(l.getX()));
+        m.put("y", Double.toString(l.getY()));
+        m.put("z", Double.toString(l.getZ()));
+        m.put("pitch", Float.toString(l.getPitch()));
+        m.put("yaw", Float.toString(l.getYaw()));
 
         this.data.setObject("home", m);
     }

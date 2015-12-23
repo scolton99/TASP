@@ -161,3 +161,7 @@ commands:
         description: View or change the weather.
         permission-message: You don't have permission to do this.
         usage: 'Invalid syntax. /weather [world [type]] | [type]'
+    spawnmob:
+        description: Spawn a mob.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /spawnmob [mob] <amount>'

@@ -93,4 +93,8 @@ public class Config {
         return s.getBoolean("color-text");
     }
 
+    public static int getSpawnLimit() {
+        return s.getInt("spawnmob-limit");
+    }
+
 }

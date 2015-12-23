@@ -69,6 +69,8 @@ default-burn-time: 30
 color-text: true
 color-code: '&'
 
+spawnmob-limit: 500
+
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
 # DARK_RED for the secondary color.
@@ -138,6 +140,9 @@ command-messages:
   antidote-others: true
   buddha: true
   buddha-others: true
+  weather: true
+  weather-others: true
+  spawnmob: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
@@ -329,3 +334,21 @@ command-message-text:
   # {2}: The word "enabled" or "disabled"
   # {3}: The player who toggled buddha mode
   buddha-s: '{0}Buddha mode was {1}{2}{0} by {1}{3}{0}.'
+  # {2}: The type of weather
+  # {3}: The duration of the weather
+  # {4}: The world
+  weather-set: '{0}It is now {1}{2}{0} in {1}{4}{0} for {1}{3}{0} seconds.'
+  # {2}: The type of weather
+  # {3}: The duration of the weather
+  # {4}: The temperature
+  # {5}: The humidity
+  # {6}: The world
+  weather: "{0}It is currently {1}{2}{0} in {1}{6}{0}, and it will likely remain this way for {1}{3}{0} seconds.  {1}{4}{0}\u00B0F, {1}{5}{0}% humidity."
+  # {2}: The type of weather
+  # {3}: The duration of the weather
+  # {4}: The world
+  weather-console: '{0}It is currently {1}{2}{0} in {1}{4}{0}, and it will likely remain this way for {1}{3}{0} seconds.'
+  # {2}: The mob type
+  # {3}: The amount of mobs
+  spawnmob: '{0}Spawned {1}{3}{0} of mob type {1}{2}{0}.'
+
