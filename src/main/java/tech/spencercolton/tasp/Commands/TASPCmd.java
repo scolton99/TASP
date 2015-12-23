@@ -1,9 +1,14 @@
 package tech.spencercolton.tasp.Commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.Config;
+
+import java.io.File;
 
 public class TASPCmd extends TASPCommand {
 
@@ -42,7 +47,39 @@ public class TASPCmd extends TASPCommand {
                 sender.sendMessage(Config.c3() + "" + ChatColor.ITALIC + "TASP" + ChatColor.RESET + "" + Config.c4() + " reloaded.");
                 break;
             case "config":
+                sender.sendMessage(Config.err() + "Sorry, this feature is not yet implemented.");
                 break;
+            case "deleteconfig":
+                File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "config.yml");
+                boolean deleted = true;
+                if(f.exists())
+                    deleted = !f.delete();
+                if(deleted) {
+                    Bukkit.getPluginManager().getPlugin("TASP").saveDefaultConfig();
+                    TASP.reload();
+                    sender.sendMessage(Config.c3() + "Main configuration file deleted and reset to factory defaults.  TASP was reloaded.");
+                } else {
+                    sender.sendMessage(Config.err() + "Main configuration file could not be deleted.  No changes were made.");
+                }
+                return;
+            case "deleteplayerdata":
+                if(args.length != 2) {
+                    Command.sendGenericSyntaxError(sender, this);
+                    return;
+                }
+
+                Player p = Bukkit.getPlayer(args[1]);
+                if(p == null) {
+                    Command.sendPlayerMessage(sender, args[1]);
+                    return;
+                }
+
+                Person pa = Person.get(p);
+                assert pa != null;
+                if(pa.resetData()) {
+                    sender.sendMessage(Config.c3() + "Player " + Config.c4() + p.getDisplayName() + Config.c3() + "'s data was reset.");
+                }
+                return;
             default:
                 Command.sendSyntaxError(sender, this);
         }

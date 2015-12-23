@@ -60,6 +60,7 @@ public class TASP extends JavaPlugin {
      *     <li>Writes the default configuration file if none exists already.</li>
      * </ul>
      */
+
     @Override
     public void onEnable() {
         this.getLogger().info("Loading TASP plugin...");
@@ -69,6 +70,7 @@ public class TASP extends JavaPlugin {
 
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
+
         this.initCommands();
         this.initListeners();
         for(Player p: this.getServer().getOnlinePlayers()) {

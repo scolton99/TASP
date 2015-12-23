@@ -6,8 +6,10 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.PlayerData;
 
+import java.io.File;
 import java.util.*;
 
 /**
@@ -311,6 +313,19 @@ public class Person {
         this.data.setBoolean("buddha", b);
     }
     /* */
+
+    public boolean resetData() {
+        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.getUid() + ".json");
+        if(!f.exists()) {
+            return false;
+        }
+        if(f.delete()) {
+            this.data = new PlayerData(this);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
 

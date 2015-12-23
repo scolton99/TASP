@@ -102,7 +102,7 @@ public class PlayerData {
      */
     private static boolean dataExists(UUID s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
-        p1 += "\\players\\" + s + ".json";
+        p1 += File.separator + "players" + File.separator + s + ".json";
         return new File(p1).exists();
     }
 
@@ -140,7 +140,7 @@ public class PlayerData {
      * not.
      */
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json");
         if(!f.exists())
             return null;
 
@@ -174,7 +174,7 @@ public class PlayerData {
      * @return The path of the player's data file, in the form of a {@code String}.
      */
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json";
     }
 
     /**
@@ -214,5 +214,7 @@ public class PlayerData {
         this.data.put(s, l);
         this.writeData();
     }
+
+
 
 }

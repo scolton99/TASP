@@ -97,4 +97,8 @@ public class Config {
         return s.getInt("spawnmob-limit");
     }
 
+    public static char getFilterChar() {
+        return s.getString("filter-character").charAt(0);
+    }
+
 }
