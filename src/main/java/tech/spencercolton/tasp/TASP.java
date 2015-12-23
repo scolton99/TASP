@@ -140,6 +140,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("potion").setExecutor(c);
         this.getCommand("antidote").setExecutor(c);
         this.getCommand("buddha").setExecutor(c);
+        this.getCommand("weather").setExecutor(c);
     }
 
     /**

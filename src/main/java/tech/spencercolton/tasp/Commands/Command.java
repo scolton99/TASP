@@ -138,6 +138,7 @@ public class Command implements CommandExecutor{
         cmds.put(PotionCmd.name.toLowerCase(), new PotionCmd());
         cmds.put(AntidoteCmd.name.toLowerCase(), new AntidoteCmd());
         cmds.put(BuddhaCmd.name.toLowerCase(), new BuddhaCmd());
+        cmds.put(WeatherCmd.name.toLowerCase(), new WeatherCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

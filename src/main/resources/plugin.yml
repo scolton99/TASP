@@ -5,7 +5,6 @@ loadbefore: [TASPLocks, TASPPerms, TASPEconomy, TASPBackup]
 commands:
     killall:
         description: "Kill all entities of a given type in a given radius."
-        permission: tasp.killall
         permission-message: "You do not have permisssion to do that."
         usage: "Invalid syntax. /killall [entity] [radius]"
     setspeed:
@@ -15,307 +14,150 @@ commands:
         usage: "Invalid syntax. /setspeed <speed> [player]"
     fly:
         description: Enable or disable fly mode for a player.
-        permission: tasp.fly
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /fly [player]"
     home:
         description: Teleport a player home.
-        permission: tasp.home
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /home"
     sethome:
         description: Sets the home of a player.
-        permission: tasp.sethome
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /sethome"
     god:
         description: Sets god mode to enabled or disabled for a player.
-        permission: tasp.god
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /god [player]"
     setspawn:
         description: Sets the spawnpoint of a world.
-        permission: tasp.setspawn
         permission-message: You do not have permission to do that
         usage: "Invalid syntax. /setspawn [<x> <y> <z>] [world]"
     gamemode:
         description: Change a player''s gamemode.
-        permission: tasp.gamemode
         aliases: [gm]
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /gamemode <mode> [player]"
     time:
         description: View or change the world time.
-        permission: tasp.time
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax.  /time [newTime]"
     top:
         description: Go to the highest block in this column.
-        permission: tasp.top
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /top"
     afk:
         description: Set yourself AFK.
-        permission: tasp.afk
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /afk [player]"
     xyz:
         description: Get your position in the world.
-        permission: tasp.xyz
         permission-message: You do not have permission to do that.
         usage: "Invalid syntax. /xyz"
     mute:
         description: Stop a player from talking.
-        permission: tasp.mute
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /mute <player>"
     me:
         description: Perform an action.
-        permission: tasp.me
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /me <action>"
     msg:
         description: Send a private message.
         aliases: [message, send, tell]
-        permission: tasp.msg
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /msg <player> <message>"
     reply:
         description: Reply to a private message.
         aliases: [r]
-        permision: tasp.msg
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /r <message>"
     block:
         description: Block a player.
-        permission: tasp.block
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /block <player>"
     unblock:
         description: Unblock a player.
-        permission: tasp.block
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /unblock <player>"
     tasp:
         description: TASP administrative command.
-        permission: tasp.tasp
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /tasp [option]"
     broadcast:
         description: Broadcast a message.
-        permission: tasp.broadcast
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax.  /broadcast <message>"
     powertool:
         description: Run a command by hitting with a block.
-        permission: tasp.powertool
         aliases: [pt]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax.  /powertool [command line]"
     powertooltoggle:
         description: Enable or disable powertools for the whole server.
-        permission: tasp.powertool.toggle
         aliases: [ptt]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /powertooltoggle"
     stalker:
         description: See messages sent to others.
-        permission: tasp.msg.stalk
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /stalker [player]"
     info:
         description: See info about a player.
-        permission: tasp.info
         aliases: [whois]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /info <player>"
     srvinfo:
         description: Get vital server info.
-        permission: tasp.info.server
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /srvinfo"
     stahp:
         description: Stop the server.
-        permission: tasp.stop
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /stahp"
     shock:
         description: Shock a player.
-        permission: tasp.shock
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /shock <player>"
     burn:
         description: Burn a player.
-        permission: tasp.burn
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /burn <player> [time]"
     feed:
         description: Feed a player.
-        permission: tasp.feed
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /feed [player] [amount]"
     starve:
         description: Starve a player.
-        permission: tasp.feed
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /starve [player] [amount]"
     heal:
         description: Heal a player.
-        permission: tasp.heal
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /heal [player] [amount]"
     hurt:
         description: Hurt a player.
-        permission: tasp.heal
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /hurt [player] [amount]"
     fom:
         description: Make a player a friend of monsters.
-        permission: tasp.fom
         aliases: [disabletarget]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /fom [player]"
     potion:
         description: Give a player certain potion effects.
-        permission: tasp.potion
         aliases: [effect]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /potion <potion> [strength] [duration] [player]"
     antidote:
         description: Cure all status effects.
-        permission: tasp.antidote
         aliases: [cleareffects]
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /antidote [player]"
     buddha:
         description: Don't allow death.
-        permission: tasp.buddha
         permission-message: You do not have permission to do this.
         usage: "Invalid syntax. /buddha [player]"
-permissions:
-    tasp.*:
-        description: OP access to TASP plugin.
-        children:
-          tasp.setspeed: true
-          tasp.setspeed.others: true
-          tasp.killall: true
-          tasp.fly: true
-          tasp.fly.others: true
-          tasp.home: true
-          tasp.god: true
-          tasp.god.others: true
-    tasp.setspeed:
-        description: Set the speed of a player.
-        default: op
-    tasp.setspeed.others:
-        description: Set the speed of another player.
-        default: op
-        children:
-            tasp.setspeed: true
-    tasp.killall:
-        description: Kill all entites of a given type in a given radius.
-        default: op
-    tasp.fly:
-        description: Set fly mode of a player.
-        default: op
-    tasp.fly.others:
-        description: Set the fly mode of another player.
-        default: op
-        children:
-            tasp.fly: true
-    tasp.home:
-        description: Teleport a player home.
-        default: true
-    tasp.god:
-        description: Set the god mode of a player.
-        default: op
-    tasp.god.others:
-        description: Set the god mode of another player.
-        default: op
-        children:
-            tasp.god: true
-    tasp.setspawn:
-        description: Sets the spawnpoint of a world.
-        default: op
-    tasp.gamemode:
-        description: Sets a player's gamemode.
-        default: op
-    tasp.gamemode.others:
-        description: Sets the gamemode of another player.
-        default: op
-        children:
-            tasp.gamemode: true
-    tasp.time:
-        description: View the current world time.
-        default: true
-    tasp.top:
-        description: Go to the highest block in this column.
-        default: op
-    tasp.afk:
-        description: Set yourself AFK.
-        default: true
-    tasp.afk.others:
-        description: Check if a player is AFK.
-        default: true
-        children:
-            tasp.afk: true
-    tasp.xyz:
-        description: Get your position in world.
-        default: true
-    tasp.mute:
-        description: Stop a player from talking.
-        default: op
-    tasp.me:
-        description: Perform an action
-        default: true
-    tasp.msg:
-        description: Send a private message.
-        default: true
-    tasp.ping:
-        description: Check a player's ping.
-        default: true
-    tasp.block:
-        description: Block a player.
-        default: true
-    tasp.broadcast:
-        description: Broadcast a message.
-        default: op
-    tasp.powertool:
-        description: Run a command by hitting with a block.
-        default: op
-    tasp.powertool.toggle:
-        description: Enable or disable powertools for the whole server.
-        default: op
-    tasp.msg.stalk:
-        description: See messages sent to others.
-        default: op
-    tasp.info:
-        description: See info about a player.
-        default: op
-    tasp.info.server:
-        description: Get vital server info.
-        default: op
-    tasp.stop:
-        description: Stop the server.
-        default: op
-    tasp.burn:
-        description: Burn a player.
-        default: op
-    tasp.feed:
-        description: Feed a player.
-        default: op
-    tasp.heal:
-        description: Heal a player.
-        default: op
-    tasp.fom:
-        description: Make a player a friend of monsters.
-        default: op
-    tasp.potion:
-        description: Give a player certain potion effects.
-        default: op
-    tasp.antidote:
-        description: Cure all status effects.
-        default: op
-    tasp.buddha:
-        description: Don't allow death.
-        default: op
+    weather:
+        description: View or change the weather.
+        permission-message: You don't have permission to do this.
+        usage: 'Invalid syntax. /weather [world [type]] | [type]'
