@@ -395,5 +395,15 @@ public class Person {
         return null;
     }
 
+    public static String getMostRecentName(UUID u) {
+        try {
+            FileReader a = new FileReader(new File(TASP.dataFolder() + File.separator + "players" + File.separator + u.toString() + ".json"));
+            JSONObject e = (JSONObject) new JSONParser().parse(a);
+            return (String)e.get("lastName");
+        } catch(IOException|ParseException e) {
+            return null;
+        }
+    }
+
 }
 
