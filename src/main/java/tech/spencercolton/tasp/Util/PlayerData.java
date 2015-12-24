@@ -141,8 +141,7 @@ public class PlayerData {
      */
     private JSONObject loadData() {
         File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json");
-        if(!f.exists())
-            return null;
+        assert f.exists();
 
         JSONParser p = new JSONParser();
         try (FileReader fa = new FileReader(f)){
