@@ -51,13 +51,10 @@ public class TASPCmd extends TASPCommand {
                 break;
             case "deleteconfig":
                 File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "config.yml");
-                boolean deleted = true;
-                if(f.exists())
-                    deleted = !f.delete();
+                boolean deleted = f.delete();
                 if(deleted) {
-                    Bukkit.getPluginManager().getPlugin("TASP").saveDefaultConfig();
-                    TASP.reload();
-                    sender.sendMessage(Config.c3() + "Main configuration file deleted and reset to factory defaults.  TASP was reloaded.");
+                    TASP.reloadTASPConfig();
+                    sender.sendMessage(Config.c3() + "Main configuration file deleted and reset to factory defaults.  TASP configuration was reloaded.");
                 } else {
                     sender.sendMessage(Config.err() + "Main configuration file could not be deleted.  No changes were made.");
                 }

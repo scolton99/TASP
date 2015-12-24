@@ -2,8 +2,7 @@ package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Events.TASPBroadcastEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +32,7 @@ public class BroadcastCmd extends TASPCommand {
                 fin += " ";
         }
 
-        Bukkit.broadcastMessage(Config.c1() + "[" + Config.c4() + M.u("broadcast-prefix") + Config.c1() + "] " + Config.c3() + fin);
+        Bukkit.getServer().getPluginManager().callEvent(new TASPBroadcastEvent(sender, fin));
     }
 
     @Override

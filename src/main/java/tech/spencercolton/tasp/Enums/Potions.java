@@ -1,10 +1,7 @@
 package tech.spencercolton.tasp.Enums;
 
-import com.avaje.ebean.validation.NotNull;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,10 +36,10 @@ public enum Potions {
     MINING_FATIGUE(PotionEffectType.SLOW_DIGGING, 120, "SLOW_DIGGING", "POTION_OF_SLOW_DIGGING", "SLOW_DIGGING_POTION", "MINING_FATIGUE", "POTION_OF_MINING_FATIGUE", "MINING_FATIGUE_POTION"),
     WITHER(PotionEffectType.WITHER, 120, "WITHER", "POTION_OF_WITHER", "WITHER_POTION", "POTION_OF_DECAY", "DECAY_POTION", "DECAY");
 
-    List<String> names;
+    final List<String> names;
 
-    PotionEffectType p;
-    int defaultDuration;
+    final PotionEffectType p;
+    final int defaultDuration;
     public static final int DEFAULT_STRENGTH = 0;
     public static final int TICKS_IN_SECOND = 20;
 

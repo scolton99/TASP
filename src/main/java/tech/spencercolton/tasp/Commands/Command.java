@@ -92,6 +92,10 @@ public class Command implements CommandExecutor{
      */
     private boolean executeCommand(String name, CommandSender sender, String... args) {
         if(Collections.list(cmds.keys()).contains(name.toLowerCase())) {
+            if(sender instanceof ConsoleCommandSender && cmds.get(name.toLowerCase()).getConsoleSyntax() == null) {
+                sendConsoleError((ConsoleCommandSender)sender);
+                return true;
+            }
             cmds.get(name.toLowerCase()).execute(sender, args);
             return true;
         }
@@ -140,6 +144,19 @@ public class Command implements CommandExecutor{
         cmds.put(BuddhaCmd.name.toLowerCase(), new BuddhaCmd());
         cmds.put(WeatherCmd.name.toLowerCase(), new WeatherCmd());
         cmds.put(SpawnmobCmd.name.toLowerCase(), new SpawnmobCmd());
+        cmds.put(WorldCmd.name.toLowerCase(), new WorldCmd());
+        cmds.put(ExplodeCmd.name.toLowerCase(), new ExplodeCmd());
+        cmds.put(DropsCmd.name.toLowerCase(), new DropsCmd());
+        cmds.put(TeleportCmd.name.toLowerCase(), new TeleportCmd());
+        cmds.put(TeleportHereCmd.name.toLowerCase(), new TeleportHereCmd());
+        cmds.put(TeleportAllHereCmd.name.toLowerCase(), new TeleportAllHereCmd());
+        cmds.put(TeleportAcceptCmd.name.toLowerCase(), new TeleportAcceptCmd());
+        cmds.put(TeleportDenyCommand.name.toLowerCase(), new TeleportDenyCommand());
+        cmds.put(TeleportRequestCmd.name.toLowerCase(), new TeleportRequestCmd());
+        cmds.put(TeleportHereRequestCmd.name.toLowerCase(), new TeleportHereRequestCmd());
+        cmds.put(TeleportAllHereRequestCmd.name.toLowerCase(), new TeleportAllHereRequestCmd());
+        cmds.put(TeleportToggleCmd.name.toLowerCase(), new TeleportToggleCmd());
+        cmds.put(MailCmd.name.toLowerCase(), new MailCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

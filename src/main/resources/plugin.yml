@@ -159,9 +159,71 @@ commands:
         usage: "Invalid syntax. /buddha [player]"
     weather:
         description: View or change the weather.
-        permission-message: You don't have permission to do this.
+        permission-message: You do not have permission to do this.
         usage: 'Invalid syntax. /weather [world [type]] | [type]'
     spawnmob:
         description: Spawn a mob.
         permission-message: You do not have permission to do this.
         usage: 'Invalid syntax. /spawnmob [mob] <amount>'
+    world:
+        description: Teleport to a world.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /world [world]'
+    explode:
+        description: Create an explosion.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /explode [power]'
+    drops:
+        description: Remove item drops in a world.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /drops [world]'
+        aliases: [clearlag, nolag, lagfix, fixlag]
+    tp:
+        description: Teleport to a player.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tp <player>'
+        aliases: [teleport]
+    tphere:
+        description: Teleport a player to you.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tphere <player>'
+        aliases: [teleporthere]
+    tpall:
+        description: Teleport all players to you.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpall'
+        aliases: [tpallhere, tpahere, teleportallhere, teleportall]
+    tpa:
+        description: Accept a teleport request.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpa'
+        aliases: [tpaccept]
+    tpd:
+        description: Deny a teleport request.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpd'
+        aliases: [tpdeny]
+    tpr:
+        description: Request to teleport to a player.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpr <player>'
+        aliases: [tprequest]
+    tprhere:
+        description: Request to teleport a player to you.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tprhere <player>'
+        aliases: [tprequesthere, teleportrequesthere, teleporthererequest, tphererequest, tpherer]
+    tpar:
+        description: Request all players to teleport to you.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpar'
+        aliases: [tpallrhere, tparhere, teleportallrhere, teleportrall, tpallherer, tpaherer, teleportallherer, teleportallr, tpallrequesthere, tparequesthere, teleportallrequesthere, teleportrequestall, tpallhererequest, tpahererequest, teleportallhererequest, teleportallrequest]
+    tpt:
+        description: Enable or disable teleportation for the whole server.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /tpt'
+        aliases: [tptoggle, teleporttoggle, teleportationtoggle]
+    mail:
+        description: Send or receive mail.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /mail <option> [options]'

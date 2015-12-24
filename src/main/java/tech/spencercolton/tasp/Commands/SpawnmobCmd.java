@@ -9,7 +9,6 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,10 +19,10 @@ import java.util.stream.Collectors;
  */
 public class SpawnmobCmd extends TASPCommand {
 
-    public static final String syntax = "/spawnmob <type> [amount]";
+    private static final String syntax = "/spawnmob <type> [amount]";
     public static final String name = "spawnmob";
-    public static final String permission = "tasp.spawnmob";
-    public static final String consoleSyntax = null;
+    private static final String permission = "tasp.spawnmob";
+    private static final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String... args) {
@@ -77,6 +76,7 @@ public class SpawnmobCmd extends TASPCommand {
             case 1:
                 if(pets.contains(realArgs.get(0).replace(" ", "_"))) {
                     Location l = ((Player)sender).getTargetBlock((Set<Material>)null, 1000).getLocation();
+                    l.setY(l.getY() + 1.0D);
                     l.getWorld().spawnEntity(l, EntityType.valueOf(realArgs.get(0).replace(" ", "_").toUpperCase()));
                     sendSpawnmobMessage(sender, EntityType.valueOf(realArgs.get(0).replace(" ", "_").toUpperCase()), 1);
                 } else {
@@ -86,6 +86,7 @@ public class SpawnmobCmd extends TASPCommand {
             case 2:
                 if(pets.contains(realArgs.get(0).replace(" ", "_"))) {
                     Location l = ((Player)sender).getTargetBlock((Set<Material>)null, 1000).getLocation();
+                    l.setY(l.getY() + 1.0D);
                     int x;
                     try {
                         x = Integer.parseInt(realArgs.get(1));

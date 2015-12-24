@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class FOMCmd extends TASPCommand {
 
-    public static final String syntax = "/fom [player]";
+    private static final String syntax = "/fom [player]";
     public static final String name = "fom";
-    public static final String permission = "tasp.fom";
-    public static final String consoleSyntax = "/fom <player>";
+    private static final String permission = "tasp.fom";
+    private static final String consoleSyntax = "/fom <player>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {

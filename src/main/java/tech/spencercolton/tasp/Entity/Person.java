@@ -6,10 +6,19 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import tech.spencercolton.tasp.TASP;
+import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -50,6 +59,10 @@ public class Person {
     private String ip;
     private final HashMap<Material, List<String>> pts = new HashMap<>();
 
+    private Person lastTeleportRequester;
+    private boolean lastTeleportHere;
+    private long lastRequestTime;
+
     /**
      * Constructs a person object from a player object.
      * <p>
@@ -61,6 +74,8 @@ public class Person {
     public Person(Player p) {
         this.uid = p.getUniqueId();
         this.data = new PlayerData(this);
+        this.data.setString("lastName", p.getName());
+        writeData();
         // ...
         people.add(this);
         UIDpeople.put(this.uid, this);
@@ -138,7 +153,6 @@ public class Person {
      * @return A {@link Location} containing the coordinates, pitch, world, and yaw of the player's home location,
      * or {@code null} if the player has no home set.
      */
-    @SuppressWarnings("unchecked")
     public Location getHome() {
         Map h = this.data.getMap("home");
 
@@ -325,6 +339,60 @@ public class Person {
         } else {
             return false;
         }
+    }
+
+    public static void unloadAll() {
+        people.clear();
+        UIDpeople.clear();
+    }
+
+    public void setLastTeleportRequest(Person p, boolean here) {
+        this.lastTeleportRequester = p;
+        this.lastTeleportHere = here;
+        this.lastRequestTime = System.currentTimeMillis();
+    }
+
+    public Person getLastTeleportRequester() {
+        if(Config.isTeleportRequestLimited()) {
+            if(System.currentTimeMillis() - this.lastRequestTime <= Config.teleportRequestLimit()) {
+                return this.lastTeleportRequester;
+            } else {
+                this.lastTeleportRequester = null;
+            }
+        }
+        return this.lastTeleportRequester;
+    }
+
+    public boolean isLastTeleportRequestHere() {
+        return this.lastTeleportHere;
+    }
+
+    public void clearTeleportRequests() {
+        this.lastTeleportRequester = null;
+    }
+
+    public static UUID personExists(String name) {
+        if(Bukkit.getPlayer(name) != null) {
+            return Bukkit.getPlayer(name).getUniqueId();
+        }
+        File folder = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
+        File[] list = folder.listFiles();
+
+        if(list == null)
+            return null;
+
+        for(File f : list) {
+            try {
+                FileReader a = new FileReader(f);
+                JSONObject e = (JSONObject) new JSONParser().parse(a);
+                if ((e.get("lastName")).equals("name")) {
+                    return UUID.fromString((String) e.get("UUID"));
+                }
+            } catch(IOException|ParseException ignored) {
+
+            }
+        }
+        return null;
     }
 
 }

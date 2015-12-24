@@ -1,7 +1,10 @@
 package tech.spencercolton.tasp.Enums;
 
-public class Blocks {
+class Blocks {
 
-    Blocks(int id, int damage, )
+    @SuppressWarnings({"unused", "UnusedParameters"})
+    Blocks(int id, int damage) {
+
+    }
 
 }

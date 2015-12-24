@@ -97,8 +97,32 @@ public class Config {
         return s.getInt("spawnmob-limit");
     }
 
+    public static boolean obfuscate() {
+        return s.getBoolean("obfuscate-bad-words");
+    }
+
     public static char getFilterChar() {
         return s.getString("filter-character").charAt(0);
+    }
+
+    public static boolean filterChat() {
+        return s.getBoolean("chat-filter");
+    }
+
+    public static boolean teleportCooldown() {
+        return !(s.getInt("teleport-cooldown") == 0);
+    }
+
+    public static int teleportCooldownInt() {
+        return s.getInt("teleport-cooldown");
+    }
+
+    public static boolean isTeleportRequestLimited() {
+        return !(s.getInt("teleport-request-time-limit") == 0);
+    }
+
+    public static int teleportRequestLimit() {
+        return s.getInt("teleport-request-time-limit") * 1000;
     }
 
 }

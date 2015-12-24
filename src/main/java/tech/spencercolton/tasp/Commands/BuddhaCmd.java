@@ -12,10 +12,10 @@ import tech.spencercolton.tasp.Util.M;
  */
 public class BuddhaCmd extends TASPCommand {
 
-    public static final String syntax = "/buddha [player]";
+    private static final String syntax = "/buddha [player]";
     public static final String name = "buddha";
-    public static final String permission = "tasp.buddha";
-    public static final String consoleSyntax = "/buddha <player>";
+    private static final String permission = "tasp.buddha";
+    private static final String consoleSyntax = "/buddha <player>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {

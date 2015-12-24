@@ -1,12 +1,13 @@
 package tech.spencercolton.tasp.Listeners;
 
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import tech.spencercolton.tasp.Commands.AFKCmd;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
+import tech.spencercolton.tasp.Util.ChatFilter;
+import tech.spencercolton.tasp.Util.ColorChat;
 import tech.spencercolton.tasp.Util.Config;
 
 public class ChatListener implements Listener {
@@ -23,8 +24,8 @@ public class ChatListener implements Listener {
             return;
         }
 
-        if(Config.coloredText() && p.getPlayer().hasPermission("tasp.chat.color"))
-            e.setMessage(ChatColor.translateAlternateColorCodes(Config.getColorCode(), e.getMessage()));
+        e.setMessage(ColorChat.color(e.getMessage()));
+        e.setMessage(ChatFilter.filter(e.getMessage()));
 
         if(p.isAfk()) {
             p.setAfk(false);

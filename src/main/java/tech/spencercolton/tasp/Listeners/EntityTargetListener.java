@@ -12,6 +12,7 @@ import tech.spencercolton.tasp.Entity.Person;
  */
 public class EntityTargetListener implements Listener {
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void onEvent(EntityTargetEvent e) {
         if(e.getTarget() instanceof Player && e.getEntity() instanceof Monster) {

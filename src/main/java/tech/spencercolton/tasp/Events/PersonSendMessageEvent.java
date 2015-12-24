@@ -9,7 +9,7 @@ public class PersonSendMessageEvent extends Event {
     private static final HandlerList handlers = new HandlerList();
     private final CommandSender from;
     private final CommandSender to;
-    private final String message;
+    private String message;
 
     public PersonSendMessageEvent(CommandSender from, CommandSender to, String message) {
         this.from = from;
@@ -37,6 +37,10 @@ public class PersonSendMessageEvent extends Event {
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    public void setMessage(String newMessage) {
+        this.message = newMessage;
     }
 
 }

@@ -13,10 +13,10 @@ import tech.spencercolton.tasp.Util.M;
  */
 public class HurtCmd extends TASPCommand {
 
-    public static final String syntax = "/hurt [player] [amount]";
+    private static final String syntax = "/hurt [player] [amount]";
     public static final String name = "hurt";
-    public static final String permission = "tasp.heal";
-    public static final String consoleSyntax = "/hurt <player> [amount]";
+    private static final String permission = "tasp.heal";
+    private static final String consoleSyntax = "/hurt <player> [amount]";
 
     @Override
     public void execute(CommandSender sender, String[] args) {

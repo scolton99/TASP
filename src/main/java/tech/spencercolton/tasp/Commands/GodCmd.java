@@ -8,9 +8,6 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
 
-import java.util.Collections;
-import java.util.List;
-
 public class GodCmd extends TASPCommand {
 
     public static final String name = "god";

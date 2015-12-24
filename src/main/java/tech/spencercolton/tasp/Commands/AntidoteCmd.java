@@ -14,10 +14,10 @@ import java.util.List;
  */
 public class AntidoteCmd extends TASPCommand {
 
-    public static final String syntax = "/antidote [player]";
+    private static final String syntax = "/antidote [player]";
     public static final String name = "antidote";
-    public static final String permission = "tasp.antidote";
-    public static final String consoleSyntax = "/antidote <player>";
+    private static final String permission = "tasp.antidote";
+    private static final String consoleSyntax = "/antidote <player>";
 
     @Override
     public void execute(CommandSender sender, String... args) {

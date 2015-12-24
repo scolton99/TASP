@@ -71,6 +71,15 @@ color-code: '&'
 
 spawnmob-limit: 500
 
+chat-filter: true
+bad-words: [fuck, bitch, nigger, shit, ass, faggot, fag, fagot, fuk, fuc, n00b, noob, n0ob, no0b, $hit, $h1t, fagg0t, a$$, cunt, pussy, pu$$y, cock, c0ck, cok, c0k, coc, c0c, slut, whore, wh0re]
+filter-character: '*'
+obfuscate-bad-words: true
+
+teleport-cooldown: 5
+
+teleport-request-time-limit: 15
+
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
 # DARK_RED for the secondary color.
@@ -143,9 +152,12 @@ command-messages:
   weather: true
   weather-others: true
   spawnmob: true
+  world: true
+  drops: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
+broadcast-teleport-toggle: true
 # ---------------------------------------------------------------------------------------
 # |                                MESSAGE CUSTOMIZATION                                |
 # ---------------------------------------------------------------------------------------
@@ -351,4 +363,10 @@ command-message-text:
   # {2}: The mob type
   # {3}: The amount of mobs
   spawnmob: '{0}Spawned {1}{3}{0} of mob type {1}{2}{0}.'
+  # {2}: The world name
+  world: '{0}You are currently in {1}{2}{0}.'
+  # {2}: The amount of drops removed
+  drops: '{0}Removed {1}{2}{0} drops.'
+  # {2}: The word "enabled" or "disabled"
+  teleporttoggle: '{0}You {1}{2}{0} teleportation.'
 

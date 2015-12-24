@@ -9,7 +9,7 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.PlayerData;
+import tech.spencercolton.tasp.Util.Mail;
 
 import java.io.File;
 
@@ -71,17 +71,19 @@ public class TASP extends JavaPlugin {
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
 
+        Mail.initMail();
         this.initCommands();
         this.initListeners();
+        File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
+        File g = new File(dataFolder().getAbsolutePath() + File.separator + "mail" + File.separator);
+        if(f.mkdirs() && g.mkdirs()) {
+            Bukkit.getLogger().info("Directories were created for TASP.");
+        }
+
         for(Player p: this.getServer().getOnlinePlayers()) {
             new Person(p);
             loadPerson(Person.get(p));
         }
-        File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
-        if(f.mkdirs()) {
-            Bukkit.getLogger().info("Directories were created for TASP.");
-        }
-
         this.loadInteractions();
     }
 
@@ -144,6 +146,19 @@ public class TASP extends JavaPlugin {
         this.getCommand("buddha").setExecutor(c);
         this.getCommand("weather").setExecutor(c);
         this.getCommand("spawnmob").setExecutor(c);
+        this.getCommand("world").setExecutor(c);
+        this.getCommand("explode").setExecutor(c);
+        this.getCommand("drops").setExecutor(c);
+        this.getCommand("tp").setExecutor(c);
+        this.getCommand("tphere").setExecutor(c);
+        this.getCommand("tpall").setExecutor(c);
+        this.getCommand("tpa").setExecutor(c);
+        this.getCommand("tpd").setExecutor(c);
+        this.getCommand("tpr").setExecutor(c);
+        this.getCommand("tprhere").setExecutor(c);
+        this.getCommand("tpar").setExecutor(c);
+        this.getCommand("tpt").setExecutor(c);
+        this.getCommand("mail").setExecutor(c);
     }
 
     /**
@@ -163,6 +178,8 @@ public class TASP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
         this.getServer().getPluginManager().registerEvents(new PersonSendMessageListener(), this);
         this.getServer().getPluginManager().registerEvents(new EntityTargetListener(), this);
+        this.getServer().getPluginManager().registerEvents(new TASPBroadcastListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PersonTeleportListener(), this);
     }
 
     /**
@@ -174,29 +191,6 @@ public class TASP extends JavaPlugin {
      */
     public static File dataFolder() {
         return dataFolder;
-    }
-
-    /**
-     * Iterates through all players on the server and reloads their data from file.
-     * <p>
-     *     Internally makes a call to the {@link #refreshPlayer(Player)} method.
-     * </p>
-     */
-    @SuppressWarnings("unused")
-    public static void refreshPlayers() {
-        Bukkit.getOnlinePlayers().forEach(TASP::refreshPlayer);
-    }
-
-    /**
-     * Reloads a player's data from file in the case that something goes awry with the ephemeral data.
-     * <p>
-     *     Causes the {@link PlayerData} object contained within the player to be
-     *     reloaded from the JSON file containing key-value pairs about the player.
-     * </p>
-     * @param p The player whose data is to be reloaded.
-     */
-    private static void refreshPlayer(Player p) {
-        Person.get(p).reloadData();
     }
 
     private void loadInteractions() {
@@ -215,8 +209,14 @@ public class TASP extends JavaPlugin {
     }
 
     public static void reload() {
-        Bukkit.getPluginManager().getPlugin("TASP").onDisable();
-        Bukkit.getPluginManager().getPlugin("TASP").onEnable();
+        reloadTASPConfig();
+        ((TASP)Bukkit.getPluginManager().getPlugin("TASP")).loadInteractions();
+    }
+
+    public static void reloadTASPConfig() {
+        Bukkit.getPluginManager().getPlugin("TASP").saveDefaultConfig();
+        Bukkit.getPluginManager().getPlugin("TASP").reloadConfig();
+        Config.loadConfig(Bukkit.getPluginManager().getPlugin("TASP").getConfig());
     }
 
 }

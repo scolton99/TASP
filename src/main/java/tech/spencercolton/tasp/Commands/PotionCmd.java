@@ -16,10 +16,10 @@ import java.util.List;
  */
 public class PotionCmd extends TASPCommand {
 
-    public static final String syntax = "/potion <potion> [player] [strength] [duration]";
+    private static final String syntax = "/potion <potion> [player] [strength] [duration]";
     public static final String name = "potion";
-    public static final String permission = "tasp.potion";
-    public static final String consoleSyntax = "/potion <potion> <player> [strength] [duration]";
+    private static final String permission = "tasp.potion";
+    private static final String consoleSyntax = "/potion <potion> <player> [strength] [duration]";
 
     @Override
     public void execute(CommandSender sender, String... args) {

@@ -22,7 +22,6 @@ public class WeatherCmd extends TASPCommand {
     private static final String consoleSyntax = syntax;
     private static final String permission = "tasp.weather";
 
-    String[] acceptableWeathers = {"rainy", "rain", "storm", "stormy", "thunder", "lightning", "sun", "clear", "snow"};
     private static final int TICKS_IN_SECOND = 20;
 
     @Override

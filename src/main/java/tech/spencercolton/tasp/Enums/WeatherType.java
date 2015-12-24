@@ -5,7 +5,7 @@ public enum WeatherType {
     STORM("storming"),
     SUN("sunny");
 
-    private String name;
+    private final String name;
 
     WeatherType(String name) {
         this.name = name;
@@ -13,14 +13,6 @@ public enum WeatherType {
 
     public String getName() {
         return this.name;
-    }
-
-    public WeatherType getByName(String name) {
-        for(WeatherType w : values()) {
-            if(w.getName().equalsIgnoreCase(name))
-                return w;
-        }
-        return null;
     }
 
 }
