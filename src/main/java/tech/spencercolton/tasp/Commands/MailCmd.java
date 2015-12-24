@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
@@ -62,11 +63,11 @@ public class MailCmd extends TASPCommand {
                     sender.sendMessage(Config.c3() + " * You have no mail.");
                     return;
                 }
-                for(int i = 0; i < Math.min(5, mailz.size() - multi * 10); i++) {
-                    Map<String, String> z = mailz.get(i + multi * 10);
-                    String from = Person.getMostRecentName(UUID.fromString(z.get("from")));
-                    String add = z.get("message").length() > 30 ? "..." : "";
-                    String truncMessage = z.get("message").substring(0, Math.min(30, z.get("message").length())) + add;
+                for(int i = 0; i < Math.min(5, mailz.size() - multi * 5); i++) {
+                    Map<String, String> z = mailz.get(i + multi * 5);
+                    String from = Person.getMostRecentName(UUID.fromString(z.get("from"))) == null ? z.get("currname") : Person.getMostRecentName(UUID.fromString(z.get("from")));
+                    String add = z.get("message").length() > 20 ? "..." : "";
+                    String truncMessage = z.get("message").substring(0, Math.min(20, z.get("message").length())) + add;
                     String date = z.get("sent");
                     boolean b = Boolean.parseBoolean(z.get("read"));
                     try {
@@ -79,22 +80,97 @@ public class MailCmd extends TASPCommand {
                         String month = months[c.get(Calendar.MONTH)];
                         String hour = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
                         String minute = c.get(Calendar.MINUTE) < 10 ? "0" + Integer.toString(c.get(Calendar.MINUTE)) : Integer.toString(c.get(Calendar.MINUTE));
-                        sender.sendMessage(Config.c2() + " * " + Config.c3() + month + " " + day + " " + hour + ":" + minute + " " + Config.c1() + from + " " + Config.c4() + truncMessage);
+                        sender.sendMessage(Config.c2() + " " + Integer.toString(1 + i + multi * 5)+ " " + Config.c3() + month + " " + day + " " + hour + ":" + minute + " " + Config.c1() + from + " " + Config.c4() + (b ? "" : ChatColor.BOLD) + truncMessage);
                     } catch(ParseException ignored) {
 
                     }
-
                 }
+                return;
+            case "read":
+                if(args.length != 2) {
+                    Command.sendSyntaxError(sender, this);
+                    return;
+                }
+
+                int g;
+                try {
+                    g = Integer.parseInt(args[1]);
+                } catch(NumberFormatException e) {
+                    Command.sendSyntaxError(sender, this);
+                    return;
+                }
+                g--;
+                List<Map<String,String>> mails = Mail.fetch(Person.get((Player)sender));
+                if(g < 0 || g >= mails.size()) {
+                    sendMailNotFoundMessage(sender);
+                    return;
+                }
+                Map<String, String> mel = mails.get(g);
+                try {
+                    DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+                    Date a = df.parse(mel.get("sent"));
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(a);
+                    String day = Integer.toString(c.get(Calendar.DATE));
+                    String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                    String month = months[c.get(Calendar.MONTH)];
+                    String hour = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
+                    String minute = c.get(Calendar.MINUTE) < 10 ? "0" + Integer.toString(c.get(Calendar.MINUTE)) : Integer.toString(c.get(Calendar.MINUTE));
+                    String year = Integer.toString(c.get(Calendar.YEAR));
+                    String mostRecentName = Person.getMostRecentName(UUID.fromString(mel.get("from"))) == null ? mel.get("currname") : Person.getMostRecentName(UUID.fromString(mel.get("from")));
+                    sender.sendMessage(Config.c1() + " * ----------------------------- * ");
+                    sender.sendMessage(Config.c1() + " * Number: " + Config.c2() + Integer.toString(g + 1));
+                    sender.sendMessage(Config.c1() + " * From: " + Config.c2() + mostRecentName);
+                    sender.sendMessage(Config.c1() + " * Sent: " + Config.c2() + day + " " + month + " " + year + " " + hour + ":" + minute);
+                    sender.sendMessage(Config.c1() + " * Message: " + Config.c3() + mel.get("message"));
+                    sender.sendMessage(Config.c1() + " * ----------------------------- * ");
+                    Mail.setRead(mel);
+                }catch(ParseException e) {
+                    sender.sendMessage(Config.err() + "There was a problem fetching your mail.  Try again later.");
+                    return;
+                }
+                return;
+            case "delete":
+                if(args.length != 2) {
+                    Command.sendSyntaxError(sender, this);
+                    return;
+                }
+
+                int g2;
+                try {
+                    g2 = Integer.parseInt(args[1]);
+                } catch(NumberFormatException e) {
+                    Command.sendSyntaxError(sender, this);
+                    return;
+                }
+                g2--;
+                List<Map<String,String>> mails2 = Mail.fetch(Person.get((Player)sender));
+                if(g2 < 0 || g2 >= mails2.size()) {
+                    sendMailNotFoundMessage(sender);
+                    return;
+                }
+                Map<String,String> m1 = mails2.get(g2);
+                Mail.delete(m1);
+                sendDeletedMessage(sender);
+                break;
             default:
                 Command.sendSyntaxError(sender, this);
         }
     }
 
+    private void sendDeletedMessage(CommandSender sender) {
+        sender.sendMessage(Config.c3() + "Successfully deleted mail.");
+    }
+
     private void sendSentMessage(CommandSender sender, String other) {
         if(Command.messageEnabled(this, false))
             sender.sendMessage(M.m("command-message-text.mail", (Bukkit.getPlayer(other) == null ? other : Bukkit.getPlayer(other).getDisplayName())));
-        if(Command.messageEnabled(this, false) && Bukkit.getPlayer(other) != null)
+        if(Command.messageEnabled(this, true) && Bukkit.getPlayer(other) != null)
             Bukkit.getPlayer(other).sendMessage(M.m("command-message-text.mail-r", Command.getDisplayName(sender)));
+    }
+
+    private void sendMailNotFoundMessage(CommandSender sender) {
+        sender.sendMessage(Config.err() + "A mail with that ID was not found.");
     }
 
     @Override

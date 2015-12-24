@@ -45,13 +45,33 @@ public class Mail {
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
         List m = (ArrayList)mails.get("mails");
         Map mail = new HashMap<>();
+        mails.put("id", UUID.randomUUID().toString());
         mail.put("sent", df.format(Calendar.getInstance().getTime()));
+        mail.put("currname", from.getPlayer().getName());
         mail.put("from", from.getUid().toString());
         mail.put("to", to.toString());
         mail.put("message", msg);
         mail.put("read", "false");
         m.add(mail);
         mails.put("mails", m);
+        writeMails();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void setRead(Map<String,String> mail) {
+        List<Map<String,String>> mz = (ArrayList)mails.get("mails");
+        mz.remove(mail);
+        mail.put("read", "true");
+        mz.add(mail);
+        mails.put("mails", mz);
+        writeMails();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void delete(Map<String,String> mail) {
+        List<Map<String,String>> mz = (ArrayList)mails.get("mails");
+        mz.remove(mail);
+        mails.put("mails", mz);
         writeMails();
     }
 

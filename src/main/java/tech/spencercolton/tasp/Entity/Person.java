@@ -329,7 +329,7 @@ public class Person {
     /* */
 
     public boolean resetData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.getUid() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.getUid().toString() + ".json");
         if(!f.exists()) {
             return false;
         }

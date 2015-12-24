@@ -154,6 +154,8 @@ command-messages:
   spawnmob: true
   world: true
   drops: true
+  mail: true
+  mail-others: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
@@ -369,4 +371,8 @@ command-message-text:
   drops: '{0}Removed {1}{2}{0} drops.'
   # {2}: The word "enabled" or "disabled"
   teleporttoggle: '{0}You {1}{2}{0} teleportation.'
+  # {2}: The other players's name
+  mail: '{0}Your mail was sent to {1}{2}{0}.'
+  # {2}: The person who sent the mail
+  mail-r: '{0}You just received mail from {1}{2}{0}! Use {1}/mail check'
 

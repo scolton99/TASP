@@ -59,7 +59,7 @@ public class TASPCmd extends TASPCommand {
                     sender.sendMessage(Config.err() + "Main configuration file could not be deleted.  No changes were made.");
                 }
                 return;
-            case "deleteplayerdata":
+            case "resetplayer":
                 if(args.length != 2) {
                     Command.sendGenericSyntaxError(sender, this);
                     return;
@@ -77,6 +77,8 @@ public class TASPCmd extends TASPCommand {
                     sender.sendMessage(Config.c3() + "Player " + Config.c4() + p.getDisplayName() + Config.c3() + "'s data was reset.");
                 }
                 return;
+            case "deletemail":
+
             default:
                 Command.sendSyntaxError(sender, this);
         }
