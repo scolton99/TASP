@@ -63,6 +63,8 @@ public class Person {
     private boolean lastTeleportHere;
     private long lastRequestTime;
 
+    private Location lastLocation;
+
     /**
      * Constructs a person object from a player object.
      * <p>
@@ -403,6 +405,14 @@ public class Person {
         } catch(IOException|ParseException e) {
             return null;
         }
+    }
+
+    public Location getLastLocation() {
+        return this.lastLocation;
+    }
+
+    public void setLastLocation(Location l) {
+        this.lastLocation = l;
     }
 
 }

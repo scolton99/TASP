@@ -190,7 +190,6 @@ public class KillallCmd extends TASPCommand {
         pets.add("all");
         pets.add("monster");
         pets.add("animal");
-        pets.add("elder_guardian");
 
         pets.addAll(ets.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));
 

@@ -227,3 +227,11 @@ commands:
         description: Send or receive mail.
         permission-message: You do not have permission to do this.
         usage: 'Invalid syntax. /mail <option> [options]'
+    back:
+        description: Go back to your last location.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /back'
+    spawn:
+        description: Teleport to the world's spawn.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /spawn'

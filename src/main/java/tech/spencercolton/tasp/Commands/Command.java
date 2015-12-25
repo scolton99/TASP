@@ -157,6 +157,8 @@ public class Command implements CommandExecutor{
         cmds.put(TeleportAllHereRequestCmd.name.toLowerCase(), new TeleportAllHereRequestCmd());
         cmds.put(TeleportToggleCmd.name.toLowerCase(), new TeleportToggleCmd());
         cmds.put(MailCmd.name.toLowerCase(), new MailCmd());
+        cmds.put(SpawnCmd.name.toLowerCase(), new SpawnCmd());
+        cmds.put(BackCmd.name.toLowerCase(), new BackCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
