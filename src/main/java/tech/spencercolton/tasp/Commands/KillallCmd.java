@@ -79,7 +79,9 @@ public class KillallCmd extends TASPCommand {
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public void execute(CommandSender sender, String... argsg) {
+        List<String> args = Command.processQuotedArguments(argsg);
+
         List<EntityType> banList = new ArrayList<>();
         banList.add(EntityType.ARMOR_STAND);
         banList.add(EntityType.ARROW);
@@ -188,11 +190,12 @@ public class KillallCmd extends TASPCommand {
         pets.add("all");
         pets.add("monster");
         pets.add("animal");
+        pets.add("elder_guardian");
 
         pets.addAll(ets.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));
 
         if(sender instanceof Player) {
-            switch(args.length){
+            switch(args.size()){
                 case 0:
                     World w = ((Entity) sender).getWorld();
                     int count = 0;
@@ -211,7 +214,7 @@ public class KillallCmd extends TASPCommand {
                     World w2 = ((Entity) sender).getWorld();
                     int cxt = 0;
 
-                    if(!pets.contains(args[0].toLowerCase())) {
+                    if(!pets.contains(args.get(0).toLowerCase())) {
                         Command.sendSyntaxError(sender, this);
                         return;
                     } else {
@@ -220,20 +223,20 @@ public class KillallCmd extends TASPCommand {
                         for(Entity ex: eties) {
                             if(banList.contains(ex.getType()))
                                 continue;
-                            if(args[0].equalsIgnoreCase("all")) {
+                            if(args.get(0).equalsIgnoreCase("all")) {
                                 ex.remove();
                                 cxt++;
-                            } else if(args[0].equalsIgnoreCase("monster")) {
+                            } else if(args.get(0).equalsIgnoreCase("monster")) {
                                 if (emonster.contains(ex.getType())) {
                                     ex.remove();
                                     cxt++;
                                 }
-                            } else if(args[0].equalsIgnoreCase("animal")) {
+                            } else if(args.get(0).equalsIgnoreCase("animal")) {
                                 if(eanimal.contains(ex.getType())) {
                                     ex.remove();
                                     cxt++;
                                 }
-                            } else if(ex.getType().toString().equalsIgnoreCase(args[0])) {
+                            } else if(ex.getType().toString().equalsIgnoreCase(args.get(0))) {
                                 ex.remove();
                                 cxt++;
                             }
@@ -244,8 +247,8 @@ public class KillallCmd extends TASPCommand {
                 case 2:
                     int a;
                     try {
-                        a = Integer.parseInt(args[1]);
-                        String ET = args[0];
+                        a = Integer.parseInt(args.get(1));
+                        String ET = args.get(0);
 
                         World w3 = ((Entity) sender).getWorld();
 
@@ -268,20 +271,20 @@ public class KillallCmd extends TASPCommand {
                                     continue;
                                 if(ex.getLocation().distance(((Entity) sender).getLocation()) > a)
                                     continue;
-                                if(args[0].equalsIgnoreCase("all")) {
+                                if(args.get(0).equalsIgnoreCase("all")) {
                                     ex.remove();
                                     czt++;
-                                } else if(args[0].equalsIgnoreCase("monster")) {
+                                } else if(args.get(0).equalsIgnoreCase("monster")) {
                                     if(emonster.contains(ex.getType())) {
                                         ex.remove();
                                         czt++;
                                     }
-                                } else if(args[0].equalsIgnoreCase("animal")) {
+                                } else if(args.get(0).equalsIgnoreCase("animal")) {
                                     if(eanimal.contains(ex.getType())) {
                                         ex.remove();
                                         czt++;
                                     }
-                                } else if(ex.getType().toString().equalsIgnoreCase(args[0])) {
+                                } else if(ex.getType().toString().equalsIgnoreCase(args.get(0))) {
                                     ex.remove();
                                     czt++;
                                 }
@@ -297,7 +300,7 @@ public class KillallCmd extends TASPCommand {
             }
 
         } else if (sender instanceof ConsoleCommandSender) {
-            switch(args.length) {
+            switch(args.size()) {
                 case 0:
                     World w = Bukkit.getWorlds().get(0);
                     int count = 0;
@@ -315,13 +318,13 @@ public class KillallCmd extends TASPCommand {
 
                     World w2 = Bukkit.getWorlds().get(0);
 
-                    if(!pets.contains(args[0])) {
+                    if(!pets.contains(args.get(0))) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
                     }
 
 
                     for(Entity x : w2.getEntities()) {
-                        switch (args[0]) {
+                        switch (args.get(0)) {
                             case "all":
                                 if (!banList.contains(x.getType())) {
                                     x.remove();
@@ -341,7 +344,7 @@ public class KillallCmd extends TASPCommand {
                                 }
                                 break;
                             default:
-                                if (x.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(x.getType())) {
+                                if (x.getType().toString().equalsIgnoreCase(args.get(0)) && !banList.contains(x.getType())) {
                                     x.remove();
                                     ccx++;
                                 }
@@ -353,21 +356,21 @@ public class KillallCmd extends TASPCommand {
 
                     return;
                 case 2:
-                    World w3 = Bukkit.getWorld(args[1]);
+                    World w3 = Bukkit.getWorld(args.get(1));
 
                     int ccz = 0;
 
                     if(w3 == null) {
-                        sender.sendMessage(Config.err() + "World \"" + args[1] + "\" does not seem to exist.");
+                        sender.sendMessage(Config.err() + "World \"" + args.get(1) + "\" does not seem to exist.");
                         return;
                     }
 
-                    if(!pets.contains(args[0])) {
+                    if(!pets.contains(args.get(0))) {
                         Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
                     }
 
                     for(Entity y : w3.getEntities()) {
-                        switch(args[0]) {
+                        switch(args.get(0)) {
                             case "all":
                                 if(!banList.contains(y.getType())) {
                                     y.remove();
@@ -387,7 +390,7 @@ public class KillallCmd extends TASPCommand {
                                 }
                                 break;
                             default:
-                                if(y.getType().toString().equalsIgnoreCase(args[0]) && !banList.contains(y.getType())) {
+                                if(y.getType().toString().equalsIgnoreCase(args.get(0)) && !banList.contains(y.getType())) {
                                     y.remove();
                                     ccz++;
                                 }
