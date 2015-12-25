@@ -2,13 +2,14 @@ package tech.spencercolton.tasp.Listeners;
 
 import com.oracle.jrockit.jfr.EventDefinition;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import tech.spencercolton.tasp.Entity.Person;
 
 /**
  * @author Spencer Colton
  */
-public class PlayerTeleportListener {
+public class PlayerTeleportListener implements Listener {
 
     @EventHandler
     public void onEvent(PlayerTeleportEvent e) {

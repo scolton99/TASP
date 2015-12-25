@@ -159,6 +159,7 @@ public class Command implements CommandExecutor{
         cmds.put(MailCmd.name.toLowerCase(), new MailCmd());
         cmds.put(SpawnCmd.name.toLowerCase(), new SpawnCmd());
         cmds.put(BackCmd.name.toLowerCase(), new BackCmd());
+        cmds.put(ShootCmd.name.toLowerCase(), new ShootCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -276,6 +277,14 @@ public class Command implements CommandExecutor{
         }
 
         return newArgs;
+    }
+
+    public static List<String> removeSpaces(String... args) {
+        List<String> fin = new ArrayList<>();
+        for(String s : args) {
+            fin.add(s.replace(" ", "_"));
+        }
+        return fin;
     }
 
     public static String getDisplayName(CommandSender sender) {

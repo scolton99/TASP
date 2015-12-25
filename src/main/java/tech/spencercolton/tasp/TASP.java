@@ -6,6 +6,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.Config;
@@ -74,9 +75,9 @@ public class TASP extends JavaPlugin {
         Mail.initMail();
         this.initCommands();
         this.initListeners();
+        Entities.initEntities();
         File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
-        File g = new File(dataFolder().getAbsolutePath() + File.separator + "mail" + File.separator);
-        if(f.mkdirs() && g.mkdirs()) {
+        if(f.mkdirs()) {
             Bukkit.getLogger().info("Directories were created for TASP.");
         }
 
@@ -161,6 +162,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("mail").setExecutor(c);
         this.getCommand("spawn").setExecutor(c);
         this.getCommand("back").setExecutor(c);
+        this.getCommand("shoot").setExecutor(c);
     }
 
     /**
@@ -182,6 +184,7 @@ public class TASP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EntityTargetListener(), this);
         this.getServer().getPluginManager().registerEvents(new TASPBroadcastListener(), this);
         this.getServer().getPluginManager().registerEvents(new PersonTeleportListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(), this);
     }
 
     /**

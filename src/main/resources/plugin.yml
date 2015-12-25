@@ -7,6 +7,7 @@ commands:
         description: "Kill all entities of a given type in a given radius."
         permission-message: "You do not have permisssion to do that."
         usage: "Invalid syntax. /killall [entity] [radius]"
+        aliases: [bluerinse]
     setspeed:
         description: Set the speed of a player.
         permission: tasp.setspeed
@@ -235,3 +236,7 @@ commands:
         description: Teleport to the world's spawn.
         permission-message: You do not have permission to do this.
         usage: 'Invalid syntax. /spawn'
+    shoot:
+        description: Fire an entity.
+        permission-message: You do not have permission to do this.
+        usage: 'Invalid syntax. /shoot <entity>'
