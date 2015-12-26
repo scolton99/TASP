@@ -69,10 +69,7 @@ public class GamemodeCmd extends TASPCommand {
                         return;
                     }
                 }
-                if(sender.equals(p))
-                    Message.Gamemode.sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase());
-                else
-                    Message.Gamemode.sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase(), p);
+                Message.Gamemode.sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase(), p);
                 break;
             }
             default: {

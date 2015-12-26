@@ -47,10 +47,7 @@ public class BuddhaCmd extends TASPCommand {
                 assert p != null;
 
                 p.setBuddha(!p.isBuddha());
-                if(p.getPlayer().equals(sender))
-                    Message.Buddha.sendBuddhaMessage(sender, p.isBuddha(), p);
-                else
-                    Message.Buddha.sendBuddhaMessage(sender, p.isBuddha());
+                Message.Buddha.sendBuddhaMessage(sender, p.isBuddha(), p.getPlayer());
                 return;
             }
             default: {

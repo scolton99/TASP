@@ -101,10 +101,7 @@ public class FlyCmd extends TASPCommand {
                     p = (Player)sender;
                 p.setAllowFlight(true);
                 p.setFlying(!p.isFlying());
-                if(p.equals(sender))
-                    Message.Fly.sendFlyingMessage(sender, p.isFlying());
-                else
-                    Message.Fly.sendFlyingMessage(sender, p.isFlying(), p.getDisplayName());
+                Message.Fly.sendFlyingMessage(sender, p.isFlying(), p);
                 return;
             }
             default: {

@@ -40,7 +40,7 @@ public class AFKCmd extends TASPCommand {
             case 0: {
                 Person pers = Person.get((Player)sender);
                 pers.setAfk(!pers.isAfk());
-                Message.AFK.broadcastAFKMessage(pers);
+                Message.AFK.broadcastAFKMessage(pers.getPlayer());
                 return;
             }
             default: {

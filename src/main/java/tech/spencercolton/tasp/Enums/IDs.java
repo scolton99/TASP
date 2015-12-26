@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-enum IDs {
+public enum IDs {
 
     AIR(0, 0, Material.AIR, "NOTHING"),
     STONE(1, 0, Material.STONE, "SMOOTH_STONE"),

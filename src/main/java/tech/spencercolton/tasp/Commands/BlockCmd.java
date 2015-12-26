@@ -58,11 +58,11 @@ public class BlockCmd extends TASPCommand {
         if(!pa.isPlayerBlocked(ps))
             pa.blockPlayer(ps);
         else {
-            Message.Block.Error.sendAlreadyBlockedMessage(sender, ps);
+            Message.Block.Error.sendAlreadyBlockedMessage(sender, ps.getPlayer());
             return;
         }
 
-        Message.Block.sendBlockedMessage(sender, ps);
+        Message.Block.sendBlockedMessage(sender, ps.getPlayer());
     }
 
 }

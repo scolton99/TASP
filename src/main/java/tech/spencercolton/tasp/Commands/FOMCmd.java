@@ -56,10 +56,7 @@ public class FOMCmd extends TASPCommand {
                             ((Monster) e).setTarget(null);
                     });
                 }
-                if (p.getPlayer().equals(sender))
-                    Message.FOM.sendFOMMessage(sender, p.isFOM());
-                else
-                    Message.FOM.sendFOMMessage(sender, p.isFOM(), p);
+                Message.FOM.sendFOMMessage(sender, p.isFOM(), p.getPlayer());
                 return;
             }
             default: {

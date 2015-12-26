@@ -39,7 +39,7 @@ public class FeedCmd extends TASPCommand {
                 try {
                     amount = Integer.parseInt(args[1]);
                     if (amount < 0) {
-                        Message.Feed.Error.sendNegativeMessage(sender);
+                        Command.sendNegativeMessage(sender);
                     }
                 } catch (NumberFormatException e) {
                     Command.sendGenericSyntaxError(sender, this);
@@ -66,10 +66,7 @@ public class FeedCmd extends TASPCommand {
                 p.setFoodLevel(p.getFoodLevel() + amount);
                 p.setSaturation(20.0F);
 
-                if(p.equals(sender))
-                    Message.Feed.sendFedMessage(sender, amount / 2.0F);
-                else
-                    Message.Feed.sendFedMessage(sender, amount / 2.0F, p);
+                Message.Feed.sendFedMessage(sender, amount / 2.0F, p.getPlayer());
                 return;
             }
             default: {

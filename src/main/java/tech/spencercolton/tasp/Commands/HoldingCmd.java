@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -13,36 +14,21 @@ import java.util.List;
  */
 public class HoldingCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/holding";
+
     public static final String name = "holding";
+
+    @Getter
     private static final String permission = "tasp.holding";
+
+    @Getter
     private static final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
         ItemStack i = ((Player)sender).getItemInHand();
-
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override

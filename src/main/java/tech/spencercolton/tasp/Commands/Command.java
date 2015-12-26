@@ -90,7 +90,7 @@ public class Command implements CommandExecutor{
     private boolean executeCommand(String name, CommandSender sender, String... args) {
         if(Collections.list(cmds.keys()).contains(name.toLowerCase())) {
             if(sender instanceof ConsoleCommandSender && cmds.get(name.toLowerCase()).getConsoleSyntax() == null) {
-                sendConsoleError((ConsoleCommandSender)sender);
+                sendConsoleError(sender);
                 return true;
             }
             cmds.get(name.toLowerCase()).execute(sender, args);
@@ -157,6 +157,7 @@ public class Command implements CommandExecutor{
         cmds.put(SpawnCmd.name.toLowerCase(), new SpawnCmd());
         cmds.put(BackCmd.name.toLowerCase(), new BackCmd());
         cmds.put(ShootCmd.name.toLowerCase(), new ShootCmd());
+        cmds.put(HoldingCmd.name.toLowerCase(), new HoldingCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -172,14 +173,14 @@ public class Command implements CommandExecutor{
     /**
      * A method to send an error message to the console informing it that the command cannot be run from the console.
      * <p>
-     *     Internally calls {@link #sendConsoleError(ConsoleCommandSender, String)}.
+     *     Internally calls {@link #sendConsoleError(CommandSender, String)}.
      * </p>
      *
      * @param s A console command sender to whom the message will be sent.
      */
     public static void sendConsoleError(CommandSender s) {
         assert s instanceof ConsoleCommandSender;
-        sendConsoleError(s, "this command");
+        s.sendMessage(Config.err() + "Sorry, this command can only be run in-game.");
     }
 
     /**
@@ -189,10 +190,6 @@ public class Command implements CommandExecutor{
      * @param command The name of the command that cannot be executed from the console.
      */
     public static void sendConsoleError(CommandSender s, String command) {
-        assert s instanceof ConsoleCommandSender;
-        if(!command.equals("this command"))
-            command = "\"" + command + "\"";
-        s.sendMessage(Config.err() + "Sorry, " + command + " can only be run in-game.");
     }
 
     /**
@@ -293,18 +290,18 @@ public class Command implements CommandExecutor{
         return combineArgs(Arrays.asList(args), 0);
     }
 
-    public static String combineArgs(List<String> args) {
-        return combineArgs(args, 0);
-    }
-
     public static String combineArgs(List<String> args, int start) {
         String fin = "";
-        for(int i = 0; i < args.size(); i++) {
+        for(int i = start; i < args.size(); i++) {
             fin += args.get(i);
             if(!(i + 1 >= args.size()))
                 fin += " ";
         }
         return fin;
+    }
+
+    public static void sendNegativeMessage(CommandSender s) {
+        s.sendMessage(Config.err() + "Amount must be positive.");
     }
 
 }

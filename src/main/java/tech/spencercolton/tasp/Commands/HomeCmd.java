@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -51,21 +52,15 @@ import tech.spencercolton.tasp.Util.Config;
  */
 public class HomeCmd extends TASPCommand {
 
-    /**
-     * String containing the command's name.
-     */
     public static final String name = "home";
 
-    /**
-     * String containing the command's syntax.
-     */
+    @Getter
     private static final String syntax = "/home";
 
-    /**
-     * String containing the command's console syntax.
-     */
+    @Getter
     private static final String consoleSyntax = null;
 
+    @Getter
     private static final String permission = "tasp.home";
 
     /**
@@ -74,7 +69,7 @@ public class HomeCmd extends TASPCommand {
     @Override
     public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender, name);
+            Command.sendConsoleError(sender);
             return;
         }
 
@@ -102,32 +97,6 @@ public class HomeCmd extends TASPCommand {
 
     }
 
-    private void sendWorldMessage(CommandSender s) {
-        s.sendMessage(Config.err() + "You could not be teleported to your home because it is not in this world.");
-    }
 
-    private void sendNoHomeMessage(CommandSender s) {
-        s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
 
 }
