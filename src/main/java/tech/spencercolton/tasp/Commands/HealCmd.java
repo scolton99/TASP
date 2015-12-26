@@ -38,7 +38,7 @@ public class HealCmd extends TASPCommand {
                         return;
                     }
                 } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
+                    Command.sendGenericSyntaxError(sender, this);
                 }
             }
             case 1: {

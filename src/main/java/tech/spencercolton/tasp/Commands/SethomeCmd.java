@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -9,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code sethome} command.
@@ -56,254 +58,147 @@ import tech.spencercolton.tasp.Util.M;
  */
 public class SethomeCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/sethome [<x> <y> <z>] [world] [player] [<yaw> <pitch>]";
+
+    @Getter
     private static final String consoleSyntax = "/sethome <player> <x> <y> <z> [world] [<yaw> <pitch>]";
+
     public static final String name = "sethome";
+
+    @Getter
     private static final String permission = "tasp.sethome";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(sender instanceof ConsoleCommandSender) {
-            if (args.length < 4 || args.length > 7) {
-                Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-            }
+        assert (sender instanceof ConsoleCommandSender || sender instanceof Player);
 
-            switch (args.length) {
-                case 4:
-                    try {
-                        double x = Double.parseDouble(args[1]);
-                        double y = Double.parseDouble(args[2]);
-                        double z = Double.parseDouble(args[3]);
-                        Player p = Bukkit.getPlayer(args[0]);
-
-                        if (p == null) {
-                            Command.sendPlayerMessage(sender, args[0]);
-                            return;
-                        }
-
-                        Location l = new Location(p.getWorld(), x, y, z);
-                        Person.get(p).setHome(l);
-                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
-                        return;
-                    } catch (NumberFormatException e) {
-                        Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-                        return;
-                    }
-                case 5:
-                    try {
-                        double x = Double.parseDouble(args[1]);
-                        double y = Double.parseDouble(args[2]);
-                        double z = Double.parseDouble(args[3]);
-                        World w = Bukkit.getWorld(args[4]);
-                        Player p = Bukkit.getPlayer(args[0]);
-
-                        if (p == null) {
-                            Command.sendPlayerMessage(sender, args[0]);
-                            return;
-                        }
-
-                        if (w == null) {
-                            Command.sendWorldMessage(sender, args[4]);
-                            return;
-                        }
-
-                        Location l = new Location(w, x, y, z);
-                        Person.get(p).setHome(l);
-                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
-                        return;
-                    } catch (NumberFormatException e) {
-                        Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-                        return;
-                    }
-                case 7:
-                    try {
-                        double x = Double.parseDouble(args[1]);
-                        double y = Double.parseDouble(args[2]);
-                        double z = Double.parseDouble(args[3]);
-                        World w = Bukkit.getWorld(args[4]);
-                        float yaw = Float.parseFloat(args[5]);
-                        float pitch = Float.parseFloat(args[6]);
-                        Player p = Bukkit.getPlayer(args[0]);
-
-                        if (p == null) {
-                            Command.sendPlayerMessage(sender, args[0]);
-                            return;
-                        }
-
-                        if (w == null) {
-                            Command.sendPlayerMessage(sender, args[4]);
-                            return;
-                        }
-
-                        Location l = new Location(w, x, y, z, yaw, pitch);
-                        Person.get(p).setHome(l);
-                        this.sendHomeMessage(sender, Person.get(p).getHome(), args[0]);
-                        return;
-                    } catch (NumberFormatException e) {
-                        Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-                        return;
-                    }
-                default:
-                    Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-                    return;
-            }
+        if(sender instanceof ConsoleCommandSender && (args.length < 4 || args.length > 7 || args.length == 6)) {
+            Command.sendConsoleSyntaxError(sender, this);
+            return;
         }
 
-        if(args.length > 7) {
+        if(sender instanceof Player && (args.length > 7 || args.length == 6)) {
             Command.sendSyntaxError(sender, this);
             return;
         }
 
+        World w = null;
+        Double x = null, y = null, z = null;
+        Float yaw = null, pitch = null;
+        Player p = null;
+
         switch(args.length) {
-            case 0:
-                Person p = Person.get((Player)sender);
-                p.setHome(((Entity) sender).getLocation());
+            case 7: {
+                try {
+                    yaw = Float.parseFloat(args[5]);
+                    pitch = Float.parseFloat(args[6]);
+                    if (yaw < 0.0F || yaw > 360.0F) {
+                        Message.Sethome.Error.sendYawOOBMessage(sender);
+                        return;
+                    }
+                    if (pitch < -90.0F || pitch > 90.0F) {
+                        Message.Sethome.Error.sendPitchOOBMessage(sender);
+                        return;
+                    }
+                } catch(NumberFormatException e) {
+                    Command.sendGenericSyntaxError(sender, this);
+                    return;
+                }
+            }
+            case 5: {
+                if(sender instanceof ConsoleCommandSender) {
+                    w = Bukkit.getWorld(args[4]);
+                    if (w == null) {
+                        Command.sendWorldMessage(sender, args[4]);
+                        return;
+                    }
+                } else {
+                    p = Bukkit.getPlayer(args[4]);
+                    if (p == null) {
+                        Command.sendPlayerMessage(sender, args[4]);
+                        return;
+                    }
+                }
+            }
+            case 4: {
+                if(sender instanceof ConsoleCommandSender) {
+                    try {
+                        x = Double.parseDouble(args[1]);
+                        y = Double.parseDouble(args[2]);
+                        z = Double.parseDouble(args[3]);
+                        p = Bukkit.getPlayer(args[0]);
+                        if (p == null) {
+                            Command.sendPlayerMessage(sender, args[0]);
+                            return;
+                        }
+                        if(yaw == null)
+                            yaw = 0.0F;
+                        if(pitch == null)
+                            pitch = 0.0F;
+                        if(w == null)
+                            w = Bukkit.getWorlds().get(0);
 
-                this.sendHomeMessage(sender, p.getHome());
+                        Location l = new Location(w, x, y, z, yaw, pitch);
+                        Person.get(p).setHome(l);
+                        Message.Sethome.sendHomeMessage(sender, l, p);
+                        return;
+                    } catch(NumberFormatException e) {
+                        Command.sendConsoleSyntaxError(sender, this);
+                        return;
+                    }
+                } else {
+                    w = Bukkit.getWorld(args[3]);
+                    if(w == null) {
+                        Command.sendWorldMessage(sender, args[3]);
+                        return;
+                    }
+                }
+            }
+            case 3: {
+                if(sender instanceof Player) {
+                    try {
+                        x = Double.parseDouble(args[0]);
+                        y = Double.parseDouble(args[1]);
+                        z = Double.parseDouble(args[2]);
+                    } catch (NumberFormatException e) {
+                        Command.sendSyntaxError(sender, this);
+                        return;
+                    }
+                }
+            }
+            case 0: {
+                assert sender instanceof Player;
+
+                if(p == null)
+                    p = (Player)sender;
+                if(yaw == null)
+                    yaw = p.getLocation().getYaw();
+                if(pitch == null)
+                    pitch = p.getLocation().getPitch();
+                if(x == null)
+                    x = p.getLocation().getX();
+                if(y == null)
+                    y = p.getLocation().getY();
+                if(z == null)
+                    z = p.getLocation().getZ();
+                if(w == null)
+                    w = p.getWorld();
+
+                Location l = new Location(w, x, y, z, yaw, pitch);
+                Person.get(p).setHome(l);
+                Message.Sethome.sendHomeMessage(sender, l, p);
                 return;
-            case 3:
-                Person p2 = Person.get((Player)sender);
-                try {
-                    Double x = Double.parseDouble(args[0]);
-                    Double y = Double.parseDouble(args[1]);
-                    Double z = Double.parseDouble(args[2]);
-                    p2.setHome(new Location(((Entity) sender).getWorld(), x, y, z));
-
-                    this.sendHomeMessage(sender, p2.getHome());
-                    return;
-                } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
-                    return;
-                }
-            case 4:
-                Person p3 = Person.get((Player)sender);
-                try {
-                    Double x = Double.parseDouble(args[0]);
-                    Double y = Double.parseDouble(args[1]);
-                    Double z = Double.parseDouble(args[2]);
-                    World w = Bukkit.getWorld(args[3]);
-
-                    if(w == null) {
-                        Command.sendWorldMessage(sender, args[3]);
-                        return;
-                    }
-
-                    p3.setHome(new Location(w, x, y, z));
-
-                    this.sendHomeMessage(sender, p3.getHome());
-                    return;
-                } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
-                    return;
-                }
-            case 5:
-                Person p4 = Person.get((Player)sender);
-                try {
-                    Double x = Double.parseDouble(args[0]);
-                    Double y = Double.parseDouble(args[1]);
-                    Double z = Double.parseDouble(args[2]);
-                    World w = Bukkit.getWorld(args[3]);
-                    Player v = Bukkit.getPlayer(args[4]);
-
-                    if(w == null) {
-                        Command.sendWorldMessage(sender, args[3]);
-                        return;
-                    }
-
-                    if(v == null) {
-                        Command.sendPlayerMessage(sender, args[4]);
-                    }
-
-                    Person.get(v).setHome(new Location(w, x, y, z));
-
-                    assert v != null;
-
-                    this.sendHomeMessage(sender, p4.getHome(), v.getName());
-                    return;
-                } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
-                    return;
-                }
-            case 7:
-                Person p5 = Person.get((Player)sender);
-                try {
-                    Double x = Double.parseDouble(args[0]);
-                    Double y = Double.parseDouble(args[1]);
-                    Double z = Double.parseDouble(args[2]);
-                    World w = Bukkit.getWorld(args[3]);
-                    Player v = Bukkit.getPlayer(args[4]);
-                    Float yaw = Float.parseFloat(args[5]);
-                    Float pitch = Float.parseFloat(args[6]);
-
-                    if(w == null) {
-                        Command.sendWorldMessage(sender, args[3]);
-                        return;
-                    }
-
-                    if(v == null) {
-                        Command.sendPlayerMessage(sender, args[4]);
-                    }
-
-                    Person.get(v).setHome(new Location(w, x, y, z, yaw, pitch));
-
-                    assert v != null;
-
-                    this.sendHomeMessage(sender, p5.getHome(), v.getName());
-                    return;
-                } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
-                    return;
-                }
-            default:
-                Command.sendSyntaxError(sender, this);
-                break;
+            }
+            default: {
+                Command.sendGenericSyntaxError(sender, this);
+            }
         }
-    }
-
-    private void sendHomeMessage(CommandSender s, Location l) {
-        if(Command.messageEnabled(this, false))
-            s.sendMessage(M.m("command-message-text.sethome", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ())));
-    }
-
-    private void sendHomeMessage(CommandSender s, Location l, String o) {
-        Player p = Bukkit.getPlayer(o);
-
-        assert p != null;
-
-        if(p.equals(s)) {
-            this.sendHomeMessage(s, l);
-            return;
-        }
-
-        if(Command.messageEnabled(this, false))
-            s.sendMessage(M.m("command-message-text.sethome-others-s", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), p.getDisplayName()));
-        if(Command.messageEnabled(this, true))
-            p.sendMessage(M.m("command-message-text.sethome-others-r", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), s.getName()));
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
         return args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender) ? permission + ".others" : permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
 }

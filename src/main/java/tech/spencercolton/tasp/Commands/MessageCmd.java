@@ -1,25 +1,30 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
 import tech.spencercolton.tasp.Util.Config;
 
+import javax.annotation.Generated;
 import java.util.Arrays;
 import java.util.List;
 
 public class MessageCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/msg <player> <message>";
-    private static final String consoleSyntax = syntax;
-    private static final String permission = "tasp.msg";
-    public static final String name = "msg";
 
-    public static CommandSender consoleLast;
+    @Getter
+    private static final String consoleSyntax = syntax;
+
+    @Getter
+    private static final String permission = "tasp.msg";
+
+    public static final String name = "msg";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-
         if (args.length < 2) {
             Command.sendSyntaxError(sender, this);
             return;
@@ -36,50 +41,14 @@ public class MessageCmd extends TASPCommand {
             return;
         }
 
-        String msg = "";
-        List<String> arg = Arrays.asList(args);
-
-        for(int i = 1; i < arg.size(); i++) {
-            msg += arg.get(i);
-            if(!(i + 1 >= arg.size()))
-                msg += " ";
-        }
+        String msg = Command.combineArgs(1, args);
 
         Bukkit.getServer().getPluginManager().callEvent(new PersonSendMessageEvent(sender, p, msg));
-
-    }
-
-    public static void sendBlockedMessage(CommandSender s, String name) {
-        s.sendMessage(Config.err() + name + " has blocked you.");
-    }
-
-    public static void sendYouBlockedMessage(CommandSender s, String name) {
-        s.sendMessage(Config.err() + "You have blocked " + name);
     }
 
     @Override
     public List<String> getAliases() {
         return Arrays.asList("message", "send", "tell");
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
 }

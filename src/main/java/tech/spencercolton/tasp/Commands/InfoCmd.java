@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -20,9 +21,14 @@ import java.util.Map;
  */
 public class InfoCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/info <player>";
+
     public static final String name = "info";
+
+    @Getter
     private static final String permission = "tasp.info";
+    @Getter
     private static final String consoleSyntax = "/info <player>";
 
     private final List<String> incls = Config.getListString("info-includes");
@@ -32,10 +38,7 @@ public class InfoCmd extends TASPCommand {
     public void execute(CommandSender sender, String[] args) {
 
         if(args.length != 1) {
-            if(sender instanceof ConsoleCommandSender)
-                Command.sendConsoleSyntaxError(sender, this);
-            else
-                Command.sendSyntaxError(sender, this);
+            Command.sendGenericSyntaxError(sender, this);
             return;
         }
 
@@ -123,26 +126,6 @@ public class InfoCmd extends TASPCommand {
                 return true;
         }
         return false;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override

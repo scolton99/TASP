@@ -1,8 +1,11 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
+import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Collections;
 import java.util.List;
@@ -12,52 +15,26 @@ import java.util.List;
  */
 public class PowertoolToggleCmd extends TASPCommand {
 
-    private static final String syntax = "/powertooltoggle";
+    @Getter
+    private static final String syntax = "/ptt";
+
     public static final String name = "powertooltoggle";
+
+    @Getter
     private static final String permission = "tasp.powertool.toggle";
+
+    @Getter
     private static final String consoleSyntax = syntax;
 
     @Override
     public void execute(CommandSender sender, String... args) {
         if(args.length != 0) {
-            Command.sendSyntaxError(sender, this);
+            Command.sendGenericSyntaxError(sender, this);
             return;
         }
 
-        this.sendToggledMessage(sender, PowertoolCmd.togglePowertools());
-        this.broadcastToggledMessage(sender, PowertoolCmd.powertoolsEnabled());
-    }
-
-    private void sendToggledMessage(CommandSender sender, boolean enabled) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.powertooltoggle", enabled ? "enabled" : "disabled"));
-    }
-
-    private void broadcastToggledMessage(CommandSender sender, boolean enabled) {
-        if(Config.getBoolean("broadcast-powertool-toggle")) {
-            String[] x = {"Powertools have been", (enabled ? "enabled" : "disabled") + "."};
-            new BroadcastCmd().execute(sender, x);
-        }
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Message.PowertoolToggle.sendToggledMessage(sender, TASP.togglePowertools());
+        Message.PowertoolToggle.broadcastToggledMessage(sender, TASP.powertoolsEnabled());
     }
 
     @Override

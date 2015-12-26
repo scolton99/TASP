@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -17,9 +18,15 @@ import java.util.*;
  */
 public class MailCmd extends TASPCommand {
 
+    @Getter
     public static final String syntax = "/mail <option> [options]";
+
     public static final String name = "mail";
+
+    @Getter
     public static final String permission = "tasp.mail";
+
+    @Getter
     public static final String consoleSyntax = null;
 
     @Override
@@ -46,7 +53,7 @@ public class MailCmd extends TASPCommand {
                     msg = ColorChat.color(msg);
                     msg = ChatFilter.filter(msg);
                     Mail.send(Person.get((Player)sender), Person.personExists(args[1]), msg);
-                    sendSentMessage(sender, args[1]);
+                    Message.Mail.sendSentMessage(sender, args[1]);
                     return;
                 } else {
                     Command.sendPlayerMessage(sender, args[1]);
@@ -102,7 +109,7 @@ public class MailCmd extends TASPCommand {
                 g--;
                 List<Map<String,String>> mails = Mail.fetch(Person.get((Player)sender));
                 if(g < 0 || g >= mails.size()) {
-                    sendMailNotFoundMessage(sender);
+                    Message.Mail.Error.sendMailNotFoundMessage(sender);
                     return;
                 }
                 Map<String, String> mel = mails.get(g);
@@ -146,51 +153,16 @@ public class MailCmd extends TASPCommand {
                 g2--;
                 List<Map<String,String>> mails2 = Mail.fetch(Person.get((Player)sender));
                 if(g2 < 0 || g2 >= mails2.size()) {
-                    sendMailNotFoundMessage(sender);
+                    Message.Mail.Error.sendMailNotFoundMessage(sender);
                     return;
                 }
                 Map<String,String> m1 = mails2.get(g2);
                 Mail.delete(m1);
-                sendDeletedMessage(sender);
+                Message.Mail.sendDeletedMessage(sender);
                 break;
             default:
                 Command.sendSyntaxError(sender, this);
         }
-    }
-
-    private void sendDeletedMessage(CommandSender sender) {
-        sender.sendMessage(Config.c3() + "Successfully deleted mail.");
-    }
-
-    private void sendSentMessage(CommandSender sender, String other) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.mail", (Bukkit.getPlayer(other) == null ? other : Bukkit.getPlayer(other).getDisplayName())));
-        if(Command.messageEnabled(this, true) && Bukkit.getPlayer(other) != null)
-            Bukkit.getPlayer(other).sendMessage(M.m("command-message-text.mail-r", Command.getDisplayName(sender)));
-    }
-
-    private void sendMailNotFoundMessage(CommandSender sender) {
-        sender.sendMessage(Config.err() + "A mail with that ID was not found.");
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override

@@ -1,10 +1,15 @@
 package tech.spencercolton.tasp.Util;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import tech.spencercolton.tasp.Commands.BroadcastCmd;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Enums.Potions;
 
 /**
  * @author Spencer Colton
@@ -186,12 +191,185 @@ public class Message {
 
     public static class Home {
         public static class Error {
-            private void sendWorldMessage(CommandSender s) {
+            public static void sendWorldMessage(CommandSender s) {
                 s.sendMessage(Config.err() + "You could not be teleported to your home because it is not in this world.");
             }
 
-            private void sendNoHomeMessage(CommandSender s) {
+            public static void sendNoHomeMessage(CommandSender s) {
                 s.sendMessage(Config.err() + "You could not be sent home because you have not set your home.  Use /sethome first.");
+            }
+        }
+    }
+
+    public static class Hurt {
+        public static void sendHurtMessage(CommandSender sender, double amount, Player other) {
+            if (sender.equals(other) && Command.messageEnabled("hurt")) {
+                sender.sendMessage(M.cm("hurt", Double.toString(amount)));
+                return;
+            }
+
+            if (Command.messageEnabled("hurt"))
+                sender.sendMessage(M.cm("hurt-s", Double.toString(amount), other.getDisplayName()));
+            if (Command.messageEnabled("hurt-others"))
+                other.sendMessage(M.cm("hurt-r", Double.toString(amount), Command.getDisplayName(sender)));
+        }
+    }
+
+    public static class Killall {
+        public static void sendCountMessage(CommandSender sender, int count, String world) {
+            if(Command.messageEnabled("killall"))
+                sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
+        }
+
+        public static class Error {
+            public static void sendInvalidEntityMessage(CommandSender sender, String entity) {
+                sender.sendMessage(Config.err() + "\"" + entity + "\" is not recognized as a valid entity.");
+            }
+        }
+    }
+
+    public static class Mail {
+        public static void sendDeletedMessage(CommandSender sender) {
+            sender.sendMessage(Config.c3() + "Successfully deleted mail.");
+        }
+
+        public static void sendSentMessage(CommandSender sender, String other) {
+            if (Command.messageEnabled("mail"))
+                sender.sendMessage(M.cm("mail", (Bukkit.getPlayer(other) == null ? other : Bukkit.getPlayer(other).getDisplayName())));
+            if (Command.messageEnabled("mail-others") && Bukkit.getPlayer(other) != null)
+                Bukkit.getPlayer(other).sendMessage(M.cm("mail-r", Command.getDisplayName(sender)));
+        }
+
+        public static class Error {
+            public static void sendMailNotFoundMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "A mail with that ID was not found.");
+            }
+        }
+    }
+
+    public static class MessageCmd {
+        public static class Error {
+            public static void sendBlockedMessage(CommandSender s, String name) {
+                s.sendMessage(Config.err() + name + " has blocked you.");
+            }
+
+            public static void sendYouBlockedMessage(CommandSender s, String name) {
+                s.sendMessage(Config.err() + "You have blocked " + name);
+            }
+        }
+    }
+
+    public static class Mute {
+        public static void sendMutedMessage(CommandSender sender, boolean muted, Player p) {
+            if(Command.messageEnabled("muted"))
+                sender.sendMessage(M.cm("muted-s", p.getDisplayName(), muted ? "muted" : "unmuted"));
+            if(Command.messageEnabled("muted-r"))
+                sender.sendMessage(M.cm("muted-r", Command.getDisplayName(sender), muted ? "muted" : "unmuted"));
+        }
+    }
+
+    public static class Potion {
+        public static void sendPotionMessage(CommandSender sender, PotionEffect pe, Player p) {
+            if(sender.equals(p) && Command.messageEnabled("potion")) {
+                sender.sendMessage(M.m("command-message-text.potion", pe.getType().getName(), Integer.toString(pe.getAmplifier() + 1), Integer.toString(pe.getDuration() / Potions.TICKS_IN_SECOND)));
+                return;
+            }
+
+            if(Command.messageEnabled("potion"))
+                sender.sendMessage(M.cm("potion-s", pe.getType().getName(), Integer.toString(pe.getAmplifier() + 1), Integer.toString(pe.getDuration() / Potions.TICKS_IN_SECOND), p.getDisplayName()));
+            if(Command.messageEnabled("potion-others"))
+                p.sendMessage(M.cm("potion-r", pe.getType().getName(), Integer.toString(pe.getAmplifier() + 1), Integer.toString(pe.getDuration() / Potions.TICKS_IN_SECOND), Command.getDisplayName(sender)));
+        }
+
+        public static class Error {
+            public static void sendPotionNotRecognizedMessage(CommandSender sender, String potion) {
+                sender.sendMessage(Config.err() + "Potion " + potion + " not recognized.");
+            }
+        }
+    }
+
+    public static class Powertool {
+        public static void sendRemovedPowertoolsMessage(CommandSender sender, Material m) {
+            if(Command.messageEnabled("powertool-remove"))
+                sender.sendMessage(M.cm("powertool-remove", m.toString().toLowerCase().replace("_", " ")));
+
+        }
+
+        public static void sendPowertoolEnabledMessage(CommandSender sender, Material m, String cmdLine) {
+            if(Command.messageEnabled("powertool"))
+                sender.sendMessage(M.cm("powertool", m.toString().toLowerCase().replace("_", " "), cmdLine));
+        }
+    }
+
+    public static class PowertoolToggle {
+        public static void sendToggledMessage(CommandSender sender, boolean enabled) {
+            if(Command.messageEnabled("powertooltoggle"))
+                sender.sendMessage(M.cm("powertooltoggle", enabled ? "enabled" : "disabled"));
+        }
+
+        public static void broadcastToggledMessage(CommandSender sender, boolean enabled) {
+            if(Config.getBoolean("broadcast-powertool-toggle")) {
+                String[] x = {"Powertools have been", (enabled ? "enabled" : "disabled") + "."};
+                new BroadcastCmd().execute(sender, x);
+            }
+        }
+    }
+
+    public static class Reply {
+        public static class Error {
+            public static void sendNoLastMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "You cannot reply because you have not been messaged nor have you messaged anyone.");
+            }
+        }
+    }
+
+    public static class Sethome {
+        public static void sendHomeMessage(CommandSender s, Location l, Player p) {
+            if(s.equals(p) && Command.messageEnabled("sethome")) {
+                s.sendMessage(M.cm("sethome", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ())));
+                return;
+            }
+
+            if(Command.messageEnabled("sethome"))
+                s.sendMessage(M.cm("sethome-s", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), p.getDisplayName()));
+            if(Command.messageEnabled("sethome-others"))
+                p.sendMessage(M.cm("sethome-r", Integer.toString((int)l.getX()), Integer.toString((int)l.getY()), Integer.toString((int)l.getZ()), Command.getDisplayName(s)));
+        }
+
+        public static class Error {
+            public static void sendYawOOBMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "Yaw must be between 0 and 360 (inclusive).");
+            }
+
+            public static void sendPitchOOBMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "Pitch must be between -90 and 90 (inclusive).");
+            }
+        }
+    }
+
+    public static class Setspawn {
+        public static void sendSpawnSetMessage(CommandSender s, int x, int y, int z, String world) {
+            if(Command.messageEnabled("setspawn"))
+                s.sendMessage(M.cm("setspawn", Integer.toString(x), Integer.toString(y), Integer.toString(z), world));
+        }
+    }
+
+    public static class Setspeed {
+        public static void sendSpeedMessage(CommandSender s, float speed, Player p) {
+            if(s.equals(p) && Command.messageEnabled("setspeed")) {
+                p.sendMessage(M.m("command-message-text.setspeed", Float.toString(speed)));
+                return;
+            }
+
+            if(Command.messageEnabled("setspeed"))
+                p.sendMessage(M.cm("setspeed-s", p.getDisplayName(), Float.toString(speed)));
+            if(Command.messageEnabled("setspeed-others"))
+                s.sendMessage(M.cm("setspeed-r", Float.toString(speed), Command.getDisplayName(s)));
+        }
+
+        public static class Error {
+            public static void sendSpeedOOBMessage(CommandSender s) {
+                s.sendMessage(Config.err() + "Speed must be between 0 and 50 (inclusive).");
             }
         }
     }

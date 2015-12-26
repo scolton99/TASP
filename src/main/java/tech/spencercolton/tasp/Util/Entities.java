@@ -18,7 +18,7 @@ public class Entities {
     private static List<EntityType> notSpawnable;
     private static List<EntityType> allowed;
     private static List<String> kaAllowed;
-    private static List<String> allEntitesAsString;
+    private static List<String> allEntitiesAsString;
 
     public static void initEntities() {
         notSpawnable = new ArrayList<>();
@@ -128,12 +128,13 @@ public class Entities {
         kaAllowed = new ArrayList<>();
         kaAllowed.add("all");
         kaAllowed.add("monster");
+        kaAllowed.add("animal");
 
         kaAllowed.addAll(allowed.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));kaAllowed.add("animal");
 
-        allEntitesAsString = new ArrayList<>();
+        allEntitiesAsString = new ArrayList<>();
         for(EntityType e: EntityType.values()) {
-            allEntitesAsString.add(e.toString().toLowerCase());
+            allEntitiesAsString.add(e.toString().toLowerCase());
         }
     }
 
@@ -171,7 +172,7 @@ public class Entities {
     }
 
     public static boolean isValidEntityName(String s) {
-        return allEntitesAsString.contains(Command.removeSpaces(s).get(0).toLowerCase());
+        return allEntitiesAsString.contains(Command.removeSpaces(s).get(0).toLowerCase());
     }
 
     public static EntityType getEntityType(String s) {

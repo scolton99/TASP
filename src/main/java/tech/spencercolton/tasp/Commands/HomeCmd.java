@@ -7,6 +7,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Message;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code home} command.
@@ -63,9 +64,6 @@ public class HomeCmd extends TASPCommand {
     @Getter
     private static final String permission = "tasp.home";
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
@@ -85,18 +83,15 @@ public class HomeCmd extends TASPCommand {
         Location l = p2.getHome();
 
         if(l == null) {
-            this.sendNoHomeMessage(sender);
+            Message.Home.Error.sendNoHomeMessage(sender);
             return;
         }
 
         if(l.getWorld().equals(p.getWorld())) {
             p.teleport(l);
         } else {
-            this.sendWorldMessage(sender);
+            Message.Home.Error.sendWorldMessage(sender);
         }
-
     }
-
-
 
 }

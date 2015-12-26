@@ -172,24 +172,12 @@ public class Command implements CommandExecutor{
 
     /**
      * A method to send an error message to the console informing it that the command cannot be run from the console.
-     * <p>
-     *     Internally calls {@link #sendConsoleError(CommandSender, String)}.
-     * </p>
      *
      * @param s A console command sender to whom the message will be sent.
      */
     public static void sendConsoleError(CommandSender s) {
         assert s instanceof ConsoleCommandSender;
         s.sendMessage(Config.err() + "Sorry, this command can only be run in-game.");
-    }
-
-    /**
-     * A method to send an error message to the console informing it that the command cannot be run from the console.
-     *
-     * @param s A console command sender to whom the message will be sent.
-     * @param command The name of the command that cannot be executed from the console.
-     */
-    public static void sendConsoleError(CommandSender s, String command) {
     }
 
     /**
@@ -288,6 +276,10 @@ public class Command implements CommandExecutor{
 
     public static String combineArgs(String... args) {
         return combineArgs(Arrays.asList(args), 0);
+    }
+
+    public static String combineArgs(int start, String... args) {
+        return combineArgs(Arrays.asList(args), start);
     }
 
     public static String combineArgs(List<String> args, int start) {

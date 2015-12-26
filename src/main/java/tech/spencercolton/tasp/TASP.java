@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp;
 
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -43,6 +44,10 @@ public class TASP extends JavaPlugin {
      * </p>
      */
     private static File dataFolder;
+
+    private static boolean powertoolsEnabled = true;
+
+    public static CommandSender consoleLast;
 
     /**
      *
@@ -222,6 +227,15 @@ public class TASP extends JavaPlugin {
         Bukkit.getPluginManager().getPlugin("TASP").saveDefaultConfig();
         Bukkit.getPluginManager().getPlugin("TASP").reloadConfig();
         Config.loadConfig(Bukkit.getPluginManager().getPlugin("TASP").getConfig());
+    }
+
+    public static boolean powertoolsEnabled() {
+        return powertoolsEnabled;
+    }
+
+    public static boolean togglePowertools() {
+        powertoolsEnabled = !powertoolsEnabled;
+        return powertoolsEnabled;
     }
 
 }
