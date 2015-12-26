@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -35,6 +36,7 @@ import java.io.File;
  */
 public class TASP extends JavaPlugin {
 
+    public static final int WORLD_HEIGHT = 256;
     /**
      * A {@link File} object representing this plugin's data folder.
      * <p>
@@ -53,6 +55,13 @@ public class TASP extends JavaPlugin {
      *
      */
     public static Plugin TASPPerms_link;
+
+    @Getter
+    private static boolean teleportEnabled = true;
+
+    public static boolean toggleTeleporting() {
+        return teleportEnabled = !teleportEnabled;
+    }
 
     /**
      * Main method called by the server to enable the plugin.

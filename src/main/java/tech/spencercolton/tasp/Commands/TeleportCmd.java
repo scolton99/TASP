@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,19 +15,20 @@ import java.util.List;
  */
 public class TeleportCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/tp <player>";
-    public static final String name = "tp";
-    private static final String permission = "tasp.teleport";
-    private static final String consoleSyntax = null;
 
-    private static boolean enabled = true;
+    public static final String name = "tp";
+
+    @Getter
+    private static final String permission = "tasp.teleport";
+
+    @Getter
+    private static final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender);
-            return;
-        }
+        assert !(sender instanceof ConsoleCommandSender);
 
         if(args.length != 1) {
             Command.sendSyntaxError(sender, this);
@@ -36,40 +38,17 @@ public class TeleportCmd extends TASPCommand {
         Player p = (Player)sender;
         Player other = Bukkit.getPlayer(args[0]);
 
+        if(other == null) {
+            Command.sendPlayerMessage(sender, args[0]);
+            return;
+        }
+
         Bukkit.getServer().getPluginManager().callEvent(new PersonTeleportEvent(p, other));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override
     public List<String> getAliases() {
         return Collections.singletonList("teleport");
-    }
-
-    public static boolean toggleTeleporting() {
-        return enabled = !enabled;
-    }
-
-    public static boolean isEnabled() {
-        return enabled;
     }
 
 }

@@ -28,7 +28,7 @@ public class HoldingCmd extends TASPCommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
-        ItemStack i = ((Player)sender).getItemInHand();
+        @SuppressWarnings("UnusedAssignment") ItemStack i = ((Player)sender).getItemInHand();
     }
 
     @Override

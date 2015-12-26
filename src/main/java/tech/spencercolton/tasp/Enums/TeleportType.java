@@ -6,6 +6,6 @@ package tech.spencercolton.tasp.Enums;
 public enum TeleportType {
 
     PERSON,
-    LOCATION;
+    LOCATION
 
 }

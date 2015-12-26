@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 /**

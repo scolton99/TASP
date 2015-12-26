@@ -5,12 +5,13 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import tech.spencercolton.tasp.Commands.MessageCmd;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
+import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.ChatFilter;
 import tech.spencercolton.tasp.Util.ColorChat;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -28,25 +29,25 @@ public class PersonSendMessageListener implements Listener {
             Person p1 = Person.get((Player) e.getFrom());
 
             if (p2.isPlayerBlocked(p1)) {
-                MessageCmd.sendBlockedMessage(e.getFrom(), p2.getPlayer().getDisplayName());
+                Message.MessageCmd.Error.sendBlockedMessage(e.getFrom(), p2.getPlayer().getDisplayName());
                 return;
             }
 
             if(p1.isPlayerBlocked(p2)) {
-                MessageCmd.sendYouBlockedMessage(e.getFrom(), p2.getPlayer().getDisplayName());
+                Message.MessageCmd.Error.sendYouBlockedMessage(e.getFrom(), p2.getPlayer().getDisplayName());
                 return;
             }
         }
 
         if(e.getFrom() instanceof ConsoleCommandSender) {
-            MessageCmd.consoleLast = e.getTo();
+            TASP.consoleLast = e.getTo();
         } else {
             Person px = Person.get((Player)e.getFrom());
             px.setLastMessaged(e.getFrom());
         }
 
         if(e.getTo() instanceof ConsoleCommandSender) {
-            MessageCmd.consoleLast = e.getFrom();
+            TASP.consoleLast = e.getFrom();
         } else {
             Person pz = Person.get((Player)e.getTo());
             pz.setLastMessaged(e.getFrom());

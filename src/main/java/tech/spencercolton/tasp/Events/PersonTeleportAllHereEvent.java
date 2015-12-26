@@ -1,7 +1,6 @@
 package tech.spencercolton.tasp.Events;
 
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import tech.spencercolton.tasp.Entity.Person;
@@ -11,6 +10,7 @@ import tech.spencercolton.tasp.Entity.Person;
  */
 public class PersonTeleportAllHereEvent extends Event {
 
+    @Getter
     private static final HandlerList handlers = new HandlerList();
 
     @Getter
@@ -26,11 +26,6 @@ public class PersonTeleportAllHereEvent extends Event {
     public PersonTeleportAllHereEvent(Person requester, boolean request) {
         this.requester = requester;
         this.request = request;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
     }
 
     @SuppressWarnings("unused")

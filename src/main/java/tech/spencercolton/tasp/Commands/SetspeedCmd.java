@@ -5,11 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
-
-import java.io.Console;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code setspeed} command.

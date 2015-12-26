@@ -6,10 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 /**

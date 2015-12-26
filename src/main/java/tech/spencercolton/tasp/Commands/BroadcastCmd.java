@@ -5,9 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Events.TASPBroadcastEvent;
 
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author Spencer Colton
  */

@@ -158,6 +158,7 @@ public class Command implements CommandExecutor{
         cmds.put(BackCmd.name.toLowerCase(), new BackCmd());
         cmds.put(ShootCmd.name.toLowerCase(), new ShootCmd());
         cmds.put(HoldingCmd.name.toLowerCase(), new HoldingCmd());
+        cmds.put(ItemCmd.name.toLowerCase(), new ItemCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
@@ -197,7 +198,7 @@ public class Command implements CommandExecutor{
      * @param s A {@code ConsoleCommandSender} to whom the message will be sent.
      * @param c The command that was executed incorrectly.
      */
-    public static void sendConsoleSyntaxError(ConsoleCommandSender s, TASPCommand c) {
+    private static void sendConsoleSyntaxError(ConsoleCommandSender s, TASPCommand c) {
         s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getConsoleSyntax());
     }
 
@@ -282,7 +283,7 @@ public class Command implements CommandExecutor{
         return combineArgs(Arrays.asList(args), start);
     }
 
-    public static String combineArgs(List<String> args, int start) {
+    private static String combineArgs(List<String> args, int start) {
         String fin = "";
         for(int i = start; i < args.size(); i++) {
             fin += args.get(i);
@@ -294,6 +295,10 @@ public class Command implements CommandExecutor{
 
     public static void sendNegativeMessage(CommandSender s) {
         s.sendMessage(Config.err() + "Amount must be positive.");
+    }
+
+    public static void sendInvalidEntityMessage(CommandSender sender, String entity) {
+        sender.sendMessage(Config.err() + "\"" + entity + "\" is not recognized as a valid entity.");
     }
 
 }

@@ -1,5 +1,7 @@
 package tech.spencercolton.tasp.Entity;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -14,11 +16,8 @@ import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -34,11 +33,14 @@ public class Person {
     /**
      * Hold's the player's unique id.
      */
+    @Getter
     private final UUID uid;
 
     /**
      * Holds a constant list of players who are currently online on the server.
      */
+    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
+    @Getter
     private static final List<Person> people = new ArrayList<>();
 
     /**
@@ -54,15 +56,19 @@ public class Person {
      */
     private PlayerData data;
 
+    @Setter @Getter
     private CommandSender lastMessaged;
     private boolean afk;
     private String ip;
     private final HashMap<Material, List<String>> pts = new HashMap<>();
 
     private Person lastTeleportRequester;
+
+    @Getter
     private boolean lastTeleportHere;
     private long lastRequestTime;
 
+    @Getter @Setter
     private Location lastLocation;
 
     /**
@@ -78,18 +84,8 @@ public class Person {
         this.data = new PlayerData(this);
         this.data.setString("lastName", p.getName());
         writeData();
-        // ...
         people.add(this);
         UIDpeople.put(this.uid, this);
-    }
-
-    /**
-     * Gives the list of all users who are currently online.
-     *
-     * @return A list of people who are currently online.
-     */
-    public static List<Person> getPeople() {
-        return people;
     }
 
     /**
@@ -121,18 +117,8 @@ public class Person {
         return Bukkit.getPlayer(this.uid);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public String getName() {
         return this.getPlayer().getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public UUID getUid() {
-        return this.uid;
     }
 
     /**
@@ -208,14 +194,6 @@ public class Person {
         return this.getBlockedPlayers().contains(p.getUid().toString());
     }
 
-    public CommandSender getLastMessaged() {
-        return this.lastMessaged;
-    }
-
-    public void setLastMessaged(CommandSender p) {
-        this.lastMessaged = p;
-    }
-
     @SuppressWarnings("unchecked")
     public Map<String, List<String>> getPowertools() {
         return this.data.getMap("powertools");
@@ -267,8 +245,7 @@ public class Person {
 
     /* */
     public boolean isStalker() {
-        Boolean b = this.data.getBoolean("stalker");
-        return !(b == null || !b);
+        return this.data.getBoolean("stalker");
     }
 
     public void setStalker(boolean b) {
@@ -278,8 +255,7 @@ public class Person {
 
     /* */
     public boolean isGod() {
-        Boolean b = this.data.getBoolean("god");
-        return !(b == null || !b);
+        return this.data.getBoolean("god");
     }
 
     public void setGod(boolean b) {
@@ -289,8 +265,7 @@ public class Person {
 
     /* */
     public boolean isFOM() {
-        Boolean b = this.data.getBoolean("fom");
-        return !(b == null || !b);
+        return this.data.getBoolean("fom");
     }
 
     public void setFOM(boolean b) {
@@ -310,8 +285,7 @@ public class Person {
 
     /* */
     public boolean isMuted() {
-        Boolean b = this.data.getBoolean("muted");
-        return !(b == null || !b);
+        return this.data.getBoolean("muted");
     }
 
     public void setMuted(boolean b) {
@@ -321,8 +295,7 @@ public class Person {
 
     /* */
     public boolean isBuddha() {
-        Boolean b = this.data.getBoolean("buddha");
-        return !(b == null || !b);
+        return this.data.getBoolean("buddha");
     }
 
     public void setBuddha(boolean b) {
@@ -365,10 +338,6 @@ public class Person {
         return this.lastTeleportRequester;
     }
 
-    public boolean isLastTeleportRequestHere() {
-        return this.lastTeleportHere;
-    }
-
     public void clearTeleportRequests() {
         this.lastTeleportRequester = null;
     }
@@ -405,14 +374,6 @@ public class Person {
         } catch(IOException|ParseException e) {
             return null;
         }
-    }
-
-    public Location getLastLocation() {
-        return this.lastLocation;
-    }
-
-    public void setLastLocation(Location l) {
-        this.lastLocation = l;
     }
 
 }

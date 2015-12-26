@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("unused")
 public enum IDs {
 
     AIR(0, 0, Material.AIR, "NOTHING"),
@@ -60,13 +61,13 @@ public enum IDs {
     DISPENSER(23, 0, Material.DISPENSER),
     SANDSTONE(24, 0, Material.SANDSTONE),
     CHISELED_SANDSTONE(24, 1, Material.SANDSTONE),
-    SMOOTH_SANDSTONE(24, 2 Material.SANDSTONE),
+    SMOOTH_SANDSTONE(24, 2, Material.SANDSTONE),
     NOTE_BLOCK(25, 0, Material.NOTE_BLOCK),
     BED_BLOCK(26, 0, Material.BED_BLOCK),
     POWERED_RAIL(27, 0, Material.POWERED_RAIL),
     DETECTOR_RAIL(28, 0, Material.DETECTOR_RAIL),
     STICKY_PISTON(29, 0, Material.PISTON_STICKY_BASE),
-    COBWEB(30, 0, ),
+    COBWEB(30, 0),
     DEAD_SHRUB(31, 0),
     LONG_GRASS(31, 1),
     FERN(31, 2),
@@ -606,7 +607,6 @@ public enum IDs {
     private final int damage;
     private final List<String> names = new ArrayList<>();
 
-    @SuppressWarnings({"unused", "UnusedParameters"})
     IDs(int id, int damage, Material m, String... names) {
         this.id = id;
         this.damage = damage;
@@ -616,6 +616,14 @@ public enum IDs {
 
     IDs(int id, Material m, String... names) {
         this(id, 0, m, names);
+    }
+
+    IDs(int id, int damage, String... names) {
+        this(id, damage, null, names);
+    }
+
+    IDs(int id, String... names) {
+        this(id, 0, null, names);
     }
 
     public static IDs getById(int id) {

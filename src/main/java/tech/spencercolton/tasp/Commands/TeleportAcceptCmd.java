@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,9 +16,15 @@ import java.util.List;
  */
 public class TeleportAcceptCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/tpa";
+
     public static final String name = "tpa";
+
+    @Getter
     private static final String permission = "tasp.teleport.request.respond";
+
+    @Getter
     private static final String consoleSyntax = null;
 
     @Override
@@ -31,28 +38,8 @@ public class TeleportAcceptCmd extends TASPCommand {
         Person pa = p.getLastTeleportRequester();
         p.clearTeleportRequests();
 
-        PersonTeleportEvent e = (p.isLastTeleportRequestHere() ? new PersonTeleportEvent(p.getPlayer(), pa.getPlayer(), true, false) : new PersonTeleportEvent(pa.getPlayer(), p.getPlayer(), false, false));
+        PersonTeleportEvent e = (p.isLastTeleportHere() ? new PersonTeleportEvent(p.getPlayer(), pa.getPlayer(), true, false) : new PersonTeleportEvent(pa.getPlayer(), p.getPlayer(), false, false));
         Bukkit.getServer().getPluginManager().callEvent(e);
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override

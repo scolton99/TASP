@@ -15,16 +15,21 @@ public class M {
         return Config.getString(s);
     }
 
-    public static String m(String... s) {
+    public static String cu(String s) {
+        s = "command-message-text." + s;
+        return u(s);
+    }
+
+    public static String cm(String... s) {
         if(s.length >= 1) {
             s[0] = "command-message-text." + s[0];
         } else {
             return null;
         }
-        return cm(s);
+        return m(s);
     }
 
-    public static String cm(String... s) {
+    public static String m(String... s) {
         if (s.length == 0) {
             return null;
         }
@@ -42,7 +47,6 @@ public class M {
         newStrs.add(0, Config.c2().toString());
         newStrs.add(0, Config.c1().toString());
         return MessageFormat.format(finStr, newStrs.toArray(new String[newStrs.size()]));
-
     }
 
 }

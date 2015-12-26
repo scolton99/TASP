@@ -4,10 +4,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitTask;
-import tech.spencercolton.tasp.Commands.AFKCmd;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Message;
 
 public class MoveListener implements Listener {
 
@@ -17,7 +17,7 @@ public class MoveListener implements Listener {
         Person p = Person.get(e.getPlayer());
         if(p.isAfk()) {
             p.setAfk(false);
-            AFKCmd.broadcastAFKMessage(p);
+            Message.AFK.broadcastAFKMessage(p.getPlayer());
         } else {
             BukkitTask k = AFKTimer.timers.get(p);
             k.cancel();

@@ -10,6 +10,7 @@ import tech.spencercolton.tasp.Util.M;
 
 public class TASPBroadcastEvent extends Event {
 
+    @Getter
     private static final HandlerList handlers = new HandlerList();
 
     @Getter @Setter
@@ -34,11 +35,6 @@ public class TASPBroadcastEvent extends Event {
         this.p = p;
         this.message = message;
         this.prefix = prefix;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
     }
 
     @SuppressWarnings("unused")

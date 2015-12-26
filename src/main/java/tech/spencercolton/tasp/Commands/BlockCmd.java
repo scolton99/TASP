@@ -6,8 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 public class BlockCmd extends TASPCommand {
@@ -54,6 +52,11 @@ public class BlockCmd extends TASPCommand {
 
         Person ps = Person.get(p);
         Person pa = Person.get((Player)sender);
+
+        if(ps.equals(pa)) {
+            Message.Block.Error.sendSelfMessage(sender);
+            return;
+        }
 
         if(!pa.isPlayerBlocked(ps))
             pa.blockPlayer(ps);

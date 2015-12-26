@@ -5,9 +5,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Util.Config;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MeCmd extends TASPCommand {
 
     @Getter

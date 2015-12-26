@@ -1,8 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.TASP;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,9 +13,15 @@ import java.util.List;
  */
 public class TeleportToggleCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/tpt";
+
     public static final String name = "tpt";
+
+    @Getter
     private static final String permission = "tasp.teleport.toggle";
+
+    @Getter
     private static final String consoleSyntax = "/tpt";
 
     @Override
@@ -24,35 +31,7 @@ public class TeleportToggleCmd extends TASPCommand {
             return;
         }
 
-        sendToggledMessage(sender, TeleportCmd.toggleTeleporting());
-    }
-
-    private void sendToggledMessage(CommandSender sender, boolean enabled) {
-        sender.sendMessage(M.m("command-message-text.teleporttoggle", (enabled ? "enabled" : "disabled")));
-        if(Config.getBoolean("broadcast-teleport-toggle")) {
-            String[] x = {"Teleportation has been", (enabled ? "enabled" : "disabled") + "."};
-            new BroadcastCmd().execute(sender, x);
-        }
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Message.Teleport.sendToggledMessage(sender, TASP.toggleTeleporting());
     }
 
     @Override

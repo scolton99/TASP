@@ -6,7 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Collections;

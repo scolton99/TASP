@@ -4,8 +4,6 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-import javax.annotation.Generated;
-
 /**
  * @author Spencer Colton
  */

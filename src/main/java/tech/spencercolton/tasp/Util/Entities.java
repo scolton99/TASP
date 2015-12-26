@@ -16,7 +16,6 @@ public class Entities {
     private static List<EntityType> monsters;
     private static List<EntityType> animals;
     private static List<EntityType> notSpawnable;
-    private static List<EntityType> allowed;
     private static List<String> kaAllowed;
     private static List<String> allEntitiesAsString;
 
@@ -91,7 +90,7 @@ public class Entities {
         animals.add(EntityType.VILLAGER);
         animals.add(EntityType.WOLF);
 
-        allowed = new ArrayList<>();
+        List<EntityType> allowed = new ArrayList<>();
         allowed.add(EntityType.BAT);
         allowed.add(EntityType.BLAZE);
         allowed.add(EntityType.CAVE_SPIDER);
@@ -138,10 +137,6 @@ public class Entities {
         }
     }
 
-    public static boolean isAllowed(Entity e) {
-        return isAllowed(e.getType());
-    }
-
     public static boolean isAllowed(String s) {
         EntityType e = EntityType.valueOf(s.toUpperCase().replace(" ", "_"));
         return e != null && isAllowed(e);
@@ -153,10 +148,6 @@ public class Entities {
 
     public static boolean killAllowed(String s) {
         return kaAllowed.contains(s);
-    }
-
-    public static boolean killAllowed(EntityType e) {
-        return killAllowed(e.toString().toLowerCase());
     }
 
     public static boolean killAllowed(Entity e) {
@@ -177,7 +168,7 @@ public class Entities {
 
     public static EntityType getEntityType(String s) {
         try {
-            return EntityType.valueOf(s.toUpperCase());
+            return EntityType.valueOf(s.toUpperCase().replace(" ", "_"));
         } catch(IllegalArgumentException e) {
             return null;
         }

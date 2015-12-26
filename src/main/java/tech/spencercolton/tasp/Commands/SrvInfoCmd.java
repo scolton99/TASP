@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Util.Config;
@@ -9,9 +10,15 @@ import tech.spencercolton.tasp.Util.Config;
  */
 public class SrvInfoCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/srvinfo";
+
     public static final String name = "srvinfo";
+
+    @Getter
     private static final String permission = "tasp.info.server";
+
+    @Getter
     private static final String consoleSyntax = syntax;
 
     @Override
@@ -27,26 +34,6 @@ public class SrvInfoCmd extends TASPCommand {
         sender.sendMessage(Config.c1() + " * Whitelist: " + (Bukkit.getServer().hasWhitelist() ? Config.c3() : Config.c4()) + Boolean.toString(Bukkit.getServer().hasWhitelist()));
         sender.sendMessage(Config.c1() + " * Online Mode: " + (Bukkit.getServer().getOnlineMode() ? Config.c3() : Config.c4()) + Boolean.toString(Bukkit.getServer().getOnlineMode()));
         sender.sendMessage(Config.c1() + " * Flight Allowed: "+ (Bukkit.getServer().getAllowFlight() ? Config.c3() : Config.c4()) + Boolean.toString(Bukkit.getServer().getAllowFlight()));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
 }

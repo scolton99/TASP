@@ -10,6 +10,7 @@ import tech.spencercolton.tasp.Enums.TeleportType;
 
 public class PersonTeleportEvent extends Event {
 
+    @Getter
     private static final HandlerList handlers = new HandlerList();
 
     @Getter
@@ -54,11 +55,6 @@ public class PersonTeleportEvent extends Event {
         this.requester = teleporter;
         this.location = to;
         this.type = TeleportType.LOCATION;
-    }
-
-    @Override
-    public HandlerList getHandlers() {
-        return handlers;
     }
 
     @SuppressWarnings("unused")

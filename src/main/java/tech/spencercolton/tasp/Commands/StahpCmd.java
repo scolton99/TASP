@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 
@@ -8,9 +9,15 @@ import org.bukkit.command.CommandSender;
  */
 public class StahpCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/stahp";
+
     public static final String name = "stahp";
+
+    @Getter
     private static final String permission = "tasp.stop";
+
+    @Getter
     private static final String consoleSyntax = syntax;
 
     @Override
@@ -21,26 +28,5 @@ public class StahpCmd extends TASPCommand {
         }
         Bukkit.shutdown();
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }

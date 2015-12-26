@@ -7,8 +7,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import tech.spencercolton.tasp.Enums.Potions;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;
@@ -38,7 +36,7 @@ public class PotionCmd extends TASPCommand {
             return;
         }
 
-        Potions po = null;
+        Potions po;
         Player p = null;
         Integer strength = null;
         Integer duration = null;

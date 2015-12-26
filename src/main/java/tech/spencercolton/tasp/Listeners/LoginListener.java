@@ -24,7 +24,6 @@ public class LoginListener implements Listener {
     public void onEvent(PlayerJoinEvent e) {
         new Person(e.getPlayer());
         Person a = Person.get(e.getPlayer());
-
         assert a != null;
 
         TASP.loadPerson(a);

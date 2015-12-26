@@ -2,13 +2,10 @@ package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 public class SetspawnCmd extends TASPCommand {
@@ -34,7 +31,7 @@ public class SetspawnCmd extends TASPCommand {
         }
 
         Integer x = null, y = null, z = null;
-        World w = null;
+        World w;
         switch(args.length) {
             case 4: {
                 try {
@@ -83,7 +80,6 @@ public class SetspawnCmd extends TASPCommand {
             }
             default: {
                 Command.sendGenericSyntaxError(sender, this);
-                return;
             }
         }
     }

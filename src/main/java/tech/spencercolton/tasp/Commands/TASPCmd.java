@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -21,14 +22,17 @@ public class TASPCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
+    @Getter
     private static final String syntax = "/tasp [option]";
 
 
     /**
      * String containing the command's console syntax.
      */
+    @Getter
     private static final String consoleSyntax = syntax;
 
+    @Getter
     private static final String permission = "tasp.tasp";
 
     /**
@@ -78,30 +82,11 @@ public class TASPCmd extends TASPCommand {
                 }
                 return;
             case "deletemail":
-
+                sender.sendMessage(Config.err() + "Sorry, this feature is not yet implemented.");
+                break;
             default:
                 Command.sendSyntaxError(sender, this);
         }
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override

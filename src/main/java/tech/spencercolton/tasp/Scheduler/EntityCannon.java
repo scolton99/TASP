@@ -7,8 +7,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class EntityCannon extends BukkitRunnable {
 
-    final Entity e;
-    static final long TICKS_IN_SECOND = 20;
+    private final Entity e;
+    private static final long TICKS_IN_SECOND = 20;
 
     public EntityCannon(Entity e) {
         this.e = e;

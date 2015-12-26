@@ -4,12 +4,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import tech.spencercolton.tasp.Commands.BroadcastCmd;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Enums.Potions;
+import tech.spencercolton.tasp.Enums.WeatherType;
+
+import java.text.DecimalFormat;
 
 /**
  * @author Spencer Colton
@@ -61,6 +65,10 @@ public class Message {
         public static class Error {
             public static void sendAlreadyBlockedMessage(CommandSender s, Player p) {
                 s.sendMessage(Config.err() + p.getDisplayName() + " is already blocked.");
+            }
+
+            public static void sendSelfMessage(CommandSender s) {
+                s.sendMessage(Config.err() + "You can't block yourself!");
             }
         }
     }
@@ -220,12 +228,6 @@ public class Message {
             if(Command.messageEnabled("killall"))
                 sender.sendMessage(M.m("command-message-text.killall", Integer.toString(count), world));
         }
-
-        public static class Error {
-            public static void sendInvalidEntityMessage(CommandSender sender, String entity) {
-                sender.sendMessage(Config.err() + "\"" + entity + "\" is not recognized as a valid entity.");
-            }
-        }
     }
 
     public static class Mail {
@@ -248,6 +250,8 @@ public class Message {
     }
 
     public static class MessageCmd {
+
+
         public static class Error {
             public static void sendBlockedMessage(CommandSender s, String name) {
                 s.sendMessage(Config.err() + name + " has blocked you.");
@@ -374,7 +378,54 @@ public class Message {
         }
     }
 
-    public static class TeleportListener {
+    public static class Shock {
+        public static void sendShockMessage(CommandSender s, Player p) {
+            if(p.equals(s)) {
+                s.sendMessage(M.cu("shock"));
+                return;
+            }
+            if(Command.messageEnabled("shock"))
+                s.sendMessage(M.cm("shock-s", p.getDisplayName()));
+            if(Command.messageEnabled("shock-others"))
+                p.sendMessage(M.cm("shock-r", Command.getDisplayName(s)));
+        }
+    }
+
+    public static class Spawnmob {
+        public static void sendSpawnmobMessage(CommandSender sender, EntityType e, int amount) {
+            sender.sendMessage(M.m("command-message-text.spawnmob", e.toString().toLowerCase().replace("_", " "), Integer.toString(amount)));
+        }
+    }
+
+    public static class Stalker {
+        public static void sendStalkerMessage(CommandSender sender, boolean enabled, Player p) {
+            if(sender.equals(p) && Command.messageEnabled("stalker")) {
+                sender.sendMessage(M.cm("stalker", enabled ? "enabled" : "disabled"));
+                return;
+            }
+
+            if(Command.messageEnabled("stalker"))
+                sender.sendMessage(M.cm("stalker-s", enabled ? "enabled" : "disabled", p.getDisplayName()));
+            if(Command.messageEnabled("stalker-others"))
+                p.sendMessage(M.cm("stalker-r", enabled ? "enabled" : "disabled", Command.getDisplayName(sender)));
+        }
+    }
+
+    public static class Starve {
+        public static void sendStarvedMessage(CommandSender sender, float amount, Player p) {
+            if(sender.equals(p) && Command.messageEnabled("starve")) {
+                sender.sendMessage(M.cm("starve", Float.toString(amount)));
+                return;
+            }
+
+            if(Command.messageEnabled("starve"))
+                sender.sendMessage(M.m("command-message-text.starve-s", Float.toString(amount), p.getDisplayName()));
+            if(Command.messageEnabled("starve-others"))
+                p.sendMessage(M.m("command-message-text.starve-r", Float.toString(amount), Command.getDisplayName(sender)));
+        }
+    }
+
+    public static class Teleport {
         public static void sendTeleportRequestMessage(Player requester, Player requestee) {
             requester.sendMessage(Config.c3() + "Asking " + requestee.getDisplayName() + " if it's okay to teleport you to him or her..." + (Config.isTeleportRequestLimited() ? "expires in " + Config.teleportRequestLimit() / 1000 + " seconds" : ""));
             requestee.sendMessage(Config.c4() + "Player " + requester.getDisplayName() + " would like to teleport to you.  Type /tpa to allow, or /tpd to deny (or just ignore this message.) " + (Config.isTeleportRequestLimited() ? "Expires in "+ Config.teleportRequestLimit() / 1000 + " seconds." : "" ));
@@ -401,6 +452,19 @@ public class Message {
             requestee.sendMessage(Config.c4() + "Player " + requester.getDisplayName() + " would like you to teleport to him or her.  Type /tpa to allow, or /tpd to deny (or just ignore this message.) " + (Config.isTeleportRequestLimited() ? "Expires in "+ Config.teleportRequestLimit() / 1000 + " seconds." : "" ));
         }
 
+        public static void sendTeleportDenyMessage(Player requester, Player requestee) {
+            requester.sendMessage(Config.c1() + requestee.getDisplayName() + Config.c1() + " denied your teleport request.");
+            requestee.sendMessage(Config.c1() + "You denied " + requester.getDisplayName() + Config.c1() + "'s teleport request.");
+        }
+
+        public static void sendToggledMessage(CommandSender s, boolean enabled) {
+            s.sendMessage(M.m("command-message-text.teleporttoggle", (enabled ? "enabled" : "disabled")));
+            if(Config.getBoolean("broadcast-teleport-toggle")) {
+                String[] x = {"Teleportation has been", (enabled ? "enabled" : "disabled") + "."};
+                new BroadcastCmd().execute(s, x);
+            }
+        }
+
         public static class Error {
             public static void sendTeleportCooldownMessage(Player p, long time) {
                 p.sendMessage(Config.err() + "You can't teleport again for another " + (int)Math.ceil(time / 1000.0D) + " seconds.");
@@ -413,6 +477,73 @@ public class Message {
             public static void sendTeleportDisabledMessage(CommandSender s) {
                 s.sendMessage(Config.err() + "Teleporting has been disabled for this server.");
             }
+
+            public static void sendNoTeleportRequestsMessage(CommandSender s) {
+                s.sendMessage(Config.err() + "You have no existing teleport requests.");
+            }
+        }
+    }
+
+    public static class Time {
+        public static void sendTimeMessage(CommandSender sender, String time, String bukkitTime, String name) {
+            sender.sendMessage(M.m("command-message-text.time", time, bukkitTime, name));
+        }
+
+        public static void sendTimeSetMessage(CommandSender sender, String time, String bukkitTime, String name) {
+            if(Command.messageEnabled("time-set"))
+                sender.sendMessage(M.m("command-message-text.time-set", time, bukkitTime, name));
+        }
+
+        public static class Error {
+            public static void sendInvalidFormatMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "Time must be in ticks, 12 or 24 hour format, or \"noon\", \"midnight\", \"night\", or \"day\".");
+            }
+        }
+    }
+
+    public static class Unblock {
+        public static void sendUnblockedMessage(CommandSender sender, Person p) {
+            if(Command.messageEnabled("unblock"))
+                sender.sendMessage(M.m("command-message-text.unblock", p.getPlayer().getDisplayName()));
+            if(Command.messageEnabled("unblock-r"))
+                p.getPlayer().sendMessage(M.m("command-message-text.unblock-r", sender.getName()));
+        }
+
+        public static class Error {
+            public static void sendNotBlockedMessage(CommandSender sender, Person p) {
+                sender.sendMessage(Config.err() + p.getPlayer().getDisplayName() + " is not blocked.");
+            }
+        }
+    }
+
+
+    public static class Weather {
+        public static void sendWeatherMessage(CommandSender sender, WeatherType w, int duration, org.bukkit.World world) {
+            if(Command.messageEnabled("weather"))
+                sender.sendMessage(M.m("command-message-text.weather-set", w.getName(), Integer.toString(duration / tech.spencercolton.tasp.Util.Time.TICKS_IN_SECOND), world.getName()));
+        }
+
+        public static void sendConsoleWeatherReport(CommandSender sender, boolean storming, int duration, org.bukkit.World w) {
+            sender.sendMessage(M.m("command-message-text.weather-console", (storming ? "storming" : "clear"), Integer.toString(duration / tech.spencercolton.tasp.Util.Time.TICKS_IN_SECOND), w.getName()));
+        }
+
+        public static void sendWeatherReport(CommandSender sender, boolean storming, int duration, double temperature, double humidity, org.bukkit.World w) {
+            DecimalFormat d = new DecimalFormat("0.00");
+            String temp = d.format(tech.spencercolton.tasp.Util.Weather.calcTemperature(temperature, w));
+            sender.sendMessage(M.m("command-message-text.weather", (storming ? "storming" : "clear"), Integer.toString(duration / tech.spencercolton.tasp.Util.Time.TICKS_IN_SECOND), temp, d.format(tech.spencercolton.tasp.Util.Weather.calcHumidity(humidity)), w.getName()));
+        }
+    }
+
+    public static class World {
+        public static void sendWorldMessage(CommandSender sender) {
+            if(Command.messageEnabled("world"))
+                sender.sendMessage(M.cm("world", ((Player)sender).getWorld().getName()));
+        }
+    }
+
+    public static class XYZ {
+        public static void sendPosMessage(CommandSender sender, int x, int y, int z) {
+            sender.sendMessage(M.cm("xyz", Integer.toString(x), Integer.toString(y), Integer.toString(z)));
         }
     }
 

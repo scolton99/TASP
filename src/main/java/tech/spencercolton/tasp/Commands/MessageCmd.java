@@ -4,9 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
-import tech.spencercolton.tasp.Util.Config;
 
-import javax.annotation.Generated;
 import java.util.Arrays;
 import java.util.List;
 

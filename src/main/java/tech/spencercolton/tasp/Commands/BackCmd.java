@@ -7,7 +7,6 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 /**

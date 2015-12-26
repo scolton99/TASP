@@ -5,8 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import tech.spencercolton.tasp.Commands.PowertoolCmd;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.TASP;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ public class PlayerInteractListener implements Listener {
         if(e.getAction() != Action.LEFT_CLICK_AIR && e.getAction() != Action.LEFT_CLICK_BLOCK)
             return;
 
-        if(!PowertoolCmd.powertoolsEnabled())
+        if(!TASP.powertoolsEnabled())
             return;
 
         if(Person.get(e.getPlayer()).getPowertool(e.getPlayer().getItemInHand().getType()) != null) {

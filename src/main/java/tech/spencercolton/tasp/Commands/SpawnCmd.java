@@ -1,16 +1,26 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 
 /**
  * @author Spencer Colton
  */
 public class SpawnCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/spawn";
+
     public static final String name = "spawn";
+
+    @Getter
     private static final String consoleSyntax = null;
+
+    @Getter
     private static final String permission = "tasp.spawn";
 
     @Override
@@ -19,27 +29,9 @@ public class SpawnCmd extends TASPCommand {
             Command.sendSyntaxError(sender, this);
             return;
         }
-        ((Player)sender).teleport(((Player)sender).getWorld().getSpawnLocation());
-    }
+        assert sender instanceof Player;
 
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        Bukkit.getPluginManager().callEvent(new PersonTeleportEvent(Person.get((Player)sender), ((Player)sender).getWorld().getSpawnLocation()));
     }
 
 }

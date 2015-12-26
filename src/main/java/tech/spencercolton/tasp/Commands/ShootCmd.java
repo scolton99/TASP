@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -19,9 +20,15 @@ import java.util.List;
  */
 public class ShootCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/shoot <mob>";
+
     public static final String name = "shoot";
+
+    @Getter
     private static final String permission = "tasp.shoot";
+
+    @Getter
     private static final String consoleSyntax = null;
 
     @Override
@@ -53,26 +60,5 @@ public class ShootCmd extends TASPCommand {
         g.setVelocity(j);
         new EntityCannon(g);
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }

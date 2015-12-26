@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Mail {
 
@@ -79,12 +80,7 @@ public class Mail {
     public static List<Map<String,String>> fetch(Person to) {
         String uid = to.getUid().toString();
         List<Map<String,String>> m = (ArrayList)mails.get("mails");
-        List<Map<String,String>> mailz = new ArrayList<>();
-        for(Map g : m) {
-            if(g.get("to").equals(uid)) {
-                mailz.add(g);
-            }
-        }
+        List<Map<String,String>> mailz = m.stream().filter(g -> g.get("to").equals(uid)).collect(Collectors.toList());
         Collections.sort(mailz, new Comparator<Map<String,String>>() {
             DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
             @Override

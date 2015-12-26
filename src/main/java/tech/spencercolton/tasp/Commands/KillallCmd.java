@@ -6,11 +6,8 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.Entities;
-import tech.spencercolton.tasp.Util.M;
 import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Collections;
@@ -107,7 +104,7 @@ public class KillallCmd extends TASPCommand {
             }
             case 1: {
                 if(!Entities.killAllowed(args.get(0))) {
-                    Message.Killall.Error.sendInvalidEntityMessage(sender, args.get(0));
+                    Command.sendInvalidEntityMessage(sender, args.get(0));
                     return;
                 }
                 et = args.get(0);
@@ -120,7 +117,7 @@ public class KillallCmd extends TASPCommand {
                     w = ((Player)sender).getWorld();
                 int count = 0;
                 for(Entity e : w.getEntities()) {
-                    if(!Entities.killAllowed(e))
+                    if(!Entities.killAllowed(e) || (distance != 0 && e.getLocation().distance(((Player)sender).getLocation()) > distance))
                         continue;
                     switch(et) {
                         case "all": {

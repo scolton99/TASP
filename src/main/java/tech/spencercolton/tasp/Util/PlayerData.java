@@ -90,8 +90,8 @@ public class PlayerData {
         return (JSONArray) this.data.get(s);
     }
 
-    public Boolean getBoolean(String s) {
-        return (Boolean) this.data.get(s);
+    public boolean getBoolean(String s) {
+        return !(this.data.get(s) == null || !((boolean) this.data.get(s)));
     }
 
     /**

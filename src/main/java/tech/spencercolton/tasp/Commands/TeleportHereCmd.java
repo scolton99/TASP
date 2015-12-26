@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -14,17 +15,20 @@ import java.util.List;
  */
 public class TeleportHereCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/tphere <player>";
+
     public static final String name = "tphere";
+
+    @Getter
     private static final String permission = "tasp.teleport.here";
+
+    @Getter
     private static final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender);
-            return;
-        }
+        assert !(sender instanceof ConsoleCommandSender);
 
         if(args.length != 1) {
             Command.sendSyntaxError(sender, this);
@@ -37,27 +41,7 @@ public class TeleportHereCmd extends TASPCommand {
             return;
         }
 
-        Bukkit.getServer().getPluginManager().callEvent(new PersonTeleportEvent(p, (Player)sender, true));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Bukkit.getServer().getPluginManager().callEvent(new PersonTeleportEvent((Player)sender, p, true));
     }
 
     @Override
