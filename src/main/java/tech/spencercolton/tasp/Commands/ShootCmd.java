@@ -8,9 +8,9 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
-import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Scheduler.EntityCannon;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Entities;
 
 import java.util.List;
 

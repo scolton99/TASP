@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Collections;
 import java.util.List;
@@ -16,85 +18,54 @@ import java.util.List;
  */
 public class FOMCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/fom [player]";
+
     public static final String name = "fom";
+
+    @Getter
     private static final String permission = "tasp.fom";
+
+    @Getter
     private static final String consoleSyntax = "/fom <player>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        switch(args.length) {
-            case 0:
-                if(sender instanceof ConsoleCommandSender) {
-                    Command.sendConsoleSyntaxError(sender, this);
-                    return;
-                }
-                Person p = Person.get((Player) sender);
-                assert p != null;
-                p.setFOM(!p.isFOM());
-                if(p.isFOM()) {
-                    p.getPlayer().getWorld().getEntities().stream().forEach(e -> {
-                        if(e instanceof Monster)
-                            ((Monster)e).setTarget(null);
-                    });
-                }
-                sendFOMMessage(sender, p.isFOM());
-                return;
-            case 1:
-                Player p2 = Bukkit.getPlayer(args[0]);
-                if(p2 == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
-                    return;
-                }
-
-                Person p3 = Person.get(p2);
-                assert p3 != null;
-                p3.setFOM(!p3.isFOM());
-                if(p3.isFOM()) {
-                    p3.getPlayer().getWorld().getEntities().stream().forEach(e -> {
-                        if(e instanceof Monster)
-                            ((Monster)e).setTarget(null);
-                    });
-                }
-                sendFOMMessage(sender, p3.isFOM(), p3);
-        }
-    }
-
-    private void sendFOMMessage(CommandSender sender, boolean enabled) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fom", (enabled ? "enabled" : "disabled")));
-    }
-
-    private void sendFOMMessage(CommandSender sender, boolean enabled, Person p) {
-        if(p.getPlayer().equals(sender)) {
-            sendFOMMessage(sender, enabled);
+        if(sender instanceof ConsoleCommandSender && args.length != 1) {
+            Command.sendConsoleSyntaxError(sender, this);
             return;
         }
 
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fom-s", (enabled ? "enabled" : "disabled"), p.getPlayer().getDisplayName()));
-        if(Command.messageEnabled(this, true))
-            p.getPlayer().sendMessage(M.m("command-message-text.fom-r", (enabled ? "enabled" : "disabled"), Command.getDisplayName(sender)));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Person p = null;
+        switch(args.length) {
+            case 1: {
+                p = Person.get(Bukkit.getPlayer(args[0]));
+                if (p == null) {
+                    Command.sendPlayerMessage(sender, args[0]);
+                    return;
+                }
+            }
+            case 0: {
+                if(p == null)
+                    p = Person.get((Player)sender);
+                assert p != null;
+                p.setFOM(!p.isFOM());
+                if (p.isFOM()) {
+                    p.getPlayer().getWorld().getEntities().stream().forEach(e -> {
+                        if (e instanceof Monster)
+                            ((Monster) e).setTarget(null);
+                    });
+                }
+                if (p.getPlayer().equals(sender))
+                    Message.FOM.sendFOMMessage(sender, p.isFOM());
+                else
+                    Message.FOM.sendFOMMessage(sender, p.isFOM(), p);
+                return;
+            }
+            default: {
+                Command.sendGenericSyntaxError(sender, this);
+            }
+        }
     }
 
     @Override

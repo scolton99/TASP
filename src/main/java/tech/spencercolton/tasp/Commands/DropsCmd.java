@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,40 +19,37 @@ import java.util.List;
  */
 public class DropsCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/drops [world]";
+
     public static final String name = "drops";
+
+    @Getter
     private static final String permission = "tasp.drops";
+
+    @Getter
     private static final String consoleSyntax = "/drops <world>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender) {
-            if(args.length != 1) {
-                Command.sendConsoleSyntaxError(sender, this);
-                return;
-            }
-
-            World w = Bukkit.getWorld(args[0]);
-            if(w == null) {
-                Command.sendWorldMessage(sender, args[0]);
-                return;
-            }
-
-            int i = 0;
-            for(Entity e : w.getEntities()) {
-                if(e.getType() == EntityType.DROPPED_ITEM) {
-                    e.remove();
-                    i++;
-                }
-            }
-            sendDropsMessage(sender, i);
+        if(sender instanceof ConsoleCommandSender && args.length != 1) {
+            Command.sendConsoleSyntaxError(sender, this);
             return;
         }
 
+        World w = null;
         switch(args.length) {
-            case 0:
-                Player p = (Player)sender;
-                World w = p.getWorld();
+            case 1: {
+                w = Bukkit.getWorld(args[0]);
+                if(w == null) {
+                    Command.sendWorldMessage(sender, args[0]);
+                    return;
+                }
+            }
+            case 0: {
+                if(w == null) {
+                    w = ((Player)sender).getWorld();
+                }
 
                 int i = 0;
                 for(Entity e : w.getEntities()) {
@@ -59,54 +58,13 @@ public class DropsCmd extends TASPCommand {
                         i++;
                     }
                 }
-
-                sendDropsMessage(sender, i);
+                Message.Drops.sendDropsMessage(sender, i);
                 return;
-            case 1:
-                World w2 = Bukkit.getWorld(args[0]);
-                if(w2 == null) {
-                    Command.sendWorldMessage(sender, args[0]);
-                    return;
-                }
-
-                int i2 = 0;
-                for(Entity e : w2.getEntities()) {
-                    if(e.getType() == EntityType.DROPPED_ITEM) {
-                        e.remove();
-                        i2++;
-                    }
-                }
-
-                sendDropsMessage(sender, i2);
-                return;
-            default:
+            }
+            default: {
                 Command.sendSyntaxError(sender, this);
+            }
         }
-    }
-
-    private void sendDropsMessage(CommandSender sender, int drops) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.drops", Integer.toString(drops)));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
     }
 
     @Override

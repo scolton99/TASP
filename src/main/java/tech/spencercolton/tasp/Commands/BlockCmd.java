@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -7,6 +8,7 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 public class BlockCmd extends TASPCommand {
 
@@ -19,20 +21,23 @@ public class BlockCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
+    @Getter
     private static final String syntax = "/block <user>";
 
 
     /**
      * String containing the command's console syntax.
      */
+    @Getter
     private static final String consoleSyntax = "/block <user>";
 
+    @Getter
     private static final String permission = "tasp.block";
 
     @Override
     public void execute(CommandSender sender, String... args) {
         if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender);
+            Command.sendConsoleError(sender);
             return;
         }
 
@@ -53,41 +58,11 @@ public class BlockCmd extends TASPCommand {
         if(!pa.isPlayerBlocked(ps))
             pa.blockPlayer(ps);
         else {
-            this.sendAlreadyBlockedMessage(sender, ps);
+            Message.Block.Error.sendAlreadyBlockedMessage(sender, ps);
             return;
         }
 
-        this.sendBlockedMessage(sender, ps);
+        Message.Block.sendBlockedMessage(sender, ps);
     }
 
-    private void sendBlockedMessage(CommandSender sender, Person p) {
-        if(Command.messageEnabled("block"))
-            sender.sendMessage(M.m("command-message-text.block", p.getPlayer().getDisplayName()));
-        if(Command.messageEnabled("block-r"))
-            p.getPlayer().sendMessage(M.m("command-message-text.block-r", sender.getName()));
-    }
-
-    private void sendAlreadyBlockedMessage(CommandSender sender, Person p) {
-        sender.sendMessage(Config.err() + p.getPlayer().getDisplayName() + " is already blocked.");
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
 }

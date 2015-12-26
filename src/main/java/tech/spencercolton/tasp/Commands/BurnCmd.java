@@ -1,19 +1,27 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 /**
  * @author Spencer Colton
  */
 public class BurnCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/burn <player> [time]";
+
     public static final String name = "burn";
+
+    @Getter
     private static final String permission = "tasp.burn";
+
+    @Getter
     private static final String consoleSyntax = syntax;
 
     private static final int TICKS_PER_SECOND = 20;
@@ -50,43 +58,7 @@ public class BurnCmd extends TASPCommand {
 
         p.setFireTicks(x + p.getFireTicks());
 
-        sendFireMessage(sender, x / TICKS_PER_SECOND, p);
-    }
-
-    private void sendFireMessage(CommandSender sender, int seconds) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.burn", Integer.toString(seconds)));
-    }
-
-    private void sendFireMessage(CommandSender sender, int seconds, Player other) {
-        if(sender.equals(other)) {
-            sendFireMessage(sender, seconds);
-            return;
-        }
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.burn-s", Integer.toString(seconds), other.getDisplayName()));
-        if(Command.messageEnabled(this, true))
-            other.sendMessage(M.m("command-message-text.burn-r", Integer.toString(seconds), Command.getDisplayName(sender)));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Message.Burn.sendFireMessage(sender, x / TICKS_PER_SECOND, p);
     }
 
     @Override

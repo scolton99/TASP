@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -11,15 +12,21 @@ import org.bukkit.entity.Player;
  */
 public class ExplodeCmd extends TASPCommand {
 
+    @Getter
     private static final String syntax = "/explode [power] [breakblocks]";
+
     public static final String name = "explode";
+
+    @Getter
     private static final String permission = "tasp.explode";
+
+    @Getter
     private static final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender);
+            Command.sendConsoleError(sender);
             return;
         }
 
@@ -47,26 +54,5 @@ public class ExplodeCmd extends TASPCommand {
                 Command.sendSyntaxError(sender, this);
         }
     }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }

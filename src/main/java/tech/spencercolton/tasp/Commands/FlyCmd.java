@@ -1,11 +1,13 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.M;
+import tech.spencercolton.tasp.Util.Message;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code fly} command.
@@ -62,14 +64,17 @@ public class FlyCmd extends TASPCommand {
     /**
      * String containing the command's syntax.
      */
+    @Getter
     private static final String syntax = "/fly [user]";
 
 
     /**
      * String containing the command's console syntax.
      */
+    @Getter
     private static final String consoleSyntax = "/fly <user>";
 
+    @Getter
     private static final String permission = "tasp.fly";
 
     /**
@@ -77,92 +82,40 @@ public class FlyCmd extends TASPCommand {
      */
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(sender instanceof ConsoleCommandSender) {
-            if(args.length != 1) {
-                Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
-                return;
-            }
-
-            Player p = Bukkit.getPlayer(args[0]);
-
-            if(p == null) {
-                sender.sendMessage(Config.err() + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
-                return;
-            }
-
-            p.setAllowFlight(true);
-
-            p.setFlying(!p.isFlying());
-
-            this.sendFlyingMessage(sender, p.isFlying(), p.getDisplayName());
-        } else {
-            switch(args.length) {
-                case 0:
-                    Player p = (Player)sender;
-                    p.setAllowFlight(true);
-                    p.setFlying(!p.isFlying());
-                    this.sendFlyingMessage(sender, p.isFlying());
-                    return;
-                case 1:
-                    Player p2 = Bukkit.getPlayer(args[0]);
-                    if(p2 == null) {
-                        sender.sendMessage(Config.err() + "Couldn't find player \"" + args[0] + ".\"  Please try again.");
-                        return;
-                    }
-                    p2.setAllowFlight(true);
-                    p2.setFlying(!p2.isFlying());
-
-                    if(!p2.equals(sender))
-                        this.sendFlyingMessage(sender, p2.isFlying(), p2.getDisplayName());
-                    else
-                        this.sendFlyingMessage(sender, ((Player)sender).isFlying());
-            }
-        }
-    }
-
-    private void sendFlyingMessage(CommandSender sender, boolean flying) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fly", flying ? "enabled" : "disabled"));
-    }
-
-    private void sendFlyingMessage(CommandSender sender, boolean flying, String n) {
-        Player p = Bukkit.getPlayer(n);
-        assert p != null;
-
-        if(sender.equals(p)) {
-            this.sendFlyingMessage(sender, flying);
+        if(sender instanceof ConsoleCommandSender && args.length != 1) {
+            Command.sendConsoleSyntaxError(sender, this);
             return;
         }
 
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.fly-others-s", flying ? "enabled" : "disabled", n));
-        if(Command.messageEnabled(this, true))
-            p.sendMessage(M.m("command-message-text.fly-others-r", flying ? "enabled" : "disabled", sender.getName()));
+        Player p = null;
+        switch(args.length) {
+            case 1: {
+                p = Bukkit.getPlayer(args[0]);
+                if (p == null) {
+                    Command.sendPlayerMessage(sender, args[0]);
+                    return;
+                }
+            }
+            case 0: {
+                if(p == null)
+                    p = (Player)sender;
+                p.setAllowFlight(true);
+                p.setFlying(!p.isFlying());
+                if(p.equals(sender))
+                    Message.Fly.sendFlyingMessage(sender, p.isFlying());
+                else
+                    Message.Fly.sendFlyingMessage(sender, p.isFlying(), p.getDisplayName());
+                return;
+            }
+            default: {
+                Command.sendGenericSyntaxError(sender, this);
+            }
+        }
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
         return args.length > 0 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(sender) ? permission + ".others" : permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
 }

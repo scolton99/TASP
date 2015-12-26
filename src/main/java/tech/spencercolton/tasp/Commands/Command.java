@@ -6,10 +6,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -180,7 +177,8 @@ public class Command implements CommandExecutor{
      *
      * @param s A console command sender to whom the message will be sent.
      */
-    public static void sendConsoleError(ConsoleCommandSender s) {
+    public static void sendConsoleError(CommandSender s) {
+        assert s instanceof ConsoleCommandSender;
         sendConsoleError(s, "this command");
     }
 
@@ -190,7 +188,8 @@ public class Command implements CommandExecutor{
      * @param s A console command sender to whom the message will be sent.
      * @param command The name of the command that cannot be executed from the console.
      */
-    public static void sendConsoleError(ConsoleCommandSender s, String command) {
+    public static void sendConsoleError(CommandSender s, String command) {
+        assert s instanceof ConsoleCommandSender;
         if(!command.equals("this command"))
             command = "\"" + command + "\"";
         s.sendMessage(Config.err() + "Sorry, " + command + " can only be run in-game.");
@@ -203,6 +202,7 @@ public class Command implements CommandExecutor{
      * @param c The command that was executed incorrectly.
      */
     public static void sendSyntaxError(CommandSender s, TASPCommand c) {
+        assert s instanceof Player;
         s.sendMessage(Config.err() + "Invalid syntax! Try: " + c.getSyntax());
     }
 
@@ -234,13 +234,6 @@ public class Command implements CommandExecutor{
 
     private TASPCommand getCommand(String s) {
         return cmds.get(s);
-    }
-
-    public static boolean messageEnabled(TASPCommand c, boolean others) {
-        if(others)
-            return Config.getBoolean("command-messages." + c.getName() + "-others");
-        else
-            return Config.getBoolean("command-messages." + c.getName());
     }
 
     public static boolean messageEnabled(String s) {
@@ -294,6 +287,24 @@ public class Command implements CommandExecutor{
 
         Player p = (Player)sender;
         return p.getDisplayName();
+    }
+
+    public static String combineArgs(String... args) {
+        return combineArgs(Arrays.asList(args), 0);
+    }
+
+    public static String combineArgs(List<String> args) {
+        return combineArgs(args, 0);
+    }
+
+    public static String combineArgs(List<String> args, int start) {
+        String fin = "";
+        for(int i = 0; i < args.size(); i++) {
+            fin += args.get(i);
+            if(!(i + 1 >= args.size()))
+                fin += " ";
+        }
+        return fin;
     }
 
 }

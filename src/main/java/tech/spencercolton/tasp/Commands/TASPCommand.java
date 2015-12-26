@@ -59,8 +59,6 @@ abstract class TASPCommand {
         return this.getPermission();
     }
 
-    public abstract String getName();
-
     public List<String> getAliases() {
         return null;
     }

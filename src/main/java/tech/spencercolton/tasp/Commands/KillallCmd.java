@@ -6,8 +6,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Util.M;
 
 import java.util.Collections;

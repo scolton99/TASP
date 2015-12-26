@@ -13,8 +13,8 @@ public class PersonTeleportAllHereEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    @Getter @Setter
-    private Person to;
+    @Getter
+    private Person requester;
 
     @Getter
     private boolean request;
@@ -23,8 +23,8 @@ public class PersonTeleportAllHereEvent extends Event {
         this(to, false);
     }
 
-    public PersonTeleportAllHereEvent(Person to, boolean request) {
-        this.to = to;
+    public PersonTeleportAllHereEvent(Person requester, boolean request) {
+        this.requester = requester;
         this.request = request;
     }
 
