@@ -6,10 +6,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Message;
 
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static tech.spencercolton.tasp.Commands.Command.combineArgs;
+import static tech.spencercolton.tasp.Commands.Command.sendConsoleError;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Message.Powertool.sendPowertoolEnabledMessage;
+import static tech.spencercolton.tasp.Util.Message.Powertool.sendRemovedPowertoolsMessage;
 
 /**
  * @author Spencer Colton
@@ -17,36 +22,37 @@ import java.util.List;
 public class PowertoolCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/powertool [command line]";
-
-    public static final String name = "powertool";
+    private final String syntax = "/powertool [command line]";
 
     @Getter
-    private static final String permission = "tasp.powertool";
+    private static final String name = "powertool";
 
     @Getter
-    private static final String consoleSyntax = null;
+    private final String permission = "tasp.powertool";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError(sender);
+        if (sender instanceof ConsoleCommandSender) {
+            sendConsoleError(sender);
             return;
         }
 
-        Person p = Person.get((Player)sender);
+        Person p = get((Player) sender);
         Material m = p.getPlayer().getItemInHand().getType();
 
-        switch(args.length) {
+        switch (args.length) {
             case 0: {
                 p.clearPowertool(m);
-                Message.Powertool.sendRemovedPowertoolsMessage(sender, m);
+                sendRemovedPowertoolsMessage(sender, m);
                 break;
             }
             default: {
-                String cmdLine = Command.combineArgs(args);
+                String cmdLine = combineArgs(args);
                 p.setPowertool(m, cmdLine);
-                Message.Powertool.sendPowertoolEnabledMessage(sender, m, cmdLine);
+                sendPowertoolEnabledMessage(sender, m, cmdLine);
                 break;
             }
         }
@@ -54,7 +60,7 @@ public class PowertoolCmd extends TASPCommand {
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("pt");
+        return singletonList("pt");
     }
 
 }

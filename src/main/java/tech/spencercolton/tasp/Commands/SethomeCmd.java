@@ -1,83 +1,46 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Message;
 
-/**
- * The {@link TASPCommand} object containing the runtime information for the {@code sethome} command.
- *
- * <table summary="Properties">
- *     <tr>
- *         <th style="font-weight:bold;">Property</th>
- *         <th style="font-weight:bold;">Value</th>
- *     </tr>
- *     <tr>
- *         <td>
- *             Name
- *         </td>
- *         <td>
- *             {@value name}
- *         </td>
- *     </tr>
- *     <tr>
- *         <td>
- *             Permission
- *         </td>
- *         <td>
- *             {@value permission}
- *             <br>
- *             {@code tasp.sethome.others}
- *         </td>
- *     </tr>
- *     <tr>
- *         <td>
- *             Syntax
- *         </td>
- *         <td>
- *             /sethome [player]
- *         </td>
- *     </tr>
- *     <tr>
- *         <td>
- *             Console Syntax
- *         </td>
- *         <td>
- *             null
- *         </td>
- *     </tr>
- * </table>
- */
+import static java.lang.Double.parseDouble;
+import static java.lang.Float.parseFloat;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Message.Sethome.Error.sendPitchOOBMessage;
+import static tech.spencercolton.tasp.Util.Message.Sethome.Error.sendYawOOBMessage;
+import static tech.spencercolton.tasp.Util.Message.Sethome.sendHomeMessage;
+
 public class SethomeCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/sethome [<x> <y> <z>] [world] [player] [<yaw> <pitch>]";
+    private final String syntax = "/sethome [<x> <y> <z>] [world] [player] [<yaw> <pitch>]";
 
     @Getter
-    private static final String consoleSyntax = "/sethome <player> <x> <y> <z> [world] [<yaw> <pitch>]";
-
-    public static final String name = "sethome";
+    private final String consoleSyntax = "/sethome <player> <x> <y> <z> [world] [<yaw> <pitch>]";
 
     @Getter
-    private static final String permission = "tasp.sethome";
+    private static final String name = "sethome";
+
+    @Getter
+    private final String permission = "tasp.sethome";
 
     @Override
     public void execute(CommandSender sender, String... args) {
         assert (sender instanceof ConsoleCommandSender || sender instanceof Player);
 
-        if(sender instanceof ConsoleCommandSender && (args.length < 4 || args.length > 7 || args.length == 6)) {
-            Command.sendConsoleSyntaxError(sender, this);
+        if (sender instanceof ConsoleCommandSender && (args.length < 4 || args.length > 7 || args.length == 6)) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
 
-        if(sender instanceof Player && (args.length > 7 || args.length == 6)) {
-            Command.sendSyntaxError(sender, this);
+        if (sender instanceof Player && (args.length > 7 || args.length == 6)) {
+            sendSyntaxError(sender, this);
             return;
         }
 
@@ -86,81 +49,81 @@ public class SethomeCmd extends TASPCommand {
         Float yaw = null, pitch = null;
         Player p = null;
 
-        switch(args.length) {
+        switch (args.length) {
             case 7: {
                 try {
-                    yaw = Float.parseFloat(args[5]);
-                    pitch = Float.parseFloat(args[6]);
+                    yaw = parseFloat(args[5]);
+                    pitch = parseFloat(args[6]);
                     if (yaw < 0.0F || yaw > 360.0F) {
-                        Message.Sethome.Error.sendYawOOBMessage(sender);
+                        sendYawOOBMessage(sender);
                         return;
                     }
                     if (pitch < -90.0F || pitch > 90.0F) {
-                        Message.Sethome.Error.sendPitchOOBMessage(sender);
+                        sendPitchOOBMessage(sender);
                         return;
                     }
-                } catch(NumberFormatException e) {
-                    Command.sendGenericSyntaxError(sender, this);
+                } catch (NumberFormatException e) {
+                    sendGenericSyntaxError(sender, this);
                     return;
                 }
             }
             case 5: {
-                if(sender instanceof ConsoleCommandSender) {
-                    w = Bukkit.getWorld(args[4]);
+                if (sender instanceof ConsoleCommandSender) {
+                    w = getWorld(args[4]);
                     if (w == null) {
-                        Command.sendWorldMessage(sender, args[4]);
+                        sendWorldMessage(sender, args[4]);
                         return;
                     }
                 } else {
-                    p = Bukkit.getPlayer(args[4]);
+                    p = getPlayer(args[4]);
                     if (p == null) {
-                        Command.sendPlayerMessage(sender, args[4]);
+                        sendPlayerMessage(sender, args[4]);
                         return;
                     }
                 }
             }
             case 4: {
-                if(sender instanceof ConsoleCommandSender) {
+                if (sender instanceof ConsoleCommandSender) {
                     try {
-                        x = Double.parseDouble(args[1]);
-                        y = Double.parseDouble(args[2]);
-                        z = Double.parseDouble(args[3]);
-                        p = Bukkit.getPlayer(args[0]);
+                        x = parseDouble(args[1]);
+                        y = parseDouble(args[2]);
+                        z = parseDouble(args[3]);
+                        p = getPlayer(args[0]);
                         if (p == null) {
-                            Command.sendPlayerMessage(sender, args[0]);
+                            sendPlayerMessage(sender, args[0]);
                             return;
                         }
-                        if(yaw == null)
+                        if (yaw == null)
                             yaw = 0.0F;
-                        if(pitch == null)
+                        if (pitch == null)
                             pitch = 0.0F;
-                        if(w == null)
-                            w = Bukkit.getWorlds().get(0);
+                        if (w == null)
+                            w = getWorlds().get(0);
 
                         Location l = new Location(w, x, y, z, yaw, pitch);
-                        Person.get(p).setHome(l);
-                        Message.Sethome.sendHomeMessage(sender, l, p);
+                        get(p).setHome(l);
+                        sendHomeMessage(sender, l, p);
                         return;
-                    } catch(NumberFormatException e) {
-                        Command.sendConsoleSyntaxError(sender, this);
+                    } catch (NumberFormatException e) {
+                        sendConsoleSyntaxError(sender, this);
                         return;
                     }
                 } else {
-                    w = Bukkit.getWorld(args[3]);
-                    if(w == null) {
-                        Command.sendWorldMessage(sender, args[3]);
+                    w = getWorld(args[3]);
+                    if (w == null) {
+                        sendWorldMessage(sender, args[3]);
                         return;
                     }
                 }
             }
             case 3: {
-                if(sender instanceof Player) {
+                if (sender instanceof Player) {
                     try {
-                        x = Double.parseDouble(args[0]);
-                        y = Double.parseDouble(args[1]);
-                        z = Double.parseDouble(args[2]);
+                        x = parseDouble(args[0]);
+                        y = parseDouble(args[1]);
+                        z = parseDouble(args[2]);
                     } catch (NumberFormatException e) {
-                        Command.sendSyntaxError(sender, this);
+                        sendSyntaxError(sender, this);
                         return;
                     }
                 }
@@ -168,35 +131,35 @@ public class SethomeCmd extends TASPCommand {
             case 0: {
                 assert sender instanceof Player;
 
-                if(p == null)
-                    p = (Player)sender;
-                if(yaw == null)
+                if (p == null)
+                    p = (Player) sender;
+                if (yaw == null)
                     yaw = p.getLocation().getYaw();
-                if(pitch == null)
+                if (pitch == null)
                     pitch = p.getLocation().getPitch();
-                if(x == null)
+                if (x == null)
                     x = p.getLocation().getX();
-                if(y == null)
+                if (y == null)
                     y = p.getLocation().getY();
-                if(z == null)
+                if (z == null)
                     z = p.getLocation().getZ();
-                if(w == null)
+                if (w == null)
                     w = p.getWorld();
 
                 Location l = new Location(w, x, y, z, yaw, pitch);
-                Person.get(p).setHome(l);
-                Message.Sethome.sendHomeMessage(sender, l, p);
+                get(p).setHome(l);
+                sendHomeMessage(sender, l, p);
                 return;
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        return args.length >= 5 && Bukkit.getPlayer(args[4]) != null && !Bukkit.getPlayer(args[4]).equals(sender) ? permission + ".others" : permission;
+        return args.length >= 5 && getPlayer(args[4]) != null && !getPlayer(args[4]).equals(sender) ? permission + ".others" : permission;
     }
 
 }

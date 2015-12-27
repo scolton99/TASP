@@ -6,8 +6,9 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
 
 /**
  * @author Spencer Colton
@@ -15,25 +16,26 @@ import java.util.List;
 public class HoldingCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/holding";
-
-    public static final String name = "holding";
+    private final String syntax = "/holding";
 
     @Getter
-    private static final String permission = "tasp.holding";
+    private static final String name = "holding";
 
     @Getter
-    private static final String consoleSyntax = null;
+    private final String permission = "tasp.holding";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
-        @SuppressWarnings("UnusedAssignment") ItemStack i = ((Player)sender).getItemInHand();
+        @SuppressWarnings("UnusedAssignment") ItemStack i = ((Player) sender).getItemInHand();
     }
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("itemdb");
+        return singletonList("itemdb");
     }
 
 }

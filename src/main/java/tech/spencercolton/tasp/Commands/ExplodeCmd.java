@@ -7,40 +7,46 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
+import static java.lang.Boolean.parseBoolean;
+import static java.lang.Float.parseFloat;
+import static tech.spencercolton.tasp.Commands.Command.sendConsoleError;
+import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+
 /**
  * @author Spencer Colton
  */
 public class ExplodeCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/explode [power] [breakblocks]";
-
-    public static final String name = "explode";
+    private final String syntax = "/explode [power] [breakblocks]";
 
     @Getter
-    private static final String permission = "tasp.explode";
+    private static final String name = "explode";
 
     @Getter
-    private static final String consoleSyntax = null;
+    private final String permission = "tasp.explode";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError(sender);
+        if (sender instanceof ConsoleCommandSender) {
+            sendConsoleError(sender);
             return;
         }
 
         float z = 4.0F;
         boolean b = true;
-        switch(args.length) {
+        switch (args.length) {
             case 2:
-                b = Boolean.parseBoolean(args[1]);
+                b = parseBoolean(args[1]);
             case 1:
                 try {
-                    float g = Float.parseFloat(args[0]);
+                    float g = parseFloat(args[0]);
                     z *= g;
-                } catch(NumberFormatException e) {
-                    Command.sendSyntaxError(sender, this);
+                } catch (NumberFormatException e) {
+                    sendSyntaxError(sender, this);
                     return;
                 }
             case 0: {
@@ -51,7 +57,7 @@ public class ExplodeCmd extends TASPCommand {
                 return;
             }
             default:
-                Command.sendSyntaxError(sender, this);
+                sendSyntaxError(sender, this);
         }
     }
 

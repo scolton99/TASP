@@ -1,52 +1,55 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 public class MessageCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/msg <player> <message>";
+    private final String syntax = "/msg <player> <message>";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String consoleSyntax = syntax;
 
     @Getter
-    private static final String permission = "tasp.msg";
+    private final String permission = "tasp.msg";
 
-    public static final String name = "msg";
+    @Getter
+    private static final String name = "msg";
 
     @Override
     public void execute(CommandSender sender, String... args) {
         if (args.length < 2) {
-            Command.sendSyntaxError(sender, this);
+            sendSyntaxError(sender, this);
             return;
         }
 
         CommandSender p;
         if (args[0].equalsIgnoreCase("console"))
-            p = Bukkit.getConsoleSender();
+            p = getConsoleSender();
         else
-            p = Bukkit.getPlayer(args[0]);
+            p = getPlayer(args[0]);
 
         if (p == null) {
-            Command.sendPlayerMessage(sender, args[0]);
+            sendPlayerMessage(sender, args[0]);
             return;
         }
 
-        String msg = Command.combineArgs(1, args);
+        String msg = combineArgs(1, args);
 
-        Bukkit.getServer().getPluginManager().callEvent(new PersonSendMessageEvent(sender, p, msg));
+        getServer().getPluginManager().callEvent(new PersonSendMessageEvent(sender, p, msg));
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("message", "send", "tell");
+        return asList("message", "send", "tell");
     }
 
 }

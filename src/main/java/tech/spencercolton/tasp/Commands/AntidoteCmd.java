@@ -1,15 +1,17 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
-import tech.spencercolton.tasp.Util.Message;
 
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static org.bukkit.Bukkit.getPlayer;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Message.Antidote.sendAntidoteMessage;
 
 /**
  * @author Spencer Colton
@@ -17,28 +19,29 @@ import java.util.List;
 public class AntidoteCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/antidote [player]";
-
-    public static final String name = "antidote";
+    private final String syntax = "/antidote [player]";
 
     @Getter
-    private static final String permission = "tasp.antidote";
+    private static final String name = "antidote";
 
     @Getter
-    private static final String consoleSyntax = "/antidote <player>";
+    private final String permission = "tasp.antidote";
+
+    @Getter
+    private final String consoleSyntax = "/antidote <player>";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(args.length == 0 && sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleSyntaxError(sender, this);
+        if (args.length == 0 && sender instanceof ConsoleCommandSender) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
         Player p = null;
-        switch(args.length) {
+        switch (args.length) {
             case 1: {
-                p = Bukkit.getPlayer(args[0]);
+                p = getPlayer(args[0]);
                 if (p == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
+                    sendPlayerMessage(sender, args[0]);
                     return;
                 }
             }
@@ -48,18 +51,18 @@ public class AntidoteCmd extends TASPCommand {
                 for (PotionEffect g : p.getActivePotionEffects()) {
                     p.removePotionEffect(g.getType());
                 }
-                Message.Antidote.sendAntidoteMessage(sender, p);
+                sendAntidoteMessage(sender, p);
                 return;
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("cleareffects");
+        return singletonList("cleareffects");
     }
 
 }

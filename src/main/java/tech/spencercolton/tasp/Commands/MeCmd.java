@@ -1,28 +1,33 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.Util.Config;
+
+import static org.bukkit.Bukkit.broadcastMessage;
+import static tech.spencercolton.tasp.Commands.Command.combineArgs;
+import static tech.spencercolton.tasp.Commands.Command.getDisplayName;
+import static tech.spencercolton.tasp.Util.Config.c1;
+import static tech.spencercolton.tasp.Util.Config.c2;
 
 public class MeCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/me <action>";
+    private final String syntax = "/me <action>";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String consoleSyntax = syntax;
 
     @Getter
-    private static final String permission = "tasp.me";
+    private final String permission = "tasp.me";
 
-    public static final String name = "me";
+    @Getter
+    private static final String name = "me";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        String msg = Command.combineArgs(args);
+        String msg = combineArgs(args);
 
-        Bukkit.broadcastMessage(Config.c1() + " * " + Config.c2() + Command.getDisplayName(sender) + Config.c1() + " " + msg);
+        broadcastMessage(c1() + " * " + c2() + getDisplayName(sender) + c1() + " " + msg);
     }
 
 }

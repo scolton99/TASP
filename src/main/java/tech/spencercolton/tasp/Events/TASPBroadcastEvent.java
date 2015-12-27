@@ -10,7 +10,6 @@ import tech.spencercolton.tasp.Util.M;
 
 public class TASPBroadcastEvent extends Event {
 
-    @Getter
     private static final HandlerList handlers = new HandlerList();
 
     @Getter @Setter
@@ -39,6 +38,10 @@ public class TASPBroadcastEvent extends Event {
 
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    public HandlerList getHandlers() {
         return handlers;
     }
 

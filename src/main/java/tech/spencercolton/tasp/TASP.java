@@ -177,6 +177,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("spawn").setExecutor(c);
         this.getCommand("back").setExecutor(c);
         this.getCommand("shoot").setExecutor(c);
+        this.getCommand("xp").setExecutor(c);
     }
 
     /**

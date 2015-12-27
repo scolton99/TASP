@@ -1,44 +1,49 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Message;
+
+import static org.bukkit.Bukkit.getPlayer;
+import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
+import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Message.Mute.sendMutedMessage;
 
 public class MuteCmd extends TASPCommand {
 
     @Getter
-    private static final String permission = "tasp.mute";
+    private final String permission = "tasp.mute";
 
     @Getter
-    private static final String syntax = "/mute <player>";
+    private final String syntax = "/mute <player>";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String consoleSyntax = syntax;
 
-    public static final String name = "mute";
+    @Getter
+    private static final String name = "mute";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        switch(args.length) {
+        switch (args.length) {
             case 1: {
-                Player p = Bukkit.getPlayer(args[0]);
+                Player p = getPlayer(args[0]);
 
                 if (p == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
+                    sendPlayerMessage(sender, args[0]);
                     return;
                 }
 
-                Person b = Person.get(p);
+                Person b = get(p);
                 b.setMuted(!b.isMuted());
 
-                Message.Mute.sendMutedMessage(sender, b.isMuted(), b.getPlayer());
+                sendMutedMessage(sender, b.isMuted(), b.getPlayer());
                 return;
             }
             default: {
-                Command.sendSyntaxError(sender, this);
+                sendSyntaxError(sender, this);
             }
         }
     }

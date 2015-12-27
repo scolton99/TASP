@@ -1,17 +1,19 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Message;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.bukkit.Bukkit.getWorld;
+import static org.bukkit.entity.EntityType.DROPPED_ITEM;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Message.Drops.sendDropsMessage;
 
 /**
  * @author Spencer Colton
@@ -19,56 +21,57 @@ import java.util.List;
 public class DropsCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/drops [world]";
-
-    public static final String name = "drops";
+    private final String syntax = "/drops [world]";
 
     @Getter
-    private static final String permission = "tasp.drops";
+    private static final String name = "drops";
 
     @Getter
-    private static final String consoleSyntax = "/drops <world>";
+    private final String permission = "tasp.drops";
+
+    @Getter
+    private final String consoleSyntax = "/drops <world>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender && args.length != 1) {
-            Command.sendConsoleSyntaxError(sender, this);
+        if (sender instanceof ConsoleCommandSender && args.length != 1) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
 
         World w = null;
-        switch(args.length) {
+        switch (args.length) {
             case 1: {
-                w = Bukkit.getWorld(args[0]);
-                if(w == null) {
-                    Command.sendWorldMessage(sender, args[0]);
+                w = getWorld(args[0]);
+                if (w == null) {
+                    sendWorldMessage(sender, args[0]);
                     return;
                 }
             }
             case 0: {
-                if(w == null) {
-                    w = ((Player)sender).getWorld();
+                if (w == null) {
+                    w = ((Player) sender).getWorld();
                 }
 
                 int i = 0;
-                for(Entity e : w.getEntities()) {
-                    if(e.getType() == EntityType.DROPPED_ITEM) {
+                for (Entity e : w.getEntities()) {
+                    if (e.getType() == DROPPED_ITEM) {
                         e.remove();
                         i++;
                     }
                 }
-                Message.Drops.sendDropsMessage(sender, i);
+                sendDropsMessage(sender, i);
                 return;
             }
             default: {
-                Command.sendSyntaxError(sender, this);
+                sendSyntaxError(sender, this);
             }
         }
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("clearlag", "fixlag", "nolag", "lagfix");
+        return asList("clearlag", "fixlag", "nolag", "lagfix");
     }
 
 }

@@ -240,3 +240,7 @@ commands:
         description: Fire an entity.
         permission-message: You do not have permission to do this.
         usage: 'Invalid syntax. /shoot <entity>'
+    xp:
+        description: Check or set experience points.
+        permission-message: You do not have permission to do this.
+        usgae: 'Invalid syntax. idgaf'

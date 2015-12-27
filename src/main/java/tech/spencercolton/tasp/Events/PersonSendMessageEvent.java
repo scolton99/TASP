@@ -8,7 +8,6 @@ import org.bukkit.event.HandlerList;
 
 public class PersonSendMessageEvent extends Event {
 
-    @Getter
     private static final HandlerList handlers = new HandlerList();
 
     @Getter
@@ -28,6 +27,11 @@ public class PersonSendMessageEvent extends Event {
 
     @SuppressWarnings("unused")
     public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
+    @Override
+    public HandlerList getHandlers() {
         return handlers;
     }
 

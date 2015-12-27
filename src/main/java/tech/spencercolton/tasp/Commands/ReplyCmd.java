@@ -4,55 +4,58 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.TASP;
-import tech.spencercolton.tasp.Util.Message;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.TASP.consoleLast;
+import static tech.spencercolton.tasp.Util.Message.Reply.Error.sendNoLastMessage;
 
 public class ReplyCmd extends TASPCommand {
 
-    public static final String name = "reply";
+    @Getter
+    private static final String name = "reply";
 
     @Getter
-    private static final String permission = "tasp.msg";
+    private final String permission = "tasp.msg";
 
     @Getter
-    private static final String syntax = "/reply <message>";
+    private final String syntax = "/reply <message>";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String consoleSyntax = syntax;
 
     @Override
     public void execute(CommandSender sender, String... args) {
         if (args.length == 0) {
-            Command.sendSyntaxError(sender, this);
+            sendSyntaxError(sender, this);
             return;
         }
 
         CommandSender last;
-        if(sender instanceof ConsoleCommandSender) {
-            last = TASP.consoleLast;
+        if (sender instanceof ConsoleCommandSender) {
+            last = consoleLast;
         } else {
-            last = Person.get((Player)sender).getLastMessaged();
+            last = get((Player) sender).getLastMessaged();
         }
 
-        if(last == null) {
-            Message.Reply.Error.sendNoLastMessage(sender);
+        if (last == null) {
+            sendNoLastMessage(sender);
             return;
         }
 
-        List<String> argz = new ArrayList<>(Arrays.asList(args));
+        List<String> argz = new ArrayList<>(asList(args));
         argz.add(0, last.getName());
         new MessageCmd().execute(sender, argz.toArray(new String[argz.size()]));
     }
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("r");
+        return singletonList("r");
     }
 
 }

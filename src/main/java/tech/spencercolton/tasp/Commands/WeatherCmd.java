@@ -1,17 +1,24 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Enums.WeatherType;
-import tech.spencercolton.tasp.Util.Message;
 import tech.spencercolton.tasp.Util.Weather;
 
 import java.util.Random;
+
+import static java.lang.Integer.parseInt;
+import static org.bukkit.Bukkit.getWorld;
+import static org.bukkit.Bukkit.getWorlds;
+import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
+import static tech.spencercolton.tasp.Commands.Command.sendWorldMessage;
+import static tech.spencercolton.tasp.Enums.WeatherType.STORM;
+import static tech.spencercolton.tasp.Enums.WeatherType.SUN;
+import static tech.spencercolton.tasp.Util.Message.Weather.*;
 
 /**
  * @author Spencer Colton
@@ -19,20 +26,21 @@ import java.util.Random;
 public class WeatherCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/weather [world [type] [time]] | [type] [time]";
-
-    public static final String name = "weather";
+    private final String syntax = "/weather [world [type] [time]] | [type] [time]";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private static final String name = "weather";
 
     @Getter
-    private static final String permission = "tasp.weather";
+    private final String consoleSyntax = syntax;
+
+    @Getter
+    private final String permission = "tasp.weather";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(args.length > 3) {
-            Command.sendGenericSyntaxError(sender, this);
+        if (args.length > 3) {
+            sendGenericSyntaxError(sender, this);
             return;
         }
 
@@ -41,13 +49,13 @@ public class WeatherCmd extends TASPCommand {
         Integer time = new Random().nextInt(250) + 250;
         Track t = null;
 
-        switch(args.length) {
+        switch (args.length) {
             case 3: {
                 t = Track.WORLD;
                 try {
-                    time = Integer.parseInt(args[2]);
+                    time = parseInt(args[2]);
                 } catch (NumberFormatException e) {
-                    Command.sendGenericSyntaxError(sender, this);
+                    sendGenericSyntaxError(sender, this);
                     return;
                 }
             }
@@ -55,9 +63,9 @@ public class WeatherCmd extends TASPCommand {
                 if (t == null) {
                     t = Track.TYPE;
                     try {
-                        time = Integer.parseInt(args[1]);
+                        time = parseInt(args[1]);
                     } catch (NumberFormatException e) {
-                        Command.sendGenericSyntaxError(sender, this);
+                        sendGenericSyntaxError(sender, this);
                         return;
                     }
                 } else {
@@ -69,16 +77,16 @@ public class WeatherCmd extends TASPCommand {
                         case "thunder":
                         case "lightning":
                         case "snow": {
-                            type = WeatherType.STORM;
+                            type = STORM;
                             break;
                         }
                         case "sun":
                         case "clear": {
-                            type = WeatherType.SUN;
+                            type = SUN;
                             break;
                         }
                         default: {
-                            Command.sendGenericSyntaxError(sender, this);
+                            sendGenericSyntaxError(sender, this);
                             return;
                         }
                     }
@@ -86,7 +94,7 @@ public class WeatherCmd extends TASPCommand {
             }
             case 1: {
                 if (t == null) {
-                    w = Bukkit.getWorld(args[0]);
+                    w = getWorld(args[0]);
                     if (w == null) {
                         switch (args[0].toLowerCase()) {
                             case "rainy":
@@ -96,16 +104,16 @@ public class WeatherCmd extends TASPCommand {
                             case "thunder":
                             case "lightning":
                             case "snow": {
-                                type = WeatherType.STORM;
+                                type = STORM;
                                 break;
                             }
                             case "sun":
                             case "clear": {
-                                type = WeatherType.SUN;
+                                type = SUN;
                                 break;
                             }
                             default: {
-                                Command.sendGenericSyntaxError(sender, this);
+                                sendGenericSyntaxError(sender, this);
                                 return;
                             }
                         }
@@ -119,23 +127,23 @@ public class WeatherCmd extends TASPCommand {
                         case "thunder":
                         case "lightning":
                         case "snow": {
-                            type = WeatherType.STORM;
+                            type = STORM;
                             break;
                         }
                         case "sun":
                         case "clear": {
-                            type = WeatherType.SUN;
+                            type = SUN;
                             break;
                         }
                         default: {
-                            Command.sendGenericSyntaxError(sender, this);
+                            sendGenericSyntaxError(sender, this);
                             return;
                         }
                     }
                 } else {
-                    w = Bukkit.getWorld(args[0]);
+                    w = getWorld(args[0]);
                     if (w == null) {
-                        Command.sendWorldMessage(sender, args[0]);
+                        sendWorldMessage(sender, args[0]);
                         return;
                     }
                 }
@@ -144,33 +152,33 @@ public class WeatherCmd extends TASPCommand {
                 if (type == null) {
                     if (sender instanceof ConsoleCommandSender) {
                         if (w == null)
-                            w = Bukkit.getWorlds().get(0);
-                        Message.Weather.sendConsoleWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), w);
+                            w = getWorlds().get(0);
+                        sendConsoleWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), w);
                         return;
                     } else {
                         assert sender instanceof Player;
                         if (w == null)
                             w = ((Player) sender).getWorld();
                         Location l = ((Player) sender).getLocation();
-                        Message.Weather.sendWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), Weather.calcTemperature(w.getTemperature(l.getBlockX(), l.getBlockZ()), w), Weather.calcHumidity(w.getHumidity(l.getBlockX(), l.getBlockZ())), w);
+                        sendWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), Weather.calcTemperature(w.getTemperature(l.getBlockX(), l.getBlockZ()), w), Weather.calcHumidity(w.getHumidity(l.getBlockX(), l.getBlockZ())), w);
                         return;
                     }
                 } else {
                     if (sender instanceof ConsoleCommandSender) {
                         if (w == null)
-                            w = Bukkit.getWorlds().get(0);
+                            w = getWorlds().get(0);
                     } else {
                         assert sender instanceof Player;
                         if (w == null)
                             w = ((Player) sender).getWorld();
                     }
-                    w.setStorm(type == WeatherType.STORM);
+                    w.setStorm(type == STORM);
                     w.setWeatherDuration(time);
-                    Message.Weather.sendWeatherMessage(sender, type, time, w);
+                    sendWeatherMessage(sender, type, time, w);
                 }
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }

@@ -1,15 +1,18 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportAllHereEvent;
 
-import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.asList;
+import static org.bukkit.Bukkit.getPluginManager;
+import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static tech.spencercolton.tasp.Entity.Person.get;
 
 /**
  * @author Spencer Colton
@@ -17,32 +20,33 @@ import java.util.List;
 public class TeleportAllHereCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/tpall";
-
-    public static final String name = "tpall";
+    private final String syntax = "/tpall";
 
     @Getter
-    private static final String permission = "tasp.teleport.all";
+    private static final String name = "tpall";
 
     @Getter
-    private static final String consoleSyntax = null;
+    private final String permission = "tasp.teleport.all";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
-        if(args.length != 0) {
-            Command.sendSyntaxError(sender, this);
+        if (args.length != 0) {
+            sendSyntaxError(sender, this);
             return;
         }
 
-        Person p = Person.get((Player)sender);
+        Person p = get((Player) sender);
 
-        Bukkit.getPluginManager().callEvent(new PersonTeleportAllHereEvent(p));
+        getPluginManager().callEvent(new PersonTeleportAllHereEvent(p));
     }
 
     @Override
     public List<String> getAliases() {
-        return Arrays.asList("tpallhere", "tpahere", "teleportallhere", "teleportall");
+        return asList("tpallhere", "tpahere", "teleportallhere", "teleportall");
     }
 
 }

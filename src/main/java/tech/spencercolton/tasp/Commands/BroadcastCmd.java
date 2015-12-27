@@ -1,9 +1,12 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import tech.spencercolton.tasp.Events.TASPBroadcastEvent;
+
+import static org.bukkit.Bukkit.getServer;
+import static tech.spencercolton.tasp.Commands.Command.combineArgs;
+import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
 
 /**
  * @author Spencer Colton
@@ -11,24 +14,25 @@ import tech.spencercolton.tasp.Events.TASPBroadcastEvent;
 public class BroadcastCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/broadcast <message>";
-
-    public static final String name = "broadcast";
+    private final String syntax = "/broadcast <message>";
 
     @Getter
-    private static final String permission = "tasp.broadcast";
+    private static final String name = "broadcast";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String permission = "tasp.broadcast";
+
+    @Getter
+    private final String consoleSyntax = syntax;
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(args.length == 0) {
-            Command.sendSyntaxError(sender, this);
+        if (args.length == 0) {
+            sendSyntaxError(sender, this);
             return;
         }
 
-        Bukkit.getServer().getPluginManager().callEvent(new TASPBroadcastEvent(sender, Command.combineArgs(args)));
+        getServer().getPluginManager().callEvent(new TASPBroadcastEvent(sender, combineArgs(args)));
     }
 
 

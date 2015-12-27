@@ -124,7 +124,7 @@ public class Message {
     public static class Fly {
         public static void sendFlyingMessage(CommandSender s, boolean flying, Player p) {
             if(s.equals(p) && Command.messageEnabled("fly")) {
-                s.sendMessage(M.cm("command-message-text.fly", flying ? "enabled" : "disabled"));
+                s.sendMessage(M.cm("fly", flying ? "enabled" : "disabled"));
                 return;
             }
 
@@ -538,6 +538,36 @@ public class Message {
         public static void sendWorldMessage(CommandSender sender) {
             if(Command.messageEnabled("world"))
                 sender.sendMessage(M.cm("world", ((Player)sender).getWorld().getName()));
+        }
+    }
+
+    public static class XP {
+        public static void sendDecreasedMessage(CommandSender s, int amount, float cur, Player p) {
+            if(s.equals(p) && Command.messageEnabled("xp")) {
+                s.sendMessage(M.cm("xp", "decreased", Integer.toString(amount), Float.toString(cur)));
+                return;
+            }
+
+            if(Command.messageEnabled("xp"))
+                s.sendMessage(M.cm("xp-s", "decreased", Integer.toString(amount), Float.toString(cur), p.getDisplayName()));
+            if(Command.messageEnabled("xp-others"))
+                p.sendMessage(M.cm("xp-r", "decreased", Integer.toString(amount), Float.toString(cur), Command.getDisplayName(s)));
+        }
+
+        public static void sendIncreasedMessage(CommandSender s, int amount, float cur, Player p) {
+            if(s.equals(p) && Command.messageEnabled("xp")) {
+                s.sendMessage(M.cm("xp", "increased", Integer.toString(amount), Float.toString(cur)));
+                return;
+            }
+
+            if(Command.messageEnabled("xp"))
+                s.sendMessage(M.cm("xp-s", "increased", Integer.toString(amount), Float.toString(cur), p.getDisplayName()));
+            if(Command.messageEnabled("xp-others"))
+                p.sendMessage(M.cm("xp-r", "increased", Integer.toString(amount), Float.toString(cur), Command.getDisplayName(s)));
+        }
+
+        public static void sendXPMessage(CommandSender s, float amount, Player p) {
+            s.sendMessage(M.cm("xpcheck", Float.toString(amount), p.getDisplayName()));
         }
     }
 

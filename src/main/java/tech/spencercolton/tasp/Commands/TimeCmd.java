@@ -1,67 +1,74 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
-import tech.spencercolton.tasp.Util.Message;
-import tech.spencercolton.tasp.Util.Time;
+
+import static org.bukkit.Bukkit.getWorld;
+import static org.bukkit.Bukkit.getWorlds;
+import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
+import static tech.spencercolton.tasp.Util.Message.Time.Error.sendInvalidFormatMessage;
+import static tech.spencercolton.tasp.Util.Message.Time.sendTimeMessage;
+import static tech.spencercolton.tasp.Util.Message.Time.sendTimeSetMessage;
+import static tech.spencercolton.tasp.Util.Time.niceFormatTime;
+import static tech.spencercolton.tasp.Util.Time.timeToBukkitTime;
 
 public class TimeCmd extends TASPCommand {
 
-    public static final String name = "time";
+    @Getter
+    private static final String name = "time";
 
     @Getter
-    private static final String permission = "tasp.time";
+    private final String permission = "tasp.time";
 
     @Getter
-    private static final String syntax = "/time [time | world [time]]";
+    private final String syntax = "/time [time | world [time]]";
 
     @Getter
-    private static final String consoleSyntax = syntax;
+    private final String consoleSyntax = syntax;
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(args.length > 2) {
-            Command.sendGenericSyntaxError(sender, this);
+        if (args.length > 2) {
+            sendGenericSyntaxError(sender, this);
             return;
         }
 
         World w = null;
         Long spigotTime = null;
-        switch(args.length) {
+        switch (args.length) {
             case 2: {
                 try {
-                    spigotTime = Time.timeToBukkitTime(args[1]);
+                    spigotTime = timeToBukkitTime(args[1]);
                     if (spigotTime == null) {
-                        Message.Time.Error.sendInvalidFormatMessage(sender);
+                        sendInvalidFormatMessage(sender);
                         return;
                     }
                 } catch (NumberFormatException e) {
-                    Command.sendGenericSyntaxError(sender, this);
+                    sendGenericSyntaxError(sender, this);
                     return;
                 }
             }
             case 1: {
-                w = Bukkit.getWorld(args[0]);
+                w = getWorld(args[0]);
                 if (w == null) {
                     if (sender instanceof ConsoleCommandSender) {
-                        w = Bukkit.getWorlds().get(0);
+                        w = getWorlds().get(0);
                         assert w != null;
                     } else {
                         assert sender instanceof Entity;
                         w = ((Entity) sender).getWorld();
                     }
                     try {
-                        spigotTime = Time.timeToBukkitTime(args[0]);
+                        spigotTime = timeToBukkitTime(args[0]);
                         if (spigotTime == null) {
-                            Message.Time.Error.sendInvalidFormatMessage(sender);
+                            sendInvalidFormatMessage(sender);
                             return;
                         }
                     } catch (NumberFormatException e) {
-                        Command.sendGenericSyntaxError(sender, this);
+                        sendGenericSyntaxError(sender, this);
                         return;
                     }
                 }
@@ -70,16 +77,16 @@ public class TimeCmd extends TASPCommand {
                 assert w != null;
                 if (spigotTime == null) {
                     long bTime = w.getTime();
-                    Message.Time.sendTimeMessage(sender, Time.niceFormatTime(bTime), Long.toString(bTime), w.getName());
+                    sendTimeMessage(sender, niceFormatTime(bTime), Long.toString(bTime), w.getName());
                     return;
                 } else {
                     w.setTime(spigotTime);
-                    Message.Time.sendTimeSetMessage(sender, Time.niceFormatTime(spigotTime), Long.toString(spigotTime), w.getName());
+                    sendTimeSetMessage(sender, niceFormatTime(spigotTime), Long.toString(spigotTime), w.getName());
                     return;
                 }
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }

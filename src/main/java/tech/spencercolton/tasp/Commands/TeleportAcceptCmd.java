@@ -1,15 +1,17 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
-import tech.spencercolton.tasp.Util.Config;
 
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.singletonList;
+import static org.bukkit.Bukkit.getServer;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Config.err;
 
 /**
  * @author Spencer Colton
@@ -17,21 +19,22 @@ import java.util.List;
 public class TeleportAcceptCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/tpa";
-
-    public static final String name = "tpa";
+    private final String syntax = "/tpa";
 
     @Getter
-    private static final String permission = "tasp.teleport.request.respond";
+    private static final String name = "tpa";
 
     @Getter
-    private static final String consoleSyntax = null;
+    private final String permission = "tasp.teleport.request.respond";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        Person p = Person.get((Player)sender);
-        if(p.getLastTeleportRequester() == null) {
-            p.getPlayer().sendMessage(Config.err() + "You have no existing teleport requests.");
+        Person p = get((Player) sender);
+        if (p.getLastTeleportRequester() == null) {
+            p.getPlayer().sendMessage(err() + "You have no existing teleport requests.");
             return;
         }
 
@@ -39,12 +42,12 @@ public class TeleportAcceptCmd extends TASPCommand {
         p.clearTeleportRequests();
 
         PersonTeleportEvent e = (p.isLastTeleportHere() ? new PersonTeleportEvent(p.getPlayer(), pa.getPlayer(), true, false) : new PersonTeleportEvent(pa.getPlayer(), p.getPlayer(), false, false));
-        Bukkit.getServer().getPluginManager().callEvent(e);
+        getServer().getPluginManager().callEvent(e);
     }
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("tpaccept");
+        return singletonList("tpaccept");
     }
 
 }

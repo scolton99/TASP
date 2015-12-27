@@ -1,11 +1,14 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Message;
+
+import static java.lang.Integer.parseInt;
+import static org.bukkit.Bukkit.getPlayer;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Message.Feed.sendFedMessage;
 
 /**
  * @author Spencer Colton
@@ -13,40 +16,41 @@ import tech.spencercolton.tasp.Util.Message;
 public class FeedCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/feed [player] [amount]";
-
-    public static final String name = "feed";
+    private final String syntax = "/feed [player] [amount]";
 
     @Getter
-    private static final String permission = "tasp.feed";
+    private static final String name = "feed";
 
     @Getter
-    private static final String consoleSyntax = "/feed <player> [amount]";
+    private final String permission = "tasp.feed";
+
+    @Getter
+    private final String consoleSyntax = "/feed <player> [amount]";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if((args.length == 0 || args.length > 2) && sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleSyntaxError(sender, this);
+        if ((args.length == 0 || args.length > 2) && sender instanceof ConsoleCommandSender) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
 
         Integer amount = null;
         Player p = null;
-        switch(args.length) {
+        switch (args.length) {
             case 2: {
                 try {
-                    amount = Integer.parseInt(args[1]);
+                    amount = parseInt(args[1]);
                     if (amount < 0) {
-                        Command.sendNegativeMessage(sender);
+                        sendNegativeMessage(sender);
                     }
                 } catch (NumberFormatException e) {
-                    Command.sendGenericSyntaxError(sender, this);
+                    sendGenericSyntaxError(sender, this);
                 }
             }
             case 1: {
-                p = Bukkit.getPlayer(args[0]);
+                p = getPlayer(args[0]);
                 if (p == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
+                    sendPlayerMessage(sender, args[0]);
                     return;
                 }
             }
@@ -64,18 +68,18 @@ public class FeedCmd extends TASPCommand {
                 p.setFoodLevel(p.getFoodLevel() + amount);
                 p.setSaturation(20.0F);
 
-                Message.Feed.sendFedMessage(sender, amount / 2.0F, p.getPlayer());
+                sendFedMessage(sender, amount / 2.0F, p.getPlayer());
                 return;
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        return (args.length == 2 && !sender.equals(Bukkit.getPlayer(args[1]))) ? permission + ".others" : permission;
+        return (args.length == 2 && !sender.equals(getPlayer(args[1]))) ? permission + ".others" : permission;
     }
 
 }

@@ -1,12 +1,15 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Message;
+
+import static org.bukkit.Bukkit.getPlayer;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Message.Buddha.sendBuddhaMessage;
 
 /**
  * @author Spencer Colton
@@ -14,43 +17,44 @@ import tech.spencercolton.tasp.Util.Message;
 public class BuddhaCmd extends TASPCommand {
 
     @Getter
-    private static final String syntax = "/buddha [player]";
-
-    public static final String name = "buddha";
+    private final String syntax = "/buddha [player]";
 
     @Getter
-    private static final String permission = "tasp.buddha";
+    private static final String name = "buddha";
 
     @Getter
-    private static final String consoleSyntax = "/buddha <player>";
+    private final String permission = "tasp.buddha";
+
+    @Getter
+    private final String consoleSyntax = "/buddha <player>";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(sender instanceof ConsoleCommandSender && args.length != 1) {
-            Command.sendConsoleSyntaxError(sender, this);
+        if (sender instanceof ConsoleCommandSender && args.length != 1) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
         Person p = null;
 
-        switch(args.length) {
+        switch (args.length) {
             case 1: {
-                p = Person.get(Bukkit.getPlayer(args[0]));
+                p = get(getPlayer(args[0]));
                 if (p == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
+                    sendPlayerMessage(sender, args[0]);
                     return;
                 }
             }
             case 0: {
-                if(p == null)
-                    p = Person.get((Player)sender);
+                if (p == null)
+                    p = get((Player) sender);
                 assert p != null;
 
                 p.setBuddha(!p.isBuddha());
-                Message.Buddha.sendBuddhaMessage(sender, p.isBuddha(), p.getPlayer());
+                sendBuddhaMessage(sender, p.isBuddha(), p.getPlayer());
                 return;
             }
             default: {
-                Command.sendGenericSyntaxError(sender, this);
+                sendGenericSyntaxError(sender, this);
             }
         }
     }
