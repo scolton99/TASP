@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Entities;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;
 import java.util.Set;
@@ -52,18 +53,19 @@ public class SpawnerCmd extends TASPCommand {
                 }
                 case 1: {
                     EntityType et = Entities.getEntityType(args.get(0));
-                    if(!Entities.isAllowed(et)) {
+                    if(!Entities.isAllowed(et) || et == null) {
                         Command.sendInvalidEntityMessage(sender, args.get(0));
                         return;
                     }
                     cs.setSpawnedType(et);
+                    cs.setCreatureTypeByName(et.toString());
                     cs.setDelay(delay);
-                    //TODO Add Message
+                    Message.Spawner.sendSpawnerMessage(sender, b.getLocation(), et.toString().toLowerCase().replace('_', ' '), delay);
                 }
             }
 
         } else {
-            //TODO Add message here
+            Message.Spawner.Error.sendNotSpawnerMessage(sender);
         }
     }
 

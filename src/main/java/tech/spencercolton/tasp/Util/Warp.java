@@ -71,7 +71,13 @@ public class Warp {
     }
 
     @SuppressWarnings("unchecked")
-    public static void setWarp(Location l, String name) {
+    public static boolean setWarp(Location l, String name) {
+        List<Map<String,String>> wps = (List)warps.get("warps");
+
+        for(Map<String,String> wp : wps)
+            if(wp.get("name").equalsIgnoreCase(name))
+                return false;
+
         Map<String,String> warp = new HashMap<>();
         warp.put("name", name);
         warp.put("world", l.getWorld().getUID().toString());
@@ -80,10 +86,11 @@ public class Warp {
         warp.put("z", Double.toString(l.getZ()));
         warp.put("pitch", Float.toString(l.getPitch()));
         warp.put("yaw", Float.toString(l.getYaw()));
-        List<Map<String,String>> wps = (List)warps.get("warps");
+
         wps.add(warp);
         warps.put("warps", wps);
         writeWarps();
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -97,6 +104,11 @@ public class Warp {
                 break;
             }
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<Map<String,String>> getAllWarps() {
+        return (List<Map<String,String>>)warps.get("warps");
     }
 
 }

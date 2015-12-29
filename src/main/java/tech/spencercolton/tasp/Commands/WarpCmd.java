@@ -7,6 +7,7 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
+import tech.spencercolton.tasp.Util.Message;
 import tech.spencercolton.tasp.Util.Warp;
 
 import java.util.List;
@@ -45,8 +46,9 @@ public class WarpCmd extends TASPCommand {
         if(l != null) {
             Bukkit.getServer().getPluginManager().callEvent(new PersonTeleportEvent(Person.get(p), l));
         } else {
-            //TODO Add warp not found message here
+            Message.Warp.Error.sendWarpNotFoundMessage(sender, args.get(0));
         }
+
 
     }
 

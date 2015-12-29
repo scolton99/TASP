@@ -176,6 +176,7 @@ public class Command implements CommandExecutor {
         cmds.put(WarpCmd.getName().toLowerCase(), new WarpCmd());
         cmds.put(SignCmd.getName().toLowerCase(), new SignCmd());
         cmds.put(SpawnerCmd.getName().toLowerCase(), new SpawnerCmd());
+        cmds.put(WarpsCmd.getName().toLowerCase(), new WarpsCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

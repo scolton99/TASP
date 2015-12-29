@@ -483,6 +483,30 @@ public class Message {
         }
     }
 
+    public static class Setwarp {
+
+        public static void sendWarpSetMessage(CommandSender s, Location l, String name) {
+            if(Command.messageEnabled("setwarp"))
+                s.sendMessage(M.cm("setwarp", l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ(), name, l.getWorld().getName()));
+        }
+
+        public static class Error {
+
+            public static void warpAlreadyExists(CommandSender sender) {
+                sender.sendMessage(Config.err() + "A warp with that name already exists.");
+            }
+        }
+    }
+
+    public static class Sign {
+
+        public static class Error {
+            public static void sendNotSignMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "You must be looking at a sign to perform this command.");
+            }
+        }
+    }
+
     public static class Shock {
 
         public static void sendShockMessage(CommandSender s, Player p) {
@@ -494,6 +518,21 @@ public class Message {
                 s.sendMessage(M.cm("shock-s", p.getDisplayName()));
             if (Command.messageEnabled("shock-others"))
                 p.sendMessage(M.cm("shock-r", Command.getDisplayName(s)));
+        }
+    }
+
+    public static class Spawner {
+
+        public static void sendSpawnerMessage(CommandSender sender, Location l, String mobtype, int delay) {
+            if(Command.messageEnabled("spawner"))
+                sender.sendMessage(M.cm("spawner", l.getBlockX() + " " + l.getBlockY() + " " + l.getBlockZ(), mobtype, Integer.toString(delay)));
+        }
+
+        public static class Error {
+
+            public static void sendNotSpawnerMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "You must be looking at a spawner to run this command. /i mob_spawner");
+            }
         }
     }
 
@@ -641,6 +680,15 @@ public class Message {
         }
     }
 
+    public static class Warp {
+
+        public static class Error {
+
+            public static void sendWarpNotFoundMessage(CommandSender sender, String warp) {
+                sender.sendMessage(Config.err() + "Warp \"" + warp + "\" not found. Do /warps");
+            }
+        }
+    }
 
     public static class Weather {
 

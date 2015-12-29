@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.ColorChat;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;
 import java.util.Set;
@@ -46,8 +47,10 @@ public class SignCmd extends TASPCommand {
             for(int i = 0; i < args.size(); i++) {
                 s.setLine(i, ColorChat.color(args.get(i)));
             }
+
+            s.update();
         } else {
-            // TODO Add not sign message here
+            Message.Sign.Error.sendNotSignMessage(sender);
         }
     }
 

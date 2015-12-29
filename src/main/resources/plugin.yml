@@ -168,3 +168,5 @@ commands:
         description: Edit a sign
     spawner:
         description: Edit a mob spawner
+    warps:
+        description: List all warps.

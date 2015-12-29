@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Util.Message;
 import tech.spencercolton.tasp.Util.Warp;
 
 import java.util.List;
@@ -38,9 +39,11 @@ public class SetwarpCmd extends TASPCommand {
 
         Location l = ((Player)sender).getLocation();
 
-        Warp.setWarp(l, args.get(0));
-
-        // TODO Give this commmand a message
+        if(Warp.setWarp(l, args.get(0))) {
+            Message.Setwarp.sendWarpSetMessage(sender, l, args.get(0));
+        } else {
+            Message.Setwarp.Error.warpAlreadyExists(sender);
+        }
     }
 
 }
