@@ -324,4 +324,8 @@ public class Command implements CommandExecutor {
         return fin;
     }
 
+    public static void sendItemNotFoundMessage(CommandSender sender) {
+        sender.sendMessage(Config.err() + "Sorry, couldn't find that item.");
+    }
+
 }

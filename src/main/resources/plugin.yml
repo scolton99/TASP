@@ -158,3 +158,5 @@ commands:
         description: Check the crafting recipe for an item.
     holding:
         description: What are you holding?
+    i:
+        description: Give yourself an item

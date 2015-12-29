@@ -198,6 +198,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("jump").setExecutor(c);
         this.getCommand("recipe").setExecutor(c);
         this.getCommand("holding").setExecutor(c);
+        this.getCommand("i").setExecutor(c);
     }
 
     //FIXME Outdated JDOC

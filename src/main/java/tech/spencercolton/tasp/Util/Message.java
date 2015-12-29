@@ -364,9 +364,6 @@ public class Message {
     public static class Recipe {
 
         public static class Error {
-            public static void sendItemNotFoundMessage(CommandSender sender) {
-                sender.sendMessage(Config.err() + "Sorry, couldn't find that item.");
-            }
 
             public static void sendNoRecipesMessage(CommandSender sender) {
                 sender.sendMessage(Config.err() + "Sorry, no recipes exist for that item.");

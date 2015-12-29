@@ -81,12 +81,12 @@ public class RecipeCmd extends TASPCommand {
 
                 item = IDs.getByIdDamage(id, damage);
                 if(item == null) {
-                    Message.Recipe.Error.sendItemNotFoundMessage(sender);
+                    Command.sendItemNotFoundMessage(sender);
                     return;
                 }
 
             } catch(NumberFormatException e) {
-                Command.sendSyntaxError(sender, this);
+                Command.sendItemNotFoundMessage(sender);
                 return;
             }
         }
@@ -122,31 +122,56 @@ public class RecipeCmd extends TASPCommand {
         if(i instanceof CraftingInventory) {
             CraftingInventory ci = (CraftingInventory) i;
             if (r instanceof ShapelessRecipe) {
-                List<ItemStack> z = ((ShapelessRecipe) r).getIngredientList();
-                ci.setMatrix(z.toArray(new ItemStack[z.size()]));
+                ItemStack[] z = ((ShapelessRecipe)r).getIngredientList().toArray(new ItemStack[((ShapelessRecipe)r).getIngredientList().size()]);
+                z = Arrays.copyOf(z, 9);
+                ci.setMatrix(z);
                 ci.setResult(r.getResult());
             } else if (r instanceof ShapedRecipe) {
                 ShapedRecipe sr = (ShapedRecipe) r;
-                String[] shape = sr.getShape();
-                List<ItemStack> finMatrix = new ArrayList<>();
+                String[] s = sr.getShape();
+
                 Map<Character, ItemStack> mci = sr.getIngredientMap();
-                List<List<Character>> chars = new ArrayList<>();
-                for (String s : shape) {
-                    Bukkit.broadcastMessage(s);
-                    List<Character> cx = new ArrayList<>();
-                    for (char c : s.toCharArray()) {
-                        cx.add(c);
+
+                Character[][] chrs = new Character[3][3];
+
+                for (int j = 0; j < s.length; j++) {
+                    for (int k = 0; k < s[j].length(); k++) {
+                        chrs[j][k] = s[j].toCharArray()[k];
                     }
-                    chars.add(cx);
                 }
 
-                for (List<Character> ch : chars) {
-                    for (Character h : ch) {
-                        finMatrix.add(mci.get(h));
+                for (int j = 0; j < 3; j++) {
+                    if(chrs[j] == null) {
+                        Character[] temp = {' ', ' ', ' '};
+                        chrs[j] = temp;
+                        continue;
+                    }
+                    for (int k = 0; k < 3; k++) {
+                        if(chrs[j][k] == null)
+                            chrs[j][k] = ' ';
                     }
                 }
-                ItemStack[] fin = finMatrix.toArray(new ItemStack[finMatrix.size()]);
-                ci.setMatrix(Arrays.copyOf(fin, 9));
+
+                for(Character[] ca : chrs) {
+                    for(Character c : ca) {
+                        Bukkit.broadcastMessage(Objects.toString(c));
+                    }
+                }
+
+                ItemStack[] its = new ItemStack[9];
+
+                for(int j = 0; j < 3; j++) {
+                    for (int k = 0; k < 3; k++) {
+                        if(chrs[j][k] == ' ') {
+                            its[(3*j) + k] = new ItemStack(Material.AIR);
+                            continue;
+                        }
+                        its[(3*j) + k] = mci.get(chrs[j][k]);
+                    }
+                }
+
+                ci.setMatrix(its);
+                ci.setResult(sr.getResult());
             }
         } else {
             //TODO Finish this

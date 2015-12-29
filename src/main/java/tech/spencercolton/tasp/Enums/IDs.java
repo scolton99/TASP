@@ -666,4 +666,26 @@ public enum IDs {
         return null;
     }
 
+    public static IDs getByIdDamage(String s) {
+        Integer damage = null, id = null;
+
+        String[] idDamage = s.split(":");
+
+        try {
+            if (idDamage.length == 2)
+                damage = Integer.parseInt(idDamage[1]);
+            if (idDamage.length >= 1)
+                id = Integer.parseInt(idDamage[0]);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+
+        if(damage == null)
+            damage = 0;
+
+        assert id != null;
+
+        return getByIdDamage(id, damage);
+    }
+
 }

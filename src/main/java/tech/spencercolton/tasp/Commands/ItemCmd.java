@@ -1,8 +1,15 @@
 package tech.spencercolton.tasp.Commands;
 
+import com.sun.tools.corba.se.idl.IncludeGen;
 import lombok.Getter;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import tech.spencercolton.tasp.Enums.IDs;
+
+import java.util.List;
 
 /**
  * @author Spencer Colton
@@ -22,8 +29,40 @@ public class ItemCmd extends TASPCommand {
     private final String permission = "tasp.give";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public void execute(CommandSender sender, String[] argsg) {
         assert !(sender instanceof ConsoleCommandSender);
+
+        List<String> args = Command.processQuotedArguments(argsg);
+
+        Player p = (Player)sender;
+        Integer amount = 64;
+        Short damage;
+        switch(args.size()) {
+            case 2: {
+                try {
+                    amount = Integer.parseInt(args.get(1));
+                } catch (NumberFormatException e) {
+                    Command.sendSyntaxError(sender, this);
+                    return;
+                }
+            }
+            case 1: {
+                IDs a = IDs.getByName(args.get(0));
+                if(a == null) {
+                    a = IDs.getByIdDamage(args.get(0));
+                    if(a == null) {
+                        Command.sendItemNotFoundMessage(sender);
+                        return;
+                    }
+                }
+                damage = a.getDamage();
+                ItemStack b = new ItemStack(a.getMaterial(), amount, damage);
+                p.getInventory().addItem(b);
+            }
+            default: {
+                Command.sendSyntaxError(sender, this);
+            }
+        }
     }
 
 }
