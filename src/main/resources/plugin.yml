@@ -156,3 +156,5 @@ commands:
         description: Change your nickname.
     recipe:
         description: Check the crafting recipe for an item.
+    holding:
+        description: What are you holding?

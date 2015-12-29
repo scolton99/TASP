@@ -55,6 +55,7 @@ public class RecipeCmd extends TASPCommand {
         if(args.size() == 2) {
             try {
                 start = Integer.parseInt(args.get(1));
+                start--;
             } catch (NumberFormatException e) {
                 Command.sendSyntaxError(sender, this);
                 return;
@@ -105,31 +106,20 @@ public class RecipeCmd extends TASPCommand {
             return;
         }
 
-        start--;
-
         Recipe r = recipes.get(start);
 
         Inventory i;
         if(r instanceof FurnaceRecipe) {
             i = Bukkit.createInventory(p, InventoryType.FURNACE);
+
+            p.openInventory(i);
         } else {
-            i = Bukkit.createInventory(p, InventoryType.CRAFTING);
+            i = p.openWorkbench(null, true).getTopInventory();
         }
 
         TASP.getOpenImmutableInventories().add(i);
-        //TODO Finish this
-        if(i.getType() == InventoryType.FURNACE) {
-            assert r instanceof FurnaceRecipe;
-            FurnaceRecipe z = (FurnaceRecipe) r;
 
-            ItemStack smelting = z.getInput();
-            ItemStack result = z.getResult();
-
-            smelting.setAmount(1);
-
-            i.setItem(0, smelting);
-            i.setItem(2, result);
-        } else if(i.getType() == InventoryType.CRAFTING) {
+        if(i instanceof CraftingInventory) {
             CraftingInventory ci = (CraftingInventory) i;
             if (r instanceof ShapelessRecipe) {
                 List<ItemStack> z = ((ShapelessRecipe) r).getIngredientList();
@@ -142,6 +132,7 @@ public class RecipeCmd extends TASPCommand {
                 Map<Character, ItemStack> mci = sr.getIngredientMap();
                 List<List<Character>> chars = new ArrayList<>();
                 for (String s : shape) {
+                    Bukkit.broadcastMessage(s);
                     List<Character> cx = new ArrayList<>();
                     for (char c : s.toCharArray()) {
                         cx.add(c);
@@ -154,14 +145,28 @@ public class RecipeCmd extends TASPCommand {
                         finMatrix.add(mci.get(h));
                     }
                 }
-                Bukkit.getLogger().info(finMatrix.toString());
                 ItemStack[] fin = finMatrix.toArray(new ItemStack[finMatrix.size()]);
-                Bukkit.getLogger().info(Integer.toString(fin.length));
                 ci.setMatrix(Arrays.copyOf(fin, 9));
             }
-        }
+        } else {
+            //TODO Finish this
+            if (i.getType() == InventoryType.FURNACE) {
+                assert r instanceof FurnaceRecipe;
+                FurnaceRecipe z = (FurnaceRecipe) r;
 
-        p.openInventory(i);
+                ItemStack smelting = z.getInput();
+                ItemStack result = z.getResult();
+
+                if(smelting.getDurability() == 32767)
+                    smelting.setDurability((short)0);
+
+                if(result.getDurability() == 32767)
+                    result.setDurability((short)0);
+
+                i.setItem(0, smelting);
+                i.setItem(2, result);
+            }
+        }
     }
 
 }
