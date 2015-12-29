@@ -14,21 +14,21 @@ import java.util.regex.Pattern;
 /**
  * A class for managing {@link TASPCommand}s and general command maintenance.
  * <p>
- *     Provides error-related functions for when players and console senders fail to properly use the command.
+ * Provides error-related functions for when players and console senders fail to properly use the command.
  * </p>
  *
  * @author Spencer Colton
  * @since 0.0.1-001
  */
-public class Command implements CommandExecutor{
+public class Command implements CommandExecutor {
 
     /**
      * {@code HashMap} mapping familiar plugin names to their classes.
      * <p>
-     *     Populated when the Command is instantiated.
+     * Populated when the Command is instantiated.
      * </p>
      */
-    private static final ConcurrentHashMap<String,TASPCommand> cmds = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, TASPCommand> cmds = new ConcurrentHashMap<>();
 
     /**
      * Not designed as a constructor, but as a convenient way for the class to populate the {@link #cmds} field
@@ -41,16 +41,16 @@ public class Command implements CommandExecutor{
     /**
      * The server-required {@code onCommand} method that passes only the required information to command processors.
      * <p>
-     *     Because the server-required arguments were verbose and often unnecessary, TASP implements a new class for
-     *     command processing that transfers all of the necessary arguments to a more simple command executor that
-     *     does not return a boolean value, as it expected that all relevant information will be supplied directly to
-     *     the user in the form of messages.
+     * Because the server-required arguments were verbose and often unnecessary, TASP implements a new class for
+     * command processing that transfers all of the necessary arguments to a more simple command executor that
+     * does not return a boolean value, as it expected that all relevant information will be supplied directly to
+     * the user in the form of messages.
      * </p>
      *
      * @param sender The sender, supplied by the server.
-     * @param cmd The command, supplied by the server.
-     * @param label The command's label, supplied by the server.
-     * @param args The command's arguments, supplied by the server.
+     * @param cmd    The command, supplied by the server.
+     * @param label  The command's label, supplied by the server.
+     * @param args   The command's arguments, supplied by the server.
      * @return {@code true} if the command was found in the list of available commands, else {@code false}.
      */
     @Override
@@ -58,20 +58,20 @@ public class Command implements CommandExecutor{
         String s = cmd.getName();
 
         TASPCommand c = this.getCommand(s.toLowerCase());
-        if(c == null)
+        if (c == null)
             return false;
 
         boolean hasPermission = false;
 
-        if(sender instanceof Player) {
-            Player p = (Player)sender;
-            if(p.hasPermission(c.predictRequiredPermission(sender, args)))
-                    hasPermission = true;
-        } else if(sender instanceof ConsoleCommandSender) {
+        if (sender instanceof Player) {
+            Player p = (Player) sender;
+            if (p.hasPermission(c.predictRequiredPermission(sender, args)))
+                hasPermission = true;
+        } else if (sender instanceof ConsoleCommandSender) {
             hasPermission = true;
         }
 
-        if(!hasPermission) {
+        if (!hasPermission) {
             sendPermissionError(sender);
             return true;
         }
@@ -82,14 +82,14 @@ public class Command implements CommandExecutor{
     /**
      * The method used to find a command's executor and execute it using the given arguments.
      *
-     * @param name The name of the command.
+     * @param name   The name of the command.
      * @param sender Who sent the command.
-     * @param args The arguments of the command, supplied by the player.
+     * @param args   The arguments of the command, supplied by the player.
      * @return {@code true} if the command was found in the list of available commands, else {@code false}.
      */
     private boolean executeCommand(String name, CommandSender sender, String... args) {
-        if(Collections.list(cmds.keys()).contains(name.toLowerCase())) {
-            if(sender instanceof ConsoleCommandSender && cmds.get(name.toLowerCase()).getConsoleSyntax() == null) {
+        if (Collections.list(cmds.keys()).contains(name.toLowerCase())) {
+            if (sender instanceof ConsoleCommandSender && cmds.get(name.toLowerCase()).getConsoleSyntax() == null) {
                 sendConsoleError(sender);
                 return true;
             }
@@ -159,13 +159,24 @@ public class Command implements CommandExecutor{
         cmds.put(ShootCmd.getName().toLowerCase(), new ShootCmd());
         cmds.put(HoldingCmd.getName().toLowerCase(), new HoldingCmd());
         cmds.put(ItemCmd.getName().toLowerCase(), new ItemCmd());
+        cmds.put(XPCmd.getName().toLowerCase(), new XPCmd());
+        cmds.put(CraftCmd.getName().toLowerCase(), new CraftCmd());
+        cmds.put(SuCmd.getName().toLowerCase(), new SuCmd());
+        cmds.put(InvspyCmd.getName().toLowerCase(), new InvspyCmd());
+        cmds.put(ClearCmd.getName().toLowerCase(), new ClearCmd());
+        cmds.put(TplocCmd.getName().toLowerCase(), new TplocCmd());
+        cmds.put(DisappearCmd.getName().toLowerCase(), new DisappearCmd());
+        cmds.put(KillCmd.getName().toLowerCase(), new KillCmd());
+        cmds.put(NickCmd.getName().toLowerCase(), new NickCmd());
+        cmds.put(HelpmeCmd.getName().toLowerCase(), new HelpmeCmd());
+        cmds.put(RecipeCmd.getName().toLowerCase(), new RecipeCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 
-        for(TASPCommand c : coll) {
-            if(c.getAliases() == null)
+        for (TASPCommand c : coll) {
+            if (c.getAliases() == null)
                 continue;
-            for(String g : c.getAliases()) {
+            for (String g : c.getAliases()) {
                 cmds.put(g, c);
             }
         }
@@ -204,11 +215,11 @@ public class Command implements CommandExecutor{
 
     public static void sendConsoleSyntaxError(CommandSender s, TASPCommand c) {
         assert s instanceof ConsoleCommandSender;
-        sendConsoleSyntaxError((ConsoleCommandSender)s, c);
+        sendConsoleSyntaxError((ConsoleCommandSender) s, c);
     }
 
     public static void sendGenericSyntaxError(CommandSender s, TASPCommand c) {
-        if(s instanceof ConsoleCommandSender)
+        if (s instanceof ConsoleCommandSender)
             sendConsoleSyntaxError(s, c);
         else
             sendSyntaxError(s, c);
@@ -236,19 +247,19 @@ public class Command implements CommandExecutor{
 
     public static List<String> processQuotedArguments(String... args) {
         String larg = "";
-        for(int i = 0; i < args.length; i++) {
+        for (int i = 0; i < args.length; i++) {
             larg += args[i];
-            if(!((i + 1) >= args.length))
+            if (!((i + 1) >= args.length))
                 larg += " ";
         }
 
         List<String> newArgs = new ArrayList<>();
         Pattern r = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
         Matcher rm = r.matcher(larg);
-        while(rm.find()) {
-            if(rm.group(1) != null) {
+        while (rm.find()) {
+            if (rm.group(1) != null) {
                 newArgs.add(rm.group(1));
-            } else if(rm.group(2) != null) {
+            } else if (rm.group(2) != null) {
                 newArgs.add(rm.group(2));
             } else {
                 newArgs.add(rm.group());
@@ -260,18 +271,18 @@ public class Command implements CommandExecutor{
 
     public static List<String> removeSpaces(String... args) {
         List<String> fin = new ArrayList<>();
-        for(String s : args) {
+        for (String s : args) {
             fin.add(s.replace(" ", "_"));
         }
         return fin;
     }
 
     public static String getDisplayName(CommandSender sender) {
-        if(sender instanceof ConsoleCommandSender) {
+        if (sender instanceof ConsoleCommandSender) {
             return sender.getName();
         }
 
-        Player p = (Player)sender;
+        Player p = (Player) sender;
         return p.getDisplayName();
     }
 
@@ -285,9 +296,9 @@ public class Command implements CommandExecutor{
 
     private static String combineArgs(List<String> args, int start) {
         String fin = "";
-        for(int i = start; i < args.size(); i++) {
+        for (int i = start; i < args.size(); i++) {
             fin += args.get(i);
-            if(!(i + 1 >= args.size()))
+            if (!(i + 1 >= args.size()))
                 fin += " ";
         }
         return fin;
@@ -299,6 +310,18 @@ public class Command implements CommandExecutor{
 
     public static void sendInvalidEntityMessage(CommandSender sender, String entity) {
         sender.sendMessage(Config.err() + "\"" + entity + "\" is not recognized as a valid entity.");
+    }
+
+    public static String listToCSV(List<String> org) {
+        String fin = "";
+
+        for(int i = 0; i < org.size(); i++) {
+            fin += org.get(i);
+            if(!((i + 1) >= org.size()))
+                fin += ", ";
+        }
+
+        return fin;
     }
 
 }

@@ -3,11 +3,9 @@ package tech.spencercolton.tasp.Commands;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 
-import static org.bukkit.Bukkit.broadcastMessage;
-import static tech.spencercolton.tasp.Commands.Command.combineArgs;
-import static tech.spencercolton.tasp.Commands.Command.getDisplayName;
-import static tech.spencercolton.tasp.Util.Config.c1;
-import static tech.spencercolton.tasp.Util.Config.c2;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Config.*;
 
 public class MeCmd extends TASPCommand {
 

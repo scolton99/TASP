@@ -8,7 +8,10 @@ import org.json.simple.parser.ParseException;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -39,7 +42,7 @@ public class PlayerData {
      */
     public PlayerData(Person p) {
         this.p = p;
-        if(dataExists(p)) {
+        if (dataExists(p)) {
             this.data = this.loadData();
         } else {
             this.genData();
@@ -126,7 +129,7 @@ public class PlayerData {
         this.data.put("lastName", this.p.getName());
         this.data.put("UUID", this.p.getUid().toString());
         this.data.put("firstSeen", new Date().toString());
-        if(TASP.TASPPerms_link != null) {
+        if (TASP.TASPPerms_link != null) {
             this.data.put("permissions", new ArrayList<>());
         }
         this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
@@ -144,9 +147,9 @@ public class PlayerData {
         assert f.exists();
 
         JSONParser p = new JSONParser();
-        try (FileReader fa = new FileReader(f)){
+        try (FileReader fa = new FileReader(f)) {
             return (JSONObject) p.parse(fa);
-        } catch(IOException|ParseException e) {
+        } catch (IOException | ParseException e) {
             Bukkit.getLogger().warning("Error parsing player data:");
             e.printStackTrace();
             return null;
@@ -213,7 +216,6 @@ public class PlayerData {
         this.data.put(s, l);
         this.writeData();
     }
-
 
 
 }

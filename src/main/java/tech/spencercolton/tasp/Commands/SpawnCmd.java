@@ -5,9 +5,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 
-import static org.bukkit.Bukkit.getPluginManager;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
-import static tech.spencercolton.tasp.Entity.Person.get;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
 
 /**
  * @author Spencer Colton

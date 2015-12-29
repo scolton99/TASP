@@ -6,12 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Util.Message;
 
-import static tech.spencercolton.tasp.Commands.Command.sendConsoleError;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Home.Error.sendNoHomeMessage;
-import static tech.spencercolton.tasp.Util.Message.Home.Error.sendWorldMessage;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
 
 public class HomeCmd extends TASPCommand {
 
@@ -46,14 +44,14 @@ public class HomeCmd extends TASPCommand {
         Location l = p2.getHome();
 
         if (l == null) {
-            sendNoHomeMessage(sender);
+            Message.Home.Error.sendNoHomeMessage(sender);
             return;
         }
 
         if (l.getWorld().equals(p.getWorld())) {
             p.teleport(l);
         } else {
-            sendWorldMessage(sender);
+            Message.Home.Error.sendWorldMessage(sender);
         }
     }
 

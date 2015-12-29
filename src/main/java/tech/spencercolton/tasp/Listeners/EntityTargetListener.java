@@ -15,11 +15,11 @@ public class EntityTargetListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void onEvent(EntityTargetEvent e) {
-        if(e.getTarget() instanceof Player && e.getEntity() instanceof Monster) {
-            Person p = Person.get((Player)e.getTarget());
+        if (e.getTarget() instanceof Player && e.getEntity() instanceof Monster) {
+            Person p = Person.get((Player) e.getTarget());
             assert p != null;
 
-            if(p.isFOM())
+            if (p.isFOM())
                 e.setCancelled(true);
         }
     }

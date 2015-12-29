@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Global superclass for all specific TASP commands.
  * <p>
- *     {@link #getConsoleSyntax()} may return {@code null} if the command cannot be run from the console.
+ * {@link #getConsoleSyntax()} may return {@code null} if the command cannot be run from the console.
  * </p>
  *
  * @author Spencer Colton
@@ -19,22 +19,22 @@ abstract class TASPCommand {
     /**
      * Contains the logic used to process a command.
      * <p>
-     *     Unlike Spigot's {@code onCommand} method, this method does not return a type of {@code boolean}.  It is
-     *     expected that the command code will effectively inform players when they have failed to correctly execute
-     *     the command, therefore a return value is unnecessary.  All intervention will be taken care of using messages
-     *     to the {@link CommandSender}.
+     * Unlike Spigot's {@code onCommand} method, this method does not return a type of {@code boolean}.  It is
+     * expected that the command code will effectively inform players when they have failed to correctly execute
+     * the command, therefore a return value is unnecessary.  All intervention will be taken care of using messages
+     * to the {@link CommandSender}.
      * </p>
      *
      * @param sender To be supplied by the {@link Command class}
-     * @param args To be supplied by the {@link Command class}
+     * @param args   To be supplied by the {@link Command class}
      */
     public abstract void execute(CommandSender sender, String... args);
 
     /**
      * Returns the command's expected in-game syntax in the form a human-readable {@code String}.
      * <p>
-     *     The value is used in functions such as {@link Command#sendSyntaxError(CommandSender, TASPCommand)} to
-     *     inform {@link CommandSender}s that they have incorrectly used a command.
+     * The value is used in functions such as {@link Command#sendSyntaxError(CommandSender, TASPCommand)} to
+     * inform {@link CommandSender}s that they have incorrectly used a command.
      * </p>
      *
      * @return The in-game syntax for the command, in a human-readable {@code String}.
@@ -44,10 +44,11 @@ abstract class TASPCommand {
     /**
      * Returns the command's expected console syntax in the form a human-readable {@code String}.
      * <p>
-     *     The value is used in functions such as
-     *     {@link Command#sendConsoleSyntaxError(ConsoleCommandSender, TASPCommand)} to
-     *     inform {@link CommandSender}s that they have incorrectly used a command.
+     * The value is used in functions such as
+     * {@link Command#sendConsoleSyntaxError(ConsoleCommandSender, TASPCommand)} to
+     * inform {@link CommandSender}s that they have incorrectly used a command.
      * </p>
+     *
      * @return {@code null} if the command cannot be run from the console, or a human-readable {@code String} with
      * the command's console syntax.
      */

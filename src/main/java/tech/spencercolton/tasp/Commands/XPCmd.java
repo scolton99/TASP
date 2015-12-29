@@ -6,11 +6,10 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-import static java.util.Collections.singletonList;
-import static org.bukkit.Bukkit.getPlayer;
-import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
-import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
+import static java.lang.Integer.*;
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Util.Message.XP.*;
 
 /**
@@ -57,22 +56,21 @@ public class XPCmd extends TASPCommand {
             case 1: {
                 switch (args[0].toLowerCase()) {
                     case "give": {
-                        //noinspection ConstantConditions
-                        if (amount == null || p == null) {
+                        if (p == null || amount == null) {
                             sendGenericSyntaxError(sender, this);
                             return;
                         }
                         p.giveExp(amount);
-                        sendIncreasedMessage(sender, amount, p.getExp(), p);
+                        sendIncreasedMessage(sender, amount, p.getTotalExperience(), p);
                         return;
                     }
                     case "take": {
-                        if (amount == null || p == null) {
+                        if (p == null || amount == null) {
                             sendGenericSyntaxError(sender, this);
                             return;
                         }
-                        p.setExp(p.getExp() - (float) amount);
-                        sendDecreasedMessage(sender, amount, p.getExp(), p);
+                        p.setTotalExperience(p.getTotalExperience() - amount);
+                        sendDecreasedMessage(sender, amount, p.getTotalExperience(), p);
                         return;
                     }
                     case "check": {
@@ -80,7 +78,7 @@ public class XPCmd extends TASPCommand {
                             sendGenericSyntaxError(sender, this);
                             return;
                         }
-                        float amt = p.getExp();
+                        float amt = p.getTotalExperience();
                         sendXPMessage(sender, amt, p);
                         break;
                     }
@@ -90,7 +88,7 @@ public class XPCmd extends TASPCommand {
                             sendPlayerMessage(sender, args[0]);
                             return;
                         }
-                        sendXPMessage(sender, p.getExp(), p);
+                        sendXPMessage(sender, p.getTotalExperience(), p);
                     }
                 }
             }

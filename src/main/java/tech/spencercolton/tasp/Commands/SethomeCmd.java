@@ -7,14 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Double.parseDouble;
-import static java.lang.Float.parseFloat;
+import static java.lang.Double.*;
+import static java.lang.Float.*;
 import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Sethome.Error.sendPitchOOBMessage;
-import static tech.spencercolton.tasp.Util.Message.Sethome.Error.sendYawOOBMessage;
-import static tech.spencercolton.tasp.Util.Message.Sethome.sendHomeMessage;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.Util.Message.Sethome.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Sethome.*;
 
 public class SethomeCmd extends TASPCommand {
 

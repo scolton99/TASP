@@ -5,11 +5,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Float.parseFloat;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.lang.Float.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Setspeed.Error.sendSpeedOOBMessage;
-import static tech.spencercolton.tasp.Util.Message.Setspeed.sendSpeedMessage;
+import static tech.spencercolton.tasp.Util.Message.Setspeed.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Setspeed.*;
 
 /**
  * The {@link TASPCommand} object containing the runtime information for the {@code setspeed} command.
@@ -78,8 +78,8 @@ public class SetspeedCmd extends TASPCommand {
     @Getter
     private final String permission = "tasp.setspeed";
 
-    private static final float DEFAULT_FLY_SPEED = 10.0F;
-    private static final float DEFAULT_WALK_SPEED = 5.0F;
+    private static final float DEFAULT_FLY_SPEED = 5.0F;
+    private static final float DEFAULT_WALK_SPEED = 10.0F;
     private static final float MAX_SPEED = 50.0F;
     private static final float CONVERSION_FACTOR = 50.0F;
 
@@ -108,16 +108,17 @@ public class SetspeedCmd extends TASPCommand {
                         return;
                     }
                     flySpeed = walkSpeed / 2.0F;
-                    if (p == null) {
-                        assert sender instanceof Player;
-                        p = (Player) sender;
-                    }
 
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
                 }
             }
             case 0: {
+                if (p == null) {
+                    assert sender instanceof Player;
+                    p = (Player) sender;
+                }
+
                 if (walkSpeed == null)
                     walkSpeed = DEFAULT_WALK_SPEED;
                 if (flySpeed == null)
@@ -126,7 +127,8 @@ public class SetspeedCmd extends TASPCommand {
                 walkSpeed /= CONVERSION_FACTOR;
                 flySpeed /= CONVERSION_FACTOR;
 
-                assert p != null;
+                assert flySpeed != null;
+                assert walkSpeed != null;
 
                 p.setFlySpeed(flySpeed);
                 p.setWalkSpeed(walkSpeed);

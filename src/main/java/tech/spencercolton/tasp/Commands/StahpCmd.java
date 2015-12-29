@@ -3,8 +3,8 @@ package tech.spencercolton.tasp.Commands;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 
-import static org.bukkit.Bukkit.shutdown;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 /**
  * @author Spencer Colton

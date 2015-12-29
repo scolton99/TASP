@@ -5,10 +5,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Integer.parseInt;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.lang.Integer.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Starve.sendStarvedMessage;
+import static tech.spencercolton.tasp.Util.Message.Starve.*;
 
 /**
  * @author Spencer Colton

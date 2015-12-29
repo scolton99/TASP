@@ -9,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.bukkit.Bukkit.getWorld;
-import static org.bukkit.entity.EntityType.DROPPED_ITEM;
+import static java.util.Arrays.*;
+import static org.bukkit.Bukkit.*;
+import static org.bukkit.entity.EntityType.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Drops.sendDropsMessage;
+import static tech.spencercolton.tasp.Util.Message.Drops.*;
 
 /**
  * @author Spencer Colton

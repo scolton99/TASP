@@ -9,10 +9,10 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 
-import static org.bukkit.Bukkit.getPluginManager;
-import static org.bukkit.Material.AIR;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.TASP.WORLD_HEIGHT;
+import static org.bukkit.Bukkit.*;
+import static org.bukkit.Material.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.TASP.*;
 
 public class TopCmd extends TASPCommand {
 

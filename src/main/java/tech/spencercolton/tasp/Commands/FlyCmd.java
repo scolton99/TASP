@@ -5,9 +5,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static org.bukkit.Bukkit.getPlayer;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Fly.sendFlyingMessage;
+import static tech.spencercolton.tasp.Util.Message.Fly.*;
 
 public class FlyCmd extends TASPCommand {
 

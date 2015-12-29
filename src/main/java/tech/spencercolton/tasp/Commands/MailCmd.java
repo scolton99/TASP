@@ -3,24 +3,27 @@ package tech.spencercolton.tasp.Commands;
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.*;
+import tech.spencercolton.tasp.Util.Mail;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Integer.parseInt;
+import static java.lang.Boolean.*;
+import static java.lang.Integer.*;
 import static java.lang.Math.min;
 import static java.util.Calendar.*;
-import static java.util.UUID.fromString;
-import static org.bukkit.ChatColor.BOLD;
-import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static java.util.UUID.*;
+import static org.bukkit.ChatColor.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.*;
-import static tech.spencercolton.tasp.Util.ChatFilter.filter;
-import static tech.spencercolton.tasp.Util.ColorChat.color;
+import static tech.spencercolton.tasp.Util.ChatFilter.*;
+import static tech.spencercolton.tasp.Util.ColorChat.*;
 import static tech.spencercolton.tasp.Util.Config.*;
 
 /**

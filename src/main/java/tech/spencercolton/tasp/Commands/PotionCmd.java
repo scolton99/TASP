@@ -9,13 +9,12 @@ import tech.spencercolton.tasp.Enums.Potions;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.lang.Integer.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Enums.Potions.DEFAULT_STRENGTH;
-import static tech.spencercolton.tasp.Enums.Potions.getByName;
-import static tech.spencercolton.tasp.Util.Message.Potion.Error.sendPotionNotRecognizedMessage;
-import static tech.spencercolton.tasp.Util.Message.Potion.sendPotionMessage;
+import static tech.spencercolton.tasp.Enums.Potions.*;
+import static tech.spencercolton.tasp.Util.Message.Potion.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Potion.*;
 
 /**
  * @author Spencer Colton

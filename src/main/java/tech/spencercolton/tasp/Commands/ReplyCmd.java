@@ -4,16 +4,16 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static java.util.Arrays.*;
+import static java.util.Collections.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.TASP.consoleLast;
-import static tech.spencercolton.tasp.Util.Message.Reply.Error.sendNoLastMessage;
+import static tech.spencercolton.tasp.TASP.*;
 
 public class ReplyCmd extends TASPCommand {
 
@@ -44,7 +44,7 @@ public class ReplyCmd extends TASPCommand {
         }
 
         if (last == null) {
-            sendNoLastMessage(sender);
+            Message.Reply.Error.sendNoLastMessage(sender);
             return;
         }
 

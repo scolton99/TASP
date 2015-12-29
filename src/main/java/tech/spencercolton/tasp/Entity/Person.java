@@ -51,12 +51,13 @@ public class Person {
     /**
      * Holds the player's data.
      * <p>
-     *     Information such as IP address, last time seen, status of various properties (flying, god mode, etc.)
+     * Information such as IP address, last time seen, status of various properties (flying, god mode, etc.)
      * </p>
      */
     private PlayerData data;
 
-    @Setter @Getter
+    @Setter
+    @Getter
     private CommandSender lastMessaged;
     private boolean afk;
     private String ip;
@@ -68,13 +69,14 @@ public class Person {
     private boolean lastTeleportHere;
     private long lastRequestTime;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private Location lastLocation;
 
     /**
      * Constructs a person object from a player object.
      * <p>
-     *     Sets the person's properties and adds them to the list of people that are currently online.
+     * Sets the person's properties and adds them to the list of people that are currently online.
      * </p>
      *
      * @param p The player from which to generate a new Person.
@@ -144,18 +146,18 @@ public class Person {
     public Location getHome() {
         Map h = this.data.getMap("home");
 
-        if(h == null)
+        if (h == null)
             return null;
 
-        World w = Bukkit.getWorld(UUID.fromString((String)h.get("world")));
-        if(w == null)
+        World w = Bukkit.getWorld(UUID.fromString((String) h.get("world")));
+        if (w == null)
             return null;
 
-        double x = Double.parseDouble((String)h.get("x"));
-        double y = Double.parseDouble((String)h.get("y"));
-        double z = Double.parseDouble((String)h.get("z"));
-        float pitch = Float.parseFloat((String)h.get("pitch"));
-        float yaw = Float.parseFloat((String)h.get("yaw"));
+        double x = Double.parseDouble((String) h.get("x"));
+        double y = Double.parseDouble((String) h.get("y"));
+        double z = Double.parseDouble((String) h.get("z"));
+        float pitch = Float.parseFloat((String) h.get("pitch"));
+        float yaw = Float.parseFloat((String) h.get("yaw"));
 
         return new Location(w, x, y, z, yaw, pitch);
     }
@@ -203,14 +205,14 @@ public class Person {
         Map<String, List<String>> x = this.getPowertools();
 
         Map<String, List<String>> map;
-        if(x == null)
+        if (x == null)
             map = new HashMap<>();
         else
             map = new HashMap<>(x);
 
         List<String> z = map.get(m.name().toLowerCase());
         List<String> list;
-        if(z == null)
+        if (z == null)
             list = new ArrayList<>();
         else
             list = new ArrayList<>(z);
@@ -221,7 +223,7 @@ public class Person {
 
     public List<String> getPowertool(Material m) {
         Map<String, List<String>> x = this.getPowertools();
-        if(x == null)
+        if (x == null)
             return null;
 
         return x.get(m.name().toLowerCase());
@@ -229,7 +231,7 @@ public class Person {
 
     public void clearPowertool(Material m) {
         Map<String, List<String>> x = this.getPowertools();
-        if(x == null)
+        if (x == null)
             return;
         x.remove(m.name().toLowerCase());
     }
@@ -305,10 +307,10 @@ public class Person {
 
     public boolean resetData() {
         File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.getUid().toString() + ".json");
-        if(!f.exists()) {
+        if (!f.exists()) {
             return false;
         }
-        if(f.delete()) {
+        if (f.delete()) {
             this.data = new PlayerData(this);
             return true;
         } else {
@@ -328,8 +330,8 @@ public class Person {
     }
 
     public Person getLastTeleportRequester() {
-        if(Config.isTeleportRequestLimited()) {
-            if(System.currentTimeMillis() - this.lastRequestTime <= Config.teleportRequestLimit()) {
+        if (Config.isTeleportRequestLimited()) {
+            if (System.currentTimeMillis() - this.lastRequestTime <= Config.teleportRequestLimit()) {
                 return this.lastTeleportRequester;
             } else {
                 this.lastTeleportRequester = null;
@@ -343,23 +345,23 @@ public class Person {
     }
 
     public static UUID personExists(String name) {
-        if(Bukkit.getPlayer(name) != null) {
+        if (Bukkit.getPlayer(name) != null) {
             return Bukkit.getPlayer(name).getUniqueId();
         }
         File folder = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
         File[] list = folder.listFiles();
 
-        if(list == null)
+        if (list == null)
             return null;
 
-        for(File f : list) {
+        for (File f : list) {
             try {
                 FileReader a = new FileReader(f);
                 JSONObject e = (JSONObject) new JSONParser().parse(a);
-                if ((e.get("lastName")).equals("name")) {
+                if ((e.get("lastName")).equals(name)) {
                     return UUID.fromString((String) e.get("UUID"));
                 }
-            } catch(IOException|ParseException ignored) {
+            } catch (IOException | ParseException ignored) {
 
             }
         }
@@ -370,8 +372,8 @@ public class Person {
         try {
             FileReader a = new FileReader(new File(TASP.dataFolder() + File.separator + "players" + File.separator + u.toString() + ".json"));
             JSONObject e = (JSONObject) new JSONParser().parse(a);
-            return (String)e.get("lastName");
-        } catch(IOException|ParseException e) {
+            return (String) e.get("lastName");
+        } catch (IOException | ParseException e) {
             return null;
         }
     }

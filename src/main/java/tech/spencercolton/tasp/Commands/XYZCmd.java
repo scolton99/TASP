@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static tech.spencercolton.tasp.Util.Message.XYZ.sendPosMessage;
+import static tech.spencercolton.tasp.Util.Message.XYZ.*;
 
 public class XYZCmd extends TASPCommand {
 

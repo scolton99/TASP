@@ -5,10 +5,10 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
-import static tech.spencercolton.tasp.TASP.toggleTeleporting;
-import static tech.spencercolton.tasp.Util.Message.Teleport.sendToggledMessage;
+import static java.util.Arrays.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.TASP.*;
+import static tech.spencercolton.tasp.Util.Message.Teleport.*;
 
 /**
  * @author Spencer Colton

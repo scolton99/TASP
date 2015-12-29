@@ -8,7 +8,7 @@ import org.bukkit.ChatColor;
 public class ColorChat {
 
     public static String color(String s) {
-        if(!Config.coloredText())
+        if (!Config.coloredText())
             return s;
         return ChatColor.translateAlternateColorCodes(Config.getColorCode(), s);
     }

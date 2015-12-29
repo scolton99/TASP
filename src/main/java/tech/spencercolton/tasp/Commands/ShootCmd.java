@@ -14,7 +14,7 @@ import tech.spencercolton.tasp.Scheduler.EntityCannon;
 import java.util.List;
 
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Config.err;
+import static tech.spencercolton.tasp.Util.Config.*;
 import static tech.spencercolton.tasp.Util.Entities.*;
 
 /**

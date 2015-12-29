@@ -7,10 +7,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Boolean.parseBoolean;
-import static java.lang.Float.parseFloat;
-import static tech.spencercolton.tasp.Commands.Command.sendConsoleError;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static java.lang.Boolean.*;
+import static java.lang.Float.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 /**
  * @author Spencer Colton

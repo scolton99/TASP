@@ -16,7 +16,8 @@ public class PersonSendMessageEvent extends Event {
     @Getter
     private final CommandSender to;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String message;
 
     public PersonSendMessageEvent(CommandSender from, CommandSender to, String message) {

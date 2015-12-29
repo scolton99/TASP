@@ -9,12 +9,10 @@ import tech.spencercolton.tasp.Entity.Person;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static tech.spencercolton.tasp.Commands.Command.combineArgs;
-import static tech.spencercolton.tasp.Commands.Command.sendConsoleError;
+import static java.util.Collections.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Powertool.sendPowertoolEnabledMessage;
-import static tech.spencercolton.tasp.Util.Message.Powertool.sendRemovedPowertoolsMessage;
+import static tech.spencercolton.tasp.Util.Message.Powertool.*;
 
 /**
  * @author Spencer Colton

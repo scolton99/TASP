@@ -7,13 +7,13 @@ import tech.spencercolton.tasp.Entity.Person;
 
 import java.io.File;
 
-import static java.io.File.separator;
-import static org.bukkit.Bukkit.getPlayer;
-import static org.bukkit.ChatColor.ITALIC;
-import static org.bukkit.ChatColor.RESET;
+import static java.io.File.*;
+import static org.bukkit.Bukkit.*;
+import static org.bukkit.ChatColor.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Entity.Person.*;
 import static tech.spencercolton.tasp.TASP.*;
+import static tech.spencercolton.tasp.TASP.reload;
 import static tech.spencercolton.tasp.Util.Config.*;
 
 public class TASPCmd extends TASPCommand {

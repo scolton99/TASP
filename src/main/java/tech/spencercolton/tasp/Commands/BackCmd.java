@@ -6,10 +6,10 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
+import tech.spencercolton.tasp.Util.Message;
 
-import static org.bukkit.Bukkit.getPluginManager;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Back.Error.sendNoBackMessage;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
 
 /**
  * @author Spencer Colton
@@ -34,7 +34,7 @@ public class BackCmd extends TASPCommand {
 
         Person p = get((Player) sender);
         if (p.getLastLocation() == null) {
-            sendNoBackMessage(sender);
+            Message.Back.Error.sendNoBackMessage(sender);
         } else {
             getPluginManager().callEvent(new PersonTeleportEvent(p, p.getLastLocation()));
         }

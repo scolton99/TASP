@@ -6,14 +6,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Entity;
 
-import static org.bukkit.Bukkit.getWorld;
-import static org.bukkit.Bukkit.getWorlds;
-import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
-import static tech.spencercolton.tasp.Util.Message.Time.Error.sendInvalidFormatMessage;
-import static tech.spencercolton.tasp.Util.Message.Time.sendTimeMessage;
-import static tech.spencercolton.tasp.Util.Message.Time.sendTimeSetMessage;
-import static tech.spencercolton.tasp.Util.Time.niceFormatTime;
-import static tech.spencercolton.tasp.Util.Time.timeToBukkitTime;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Message.Time.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Time.*;
+import static tech.spencercolton.tasp.Util.Time.*;
 
 public class TimeCmd extends TASPCommand {
 
@@ -38,10 +35,12 @@ public class TimeCmd extends TASPCommand {
 
         World w = null;
         Long spigotTime = null;
+        String pDate = null;
         switch (args.length) {
             case 2: {
                 try {
                     spigotTime = timeToBukkitTime(args[1]);
+                    pDate = args[1];
                     if (spigotTime == null) {
                         sendInvalidFormatMessage(sender);
                         return;
@@ -63,6 +62,7 @@ public class TimeCmd extends TASPCommand {
                     }
                     try {
                         spigotTime = timeToBukkitTime(args[0]);
+                        pDate = args[0];
                         if (spigotTime == null) {
                             sendInvalidFormatMessage(sender);
                             return;
@@ -81,7 +81,7 @@ public class TimeCmd extends TASPCommand {
                     return;
                 } else {
                     w.setTime(spigotTime);
-                    sendTimeSetMessage(sender, niceFormatTime(spigotTime), Long.toString(spigotTime), w.getName());
+                    sendTimeSetMessage(sender, prettyPlayerDate(pDate), Long.toString(spigotTime), w.getName());
                     return;
                 }
             }

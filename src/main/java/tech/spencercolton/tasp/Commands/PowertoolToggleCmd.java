@@ -5,12 +5,10 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
-import static tech.spencercolton.tasp.TASP.powertoolsEnabled;
-import static tech.spencercolton.tasp.TASP.togglePowertools;
-import static tech.spencercolton.tasp.Util.Message.PowertoolToggle.broadcastToggledMessage;
-import static tech.spencercolton.tasp.Util.Message.PowertoolToggle.sendToggledMessage;
+import static java.util.Collections.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.TASP.*;
+import static tech.spencercolton.tasp.Util.Message.PowertoolToggle.*;
 
 /**
  * @author Spencer Colton

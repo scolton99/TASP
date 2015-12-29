@@ -6,12 +6,11 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 
-import static org.bukkit.Bukkit.getPlayer;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Block.Error.sendAlreadyBlockedMessage;
-import static tech.spencercolton.tasp.Util.Message.Block.Error.sendSelfMessage;
-import static tech.spencercolton.tasp.Util.Message.Block.sendBlockedMessage;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.Util.Message.Block.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Block.*;
 
 public class BlockCmd extends TASPCommand {
 

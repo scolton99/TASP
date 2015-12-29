@@ -5,242 +5,154 @@ loadbefore: [TASPLocks, TASPPerms, TASPEconomy, TASPBackup]
 commands:
     killall:
         description: "Kill all entities of a given type in a given radius."
-        permission-message: "You do not have permisssion to do that."
-        usage: "Invalid syntax. /killall [entity] [radius]"
         aliases: [bluerinse]
     setspeed:
         description: Set the speed of a player.
-        permission: tasp.setspeed
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /setspeed <speed> [player]"
     fly:
         description: Enable or disable fly mode for a player.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /fly [player]"
     home:
         description: Teleport a player home.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /home"
     sethome:
         description: Sets the home of a player.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /sethome"
     god:
         description: Sets god mode to enabled or disabled for a player.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /god [player]"
     setspawn:
         description: Sets the spawnpoint of a world.
-        permission-message: You do not have permission to do that
-        usage: "Invalid syntax. /setspawn [<x> <y> <z>] [world]"
     gamemode:
         description: Change a player''s gamemode.
         aliases: [gm]
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /gamemode <mode> [player]"
     time:
         description: View or change the world time.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax.  /time [newTime]"
     top:
         description: Go to the highest block in this column.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /top"
     afk:
         description: Set yourself AFK.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /afk [player]"
     xyz:
         description: Get your position in the world.
-        permission-message: You do not have permission to do that.
-        usage: "Invalid syntax. /xyz"
     mute:
         description: Stop a player from talking.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /mute <player>"
     me:
         description: Perform an action.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /me <action>"
     msg:
         description: Send a private message.
         aliases: [message, send, tell]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /msg <player> <message>"
     reply:
         description: Reply to a private message.
         aliases: [r]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /r <message>"
     block:
         description: Block a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /block <player>"
     unblock:
         description: Unblock a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /unblock <player>"
     tasp:
         description: TASP administrative command.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /tasp [option]"
     broadcast:
         description: Broadcast a message.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax.  /broadcast <message>"
     powertool:
         description: Run a command by hitting with a block.
         aliases: [pt]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax.  /powertool [command line]"
     powertooltoggle:
         description: Enable or disable powertools for the whole server.
         aliases: [ptt]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /powertooltoggle"
     stalker:
         description: See messages sent to others.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /stalker [player]"
     info:
         description: See info about a player.
         aliases: [whois]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /info <player>"
     srvinfo:
         description: Get vital server info.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /srvinfo"
     stahp:
         description: Stop the server.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /stahp"
     shock:
         description: Shock a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /shock <player>"
     burn:
         description: Burn a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /burn <player> [time]"
     feed:
         description: Feed a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /feed [player] [amount]"
     starve:
         description: Starve a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /starve [player] [amount]"
     heal:
         description: Heal a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /heal [player] [amount]"
     hurt:
         description: Hurt a player.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /hurt [player] [amount]"
     fom:
         description: Make a player a friend of monsters.
         aliases: [disabletarget]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /fom [player]"
     potion:
         description: Give a player certain potion effects.
         aliases: [effect]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /potion <potion> [strength] [duration] [player]"
     antidote:
         description: Cure all status effects.
         aliases: [cleareffects]
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /antidote [player]"
     buddha:
         description: Don't allow death.
-        permission-message: You do not have permission to do this.
-        usage: "Invalid syntax. /buddha [player]"
     weather:
         description: View or change the weather.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /weather [world [type]] | [type]'
     spawnmob:
         description: Spawn a mob.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /spawnmob [mob] <amount>'
     world:
         description: Teleport to a world.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /world [world]'
     explode:
         description: Create an explosion.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /explode [power]'
     drops:
         description: Remove item drops in a world.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /drops [world]'
         aliases: [clearlag, nolag, lagfix, fixlag]
     tp:
         description: Teleport to a player.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tp <player>'
         aliases: [teleport]
     tphere:
         description: Teleport a player to you.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tphere <player>'
         aliases: [teleporthere]
     tpall:
         description: Teleport all players to you.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpall'
         aliases: [tpallhere, tpahere, teleportallhere, teleportall]
     tpa:
         description: Accept a teleport request.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpa'
         aliases: [tpaccept]
     tpd:
         description: Deny a teleport request.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpd'
         aliases: [tpdeny]
     tpr:
         description: Request to teleport to a player.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpr <player>'
         aliases: [tprequest]
     tprhere:
         description: Request to teleport a player to you.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tprhere <player>'
         aliases: [tprequesthere, teleportrequesthere, teleporthererequest, tphererequest, tpherer]
     tpar:
         description: Request all players to teleport to you.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpar'
         aliases: [tpallrhere, tparhere, teleportallrhere, teleportrall, tpallherer, tpaherer, teleportallherer, teleportallr, tpallrequesthere, tparequesthere, teleportallrequesthere, teleportrequestall, tpallhererequest, tpahererequest, teleportallhererequest, teleportallrequest]
     tpt:
         description: Enable or disable teleportation for the whole server.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /tpt'
         aliases: [tptoggle, teleporttoggle, teleportationtoggle]
     mail:
         description: Send or receive mail.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /mail <option> [options]'
     back:
         description: Go back to your last location.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /back'
     spawn:
         description: Teleport to the world's spawn.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /spawn'
     shoot:
         description: Fire an entity.
-        permission-message: You do not have permission to do this.
-        usage: 'Invalid syntax. /shoot <entity>'
     xp:
         description: Check or set experience points.
-        permission-message: You do not have permission to do this.
-        usgae: 'Invalid syntax. idgaf'
+    craft:
+        description: Open a crafting bench.
+        aliases: [workbench, crafting]
+    invspy:
+        description: See someone else's inventory.
+        aliases: [invsee]
+    clear:
+        description: Clear a player's inventory
+        aliases: [ci]
+    su:
+        description: Make a player use a command
+    tploc:
+        description: Teleport to a location in a world.
+    disappear:
+        description: Vanish before everyone's eyes!
+    jump:
+        description: Jump to where you're looking.
+    helpme:
+        description: Ask online staff for help.
+    nick:
+        description: Change your nickname.
+    recipe:
+        description: Check the crafting recipe for an item.

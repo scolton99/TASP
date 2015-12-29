@@ -7,17 +7,13 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Enums.WeatherType;
-import tech.spencercolton.tasp.Util.Weather;
 
 import java.util.Random;
 
-import static java.lang.Integer.parseInt;
-import static org.bukkit.Bukkit.getWorld;
-import static org.bukkit.Bukkit.getWorlds;
-import static tech.spencercolton.tasp.Commands.Command.sendGenericSyntaxError;
-import static tech.spencercolton.tasp.Commands.Command.sendWorldMessage;
-import static tech.spencercolton.tasp.Enums.WeatherType.STORM;
-import static tech.spencercolton.tasp.Enums.WeatherType.SUN;
+import static java.lang.Integer.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Enums.WeatherType.*;
 import static tech.spencercolton.tasp.Util.Message.Weather.*;
 
 /**
@@ -160,7 +156,7 @@ public class WeatherCmd extends TASPCommand {
                         if (w == null)
                             w = ((Player) sender).getWorld();
                         Location l = ((Player) sender).getLocation();
-                        sendWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), Weather.calcTemperature(w.getTemperature(l.getBlockX(), l.getBlockZ()), w), Weather.calcHumidity(w.getHumidity(l.getBlockX(), l.getBlockZ())), w);
+                        sendWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), w.getTemperature(l.getBlockX(), l.getBlockZ()), w.getHumidity(l.getBlockX(), l.getBlockZ()), w);
                         return;
                     }
                 } else {

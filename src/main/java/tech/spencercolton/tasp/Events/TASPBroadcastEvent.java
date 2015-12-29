@@ -12,16 +12,20 @@ public class TASPBroadcastEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private CommandSender p;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String message;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private String prefix;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     boolean console = false;
 
     public TASPBroadcastEvent(CommandSender p, String message) {
@@ -29,7 +33,7 @@ public class TASPBroadcastEvent extends Event {
     }
 
     private TASPBroadcastEvent(CommandSender p, String message, String prefix) {
-        if(p instanceof ConsoleCommandSender)
+        if (p instanceof ConsoleCommandSender)
             this.console = true;
         this.p = p;
         this.message = message;

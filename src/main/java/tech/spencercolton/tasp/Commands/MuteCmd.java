@@ -5,11 +5,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 
-import static org.bukkit.Bukkit.getPlayer;
-import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
-import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Mute.sendMutedMessage;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.Util.Message.Mute.*;
 
 public class MuteCmd extends TASPCommand {
 

@@ -18,7 +18,7 @@ public class ChatListener implements Listener {
         Person p = Person.get(e.getPlayer());
         assert p != null;
 
-        if(p.isMuted()) {
+        if (p.isMuted()) {
             e.setCancelled(true);
             p.getPlayer().sendMessage(Config.err() + "You are muted.  Other players will not see your message.");
             return;
@@ -27,7 +27,7 @@ public class ChatListener implements Listener {
         e.setMessage(ColorChat.color(e.getMessage()));
         e.setMessage(ChatFilter.filter(e.getMessage()));
 
-        if(p.isAfk()) {
+        if (p.isAfk()) {
             p.setAfk(false);
             Message.AFK.broadcastAFKMessage(p.getPlayer());
         } else {

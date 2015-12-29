@@ -23,15 +23,15 @@ public class Mail {
     @SuppressWarnings("unchecked")
     public static void initMail() {
         File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "mails.json");
-        if(!f.exists()) {
+        if (!f.exists()) {
             mails = new JSONObject();
             mails.put("mails", new ArrayList<>());
             writeMails();
         } else {
             try {
                 FileReader a = new FileReader(f);
-                mails = (JSONObject)new JSONParser().parse(a);
-            } catch(IOException|ParseException e) {
+                mails = (JSONObject) new JSONParser().parse(a);
+            } catch (IOException | ParseException e) {
                 mails = new JSONObject();
                 mails.put("mails", new ArrayList<>());
                 writeMails();
@@ -44,7 +44,7 @@ public class Mail {
     @SuppressWarnings("unchecked")
     public static void send(Person from, UUID to, String msg) {
         DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-        List m = (ArrayList)mails.get("mails");
+        List m = (ArrayList) mails.get("mails");
         Map mail = new HashMap<>();
         mails.put("id", UUID.randomUUID().toString());
         mail.put("sent", df.format(Calendar.getInstance().getTime()));
@@ -59,8 +59,8 @@ public class Mail {
     }
 
     @SuppressWarnings("unchecked")
-    public static void setRead(Map<String,String> mail) {
-        List<Map<String,String>> mz = (ArrayList)mails.get("mails");
+    public static void setRead(Map<String, String> mail) {
+        List<Map<String, String>> mz = (ArrayList) mails.get("mails");
         mz.remove(mail);
         mail.put("read", "true");
         mz.add(mail);
@@ -69,27 +69,28 @@ public class Mail {
     }
 
     @SuppressWarnings("unchecked")
-    public static void delete(Map<String,String> mail) {
-        List<Map<String,String>> mz = (ArrayList)mails.get("mails");
+    public static void delete(Map<String, String> mail) {
+        List<Map<String, String>> mz = (ArrayList) mails.get("mails");
         mz.remove(mail);
         mails.put("mails", mz);
         writeMails();
     }
 
     @SuppressWarnings("unchecked")
-    public static List<Map<String,String>> fetch(Person to) {
+    public static List<Map<String, String>> fetch(Person to) {
         String uid = to.getUid().toString();
-        List<Map<String,String>> m = (ArrayList)mails.get("mails");
-        List<Map<String,String>> mailz = m.stream().filter(g -> g.get("to").equals(uid)).collect(Collectors.toList());
-        Collections.sort(mailz, new Comparator<Map<String,String>>() {
+        List<Map<String, String>> m = (ArrayList) mails.get("mails");
+        List<Map<String, String>> mailz = m.stream().filter(g -> g.get("to").equals(uid)).collect(Collectors.toList());
+        Collections.sort(mailz, new Comparator<Map<String, String>>() {
             DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+
             @Override
-            public int compare(Map<String,String> o1, Map<String,String> o2) {
+            public int compare(Map<String, String> o1, Map<String, String> o2) {
                 try {
                     Date a = df.parse(o1.get("sent"));
                     Date b = df.parse(o2.get("sent"));
-                    return (int)(b.getTime() - a.getTime());
-                } catch(java.text.ParseException e) {
+                    return (int) (b.getTime() - a.getTime());
+                } catch (java.text.ParseException e) {
                     return 0;
                 }
             }
@@ -102,7 +103,7 @@ public class Mail {
             FileWriter f = new FileWriter(new File(TASP.dataFolder().getAbsolutePath() + File.separator + "mails.json"));
             f.write(mails.toString());
             f.close();
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             Bukkit.getLogger().warning(Config.err() + "Couldn't write mails.");
         }

@@ -8,11 +8,9 @@ import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.bukkit.Bukkit.getPlayer;
-import static org.bukkit.Bukkit.getServer;
-import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static java.util.Arrays.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 /**
  * @author Spencer Colton

@@ -9,11 +9,11 @@ import tech.spencercolton.tasp.Entity.Person;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.FOM.sendFOMMessage;
+import static tech.spencercolton.tasp.Util.Message.FOM.*;
 
 /**
  * @author Spencer Colton

@@ -9,9 +9,9 @@ import org.bukkit.entity.Player;
 
 import java.util.Set;
 
-import static org.bukkit.Bukkit.getPlayer;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Shock.sendShockMessage;
+import static tech.spencercolton.tasp.Util.Message.Shock.*;
 
 /**
  * @author Spencer Colton

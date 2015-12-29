@@ -15,7 +15,7 @@ public class MoveListener implements Listener {
     @EventHandler
     public void onEvent(PlayerMoveEvent e) {
         Person p = Person.get(e.getPlayer());
-        if(p.isAfk()) {
+        if (p.isAfk()) {
             p.setAfk(false);
             Message.AFK.broadcastAFKMessage(p.getPlayer());
         } else {
@@ -23,7 +23,7 @@ public class MoveListener implements Listener {
             k.cancel();
             new AFKTimer(p, Config.afkTime());
         }
-        if(p.isGod()) {
+        if (p.isGod()) {
             p.getPlayer().setExhaustion(0.0F);
             p.getPlayer().setSaturation(20.0F);
         }

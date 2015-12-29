@@ -47,7 +47,7 @@ public class PersonTeleportListener implements Listener {
                 else
                     e.getRequester().getPlayer().teleport(e.getRequestee().getPlayer());
             }
-        } else if(e.getType() == TeleportType.LOCATION) {
+        } else if (e.getType() == TeleportType.LOCATION) {
             if (!TASP.isTeleportEnabled()) {
                 Message.Teleport.Error.sendTeleportDisabledMessage(e.getRequester().getPlayer());
                 return;
@@ -65,20 +65,20 @@ public class PersonTeleportListener implements Listener {
     @EventHandler
     @SuppressWarnings("unused")
     public void onEvent(PersonTeleportAllHereEvent e) {
-        if(!TASP.isTeleportEnabled()) {
+        if (!TASP.isTeleportEnabled()) {
             Message.Teleport.Error.sendTeleportDisabledMessage(e.getRequester().getPlayer());
             return;
         }
-        if(e.isRequest()) {
-            for(Player p : Bukkit.getOnlinePlayers()) {
-                if(p.equals(e.getRequester().getPlayer()))
+        if (e.isRequest()) {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.equals(e.getRequester().getPlayer()))
                     continue;
                 Message.Teleport.sendTeleportRequestMessage(e.getRequester().getPlayer(), p, true, true);
                 Person.get(p).setLastTeleportRequest(e.getRequester(), true);
             }
         } else {
-            for(Player p : Bukkit.getOnlinePlayers()) {
-                if(p.equals(e.getRequester().getPlayer()))
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (p.equals(e.getRequester().getPlayer()))
                     continue;
                 if (TeleportCooldown.teleportAvailable(p)) {
                     if (Config.teleportCooldown())

@@ -61,6 +61,7 @@ error-color: 'RED'
 afk-timeout: 10
 
 broadcast-prefix: NOTICE
+helpme-prefix: HELPME
 
 info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, FLYING, FOM, BUDDHA, IP]
 
@@ -156,6 +157,8 @@ command-messages:
   drops: true
   mail: true
   mail-others: true
+  xp: true
+  xp-others: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
@@ -375,4 +378,38 @@ command-message-text:
   mail: '{0}Your mail was sent to {1}{2}{0}.'
   # {2}: The person who sent the mail
   mail-r: '{0}You just received mail from {1}{2}{0}! Use {1}/mail check'
-
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  xp: '{0}Your experience was {1}{2}{0} by {1}{3}{0} (now {1}{4}{0}).'
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  # {5}: The player whose experience was increased
+  xp-s: '{1}{5}{0}''''s experience was {1}{2}{0} by {1}{3}{0} (now {1}{4}{0}).'
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  # {5}: The player who increased the experience
+  xp-r: '{0}Your experience was {1}{2}{0} by {1}{3}{0} by {1}{5}{0} (now {1}{4}{0}).'
+  # {2}: The amount
+  # {3}: The player
+  xpcheck: '{1}{3}{0} has {1}{2}{0} exp.'
+  # {2}: The amount
+  clear: '{0}Your inventory was cleared ({1}{2}{0} items were removed.)'
+  # {2}: The amount
+  # {3}: The player whose inventory was cleared
+  clear-s: '{0}Cleared {1}{3}{0}''''s inventory ({1}{2}{0} items were removed.)'
+  # {2}: The amount
+  # {3}: The player who cleared the inventory
+  clear-r: '{0}Your inventory was cleared by {1}{3}{0} ({1}{2}{0} items were removed.)'
+  # {2}: The command performed
+  # {3}: The player who executed the command
+  su-s: '{0}Made {1}{2}{0} execute {1}{3}{0}.'
+  # {2}: The command performed
+  # {3}: The player who forced the command to be executed
+  su-r: '{1}{3}{0} made you use the command {1}{2}{0}.'
+  # {2}: The item id
+  # {3}: The item damage
+  # {4}: The item names
+  holding: '{0}You are holding {1}{2}:{3}{0}, with names {1}{4}{0}.'

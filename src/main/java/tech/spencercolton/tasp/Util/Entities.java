@@ -129,10 +129,11 @@ public class Entities {
         kaAllowed.add("monster");
         kaAllowed.add("animal");
 
-        kaAllowed.addAll(allowed.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));kaAllowed.add("animal");
+        kaAllowed.addAll(allowed.stream().map(et -> et.toString().toLowerCase()).collect(Collectors.toList()));
+        kaAllowed.add("animal");
 
         allEntitiesAsString = new ArrayList<>();
-        for(EntityType e: EntityType.values()) {
+        for (EntityType e : EntityType.values()) {
             allEntitiesAsString.add(e.toString().toLowerCase());
         }
     }
@@ -169,7 +170,7 @@ public class Entities {
     public static EntityType getEntityType(String s) {
         try {
             return EntityType.valueOf(s.toUpperCase().replace(" ", "_"));
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return null;
         }
     }

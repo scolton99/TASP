@@ -6,10 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Integer.parseInt;
-import static org.bukkit.Bukkit.getWorld;
+import static java.lang.Integer.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Setspawn.sendSpawnSetMessage;
+import static tech.spencercolton.tasp.Util.Message.Setspawn.*;
 
 public class SetspawnCmd extends TASPCommand {
 

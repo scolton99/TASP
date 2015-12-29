@@ -7,9 +7,8 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Message;
 
-import static org.bukkit.Bukkit.getWorld;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
-import static tech.spencercolton.tasp.Commands.Command.sendWorldMessage;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 /**
  * @author Spencer Colton

@@ -21,13 +21,13 @@ public class TeleportCooldown implements Listener {
     }
 
     public static long getTimeToTeleport(Player p) {
-        if(!Config.teleportCooldown())
+        if (!Config.teleportCooldown())
             return 0;
 
-        if(times.get(p) == null)
+        if (times.get(p) == null)
             return 0;
 
-        if((System.currentTimeMillis() - times.get(p)) > limit)
+        if ((System.currentTimeMillis() - times.get(p)) > limit)
             return 0;
 
         return limit - (System.currentTimeMillis() - times.get(p));

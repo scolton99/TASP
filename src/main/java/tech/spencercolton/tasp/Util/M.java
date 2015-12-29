@@ -21,7 +21,7 @@ public class M {
     }
 
     public static String cm(String... s) {
-        if(s.length >= 1) {
+        if (s.length >= 1) {
             s[0] = "command-message-text." + s[0];
         } else {
             return null;
@@ -41,12 +41,12 @@ public class M {
 
         newStrs.addAll(Arrays.asList(s));
 
-        if(newStrs.contains(str)) {
+        if (newStrs.contains(str)) {
             newStrs.remove(str);
         }
         newStrs.add(0, Config.c2().toString());
         newStrs.add(0, Config.c1().toString());
-        return MessageFormat.format(finStr, newStrs.toArray((Object[])new String[newStrs.size()]));
+        return MessageFormat.format(finStr, newStrs.toArray((Object[]) new String[newStrs.size()]));
     }
 
 }

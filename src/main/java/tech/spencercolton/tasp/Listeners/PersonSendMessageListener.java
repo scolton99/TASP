@@ -33,23 +33,23 @@ public class PersonSendMessageListener implements Listener {
                 return;
             }
 
-            if(p1.isPlayerBlocked(p2)) {
+            if (p1.isPlayerBlocked(p2)) {
                 Message.MessageCmd.Error.sendYouBlockedMessage(e.getFrom(), p2.getPlayer().getDisplayName());
                 return;
             }
         }
 
-        if(e.getFrom() instanceof ConsoleCommandSender) {
+        if (e.getFrom() instanceof ConsoleCommandSender) {
             TASP.consoleLast = e.getTo();
         } else {
-            Person px = Person.get((Player)e.getFrom());
+            Person px = Person.get((Player) e.getFrom());
             px.setLastMessaged(e.getFrom());
         }
 
-        if(e.getTo() instanceof ConsoleCommandSender) {
+        if (e.getTo() instanceof ConsoleCommandSender) {
             TASP.consoleLast = e.getFrom();
         } else {
-            Person pz = Person.get((Player)e.getTo());
+            Person pz = Person.get((Player) e.getTo());
             pz.setLastMessaged(e.getFrom());
         }
 
@@ -66,7 +66,7 @@ public class PersonSendMessageListener implements Listener {
 
     private void relay(List<Person> pl, Predicate<Person> pg, PersonSendMessageEvent e) {
         pl.stream().forEach(pa -> {
-            if(pg.test(pa) && !(pa.getPlayer().equals(e.getTo()) || pa.getPlayer().equals(e.getFrom())))
+            if (pg.test(pa) && !(pa.getPlayer().equals(e.getTo()) || pa.getPlayer().equals(e.getFrom())))
                 pa.getPlayer().sendMessage(Config.c3() + "[" + Config.c1() + e.getFrom().getName() + Config.c3() + " -> " + Config.c1() + e.getTo().getName() + Config.c3() + "] " + ChatColor.WHITE + e.getMessage());
 
         });

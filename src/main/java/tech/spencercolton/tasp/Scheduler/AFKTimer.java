@@ -27,7 +27,7 @@ public class AFKTimer extends BukkitRunnable {
 
     @Override
     public void run() {
-        if(!this.p.isAfk()) {
+        if (!this.p.isAfk()) {
             this.p.setAfk(true);
             Message.AFK.broadcastAFKMessage(this.p.getPlayer());
         }

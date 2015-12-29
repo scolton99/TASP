@@ -10,12 +10,11 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Set;
 
-import static java.lang.Integer.parseInt;
+import static java.lang.Integer.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Config.getSpawnLimit;
-import static tech.spencercolton.tasp.Util.Entities.getEntityType;
-import static tech.spencercolton.tasp.Util.Entities.isAllowed;
-import static tech.spencercolton.tasp.Util.Message.Spawnmob.sendSpawnmobMessage;
+import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Util.Entities.*;
+import static tech.spencercolton.tasp.Util.Message.Spawnmob.*;
 
 /**
  * @author Spencer Colton
@@ -60,7 +59,9 @@ public class SpawnmobCmd extends TASPCommand {
 
                 Location l = ((Player) sender).getTargetBlock((Set<Material>) null, 1000).getLocation();
                 l.setY(l.getY() + 1.0D);
-                l.getWorld().spawnEntity(l, e);
+                for (int i = 0; i < amount; i++) {
+                    l.getWorld().spawnEntity(l, e);
+                }
                 sendSpawnmobMessage(sender, e, amount);
                 return;
             }

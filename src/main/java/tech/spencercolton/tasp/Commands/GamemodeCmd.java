@@ -7,12 +7,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
 import static org.bukkit.GameMode.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Gamemode.Error.sendGamemodeNotFoundMessage;
-import static tech.spencercolton.tasp.Util.Message.Gamemode.sendGamemodeMessage;
+import static tech.spencercolton.tasp.Util.Message.Gamemode.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Gamemode.*;
 
 public class GamemodeCmd extends TASPCommand {
 

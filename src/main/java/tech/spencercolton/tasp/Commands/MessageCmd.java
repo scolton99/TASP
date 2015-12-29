@@ -6,7 +6,7 @@ import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static java.util.Arrays.*;
 import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
 

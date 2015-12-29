@@ -4,13 +4,11 @@ import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Integer.parseInt;
-import static org.bukkit.Bukkit.getPlayer;
-import static tech.spencercolton.tasp.Commands.Command.sendPlayerMessage;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
-import static tech.spencercolton.tasp.Util.Config.err;
-import static tech.spencercolton.tasp.Util.Config.getInt;
-import static tech.spencercolton.tasp.Util.Message.Burn.sendFireMessage;
+import static java.lang.Integer.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Util.Message.Burn.*;
 
 /**
  * @author Spencer Colton

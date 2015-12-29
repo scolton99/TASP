@@ -1,33 +1,37 @@
 package tech.spencercolton.tasp;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Entities;
 import tech.spencercolton.tasp.Util.Mail;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class for the TASP plugin.
  * <p>
- *     Performs setup for various pieces
- *     (generating data-folder, loading commands and {@link java.util.EventListener}s, etc.).
- *     Also contains code for dealing with server reloads (i.e., loading the plugin when there
- *     are already players online).
+ * Performs setup for various pieces
+ * (generating data-folder, loading commands and {@link java.util.EventListener}s, etc.).
+ * Also contains code for dealing with server reloads (i.e., loading the plugin when there
+ * are already players online).
  * </p>
  * <p>
- *     In the future, this class will be the linking point for all
- *     other plugins made to work with TASP.  They will not work
- *     if this plugin is not present on the server.
+ * In the future, this class will be the linking point for all
+ * other plugins made to work with TASP.  They will not work
+ * if this plugin is not present on the server.
  * </p>
  *
  * @author Spencer Colton
@@ -40,9 +44,9 @@ public class TASP extends JavaPlugin {
     /**
      * A {@link File} object representing this plugin's data folder.
      * <p>
-     *     Generated at runtime by the {@link #onEnable() onEnable} method so that
-     *     the variable becomes static and is accessible via static reference by
-     *     other components of the plugin.
+     * Generated at runtime by the {@link #onEnable() onEnable} method so that
+     * the variable becomes static and is accessible via static reference by
+     * other components of the plugin.
      * </p>
      */
     private static File dataFolder;
@@ -50,6 +54,10 @@ public class TASP extends JavaPlugin {
     private static boolean powertoolsEnabled = true;
 
     public static CommandSender consoleLast;
+
+    @Getter
+    @Setter
+    private static String helpMeRcvPrivilege;
 
     /**
      *
@@ -63,16 +71,19 @@ public class TASP extends JavaPlugin {
         return teleportEnabled = !teleportEnabled;
     }
 
+    @Getter
+    public static final List<Inventory> openImmutableInventories = new ArrayList<>();
+
     /**
      * Main method called by the server to enable the plugin.
      * Currently performs the following duties:
      * <ul>
-     *     <li>Sets the value of the {@link #dataFolder dataFolder} variable.</li>
-     *     <li>Registers the commands to be used by the plugin.</li>
-     *     <li>Registers listeners with the server.</li>
-     *     <li>Iterates through players currently online and generates {@link Person Person} objects for them.</li>
-     *     <li>Creates the "players" directory under the plugin's data folder.</li>
-     *     <li>Writes the default configuration file if none exists already.</li>
+     * <li>Sets the value of the {@link #dataFolder dataFolder} variable.</li>
+     * <li>Registers the commands to be used by the plugin.</li>
+     * <li>Registers listeners with the server.</li>
+     * <li>Iterates through players currently online and generates {@link Person Person} objects for them.</li>
+     * <li>Creates the "players" directory under the plugin's data folder.</li>
+     * <li>Writes the default configuration file if none exists already.</li>
      * </ul>
      */
 
@@ -91,11 +102,11 @@ public class TASP extends JavaPlugin {
         this.initListeners();
         Entities.initEntities();
         File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
-        if(f.mkdirs()) {
+        if (f.mkdirs()) {
             Bukkit.getLogger().info("Directories were created for TASP.");
         }
 
-        for(Player p: this.getServer().getOnlinePlayers()) {
+        for (Player p : this.getServer().getOnlinePlayers()) {
             new Person(p);
             loadPerson(Person.get(p));
         }
@@ -105,7 +116,7 @@ public class TASP extends JavaPlugin {
     /**
      * Method called by the server to disable the plugin.
      * <p>
-     *     Currently has no duty except to save the server's configuration.
+     * Currently has no duty except to save the server's configuration.
      * </p>
      */
     @Override
@@ -116,7 +127,7 @@ public class TASP extends JavaPlugin {
     /**
      * Registers commands found in the {@code plugin.yml} with their executors.
      * <p>
-     *     All commands are executed by the {@link Command} class.
+     * All commands are executed by the {@link Command} class.
      * </p>
      *
      * @see Command
@@ -178,14 +189,23 @@ public class TASP extends JavaPlugin {
         this.getCommand("back").setExecutor(c);
         this.getCommand("shoot").setExecutor(c);
         this.getCommand("xp").setExecutor(c);
+        this.getCommand("craft").setExecutor(c);
+        this.getCommand("su").setExecutor(c);
+        this.getCommand("invspy").setExecutor(c);
+        this.getCommand("clear").setExecutor(c);
+        this.getCommand("tploc").setExecutor(c);
+        this.getCommand("nick").setExecutor(c);
+        this.getCommand("jump").setExecutor(c);
+        this.getCommand("recipe").setExecutor(c);
     }
 
+    //FIXME Outdated JDOC
     /**
      * Registers events found in the {@link tech.spencercolton.tasp.Listeners} package with the server.
      * Currently listens on the following events:
      * <ul>
-     *     <li>{@link org.bukkit.event.player.PlayerJoinEvent}</li>
-     *     <li>{@link org.bukkit.event.player.PlayerQuitEvent}</li>
+     * <li>{@link org.bukkit.event.player.PlayerJoinEvent}</li>
+     * <li>{@link org.bukkit.event.player.PlayerQuitEvent}</li>
      * </ul>
      */
     private void initListeners() {
@@ -200,13 +220,17 @@ public class TASP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new TASPBroadcastListener(), this);
         this.getServer().getPluginManager().registerEvents(new PersonTeleportListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerTeleportListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PersonHelpmeListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
+        this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
     }
 
     /**
      * Fetches the cached copy of the plugin's data directory.
      * <p>
-     *     This value should be refreshed when the plugin is reloaded, but should (almost) never change.
+     * This value should be refreshed when the plugin is reloaded, but should (almost) never change.
      * </p>
+     *
      * @return A {@link File} object referencing the location of the plugin's data directory.
      */
     public static File dataFolder() {
@@ -230,7 +254,7 @@ public class TASP extends JavaPlugin {
 
     public static void reload() {
         reloadTASPConfig();
-        ((TASP)Bukkit.getPluginManager().getPlugin("TASP")).loadInteractions();
+        ((TASP) Bukkit.getPluginManager().getPlugin("TASP")).loadInteractions();
     }
 
     public static void reloadTASPConfig() {

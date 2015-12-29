@@ -8,10 +8,10 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Antidote.sendAntidoteMessage;
+import static tech.spencercolton.tasp.Util.Message.Antidote.*;
 
 /**
  * @author Spencer Colton

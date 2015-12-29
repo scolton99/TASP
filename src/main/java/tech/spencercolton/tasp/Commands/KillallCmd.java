@@ -9,12 +9,12 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
-import static java.util.Collections.singletonList;
-import static org.bukkit.Bukkit.getWorld;
+import static java.lang.Integer.*;
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Util.Entities.*;
-import static tech.spencercolton.tasp.Util.Message.Killall.sendCountMessage;
+import static tech.spencercolton.tasp.Util.Message.Killall.*;
 
 public class KillallCmd extends TASPCommand {
 
@@ -49,7 +49,7 @@ public class KillallCmd extends TASPCommand {
         String et = null;
         switch (args.size()) {
             case 2: {
-                if (sender instanceof ConsoleCommandSender) {
+                if (sender instanceof Player) {
                     try {
                         distance = parseInt(args.get(1));
                     } catch (NumberFormatException e) {
@@ -57,6 +57,7 @@ public class KillallCmd extends TASPCommand {
                         return;
                     }
                 } else {
+                    assert sender instanceof ConsoleCommandSender;
                     w = getWorld(args.get(1));
                     if (w == null) {
                         sendConsoleSyntaxError(sender, this);

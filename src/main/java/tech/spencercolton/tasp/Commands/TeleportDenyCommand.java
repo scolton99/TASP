@@ -8,11 +8,11 @@ import tech.spencercolton.tasp.Entity.Person;
 
 import java.util.List;
 
-import static java.util.Collections.singletonList;
-import static tech.spencercolton.tasp.Commands.Command.sendSyntaxError;
+import static java.util.Collections.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Message.Teleport.Error.sendNoTeleportRequestsMessage;
-import static tech.spencercolton.tasp.Util.Message.Teleport.sendTeleportDenyMessage;
+import static tech.spencercolton.tasp.Util.Message.Teleport.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Teleport.*;
 
 /**
  * @author Spencer Colton

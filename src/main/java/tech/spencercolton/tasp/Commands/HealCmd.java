@@ -5,10 +5,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
-import static java.lang.Double.parseDouble;
-import static org.bukkit.Bukkit.getPlayer;
+import static java.lang.Double.*;
+import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Message.Heal.sendHealedMessage;
+import static tech.spencercolton.tasp.Util.Message.Heal.*;
 
 public class HealCmd extends TASPCommand {
 
