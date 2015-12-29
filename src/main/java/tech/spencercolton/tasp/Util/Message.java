@@ -111,8 +111,30 @@ public class Message {
     public static class Clear {
 
         public static void sendClearMessage(CommandSender sender, int amount, Player p) {
-            if (Command.messageEnabled("clear"))
-                sender.sendMessage(M.cm("clear", Command.getDisplayName(sender), Integer.toString(amount), p.getDisplayName()));
+            if (sender.equals(p) && Command.messageEnabled("clear")) {
+                sender.sendMessage(M.cm("clear", Integer.toString(amount)));
+                return;
+            }
+
+            if(Command.messageEnabled("clear"))
+                sender.sendMessage(M.cm("clear-s", Integer.toString(amount), p.getDisplayName()));
+            if(Command.messageEnabled("clear-others"))
+                p.sendMessage(M.cm("clear-r", Integer.toString(amount), Command.getDisplayName(sender)));
+        }
+    }
+
+    public static class Disappear {
+
+        public static void sendDisappearMessage(CommandSender sender, String appearOrDisappear, Player p) {
+            if(sender.equals(p) && Command.messageEnabled("disappear"))  {
+                p.sendMessage(M.cm("disappear", appearOrDisappear));
+                return;
+            }
+
+            if(Command.messageEnabled("disappear"))
+                sender.sendMessage(M.cm("disappear-s", appearOrDisappear, p.getDisplayName()));
+            if(Command.messageEnabled("disappear-others"))
+                p.sendMessage(M.cm("disappear-r", appearOrDisappear, Command.getDisplayName(sender)));
         }
     }
 
@@ -273,7 +295,7 @@ public class Message {
 
         public static void sendSentMessage(CommandSender sender, String other) {
             if (Command.messageEnabled("mail"))
-                sender.sendMessage(M.cm("mail", (Bukkit.getPlayer(other) == null ? other : Bukkit.getPlayer(other).getDisplayName())));
+                sender.sendMessage(M.cm("mail-s", (Bukkit.getPlayer(other) == null ? other : Bukkit.getPlayer(other).getDisplayName())));
             if (Command.messageEnabled("mail-others") && Bukkit.getPlayer(other) != null)
                 Bukkit.getPlayer(other).sendMessage(M.cm("mail-r", Command.getDisplayName(sender)));
         }
@@ -307,6 +329,21 @@ public class Message {
                 sender.sendMessage(M.cm("muted-s", p.getDisplayName(), muted ? "muted" : "unmuted"));
             if (Command.messageEnabled("muted-r"))
                 sender.sendMessage(M.cm("muted-r", Command.getDisplayName(sender), muted ? "muted" : "unmuted"));
+        }
+    }
+
+    public static class Nick {
+
+        public static void sendNickMessage(CommandSender sender, String nick, Player p) {
+            if(Command.messageEnabled("nick") && sender.equals(p)) {
+                sender.sendMessage(M.cm("nick", nick));
+                return;
+            }
+
+            if(Command.messageEnabled("nick"))
+                sender.sendMessage(M.cm("nick-s", nick, p.getName()));
+            if(Command.messageEnabled("nick-others"))
+                p.sendMessage(M.cm("nick-r", nick, Command.getDisplayName(sender)));
         }
     }
 
@@ -363,10 +400,19 @@ public class Message {
 
     public static class Recipe {
 
+        public static void sendCountMessage(CommandSender sender, int amount) {
+            if(Command.messageEnabled("recipe"))
+                sender.sendMessage(M.cm("recipe", Integer.toString(amount)));
+        }
+
         public static class Error {
 
             public static void sendNoRecipesMessage(CommandSender sender) {
                 sender.sendMessage(Config.err() + "Sorry, no recipes exist for that item.");
+            }
+
+            public static void sendNoOOBError(CommandSender sender, int upper) {
+                sender.sendMessage(Config.err() + "Sorry, the recipe number must be between 1 and " + upper + " for this item.");
             }
         }
     }

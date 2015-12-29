@@ -5,6 +5,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.PlayerInventory;
+import tech.spencercolton.tasp.TASP;
 
 import java.util.Collections;
 import java.util.List;
@@ -43,8 +46,13 @@ public class InvspyCmd extends TASPCommand {
             return;
         }
 
-        Inventory i = o.getInventory();
+        PlayerInventory i = o.getInventory();
+
         p.openInventory(i);
+
+        if(!p.hasPermission(permission + ".edit")) {
+            TASP.getOpenImmutableInventories().add(i);
+        }
     }
 
     @Override

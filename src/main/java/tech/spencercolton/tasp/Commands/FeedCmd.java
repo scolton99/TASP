@@ -68,7 +68,7 @@ public class FeedCmd extends TASPCommand {
                 p.setFoodLevel(p.getFoodLevel() + amount);
                 p.setSaturation(20.0F);
 
-                sendFedMessage(sender, amount / 2.0F, p.getPlayer());
+                sendFedMessage(sender, amount, p.getPlayer());
                 return;
             }
             default: {

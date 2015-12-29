@@ -129,9 +129,6 @@ public class PlayerData {
         this.data.put("lastName", this.p.getName());
         this.data.put("UUID", this.p.getUid().toString());
         this.data.put("firstSeen", new Date().toString());
-        if (TASP.TASPPerms_link != null) {
-            this.data.put("permissions", new ArrayList<>());
-        }
         this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
         this.writeData();
     }

@@ -14,6 +14,10 @@ public class PlayerTeleportListener implements Listener {
     @EventHandler
     public void onEvent(PlayerTeleportEvent e) {
         Person.get(e.getPlayer()).setLastLocation(e.getFrom());
+
+        if(!e.getTo().getWorld().equals(e.getFrom().getWorld())) {
+            Person.get(e.getPlayer()).setLocation(e.getFrom().getWorld(), e.getFrom());
+        }
     }
 
 }

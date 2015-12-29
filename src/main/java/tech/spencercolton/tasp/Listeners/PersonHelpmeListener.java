@@ -33,7 +33,7 @@ public class PersonHelpmeListener implements Listener {
     private void relay(Collection<? extends Player> people, Predicate<Player> pr, PersonHelpmeEvent e) {
         people.stream().forEach(p -> {
             if(pr.test(p)) {
-                p.getPlayer().sendMessage(Config.c1() + "[" + Config.c4() + Config.getString("helpme-prefix") + Config.c1() + "::" + Config.c4() + e.getAsker().getPlayer().getDisplayName() + Config.c1() + "] " + e.getMessage());
+                p.sendMessage(Config.c1() + "[" + Config.c4() + Config.getString("helpme-prefix") + Config.c1() + "::" + Config.c4() + e.getAsker().getPlayer().getDisplayName() + Config.c1() + "] " + e.getMessage());
             }
         });
     }

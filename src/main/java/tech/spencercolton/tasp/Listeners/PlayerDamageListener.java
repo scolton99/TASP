@@ -20,13 +20,13 @@ public class PlayerDamageListener implements Listener {
         if (p == null)
             return;
 
-        if (p.isGod() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
+        if (p.isGod() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM && e.getCause() != EntityDamageEvent.DamageCause.VOID) {
             p.getPlayer().setExhaustion(0.0F);
             p.getPlayer().setSaturation(20.0F);
             e.setCancelled(true);
         }
 
-        if (p.isBuddha() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM) {
+        if (p.isBuddha() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM && e.getCause() != EntityDamageEvent.DamageCause.VOID) {
             double d = p.getPlayer().getHealth();
             if (e.getDamage() >= d)
                 e.setDamage(d - 0.5D);

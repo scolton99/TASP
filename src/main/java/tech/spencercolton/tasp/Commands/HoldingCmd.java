@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -35,6 +36,8 @@ public class HoldingCmd extends TASPCommand {
         assert !(sender instanceof ConsoleCommandSender);
         ItemStack i = ((Player) sender).getItemInHand();
         Material m = i.getType();
+
+        Bukkit.broadcastMessage(i.getType().toString());
 
         IDs item = IDs.getByMaterial(m);
 

@@ -12,7 +12,7 @@ import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 /**
  * @author Spencer Colton
  */
-public class TplocCmd extends TASPCommand {
+public class TeleportLocation extends TASPCommand {
 
     @Getter
     private final String syntax = "/tploc <x> <y> <z> [world]";
@@ -42,6 +42,7 @@ public class TplocCmd extends TASPCommand {
                 w = Bukkit.getWorld(args[3]);
                 if (w == null) {
                     Command.sendWorldMessage(sender, args[3]);
+                    return;
                 }
             }
             case 3: {
@@ -57,6 +58,7 @@ public class TplocCmd extends TASPCommand {
                     w = ((Player) sender).getWorld();
                 Location l = new Location(w, x, y, z);
                 Bukkit.getPluginManager().callEvent(new PersonTeleportEvent(Person.get((Player) sender), l));
+                return;
             }
             default: {
                 Command.sendSyntaxError(sender, this);

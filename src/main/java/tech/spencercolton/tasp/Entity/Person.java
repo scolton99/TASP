@@ -378,5 +378,39 @@ public class Person {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public void setLocation(World w, Location l) {
+        Map<String, Map<String,String>> m;
+        if(this.data.getMap("lastLocs") == null) {
+            m = new HashMap<>();
+        } else {
+            m = this.data.getMap("lastLocs");
+        }
+
+        Map<String,String> xyz = new HashMap<>();
+        xyz.put("x", Integer.toString(l.getBlockX()));
+        xyz.put("y", Integer.toString(l.getBlockY()));
+        xyz.put("z", Integer.toString(l.getBlockZ()));
+
+        m.put(w.getUID().toString(), xyz);
+        this.data.setObject("lastLocs", m);
+    }
+
+    @SuppressWarnings("unchecked")
+    public Location getLocation(World w) {
+        Map<String, Map<String,String>> m;
+        if(this.data.getMap("lastLocs") == null)
+            return null;
+        else
+            m = this.data.getMap("lastLocs");
+
+        Map<String,String> loc = m.get(w.getUID().toString());
+
+        if(loc == null)
+            return null;
+
+        return new Location(w, Double.parseDouble(loc.get("x")), Double.parseDouble(loc.get("y")), Double.parseDouble(loc.get("z")));
+    }
+
 }
 

@@ -45,8 +45,6 @@ public class KillCmd extends TASPCommand {
                     p = (Player) sender;
                 }
 
-                // TODO Check to see if this isn't prevented by the god-mode/buddha-mode listeners
-                // TODO Add killed message
                 p.damage(10000.0D);
                 return;
             }

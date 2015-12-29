@@ -1,10 +1,12 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import tech.spencercolton.tasp.Util.Message;
 
 /**
  * @author Spencer Colton
@@ -27,11 +29,31 @@ public class DisappearCmd extends TASPCommand {
     public void execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
-        PotionEffect p = new PotionEffect(PotionEffectType.INVISIBILITY, 1_000_000, 0, false, false);
-        // TODO Add message to this command
-        // TODO Decide whether or not to make this available for tasp.disappear.others
-        Player pl = (Player) sender;
-        pl.addPotionEffect(p);
+        if(args.length > 1) {
+            Command.sendSyntaxError(sender, this);
+            return;
+        }
+
+        Player pl;
+
+        if(args.length == 1) {
+            pl = Bukkit.getPlayer(args[0]);
+            if(pl == null) {
+                Command.sendPlayerMessage(sender, args[0]);
+                return;
+            }
+        } else {
+            pl = (Player)sender;
+        }
+
+        if(pl.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
+            pl.removePotionEffect(PotionEffectType.INVISIBILITY);
+            Message.Disappear.sendDisappearMessage(sender, "visible", pl);
+        } else {
+            PotionEffect p = new PotionEffect(PotionEffectType.INVISIBILITY, 1_000_000, 0, false, false);
+            pl.addPotionEffect(p);
+            Message.Disappear.sendDisappearMessage(sender, "invisible", pl);
+        }
     }
 
 }

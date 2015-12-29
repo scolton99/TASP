@@ -164,12 +164,15 @@ public class Command implements CommandExecutor {
         cmds.put(SuCmd.getName().toLowerCase(), new SuCmd());
         cmds.put(InvspyCmd.getName().toLowerCase(), new InvspyCmd());
         cmds.put(ClearCmd.getName().toLowerCase(), new ClearCmd());
-        cmds.put(TplocCmd.getName().toLowerCase(), new TplocCmd());
+        cmds.put(TeleportLocation.getName().toLowerCase(), new TeleportLocation());
         cmds.put(DisappearCmd.getName().toLowerCase(), new DisappearCmd());
         cmds.put(KillCmd.getName().toLowerCase(), new KillCmd());
         cmds.put(NickCmd.getName().toLowerCase(), new NickCmd());
         cmds.put(HelpmeCmd.getName().toLowerCase(), new HelpmeCmd());
         cmds.put(RecipeCmd.getName().toLowerCase(), new RecipeCmd());
+        cmds.put(JumpCmd.getName().toLowerCase(), new JumpCmd());
+        cmds.put(SetwarpCmd.getName().toLowerCase(), new SetwarpCmd());
+        cmds.put(WarpCmd.getName().toLowerCase(), new WarpCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

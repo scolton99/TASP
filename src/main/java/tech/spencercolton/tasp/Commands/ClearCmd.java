@@ -56,7 +56,6 @@ public class ClearCmd extends TASPCommand {
                         count += i.getAmount();
                 }
                 p.getInventory().clear();
-                //TODO Add message to config.yml
                 Message.Clear.sendClearMessage(sender, count, p);
                 return;
             }

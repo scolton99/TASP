@@ -94,6 +94,7 @@ public class RecipeCmd extends TASPCommand {
         ItemStack is = new ItemStack(item.getMaterial(), 1, item.getDamage());
 
         List<Recipe> recipes = Bukkit.getRecipesFor(is);
+        Message.Recipe.sendCountMessage(sender, recipes.size());
 
         if(recipes.isEmpty()) {
             Message.Recipe.Error.sendNoRecipesMessage(sender);
@@ -101,8 +102,7 @@ public class RecipeCmd extends TASPCommand {
         }
 
         if(start > recipes.size()) {
-            // TODO Make this a custom error
-            Command.sendSyntaxError(sender, this);
+            Message.Recipe.Error.sendNoOOBError(sender, recipes.size());
             return;
         }
 
@@ -123,6 +123,10 @@ public class RecipeCmd extends TASPCommand {
             CraftingInventory ci = (CraftingInventory) i;
             if (r instanceof ShapelessRecipe) {
                 ItemStack[] z = ((ShapelessRecipe)r).getIngredientList().toArray(new ItemStack[((ShapelessRecipe)r).getIngredientList().size()]);
+                for(ItemStack gh : z) {
+                    if(gh.getDurability() == (short)32767)
+                        gh.setDurability((short)0);
+                }
                 z = Arrays.copyOf(z, 9);
                 ci.setMatrix(z);
                 ci.setResult(r.getResult());
@@ -152,12 +156,6 @@ public class RecipeCmd extends TASPCommand {
                     }
                 }
 
-                for(Character[] ca : chrs) {
-                    for(Character c : ca) {
-                        Bukkit.broadcastMessage(Objects.toString(c));
-                    }
-                }
-
                 ItemStack[] its = new ItemStack[9];
 
                 for(int j = 0; j < 3; j++) {
@@ -170,11 +168,15 @@ public class RecipeCmd extends TASPCommand {
                     }
                 }
 
+                for(ItemStack gh : its) {
+                    if(gh.getDurability() == (short)32767)
+                        gh.setDurability((short)0);
+                }
+
                 ci.setMatrix(its);
                 ci.setResult(sr.getResult());
             }
         } else {
-            //TODO Finish this
             if (i.getType() == InventoryType.FURNACE) {
                 assert r instanceof FurnaceRecipe;
                 FurnaceRecipe z = (FurnaceRecipe) r;

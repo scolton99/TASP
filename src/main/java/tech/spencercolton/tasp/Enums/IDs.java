@@ -447,8 +447,7 @@ public enum IDs {
     BOAT(333, 0, Material.BOAT),
     LEATHER(334, 0, Material.LEATHER),
     MILK_BUCKET(335, 0, Material.MILK_BUCKET),
-    //TODO Sort out this brick nonsense
-    BRICK(336, 0, Material.BRICK),
+    BRICK(336, 0, Material.CLAY_BRICK),
     CLAY(337, 0, Material.CLAY),
     SUGAR_CANES(338, 0, Material.SUGAR_CANE),
     PAPER(339, 0, Material.PAPER),
@@ -623,6 +622,7 @@ public enum IDs {
         this.material = m;
         this.names.addAll(Arrays.asList(names));
         this.names.add(this.toString());
+        this.names.add(this.material.toString());
     }
 
     IDs(int id, Material m, String... names) {

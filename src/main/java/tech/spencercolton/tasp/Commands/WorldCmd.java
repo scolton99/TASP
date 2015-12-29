@@ -1,10 +1,15 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
+import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 import tech.spencercolton.tasp.Util.Message;
 
 import static org.bukkit.Bukkit.*;
@@ -49,7 +54,13 @@ public class WorldCmd extends TASPCommand {
                     Message.World.sendWorldMessage(sender);
                 } else {
                     assert w != null;
-                    ((Player) sender).teleport(w.getSpawnLocation());
+                    Person p = Person.get((Player)sender);
+                    Location l = p.getLocation(w);
+
+                    if(l == null)
+                        l = w.getSpawnLocation();
+
+                    Bukkit.getPluginManager().callEvent(new PersonTeleportEvent(p, l));
                 }
                 return;
             }
