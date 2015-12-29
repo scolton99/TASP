@@ -1,5 +1,6 @@
 package tech.spencercolton.tasp.Commands;
 
+import org.bukkit.block.Sign;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -173,6 +174,8 @@ public class Command implements CommandExecutor {
         cmds.put(JumpCmd.getName().toLowerCase(), new JumpCmd());
         cmds.put(SetwarpCmd.getName().toLowerCase(), new SetwarpCmd());
         cmds.put(WarpCmd.getName().toLowerCase(), new WarpCmd());
+        cmds.put(SignCmd.getName().toLowerCase(), new SignCmd());
+        cmds.put(SpawnerCmd.getName().toLowerCase(), new SpawnerCmd());
 
         Collection<TASPCommand> coll = cmds.values();
 

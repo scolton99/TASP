@@ -165,6 +165,8 @@ public class TASP extends JavaPlugin {
         this.getCommand("helpme").setExecutor(c);
         this.getCommand("setwarp").setExecutor(c);
         this.getCommand("warp").setExecutor(c);
+        this.getCommand("sign").setExecutor(c);
+        this.getCommand("spawner").setExecutor(c);
     }
 
     private void initListeners() {

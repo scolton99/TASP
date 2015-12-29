@@ -164,3 +164,7 @@ commands:
         description: Make a warp point in the world.
     warp:
         description: Jump to a set point in the world.
+    sign:
+        description: Edit a sign
+    spawner:
+        description: Edit a mob spawner
