@@ -14,7 +14,7 @@ import java.util.List;
  * @author Spencer Colton
  * @since 0.0.1-001
  */
-abstract class TASPCommand {
+public abstract class TASPCommand {
 
     /**
      * Contains the logic used to process a command.
