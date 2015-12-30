@@ -1,90 +1,68 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.M;
+import org.bukkit.potion.PotionEffect;
 
-import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Util.Message.Antidote.*;
 
 /**
  * @author Spencer Colton
  */
 public class AntidoteCmd extends TASPCommand {
 
-    public static final String syntax = "/antidote [player]";
-    public static final String name = "antidote";
-    public static final String permission = "tasp.antidote";
-    public static final String consoleSyntax = "/antidote <player>";
+    @Getter
+    private final String syntax = "/antidote [player]";
+
+    @Getter
+    private static final String name = "antidote";
+
+    @Getter
+    private final String permission = "tasp.antidote";
+
+    @Getter
+    private final String consoleSyntax = "/antidote <player>";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        switch(args.length) {
-            case 0:
-                if(sender instanceof ConsoleCommandSender) {
-                    Command.sendConsoleSyntaxError(sender, this);
-                    return;
-                }
-                Player p = (Player)sender;
-                p.getActivePotionEffects().stream().forEach(e -> p.removePotionEffect(e.getType()));
-                sendAntidoteMessage(sender);
-                return;
-            case 1:
-                Player p2 = Bukkit.getPlayer(args[0]);
-                if(p2 == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
-                    return;
-                }
-                p2.getActivePotionEffects().stream().forEach(e -> p2.removePotionEffect(e.getType()));
-                sendAntidoteMessage(sender, p2);
-                return;
-            default:
-                Command.sendGenericSyntaxError(sender, this);
-        }
-    }
-
-    private void sendAntidoteMessage(CommandSender sender) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.antidote"));
-    }
-
-    private void sendAntidoteMessage(CommandSender sender, Player p) {
-        if(sender.equals(p)) {
-            sendAntidoteMessage(sender);
+        if (args.length == 0 && sender instanceof ConsoleCommandSender) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
-
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.antidote-s", p.getDisplayName()));
-        if(Command.messageEnabled(this, true))
-            p.sendMessage(M.m("command-message-text.antidote-r", Command.getDisplayName(sender)));
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Player p = null;
+        switch (args.length) {
+            case 1: {
+                p = getPlayer(args[0]);
+                if (p == null) {
+                    sendPlayerMessage(sender, args[0]);
+                    return;
+                }
+            }
+            case 0: {
+                if (p == null)
+                    p = (Player) sender;
+                for (PotionEffect g : p.getActivePotionEffects()) {
+                    p.removePotionEffect(g.getType());
+                }
+                sendAntidoteMessage(sender, p);
+                return;
+            }
+            default: {
+                sendGenericSyntaxError(sender, this);
+            }
+        }
     }
 
     @Override
     public List<String> getAliases() {
-        return Collections.singletonList("cleareffects");
+        return singletonList("cleareffects");
     }
 
 }

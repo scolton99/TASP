@@ -1,41 +1,45 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
+
+import static java.util.Arrays.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.TASP.*;
+import static tech.spencercolton.tasp.Util.Message.Teleport.*;
 
 /**
  * @author Spencer Colton
  */
 public class TeleportToggleCmd extends TASPCommand {
 
-    public static final String syntax = "";
-    public static final String name = "";
-    public static final String permission = "";
-    public static final String consoleSyntax = "";
+    @Getter
+    private final String syntax = "/tpt";
+
+    @Getter
+    private static final String name = "tpt";
+
+    @Getter
+    private final String permission = "tasp.teleport.toggle";
+
+    @Getter
+    private final String consoleSyntax = "/tpt";
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        if (args.length != 0) {
+            sendGenericSyntaxError(sender, this);
+            return;
+        }
 
+        sendToggledMessage(sender, toggleTeleporting());
     }
 
     @Override
-    public String getName() {
-        return name;
+    public List<String> getAliases() {
+        return asList("tptoggle", "teleporttoggle", "teleportationtoggle");
     }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }

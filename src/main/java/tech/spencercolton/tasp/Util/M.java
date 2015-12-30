@@ -1,7 +1,5 @@
 package tech.spencercolton.tasp.Util;
 
-import org.bukkit.entity.Item;
-
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +12,21 @@ import java.util.List;
 public class M {
 
     public static String u(String s) {
-        return Config.getString(s);
+        return MessageFormat.format(Config.getString(s), Config.c1(), Config.c2());
+    }
+
+    public static String cu(String s) {
+        s = "command-message-text." + s;
+        return u(s);
+    }
+
+    public static String cm(String... s) {
+        if (s.length >= 1) {
+            s[0] = "command-message-text." + s[0];
+        } else {
+            return null;
+        }
+        return m(s);
     }
 
     public static String m(String... s) {
@@ -29,12 +41,12 @@ public class M {
 
         newStrs.addAll(Arrays.asList(s));
 
-        if(newStrs.contains(str)) {
+        if (newStrs.contains(str)) {
             newStrs.remove(str);
         }
         newStrs.add(0, Config.c2().toString());
         newStrs.add(0, Config.c1().toString());
-        return MessageFormat.format(finStr, newStrs.toArray(new String[newStrs.size()]));
+        return MessageFormat.format(finStr, newStrs.toArray((Object[]) new String[newStrs.size()]));
     }
 
 }

@@ -61,6 +61,7 @@ error-color: 'RED'
 afk-timeout: 10
 
 broadcast-prefix: NOTICE
+helpme-prefix: HELPME
 
 info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, FLYING, FOM, BUDDHA, IP]
 
@@ -70,6 +71,15 @@ color-text: true
 color-code: '&'
 
 spawnmob-limit: 500
+
+chat-filter: true
+bad-words: [fuck, bitch, nigger, shit, ass, faggot, fag, fagot, fuk, fuc, n00b, noob, n0ob, no0b, $hit, $h1t, fagg0t, a$$, cunt, pussy, pu$$y, cock, c0ck, cok, c0k, coc, c0c, slut, whore, wh0re]
+filter-character: '*'
+obfuscate-bad-words: true
+
+teleport-cooldown: 5
+
+teleport-request-time-limit: 15
 
 # Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
 # and UNDERLINE! The game code will default them to GOLD for the primary color and
@@ -133,7 +143,7 @@ command-messages:
   hurt: true
   hurt-others: true
   fom: true
-  fom-other: true
+  fom-others: true
   potion: true
   potion-others: true
   antidote: true
@@ -143,9 +153,25 @@ command-messages:
   weather: true
   weather-others: true
   spawnmob: true
+  world: true
+  drops: true
+  mail: true
+  mail-others: true
+  xp: true
+  xp-others: true
+  disappear: true
+  disappear-others: true
+  clear: true
+  clear-others: true
+  recipe: true
+  nick: true
+  nick-others: true
+  spawner: true
+  setwarp: true
 
 broadcast-afk: true
 broadcast-powertool-toggle: true
+broadcast-teleport-toggle: true
 # ---------------------------------------------------------------------------------------
 # |                                MESSAGE CUSTOMIZATION                                |
 # ---------------------------------------------------------------------------------------
@@ -161,10 +187,10 @@ command-message-text:
   setspeed: '{0}Your speed was set to {1}{2}{0}.'
   # {2}: The player whose speed was changed
   # {3}: Their new speed
-  setspeed-others-s: '{1}{2}{0}''''s speed was set to {1}{3}{0}.'
+  setspeed-s: '{1}{2}{0}''''s speed was set to {1}{3}{0}.'
   # {2}: The new speed.
   # {3}: The person who set the new speed.
-  setspeed-others-r: '{0}Your speed was set to {1}{2}{0} by {1}{3}.'
+  setspeed-r: '{0}Your speed was set to {1}{2}{0} by {1}{3}.'
   # {2}: The x position of the new home
   # {3}: The y position of the new home
   # {4}: The z position of the new home
@@ -173,12 +199,12 @@ command-message-text:
   # {3}: The y position of the new home
   # {4}: The z position of the new home
   # {5}: The person whose home was set
-  sethome-others-s: '{1}{5}{0}''''s home location was set to {1}{2} {3} {4}{0}.'
+  sethome-s: '{1}{5}{0}''''s home location was set to {1}{2} {3} {4}{0}.'
   # {2}: The x position of the new home
   # {3}: The y position of the new home
   # {4}: The z position of the new home
   # {5}: The person who set the new home
-  sethome-others-r: '{0}Your home location was set to {1}{2} {3} {4}{0} by {1}{5}{0}.'
+  sethome-r: '{0}Your home location was set to {1}{2} {3} {4}{0} by {1}{5}{0}.'
   # {2}: The number of entities removed.
   # {3]: The world in which the entities were removed.
   killall: '{0}Killed {1}{2}{0} entites in world {1}{3}{0}.'
@@ -186,18 +212,18 @@ command-message-text:
   god: '{0}God mode was {1}{2}{0}.'
   # {2}: the word "enabled" or "disabled"
   # {3}: the player for whom god mode was changed
-  god-others-s: '{0}God mode was {1}{2}{0} for {1}{3}{0}.'
+  god-s: '{0}God mode was {1}{2}{0} for {1}{3}{0}.'
   # {2}: the word "enabled" or "disabled"
   # {3}: the player who changed God mode
-  god-others-r: '{0}God mode was {1}{2}{0} by {1}{3}{0}.'
+  god-r: '{0}God mode was {1}{2}{0} by {1}{3}{0}.'
   # {2}: the word "enabled" or "disabled"
   fly: '{0}Flying was {1}{2}{0}.'
   # {2}: the word "enabled" or "disabled"
   # {3}: the player for whom flying was changed
-  fly-others-s: '{0}Flying was {1}{2}{0} for {1}{3}{0}.'
+  fly-s: '{0}Flying was {1}{2}{0} for {1}{3}{0}.'
   # {2}: the word "enabled" or "disabled"
   # {3}: the player who changed God mode
-  fly-others-r: '{0}Flying was {1}{2}{0} by {1}{3}{0}.'
+  fly-r: '{0}Flying was {1}{2}{0} by {1}{3}{0}.'
   # {2}: the x coordinate
   # {3}: the y coordinate
   # {4}: the z coordinate
@@ -207,10 +233,10 @@ command-message-text:
   gamemode: '{0}Your gamemode was set to {1}{2}{0}.'
   # {2}: the gamemode
   # {3}: the person whose gamemode was set
-  gamemode-others-s: '{1}{3}{0}''''s gamemode was set to {1}{2}{0}.'
+  gamemode-s: '{1}{3}{0}''''s gamemode was set to {1}{2}{0}.'
   # {2}: the gamemode
   # {3}: the person who set the gamemode
-  gamemode-others-r: '{0}Your gamemode was set to {1}{2}{0} by {1}{3}{0}.'
+  gamemode-r: '{0}Your gamemode was set to {1}{2}{0} by {1}{3}{0}.'
   # {2}: the time
   # {3}: The Bukkit time (in ticks)
   # {4}: The world name
@@ -351,4 +377,74 @@ command-message-text:
   # {2}: The mob type
   # {3}: The amount of mobs
   spawnmob: '{0}Spawned {1}{3}{0} of mob type {1}{2}{0}.'
-
+  # {2}: The world name
+  world: '{0}You are currently in {1}{2}{0}.'
+  # {2}: The amount of drops removed
+  drops: '{0}Removed {1}{2}{0} drops.'
+  # {2}: The word "enabled" or "disabled"
+  teleporttoggle: '{0}You {1}{2}{0} teleportation.'
+  # {2}: The other players's name
+  mail-s: '{0}Your mail was sent to {1}{2}{0}.'
+  # {2}: The person who sent the mail
+  mail-r: '{0}You just received mail from {1}{2}{0}! Use {1}/mail check'
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  xp: '{0}Your experience was {1}{2}{0} by {1}{3}{0} (now {1}{4}{0}).'
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  # {5}: The player whose experience was increased
+  xp-s: '{1}{5}{0}''''s experience was {1}{2}{0} by {1}{3}{0} (now {1}{4}{0}).'
+  # {2}: The word "increased" or "decreased"
+  # {3}: The amount of increase
+  # {4}: The new total
+  # {5}: The player who increased the experience
+  xp-r: '{0}Your experience was {1}{2}{0} by {1}{3}{0} by {1}{5}{0} (now {1}{4}{0}).'
+  # {2}: The amount
+  # {3}: The player
+  xpcheck: '{1}{3}{0} has {1}{2}{0} exp.'
+  # {2}: The amount
+  clear: '{0}Your inventory was cleared ({1}{2}{0} items were removed.)'
+  # {2}: The amount
+  # {3}: The player whose inventory was cleared
+  clear-s: '{0}Cleared {1}{3}{0}''''s inventory ({1}{2}{0} items were removed.)'
+  # {2}: The amount
+  # {3}: The player who cleared the inventory
+  clear-r: '{0}Your inventory was cleared by {1}{3}{0} ({1}{2}{0} items were removed.)'
+  # {2}: The command performed
+  # {3}: The player who executed the command
+  su-s: '{0}Made {1}{2}{0} execute {1}{3}{0}.'
+  # {2}: The command performed
+  # {3}: The player who forced the command to be executed
+  su-r: '{1}{3}{0} made you use the command {1}{2}{0}.'
+  # {2}: The item id
+  # {3}: The item damage
+  # {4}: The item names
+  holding: '{0}You are holding {1}{2}:{3}{0}, with names {1}{4}{0}.'
+  # {2}: The amount of recipes found
+  recipe: '{1}{2}{0} recipe(s) found.  To view all, type /recipe <item> [recipe-number]'
+  # {2}: The word "invisible" or "visible"
+  disappear: '{0}You became {1}{2}{0}!'
+  # {2}: The word "invisible" or "visible"
+  # {3}: The player who disappeared
+  disappear-s: '{1}{3}{0} became {1}{2}{0}!'
+  # {2}: The word "invisible" or "visible"
+  # {3}: The player who made the other disappear
+  disappear-r: '{1}{3}{0} made you become {1}{2}{0}!'
+  # {2}: The nickname
+  nick: '{0}Your nickname was set to {1}{2}{0}.'
+  # {2}: The nickname
+  # {3}: The player whose nickname was changed
+  nick-s: '{0}Set {1}{3}{0}''''s nickname to {1}{2}{0}.'
+  # {2}: The nickname
+  # {3}: The player who changed the nickname.
+  nick-r: '{0}Your nickname was set to {1}{2}{0} by {1}{3}{0}.'
+  # {2}: The coordinates of the spawner
+  # {3}: The entity to be spawned
+  # {4}: The delay
+  spawner: '{0}Spawner at {1}{2}{0} was edited to spawn {1}{3}{0} with a delay of {1}{4}{0} ticks.'
+  # {2}: The coordinates of the warp
+  # {3}: The name of the warp
+  # {4}: The world name
+  setwarp: '{0}Warp {1}{3}{0} has been placed at {1}{2}{0} in {1}{4}{0}.'

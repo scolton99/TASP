@@ -17,7 +17,7 @@ public class Config {
     public static ChatColor c1() {
         ChatColor c = ChatColor.valueOf(s.getString("primary-color"));
 
-        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+        if (c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
             return ChatColor.GOLD;
@@ -27,7 +27,7 @@ public class Config {
     public static ChatColor c2() {
         ChatColor c = ChatColor.valueOf(s.getString("secondary-color"));
 
-        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+        if (c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
             return ChatColor.DARK_RED;
@@ -37,7 +37,7 @@ public class Config {
     public static ChatColor c3() {
         ChatColor c = ChatColor.valueOf(s.getString("tertiary-color"));
 
-        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+        if (c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
             return ChatColor.GREEN;
@@ -47,7 +47,7 @@ public class Config {
     public static ChatColor c4() {
         ChatColor c = ChatColor.valueOf(s.getString("quaternary-color"));
 
-        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+        if (c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
             return ChatColor.AQUA;
@@ -58,7 +58,7 @@ public class Config {
     public static ChatColor err() {
         ChatColor c = ChatColor.valueOf(s.getString("error-color"));
 
-        if(c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
+        if (c != null && c != ChatColor.BOLD && c != ChatColor.ITALIC && c != ChatColor.MAGIC && c != ChatColor.RESET && c != ChatColor.STRIKETHROUGH && c != ChatColor.UNDERLINE) {
             return c;
         } else {
             return ChatColor.RED;
@@ -95,6 +95,34 @@ public class Config {
 
     public static int getSpawnLimit() {
         return s.getInt("spawnmob-limit");
+    }
+
+    public static boolean obfuscate() {
+        return s.getBoolean("obfuscate-bad-words");
+    }
+
+    public static char getFilterChar() {
+        return s.getString("filter-character").charAt(0);
+    }
+
+    public static boolean filterChat() {
+        return s.getBoolean("chat-filter");
+    }
+
+    public static boolean teleportCooldown() {
+        return !(s.getInt("teleport-cooldown") == 0);
+    }
+
+    public static int teleportCooldownInt() {
+        return s.getInt("teleport-cooldown");
+    }
+
+    public static boolean isTeleportRequestLimited() {
+        return !(s.getInt("teleport-request-time-limit") == 0);
+    }
+
+    public static int teleportRequestLimit() {
+        return s.getInt("teleport-request-time-limit") * 1000;
     }
 
 }

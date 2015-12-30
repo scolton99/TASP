@@ -1,89 +1,61 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Config;
+
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Util.Message.AFK.*;
 
 public class AFKCmd extends TASPCommand {
 
-    private static final String syntax = "/afk [person]";
-    public static final String name = "afk";
-    private static final String consoleSyntax = "/afk <person>";
-    private static final String permission = "tasp.afk";
+    @Getter
+    private final String syntax = "/afk [person]";
+
+    @Getter
+    private static final String name = "afk";
+
+    @Getter
+    private final String consoleSyntax = "/afk <person>";
+
+    @Getter
+    private final String permission = "tasp.afk";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        switch(args.length) {
-            case 0:
-                if(sender instanceof ConsoleCommandSender) {
-                    Command.sendConsoleSyntaxError((ConsoleCommandSender) sender, this);
-                    return;
-                }
-
-                Player p = (Player)sender;
-                Person pers = Person.get(p);
-
-                pers.setAfk(!pers.isAfk());
-
-                if(Config.getBoolean("broadcast-afk"))
-                    broadcastAFKMessage(pers);
-                return;
-            case 1:
-                Player tmp = Bukkit.getPlayer(args[0]);
-
-                if(tmp == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
-                    return;
-                }
-                Person p2 = Person.get(tmp);
-
-                assert p2 != null;
-                sender.sendMessage(Config.c2() + p2.getPlayer().getDisplayName() + Config.c1() + " is " + (!p2.isAfk() ? "not " : "") + "AFK.");
-                return;
-            default:
-                if(sender instanceof ConsoleCommandSender)
-                    Command.sendConsoleSyntaxError(sender, this);
-                else
-                    Command.sendSyntaxError(sender, this);
+        if (sender instanceof ConsoleCommandSender && args.length != 0) {
+            sendConsoleSyntaxError(sender, this);
         }
-    }
 
-    public static void broadcastAFKMessage(Person p) {
-        if(!Config.getBoolean("broadcast-afk"))
-            return;
-
-        if(p.isAfk())
-            Bukkit.broadcastMessage(Config.c1() + " * " + Config.c2() + p.getPlayer().getDisplayName() + Config.c1() + " is AFK.");
-        else
-            Bukkit.broadcastMessage(Config.c1() + " * " + Config.c2() + p.getPlayer().getDisplayName() + Config.c1() + " has returned from being AFK.");
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        switch (args.length) {
+            case 1: {
+                Person p = get(getPlayer(args[0]));
+                if (p == null) {
+                    sendPlayerMessage(sender, args[0]);
+                    return;
+                }
+                sender.sendMessage(c2() + p.getPlayer().getDisplayName() + c1() + " is " + (!p.isAfk() ? "not " : "") + "AFK.");
+            }
+            case 0: {
+                Person pers = get((Player) sender);
+                pers.setAfk(!pers.isAfk());
+                broadcastAFKMessage(pers.getPlayer());
+                return;
+            }
+            default: {
+                sendGenericSyntaxError(sender, this);
+            }
+        }
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        return args.length == 1 && Bukkit.getPlayer(args[0]) != null ? permission + ".others" : permission;
+        return args.length == 1 && getPlayer(args[0]) != null ? permission + ".others" : permission;
     }
 
 }

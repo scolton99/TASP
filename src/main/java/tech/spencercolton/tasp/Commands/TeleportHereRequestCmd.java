@@ -1,41 +1,55 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Events.PersonTeleportEvent;
+
+import java.util.List;
+
+import static java.util.Arrays.*;
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
 
 /**
  * @author Spencer Colton
  */
 public class TeleportHereRequestCmd extends TASPCommand {
 
-    public static final String syntax = "";
-    public static final String name = "";
-    public static final String permission = "";
-    public static final String consoleSyntax = "";
+    @Getter
+    private final String syntax = "/tprhere <player>";
+
+    @Getter
+    private static final String name = "tprhere";
+
+    @Getter
+    private final String permission = "tasp.teleport.request.here";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        assert !(sender instanceof ConsoleCommandSender);
 
+        if (args.length != 1) {
+            sendSyntaxError(sender, this);
+            return;
+        }
+
+        Player p = getPlayer(args[0]);
+        if (p == null) {
+            sendPlayerMessage(sender, args[0]);
+            return;
+        }
+
+        getServer().getPluginManager().callEvent(new PersonTeleportEvent((Player) sender, p, true, true));
     }
 
     @Override
-    public String getName() {
-        return name;
+    public List<String> getAliases() {
+        return asList("tprequesthere", "teleportrequesthere", "teleporthererequest", "tphererequest", "tpherer");
     }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }

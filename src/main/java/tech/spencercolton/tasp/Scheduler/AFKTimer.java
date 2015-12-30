@@ -3,9 +3,9 @@ package tech.spencercolton.tasp.Scheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-import tech.spencercolton.tasp.Commands.AFKCmd;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +27,9 @@ public class AFKTimer extends BukkitRunnable {
 
     @Override
     public void run() {
-        if(!this.p.isAfk()) {
+        if (!this.p.isAfk()) {
             this.p.setAfk(true);
-            AFKCmd.broadcastAFKMessage(this.p);
+            Message.AFK.broadcastAFKMessage(this.p.getPlayer());
         }
     }
 

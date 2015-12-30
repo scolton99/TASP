@@ -1,107 +1,67 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.M;
+
+import static org.bukkit.Bukkit.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.Util.Message.Stalker.*;
 
 /**
  * @author Spencer Colton
  */
 public class StalkerCmd extends TASPCommand {
 
-    private static final String syntax = "/stalker [person]";
-    public static final String name = "stalker";
-    private static final String permission = "tasp.msg.stalk";
-    private static final String consoleSyntax = "/stalker <person>";
+    @Getter
+    private final String syntax = "/stalker [person]";
+
+    @Getter
+    private static final String name = "stalker";
+
+    @Getter
+    private final String permission = "tasp.msg.stalk";
+
+    @Getter
+    private final String consoleSyntax = "/stalker <person>";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        switch(args.length) {
-            case 0:
-                if(sender instanceof ConsoleCommandSender) {
-                    Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
-                }
-
-                Person p = Person.get((Player)sender);
-
-                Boolean b = p.isStalker();
-                if(b)
-                    p.setStalker(false);
-                else
-                    p.setStalker(true);
-
-                this.sendStalkerMessage(sender, p.isStalker());
-                break;
-            case 1:
-                Player p2 = Bukkit.getPlayer(args[0]);
-
-                if(p2 == null) {
-                    Command.sendPlayerMessage(sender, args[0]);
-                    return;
-                }
-
-                Person p3 = Person.get(p2);
-                assert p3 != null;
-
-                Boolean b2 = p3.isStalker();
-                if(b2)
-                    p3.setStalker(false);
-                else
-                    p3.setStalker(true);
-
-                this.sendStalkerMessage(sender, p3.isStalker(), p3);
-                break;
-            default:
-                if(sender instanceof ConsoleCommandSender) {
-                    Command.sendConsoleSyntaxError((ConsoleCommandSender)sender, this);
-                } else {
-                    Command.sendSyntaxError(sender, this);
-                }
-        }
-    }
-
-    private void sendStalkerMessage(CommandSender sender, boolean enabled) {
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.stalker", enabled ? "enabled" : "disabled"));
-    }
-
-    private void sendStalkerMessage(CommandSender sender, boolean enabled, Person other) {
-        if(Person.get((Player)sender).equals(other)) {
-            sendStalkerMessage(sender, enabled);
+        if (sender instanceof ConsoleCommandSender && args.length != 1) {
+            sendConsoleSyntaxError(sender, this);
             return;
         }
-        if(Command.messageEnabled(this, false))
-            sender.sendMessage(M.m("command-message-text.stalker-s", enabled ? "enabled" : "disabled", other.getPlayer().getDisplayName()));
-        if(Command.messageEnabled(this, true))
-            other.getPlayer().sendMessage(M.m("command-message-text.stalker-r", enabled ? "enabled" : "disabled", sender.getName()));
-    }
 
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
+        Person p = null;
+        switch (args.length) {
+            case 1: {
+                p = get(getPlayer(args[0]));
+                if (p == null) {
+                    sendPlayerMessage(sender, args[0]);
+                    return;
+                }
+            }
+            case 0: {
+                if (p == null) {
+                    assert sender instanceof ConsoleCommandSender;
+                    p = get((Player) sender);
+                }
+                p.setStalker(!p.isStalker());
+                sendStalkerMessage(sender, p.isStalker(), p.getPlayer());
+                return;
+            }
+            default: {
+                sendGenericSyntaxError(sender, this);
+            }
+        }
     }
 
     @Override
     public String predictRequiredPermission(CommandSender s, String... args) {
-        return args.length == 1 && Bukkit.getPlayer(args[0]) != null && !Bukkit.getPlayer(args[0]).equals(s) ? permission + ".others" : permission;
+        return args.length == 1 && getPlayer(args[0]) != null && !getPlayer(args[0]).equals(s) ? permission + ".others" : permission;
     }
 
 }

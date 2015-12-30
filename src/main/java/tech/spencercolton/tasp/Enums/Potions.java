@@ -1,10 +1,7 @@
 package tech.spencercolton.tasp.Enums;
 
-import com.avaje.ebean.validation.NotNull;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +25,7 @@ public enum Potions {
     SLOWNESS(PotionEffectType.SLOW, 90, "SLOWNESS", "SLOWNESS_POTION", "POTION_OF_SLOWNESS", "SLOW", "SLOW_POTION"),
     HARMING(PotionEffectType.HARM, 0, "INSTANT_DAMAGE", "HARMING", "HURT", "HURTING", "INSTANT_DAMAGE_POTION", "HARMING_POTION", "HURTING_POTION", "POTION_OF_INSTANT_DAMAGE", "POTION_OF_HARMING",
             "POTION_OF_HURTING"),
-    ABSORPTION(PotionEffectType.ABSORPTION, 120, "ABSORPTION", "POTION_OF_ABSORPTION", "ABSORPTION_POTION","GOLDEN_APPLE", "ENCHANTED_GOLDEN_APPLE"),
+    ABSORPTION(PotionEffectType.ABSORPTION, 120, "ABSORPTION", "POTION_OF_ABSORPTION", "ABSORPTION_POTION", "GOLDEN_APPLE", "ENCHANTED_GOLDEN_APPLE"),
     BLINDNESS(PotionEffectType.BLINDNESS, 120, "BLIND", "BLIND_POTION", "BLINDNESS", "POTION_OF_BLINDNESS", "BLINDNESS_POTION"),
     CONFUSION(PotionEffectType.CONFUSION, 15, "CONFUSION", "POTION_OF_CONFUSION", "CONFUSION_POTION", "DRUGS", "POTION_OF_DRUGS", "DRUGS_POTION", "NAUSEA", "POTION_OF_NAUSEA", "NAUSEA_POTION"),
     HASTE(PotionEffectType.FAST_DIGGING, 120, "FAST_DIGGING", "POTION_OF_FAST_DIGGING", "FAST_DIGGING_POTION", "POTION_OF_EFFICIENCY", "EFFICIENCY_POTION", "EFFICIENCY", "HASTE", "POTION_OF_HASTE", "HASTE_POTION"),
@@ -39,10 +36,10 @@ public enum Potions {
     MINING_FATIGUE(PotionEffectType.SLOW_DIGGING, 120, "SLOW_DIGGING", "POTION_OF_SLOW_DIGGING", "SLOW_DIGGING_POTION", "MINING_FATIGUE", "POTION_OF_MINING_FATIGUE", "MINING_FATIGUE_POTION"),
     WITHER(PotionEffectType.WITHER, 120, "WITHER", "POTION_OF_WITHER", "WITHER_POTION", "POTION_OF_DECAY", "DECAY_POTION", "DECAY");
 
-    List<String> names;
+    final List<String> names;
 
-    PotionEffectType p;
-    int defaultDuration;
+    final PotionEffectType p;
+    final int defaultDuration;
     public static final int DEFAULT_STRENGTH = 0;
     public static final int TICKS_IN_SECOND = 20;
 
@@ -53,8 +50,8 @@ public enum Potions {
     }
 
     public static Potions getByName(String s) {
-        for(Potions p : Potions.values()) {
-            if(p.names.contains(s.replace(" ", "_").toUpperCase())) {
+        for (Potions p : Potions.values()) {
+            if (p.names.contains(s.replace(" ", "_").toUpperCase())) {
                 return p;
             }
         }

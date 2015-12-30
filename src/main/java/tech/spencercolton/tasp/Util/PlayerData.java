@@ -8,7 +8,10 @@ import org.json.simple.parser.ParseException;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -39,7 +42,7 @@ public class PlayerData {
      */
     public PlayerData(Person p) {
         this.p = p;
-        if(dataExists(p)) {
+        if (dataExists(p)) {
             this.data = this.loadData();
         } else {
             this.genData();
@@ -90,8 +93,8 @@ public class PlayerData {
         return (JSONArray) this.data.get(s);
     }
 
-    public Boolean getBoolean(String s) {
-        return (Boolean) this.data.get(s);
+    public boolean getBoolean(String s) {
+        return !(this.data.get(s) == null || !((boolean) this.data.get(s)));
     }
 
     /**
@@ -102,7 +105,7 @@ public class PlayerData {
      */
     private static boolean dataExists(UUID s) {
         String p1 = TASP.dataFolder().getAbsolutePath();
-        p1 += "\\players\\" + s + ".json";
+        p1 += File.separator + "players" + File.separator + s + ".json";
         return new File(p1).exists();
     }
 
@@ -126,9 +129,6 @@ public class PlayerData {
         this.data.put("lastName", this.p.getName());
         this.data.put("UUID", this.p.getUid().toString());
         this.data.put("firstSeen", new Date().toString());
-        if(TASP.TASPPerms_link != null) {
-            this.data.put("permissions", new ArrayList<>());
-        }
         this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
         this.writeData();
     }
@@ -140,14 +140,13 @@ public class PlayerData {
      * not.
      */
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json");
-        if(!f.exists())
-            return null;
+        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json");
+        assert f.exists();
 
         JSONParser p = new JSONParser();
-        try (FileReader fa = new FileReader(f)){
+        try (FileReader fa = new FileReader(f)) {
             return (JSONObject) p.parse(fa);
-        } catch(IOException|ParseException e) {
+        } catch (IOException | ParseException e) {
             Bukkit.getLogger().warning("Error parsing player data:");
             e.printStackTrace();
             return null;
@@ -174,7 +173,7 @@ public class PlayerData {
      * @return The path of the player's data file, in the form of a {@code String}.
      */
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + "\\players\\" + this.p.getUid() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json";
     }
 
     /**
@@ -214,5 +213,6 @@ public class PlayerData {
         this.data.put(s, l);
         this.writeData();
     }
+
 
 }

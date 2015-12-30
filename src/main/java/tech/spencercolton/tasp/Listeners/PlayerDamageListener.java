@@ -1,6 +1,5 @@
 package tech.spencercolton.tasp.Listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,24 +11,24 @@ public class PlayerDamageListener implements Listener {
     @SuppressWarnings("unused")
     @EventHandler
     public void onEvent(EntityDamageEvent e) {
-        if(!(e.getEntity() instanceof Player)) {
+        if (!(e.getEntity() instanceof Player)) {
             return;
         }
 
-        Person p = Person.get((Player)e.getEntity());
+        Person p = Person.get((Player) e.getEntity());
 
-        if(p == null)
+        if (p == null)
             return;
 
-        if(p.isGod()) {
+        if (p.isGod() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM && e.getCause() != EntityDamageEvent.DamageCause.VOID) {
             p.getPlayer().setExhaustion(0.0F);
             p.getPlayer().setSaturation(20.0F);
             e.setCancelled(true);
         }
 
-        if(p.isBuddha()) {
+        if (p.isBuddha() && e.getCause() != EntityDamageEvent.DamageCause.CUSTOM && e.getCause() != EntityDamageEvent.DamageCause.VOID) {
             double d = p.getPlayer().getHealth();
-            if(e.getDamage() >= d)
+            if (e.getDamage() >= d)
                 e.setDamage(d - 0.5D);
         }
     }

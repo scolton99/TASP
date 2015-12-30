@@ -1,87 +1,114 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.ChatColor;
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.TASP;
-import tech.spencercolton.tasp.Util.Config;
+import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Entity.Person;
+
+import java.io.File;
+
+import static java.io.File.*;
+import static org.bukkit.Bukkit.*;
+import static org.bukkit.ChatColor.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.*;
+import static tech.spencercolton.tasp.TASP.*;
+import static tech.spencercolton.tasp.TASP.reload;
+import static tech.spencercolton.tasp.Util.Config.*;
 
 public class TASPCmd extends TASPCommand {
 
     /**
      * String containing the command's name.
      */
-    public static final String name = "tasp";
+    @Getter
+    private static final String name = "tasp";
 
 
     /**
      * String containing the command's syntax.
      */
-    private static final String syntax = "/tasp [option]";
+    @Getter
+    private final String syntax = "/tasp [option]";
 
 
     /**
      * String containing the command's console syntax.
      */
-    private static final String consoleSyntax = syntax;
+    @Getter
+    private final String consoleSyntax = syntax;
 
-    private static final String permission = "tasp.tasp";
+    @Getter
+    private final String permission = "tasp.tasp";
 
     /**
      * {@inheritDoc}
      */
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(args.length == 0){
-            Command.sendSyntaxError(sender, this);
+        if (args.length == 0) {
+            sendSyntaxError(sender, this);
             return;
         }
 
-        switch(args[0]) {
+        switch (args[0]) {
             case "reload":
-                TASP.reload();
-                sender.sendMessage(Config.c3() + "" + ChatColor.ITALIC + "TASP" + ChatColor.RESET + "" + Config.c4() + " reloaded.");
+                reload();
+                sender.sendMessage(c3() + "" + ITALIC + "TASP" + RESET + "" + c4() + " reloaded.");
                 break;
             case "config":
+                sender.sendMessage(err() + "Sorry, this feature is not yet implemented.");
+                break;
+            case "deleteconfig":
+                File f = new File(dataFolder().getAbsolutePath() + separator + "config.yml");
+                boolean deleted = f.delete();
+                if (deleted) {
+                    reloadTASPConfig();
+                    sender.sendMessage(c3() + "Main configuration file deleted and reset to factory defaults.  TASP configuration was reloaded.");
+                } else {
+                    sender.sendMessage(err() + "Main configuration file could not be deleted.  No changes were made.");
+                }
+                return;
+            case "resetplayer":
+                if (args.length != 2) {
+                    sendGenericSyntaxError(sender, this);
+                    return;
+                }
+
+                Player p = getPlayer(args[1]);
+                if (p == null) {
+                    sendPlayerMessage(sender, args[1]);
+                    return;
+                }
+
+                Person pa = get(p);
+                assert pa != null;
+                if (pa.resetData()) {
+                    sender.sendMessage(c3() + "Player " + c4() + p.getDisplayName() + c3() + "'s data was reset.");
+                }
+                return;
+            case "deletemail":
+                sender.sendMessage(err() + "Sorry, this feature is not yet implemented.");
                 break;
             default:
-                Command.sendSyntaxError(sender, this);
+                sendSyntaxError(sender, this);
         }
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        if(args.length == 0)
+        if (args.length == 0)
             return permission;
 
-        switch(args[0]) {
+        switch (args[0]) {
             case "reload":
                 return permission + ".reload";
             case "version":
                 return permission + ".version";
             case "config":
-                if(args[1].equals("set"))
+                if (args[1].equals("set"))
                     return permission + ".config.set";
-                if(args[1].equals("get"))
+                if (args[1].equals("get"))
                     return permission + ".config.get";
                 return permission + ".config";
             default:

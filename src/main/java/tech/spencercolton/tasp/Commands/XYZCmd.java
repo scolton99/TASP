@@ -1,50 +1,32 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.M;
+
+import static tech.spencercolton.tasp.Util.Message.XYZ.*;
 
 public class XYZCmd extends TASPCommand {
 
-    private static final String syntax = "/xyz";
-    public static final String name = "xyz";
-    private static final String consoleSyntax = null;
-    private static final String permission = "tasp.xyz";
+    @Getter
+    private final String syntax = "/xyz";
+
+    @Getter
+    private static final String name = "xyz";
+
+    @Getter
+    private final String consoleSyntax = null;
+
+    @Getter
+    private final String permission = "tasp.xyz";
 
     @Override
     public void execute(CommandSender sender, String... args) {
-        if(sender instanceof ConsoleCommandSender) {
-            Command.sendConsoleError((ConsoleCommandSender)sender);
-            return;
-        }
+        assert !(sender instanceof ConsoleCommandSender);
 
-        Player p = (Player)sender;
-        this.sendPosMessage(sender, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
-    }
-
-    private void sendPosMessage(CommandSender sender, int x, int y, int z) {
-        sender.sendMessage(M.m("command-message-text.xyz", Integer.toString(x), Integer.toString(y), Integer.toString(z)));
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        Player p = (Player) sender;
+        sendPosMessage(sender, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
     }
 
 }

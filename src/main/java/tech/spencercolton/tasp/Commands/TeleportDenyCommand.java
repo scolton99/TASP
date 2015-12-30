@@ -1,41 +1,60 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
+import tech.spencercolton.tasp.Entity.Person;
+
+import java.util.List;
+
+import static java.util.Collections.*;
+import static tech.spencercolton.tasp.Commands.Command.*;
+import static tech.spencercolton.tasp.Entity.Person.get;
+import static tech.spencercolton.tasp.Util.Message.Teleport.Error.*;
+import static tech.spencercolton.tasp.Util.Message.Teleport.*;
 
 /**
  * @author Spencer Colton
  */
 public class TeleportDenyCommand extends TASPCommand {
 
-    public static final String syntax = "";
-    public static final String name = "";
-    public static final String permission = "";
-    public static final String consoleSyntax = "";
+    @Getter
+    private final String syntax = "/tpd";
+
+    @Getter
+    private static final String name = "tpd";
+
+    @Getter
+    private final String permission = "tasp.teleport.request.respond";
+
+    @Getter
+    private final String consoleSyntax = null;
 
     @Override
     public void execute(CommandSender sender, String[] args) {
+        assert !(sender instanceof ConsoleCommandSender);
 
+        if (args.length != 0) {
+            sendSyntaxError(sender, this);
+            return;
+        }
+
+        Person p = get((Player) sender);
+        if (p.getLastTeleportRequester() == null) {
+            sendNoTeleportRequestsMessage(sender);
+            return;
+        }
+
+        Person pa = p.getLastTeleportRequester();
+        p.clearTeleportRequests();
+
+        sendTeleportDenyMessage(pa.getPlayer(), p.getPlayer());
     }
 
     @Override
-    public String getName() {
-        return name;
+    public List<String> getAliases() {
+        return singletonList("tpdeny");
     }
-
-    @Override
-    public String getPermission() {
-        return permission;
-    }
-
-    @Override
-    public String getSyntax() {
-        return syntax;
-    }
-
-    @Override
-    public String getConsoleSyntax() {
-        return consoleSyntax;
-    }
-
 
 }
