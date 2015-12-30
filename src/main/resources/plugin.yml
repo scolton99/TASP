@@ -170,3 +170,5 @@ commands:
         description: Edit a mob spawner
     warps:
         description: List all warps.
+    enchant:
+        description: Enchant an item
