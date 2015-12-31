@@ -6,7 +6,13 @@
 
     <groupId>tech.spencercolton.tasp</groupId>
     <artifactId>TASP</artifactId>
-    <version>0.0.4-001</version>
+    <version>0.0.4-${buildNumber}</version>
+
+    <scm>
+        <connection>scm:git:http://none</connection>
+        <url>scm:git:https://none</url>
+    </scm>
+
     <repositories>
         <repository>
             <id>spigot-repo</id>
@@ -67,8 +73,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <doCheck>true</doCheck>
-                    <doUpdate>true</doUpdate>
+                    <doCheck>false</doCheck>
+                    <doUpdate>false</doUpdate>
+                    <revisionOnScmFailure>
+                        <format>Build: #{0}</format>
+                        <item>buildNumber\d*</item>
+                    </revisionOnScmFailure>
                 </configuration>
             </plugin>
             <plugin>
