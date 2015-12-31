@@ -6,7 +6,7 @@
 
     <groupId>tech.spencercolton.tasp</groupId>
     <artifactId>TASP</artifactId>
-    <version>0.0.4-${buildNumber}</version>
+    <version>0.0.4-$\{buildNumber}</version>
 
     <scm>
         <connection>scm:git:http://none</connection>
