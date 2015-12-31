@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -182,6 +183,16 @@ public class WeatherCmd extends TASPCommand {
     private enum Track {
         WORLD,
         TYPE
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        if(args.length >= 2 && Bukkit.getWorld(args[0]) != null)
+            return permission + ".set";
+        else if(args.length >= 1)
+            return permission + ".set";
+        else
+            return permission;
     }
 
 }

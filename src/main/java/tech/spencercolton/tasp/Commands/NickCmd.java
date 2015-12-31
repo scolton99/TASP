@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.ColorChat;
 import tech.spencercolton.tasp.Util.Message;
 
+import static org.bukkit.Bukkit.*;
+
 /**
  * @author Spencer Colton
  */
@@ -68,6 +70,11 @@ public class NickCmd extends TASPCommand {
                 Command.sendGenericSyntaxError(sender, this);
             }
         }
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length == 2 && !getPlayer(args[1]).equals(sender)) ? permission + ".others" : permission;
     }
 
 }

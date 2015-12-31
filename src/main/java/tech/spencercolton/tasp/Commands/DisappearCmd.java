@@ -8,13 +8,15 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import tech.spencercolton.tasp.Util.Message;
 
+import static org.bukkit.Bukkit.*;
+
 /**
  * @author Spencer Colton
  */
 public class DisappearCmd extends TASPCommand {
 
     @Getter
-    private final String syntax = "/disappear";
+    private final String syntax = "/disappear [player]";
 
     @Getter
     public static final String name = "disappear";
@@ -54,6 +56,11 @@ public class DisappearCmd extends TASPCommand {
             pl.addPotionEffect(p);
             Message.Disappear.sendDisappearMessage(sender, "invisible", pl);
         }
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length == 1 && !getPlayer(args[0]).equals(sender)) ? permission + ".others" : permission;
     }
 
 }

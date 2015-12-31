@@ -17,13 +17,13 @@ import java.util.List;
 public class ClearCmd extends TASPCommand {
 
     @Getter
-    private final String syntax = "/clear";
+    private final String syntax = "/clear [player]";
 
     @Getter
     public static final String name = "clear";
 
     @Getter
-    private final String consoleSyntax = null;
+    private final String consoleSyntax = "/clear <player>";
 
     @Getter
     private final String permission = "tasp.clear";

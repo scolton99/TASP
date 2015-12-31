@@ -69,7 +69,7 @@ public class FlyCmd extends TASPCommand {
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        return args.length > 0 && getPlayer(args[0]) != null && !getPlayer(args[0]).equals(sender) ? permission + ".others" : permission;
+        return args.length == 1 && getPlayer(args[0]) != null && !getPlayer(args[0]).equals(sender) ? permission + ".others" : permission;
     }
 
 }

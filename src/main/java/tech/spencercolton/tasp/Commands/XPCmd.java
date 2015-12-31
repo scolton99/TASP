@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -98,6 +99,11 @@ public class XPCmd extends TASPCommand {
     @Override
     public List<String> getAliases() {
         return singletonList("exp");
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length >= 2 && args.length <= 3 && !sender.equals(Bukkit.getPlayer(args[1]))) ? permission + ".others" : permission;
     }
 
 }

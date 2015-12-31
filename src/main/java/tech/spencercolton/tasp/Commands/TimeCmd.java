@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -89,6 +90,11 @@ public class TimeCmd extends TASPCommand {
                 sendGenericSyntaxError(sender, this);
             }
         }
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length >= 1 && Bukkit.getWorld(args[0]) == null) ? permission + ".set" : permission;
     }
 
 }

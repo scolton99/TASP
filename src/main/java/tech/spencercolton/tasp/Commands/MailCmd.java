@@ -186,7 +186,7 @@ public class MailCmd extends TASPCommand {
                 case "send":
                     return permission + ".send";
                 case "check":
-                    return permission + ".read";
+                    return permission + ".check";
                 case "read":
                     return permission + ".read";
                 case "delete":

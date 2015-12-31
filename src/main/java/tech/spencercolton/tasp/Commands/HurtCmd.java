@@ -72,4 +72,9 @@ public class HurtCmd extends TASPCommand {
         }
     }
 
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length >= 1 && args.length <= 2 && !getPlayer(args[0]).equals(sender)) ? permission + ".others" : permission;
+    }
+
 }

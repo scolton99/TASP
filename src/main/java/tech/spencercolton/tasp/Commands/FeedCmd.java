@@ -79,7 +79,7 @@ public class FeedCmd extends TASPCommand {
 
     @Override
     public String predictRequiredPermission(CommandSender sender, String... args) {
-        return (args.length == 2 && !sender.equals(getPlayer(args[1]))) ? permission + ".others" : permission;
+        return (args.length >= 1 && args.length <= 2 && !sender.equals(getPlayer(args[1]))) ? permission + ".others" : permission;
     }
 
 }
