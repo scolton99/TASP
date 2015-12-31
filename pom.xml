@@ -56,7 +56,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>$\{project.artifactId}-#\{project.version}-$\{buildNumber}</finalName>
+        <finalName>$\{project.artifactId}-$\{project.version}-$\{buildNumber}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -75,10 +75,11 @@
                 <configuration>
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
-                    <revisionOnScmFailure>
-                        <format>Build: #{0}</format>
+                    <revisionOnScmFailure>true</revisionOnScmFailure>
+                    <format>Build: #{0}</format>
+                    <items>
                         <item>buildNumber\d*</item>
-                    </revisionOnScmFailure>
+                    </items>
                 </configuration>
             </plugin>
             <plugin>
