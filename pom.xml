@@ -7,6 +7,11 @@
     <groupId>tech.spencercolton.tasp</groupId>
     <artifactId>TASP</artifactId>
     <version>0.0.3</version>
+
+    <scm>
+        <url>https://github.com/pavilion99/TASP.git</url>
+        <connection>scm:git:https://github.com/pavilion99/TASP.git</connection>
+    </scm>
     <repositories>
         <repository>
             <id>spigot-repo</id>
@@ -80,6 +85,24 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>true</doCheck>
+                    <doUpdate>true</doUpdate>
+                    <shortRevisionLength>5</shortRevisionLength>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
