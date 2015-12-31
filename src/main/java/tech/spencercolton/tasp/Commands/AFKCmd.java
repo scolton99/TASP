@@ -40,6 +40,7 @@ public class AFKCmd extends TASPCommand {
                     return;
                 }
                 sender.sendMessage(c2() + p.getPlayer().getDisplayName() + c1() + " is " + (!p.isAfk() ? "not " : "") + "AFK.");
+                return;
             }
             case 0: {
                 Person pers = get((Player) sender);

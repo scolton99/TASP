@@ -69,6 +69,7 @@ public class TASP extends JavaPlugin {
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
 
+        State.initStates();
         Mail.initMail();
         Warp.initWarps();
         this.initCommands();
