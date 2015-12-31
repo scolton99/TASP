@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
@@ -63,6 +64,11 @@ public class AntidoteCmd extends TASPCommand {
     @Override
     public List<String> getAliases() {
         return singletonList("cleareffects");
+    }
+
+    @Override
+    public String predictRequiredPermission(CommandSender sender, String... args) {
+        return (args.length == 1 && !sender.equals(Bukkit.getPlayer(args[0]))) ? permission + ".others" : permission;
     }
 
 }

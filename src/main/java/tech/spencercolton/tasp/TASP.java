@@ -7,16 +7,15 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.Entities;
-import tech.spencercolton.tasp.Util.Mail;
-import tech.spencercolton.tasp.Util.Warp;
+import tech.spencercolton.tasp.Util.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,8 +43,6 @@ public class TASP extends JavaPlugin {
 
     private static File dataFolder;
 
-    private static boolean powertoolsEnabled = true;
-
     public static CommandSender consoleLast;
 
     @Getter
@@ -53,18 +50,18 @@ public class TASP extends JavaPlugin {
     private static String helpMeRcvPrivilege;
 
     @Getter
-    private static boolean teleportEnabled = true;
-
-    public static boolean toggleTeleporting() {
-        return teleportEnabled = !teleportEnabled;
-    }
-
-    @Getter
     public static final List<Inventory> openImmutableInventories = new ArrayList<>();
 
     @Override
     public void onEnable() {
         this.getLogger().info("Loading TASP plugin...");
+
+        try {
+            Metrics metrics = new Metrics(this);
+            metrics.start();
+        } catch (IOException e) {
+            this.getLogger().warning("Failed to enable metrics for TASP.");
+        }
 
         this.saveDefaultConfig();
         this.reloadConfig();
@@ -169,6 +166,7 @@ public class TASP extends JavaPlugin {
         this.getCommand("spawner").setExecutor(c);
         this.getCommand("warps").setExecutor(c);
         this.getCommand("enchant").setExecutor(c);
+        this.getCommand("kick").setExecutor(c);
     }
 
     private void initListeners() {
@@ -218,12 +216,21 @@ public class TASP extends JavaPlugin {
     }
 
     public static boolean powertoolsEnabled() {
-        return powertoolsEnabled;
+        return State.getBoolean("powertools");
     }
 
     public static boolean togglePowertools() {
-        powertoolsEnabled = !powertoolsEnabled;
-        return powertoolsEnabled;
+        State.setBoolean("powertools", !State.getBoolean("powertools"));
+        return State.getBoolean("powertools");
+    }
+
+    public static boolean toggleTeleporting() {
+        State.setBoolean("teleport", !State.getBoolean("teleport"));
+        return State.getBoolean("teleport");
+    }
+
+    public static boolean isTeleportEnabled() {
+        return State.getBoolean("teleport");
     }
 
 }

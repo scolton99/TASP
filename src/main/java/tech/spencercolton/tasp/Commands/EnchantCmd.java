@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;
 
@@ -40,13 +41,13 @@ public class EnchantCmd extends TASPCommand {
         Player p = (Player)sender;
         ItemStack i = p.getItemInHand();
         Integer level = null;
-        Enchantment e = null;
+        Enchantment e;
         switch(args.size()) {
             case 2: {
                 try {
                     level = Integer.parseInt(args.get(1));
                     if(level > 10 || level <= 0) {
-                        // TODO Alert player that the level must be between 1 and 10
+                        Message.Enchant.Error.sendLevelOOBMessage(sender);
                         return;
                     }
                 } catch (NumberFormatException g) {
@@ -56,8 +57,7 @@ public class EnchantCmd extends TASPCommand {
             case 1: {
                 e = Enchantment.getByName(args.get(0).toUpperCase().replace(' ', '_'));
                 if(e == null) {
-                    // TODO Alert player that the enchantment doesn't exist
-                    Bukkit.broadcastMessage("NO ENCHANTMENT");
+                    Message.Enchant.Error.sendEnchantmentNotFoundMessage(sender, args.get(0));
                     return;
                 }
 
@@ -66,7 +66,9 @@ public class EnchantCmd extends TASPCommand {
 
                 i.addUnsafeEnchantment(e, level);
                 p.setItemInHand(i);
-                // TODO Add message to this command
+
+                Message.Enchant.sendEnchantedMessage(sender, e.getName().toLowerCase().replace('_', ' '), level, i.getType().toString().toLowerCase());
+                return;
             }
             default: {
                 Command.sendSyntaxError(sender, this);

@@ -172,3 +172,5 @@ commands:
         description: List all warps.
     enchant:
         description: Enchant an item
+    kick:
+        description: Kick a player.

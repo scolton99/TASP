@@ -146,6 +146,25 @@ public class Message {
         }
     }
 
+    public static class Enchant {
+
+        public static void sendEnchantedMessage(CommandSender sender, String enchantment, int level, String item) {
+            if(Command.messageEnabled("enchant"))
+                sender.sendMessage(M.cm("enchant", enchantment, Integer.toString(level), item));
+        }
+
+        public static class Error {
+
+            public static void sendLevelOOBMessage(CommandSender sender) {
+                sender.sendMessage(Config.err() + "Enchantment level must be between 1 and 10 (inclusive).");
+            }
+
+            public static void sendEnchantmentNotFoundMessage(CommandSender sender, String enchantment) {
+                sender.sendMessage(Config.err() + "An enchantment by the name \"" + enchantment + "\" was not found.");
+            }
+        }
+    }
+
     public static class Feed {
 
         public static void sendFedMessage(CommandSender s, float amount, Player p) {

@@ -42,10 +42,9 @@ public class WarpsCmd extends TASPCommand {
             }
         }
 
-        // TODO Prettify this list
-        for(int i = 0; i < Math.min((5 + 5 * start), warps.size()); i++) {
+        for(int i = start * 5; i < Math.min((5 + 5 * start), warps.size()); i++) {
             Map<String, String> mp = warps.get(i);
-            sender.sendMessage(Config.c1() + " * " + Config.c2() + mp.get("name") + Config.c1() + " * " + Config.c2() + Bukkit.getWorld(UUID.fromString(mp.get("world"))).getName() + Config.c1() + " * ");
+            sender.sendMessage(Config.c1() + " * " + Config.c2() + mp.get("name") + Config.c1() + " - " + Config.c2() + Bukkit.getWorld(UUID.fromString(mp.get("world"))).getName() + Config.c1() + " * ");
         }
     }
 
