@@ -76,7 +76,7 @@
                     <doCheck>false</doCheck>
                     <doUpdate>false</doUpdate>
                     <revisionOnScmFailure>true</revisionOnScmFailure>
-                    <format>Build: #{0}</format>
+                    <format>{0}</format>
                     <items>
                         <item>buildNumber\d*</item>
                     </items>
