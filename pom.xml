@@ -6,7 +6,7 @@
 
     <groupId>tech.spencercolton.tasp</groupId>
     <artifactId>TASP</artifactId>
-    <version>0.0.4-$\{buildNumber}</version>
+    <version>0.0.4-${buildNumber}</version>
 
     <scm>
         <connection>scm:git:http://none</connection>
@@ -56,7 +56,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>$\{project.artifactId}-$\{project.version}-$\{buildNumber}</finalName>
+        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
