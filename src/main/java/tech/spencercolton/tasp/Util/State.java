@@ -50,7 +50,7 @@ public class State {
     }
 
     public static boolean getBoolean(String path) {
-        return states.get(path) == null || (boolean)states.get(path);
+        return states.get(path) != null && (boolean)states.get(path);
     }
 
     @SuppressWarnings("unchecked")
