@@ -12,7 +12,6 @@
         <connection>scm:git:http://none</connection>
         <url>scm:git:https://none</url>
     </scm>
-
     <repositories>
         <repository>
             <id>spigot-repo</id>
@@ -111,6 +110,32 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <doCheck>true</doCheck>
+                    <doUpdate>true</doUpdate>
+                    <shortRevisionLength>5</shortRevisionLength>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-plugin</artifactId>
+                <version>1.9.4</version>
+                <configuration>
+                    <connectionType>connection</connectionType>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
