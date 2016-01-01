@@ -62,32 +62,8 @@
     </dependencies>
     <build>
         <directory>target/${build.number}</directory>
-        <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
+        <finalName>${project.artifactId}-${project.version}-${build.number}</finalName>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>
-                            validate
-                        </phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
-                    <revisionOnScmFailure>true</revisionOnScmFailure>
-                    <format>{0}</format>
-                    <items>
-                        <item>buildNumber\d*</item>
-                    </items>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>
                     org.apache.maven.plugins
