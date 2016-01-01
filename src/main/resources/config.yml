@@ -48,42 +48,70 @@
 #                    DARK_PURPLE, DARK_RED, GOLD, GRAY, GREEN, LIGHT_PURPLE, RED, WHITE
 #                    YELLOW
 # Defaults:
-#   primary-color: GOLD
-#   secondary-color: DARK_RED
-#   error-color: RED
+#   primary-color: 'GOLD'
+#   secondary-color: 'DARK_RED'
+#   tertiary-color: 'GREEN'
+#   quaternary-color: 'AQUA'
+#   error-color: 'RED'
 primary-color: 'GOLD'
 secondary-color: 'DARK_RED'
 tertiary-color: 'GREEN'
 quaternary-color: 'AQUA'
 error-color: 'RED'
+# Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
+# and UNDERLINE! The game code will reset them to their defaults.
 
 # How long should it take before a player is labeled "afk," in minutes?  Set to 0 for no limit.
 afk-timeout: 10
 
+# When a player runs /broadcast, what should the prefix of their message be?
 broadcast-prefix: NOTICE
+
+# When a player runs /helpme, what should the prefix of their message be?
 helpme-prefix: HELPME
 
+# When someone runs /info about a player, what statistics about that player should be shown?
+# Available includes: DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, FLYING, FOM,
+#                     BUDDHA, IP
 info-includes: [DISPLAY_NAME, HEALTH, FOOD, XP, LOCATION, GAMEMODE, GOD, STALKER, AFK, MUTED, FLYING, FOM, BUDDHA, IP]
 
+# If someone chooses to burn a player without specifying a time, how long should that player burn (in seconds)
 default-burn-time: 30
 
+# TASP also has a way for users to color their own text.  It can be disabled however, and the character used can
+# also be changed.
 color-text: true
 color-code: '&'
 
+# How many mobs (at maximum) should a player be allowed to spawn with the /spawnmob command?  All requests higher than
+# this number will be limited to this number.
 spawnmob-limit: 500
 
+# ---------------------------------------------------------------------------------------
+# |                                 Chat Filter Settings                                |
+# ---------------------------------------------------------------------------------------
+# TASP has a built-in (albeit primitive) chat filter.  The filter operates on private messages, mails, and the public
+# chat.
 chat-filter: true
 bad-words: [fuck, bitch, nigger, shit, ass, faggot, fag, fagot, fuk, fuc, n00b, noob, n0ob, no0b, $hit, $h1t, fagg0t, a$$, cunt, pussy, pu$$y, cock, c0ck, cok, c0k, coc, c0c, slut, whore, wh0re]
+
+# This is the character that bad words will be replaced with when the chat is filtered
 filter-character: '*'
+
+# If this is set to true, bad-words will be obfuscated instead of replaced with the "filter-character".  If you're
+# not sure what obfuscation is, look up "Formatting Codes" on the MinecraftWiki.
 obfuscate-bad-words: true
 
+# ---------------------------------------------------------------------------------------
+# |                                Teleportation Settings                               |
+# ---------------------------------------------------------------------------------------
+# How long after a player teleports should he or she be required to wait before teleporting again (in seconds)?
+# Affects: /back, ALL /tp commands, /jump, /world, /warp, and /spawn
 teleport-cooldown: 5
 
+# How long should a player have to accept or deny a standing teleportation request before the request expires (seconds)?
+# Default: 15 seconds
 teleport-request-time-limit: 15
-
-# Don't get sneaky and try to use things like BOLD, ITALIC, MAGIC, RESET, STRIKETHROUGH,
-# and UNDERLINE! The game code will default them to GOLD for the primary color and
-# DARK_RED for the secondary color.
 
 # ---------------------------------------------------------------------------------------
 # |                              TRANSPARENCY CONFIGURATION                             |
@@ -170,9 +198,20 @@ command-messages:
   setwarp: true
   enchant: true
 
+# Broadcasting Settings
+# Certain commands have aspects that can be broadcasted to the whole server when run for clarity.
+
+# If this is set to true, the whole server will see when a person goes AFK.  If false, a person's AFK status can still
+# be checked from the /info command (if seeing the AFK status of a player has been enabled in this config file.)
 broadcast-afk: true
+
+# If this is set to true, all users will receive a message when powertools are enabled or disabled for the whole server.
 broadcast-powertool-toggle: true
+
+# If this is true, all users will receive a message when teleportation is enabled or disabled for the whole server.
 broadcast-teleport-toggle: true
+
+# If this is set to true, all users will be able to see when a user has been kicked.
 broadcast-kicks: true
 # ---------------------------------------------------------------------------------------
 # |                                MESSAGE CUSTOMIZATION                                |
