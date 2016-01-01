@@ -55,6 +55,7 @@
         </dependency>
     </dependencies>
     <build>
+        <directory>target/${build.number}</directory>
         <finalName>${project.artifactId}-${project.version}-${buildNumber}</finalName>
         <plugins>
             <plugin>
