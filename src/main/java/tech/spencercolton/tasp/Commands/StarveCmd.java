@@ -1,9 +1,13 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 import static java.lang.Integer.*;
 import static org.bukkit.Bukkit.*;
@@ -34,6 +38,8 @@ public class StarveCmd extends TASPCommand {
             sendConsoleSyntaxError(sender, this);
             return;
         }
+
+        Stream<Player> s = Bukkit.getOnlinePlayers().stream().filter(p -> p.g)
 
         Player p = null;
         Integer amount = null;
