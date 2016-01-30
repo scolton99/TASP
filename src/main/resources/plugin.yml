@@ -1,5 +1,5 @@
 name: TASP
-version: 0.0.3
+version: ${project.version}
 main: tech.spencercolton.tasp.TASP
 loadbefore: [TASPLocks, TASPPerms, TASPEconomy, TASPBackup]
 commands:
