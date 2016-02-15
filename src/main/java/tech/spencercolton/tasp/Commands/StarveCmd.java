@@ -39,8 +39,6 @@ public class StarveCmd extends TASPCommand {
             return;
         }
 
-        Stream<Player> s = Bukkit.getOnlinePlayers().stream().filter(p -> p.g)
-
         Player p = null;
         Integer amount = null;
         switch (args.length) {
