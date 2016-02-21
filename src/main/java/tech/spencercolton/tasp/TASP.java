@@ -11,6 +11,7 @@ import org.mcstats.Metrics;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.*;
+import tech.spencercolton.tasp.Messenger.PlayerCommunicator;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.*;
 
@@ -65,6 +66,9 @@ public class TASP extends JavaPlugin {
 
         this.saveDefaultConfig();
         this.reloadConfig();
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PlayerCommunicator());
 
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
