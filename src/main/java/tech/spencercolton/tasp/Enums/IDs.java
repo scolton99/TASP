@@ -637,31 +637,25 @@ public enum IDs {
         name = name.toUpperCase();
         name = name.replace(" ", "_");
         name = name.replace("minecraft:", "");
-        for(IDs i : values()) {
-            for(String n : i.names) {
+        for(IDs i : values())
+            for(String n : i.names)
                 if(n.equalsIgnoreCase(name))
                     return i;
-            }
-        }
 
         return null;
     }
 
     public static IDs getByIdDamage(int id, int damage) {
-        for (IDs i : values()) {
-            if (i.getId() == id && i.getDamage() == damage) {
+        for (IDs i : values())
+            if (i.getId() == id && i.getDamage() == damage)
                 return i;
-            }
-        }
         return null;
     }
 
     public static IDs getByMaterial(Material m) {
-        for(IDs id : values()) {
-            if(id.getMaterial() == m) {
+        for(IDs id : values())
+            if(id.getMaterial() == m)
                 return id;
-            }
-        }
         assert false;
         return null;
     }
