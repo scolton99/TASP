@@ -1,9 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
@@ -30,14 +30,14 @@ public class WarpCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
 
         if(args.size() != 1) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player)sender;
@@ -49,7 +49,7 @@ public class WarpCmd extends TASPCommand {
             Message.Warp.Error.sendWarpNotFoundMessage(sender, args.get(0));
         }
 
-
+        return CommandResponse.SUCCESS;
     }
 
 }

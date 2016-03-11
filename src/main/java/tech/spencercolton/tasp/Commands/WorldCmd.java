@@ -7,7 +7,6 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 import tech.spencercolton.tasp.Util.Message;
@@ -33,11 +32,11 @@ public class WorldCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
         if (args.length > 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -46,7 +45,7 @@ public class WorldCmd extends TASPCommand {
                 w = getWorld(args[0]);
                 if (w == null) {
                     sendWorldMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.WORLD;
                 }
             }
             case 0: {
@@ -62,10 +61,11 @@ public class WorldCmd extends TASPCommand {
 
                     Bukkit.getPluginManager().callEvent(new PersonTeleportEvent(p, l));
                 }
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

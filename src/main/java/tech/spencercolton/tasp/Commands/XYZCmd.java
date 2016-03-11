@@ -22,11 +22,13 @@ public class XYZCmd extends TASPCommand {
     private final String permission = "tasp.xyz";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         Player p = (Player) sender;
         sendPosMessage(sender, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ());
+
+        return CommandResponse.SUCCESS;
     }
 
 }

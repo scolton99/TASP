@@ -1,13 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 import static java.lang.Integer.*;
 import static org.bukkit.Bukkit.*;
@@ -33,10 +29,10 @@ public class StarveCmd extends TASPCommand {
     private final String permission = "tasp.feed";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && (args.length < 1 || args.length > 2)) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -47,18 +43,18 @@ public class StarveCmd extends TASPCommand {
                     amount = parseInt(args[1]);
                     if (amount < 0) {
                         sendNegativeMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 1: {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -74,10 +70,11 @@ public class StarveCmd extends TASPCommand {
 
                 p.setFoodLevel(p.getFoodLevel() - amount);
                 sendStarvedMessage(sender, amount, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendConsoleSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

@@ -25,24 +25,25 @@ public class MuteCmd extends TASPCommand {
     private static final String name = "mute";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         switch (args.length) {
             case 1: {
                 Player p = getPlayer(args[0]);
 
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
 
                 Person b = get(p);
                 b.setMuted(!b.isMuted());
 
                 sendMutedMessage(sender, b.isMuted(), b.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

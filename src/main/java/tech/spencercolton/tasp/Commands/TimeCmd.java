@@ -28,10 +28,10 @@ public class TimeCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length > 2) {
             sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -44,11 +44,11 @@ public class TimeCmd extends TASPCommand {
                     pDate = args[1];
                     if (spigotTime == null) {
                         sendInvalidFormatMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 1: {
@@ -66,11 +66,11 @@ public class TimeCmd extends TASPCommand {
                         pDate = args[0];
                         if (spigotTime == null) {
                             sendInvalidFormatMessage(sender);
-                            return;
+                            return CommandResponse.FAILURE;
                         }
                     } catch (NumberFormatException e) {
                         sendGenericSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 }
             }
@@ -79,15 +79,16 @@ public class TimeCmd extends TASPCommand {
                 if (spigotTime == null) {
                     long bTime = w.getTime();
                     sendTimeMessage(sender, niceFormatTime(bTime), Long.toString(bTime), w.getName());
-                    return;
+                    return CommandResponse.SUCCESS;
                 } else {
                     w.setTime(spigotTime);
                     sendTimeSetMessage(sender, prettyPlayerDate(pDate), Long.toString(spigotTime), w.getName());
-                    return;
+                    return CommandResponse.SUCCESS;
                 }
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

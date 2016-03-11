@@ -30,17 +30,17 @@ public class SethomeCmd extends TASPCommand {
     private final String permission = "tasp.sethome";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         assert (sender instanceof ConsoleCommandSender || sender instanceof Player);
 
         if (sender instanceof ConsoleCommandSender && (args.length < 4 || args.length > 7 || args.length == 6)) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         if (sender instanceof Player && (args.length > 7 || args.length == 6)) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -55,15 +55,15 @@ public class SethomeCmd extends TASPCommand {
                     pitch = parseFloat(args[6]);
                     if (yaw < 0.0F || yaw > 360.0F) {
                         sendYawOOBMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                     if (pitch < -90.0F || pitch > 90.0F) {
                         sendPitchOOBMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 5: {
@@ -71,13 +71,13 @@ public class SethomeCmd extends TASPCommand {
                     w = getWorld(args[4]);
                     if (w == null) {
                         sendWorldMessage(sender, args[4]);
-                        return;
+                        return CommandResponse.WORLD;
                     }
                 } else {
                     p = getPlayer(args[4]);
                     if (p == null) {
                         sendPlayerMessage(sender, args[4]);
-                        return;
+                        return CommandResponse.PLAYER;
                     }
                 }
             }
@@ -90,7 +90,7 @@ public class SethomeCmd extends TASPCommand {
                         p = getPlayer(args[0]);
                         if (p == null) {
                             sendPlayerMessage(sender, args[0]);
-                            return;
+                            return CommandResponse.PLAYER;
                         }
                         if (yaw == null)
                             yaw = 0.0F;
@@ -102,16 +102,16 @@ public class SethomeCmd extends TASPCommand {
                         Location l = new Location(w, x, y, z, yaw, pitch);
                         get(p).setHome(l);
                         sendHomeMessage(sender, l, p);
-                        return;
+                        return CommandResponse.SUCCESS;
                     } catch (NumberFormatException e) {
                         sendConsoleSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 } else {
                     w = getWorld(args[3]);
                     if (w == null) {
                         sendWorldMessage(sender, args[3]);
-                        return;
+                        return CommandResponse.WORLD;
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class SethomeCmd extends TASPCommand {
                         z = parseDouble(args[2]);
                     } catch (NumberFormatException e) {
                         sendSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 }
             }
@@ -148,10 +148,11 @@ public class SethomeCmd extends TASPCommand {
                 Location l = new Location(w, x, y, z, yaw, pitch);
                 get(p).setHome(l);
                 sendHomeMessage(sender, l, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

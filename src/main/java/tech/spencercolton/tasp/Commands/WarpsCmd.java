@@ -1,8 +1,8 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import tech.spencercolton.tasp.Util.Config;
 import tech.spencercolton.tasp.Util.Warp;
 
@@ -28,7 +28,7 @@ public class WarpsCmd extends TASPCommand {
     private final String permission = "tasp.warp.list";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         List<Map<String,String>> warps = Warp.getAllWarps();
 
         int start = 0;
@@ -38,7 +38,7 @@ public class WarpsCmd extends TASPCommand {
                 start--;
             } catch(NumberFormatException e) {
                 Command.sendSyntaxError(sender, this);
-                return;
+                return CommandResponse.SYNTAX;
             }
         }
 
@@ -46,6 +46,8 @@ public class WarpsCmd extends TASPCommand {
             Map<String, String> mp = warps.get(i);
             sender.sendMessage(Config.c1() + " * " + Config.c2() + mp.get("name") + Config.c1() + " - " + Config.c2() + Bukkit.getWorld(UUID.fromString(mp.get("world"))).getName() + Config.c1() + " * ");
         }
+
+        return CommandResponse.SUCCESS;
     }
 
 }

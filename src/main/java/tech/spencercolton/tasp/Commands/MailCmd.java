@@ -44,17 +44,17 @@ public class MailCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length < 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         switch (args[0]) {
-            case "send":
+            case "send": {
                 if (args.length < 3) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
 
                 if (personExists(args[1]) != null) {
@@ -68,12 +68,13 @@ public class MailCmd extends TASPCommand {
                     msg = filter(msg);
                     Mail.send(get((Player) sender), personExists(args[1]), msg);
                     Message.Mail.sendSentMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.SUCCESS;
                 } else {
                     sendPlayerMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
-            case "check":
+            }
+            case "check": {
                 List<Map<String, String>> mailz = Mail.fetch(get((Player) sender));
                 int multi = 0;
                 if (args.length == 2) {
@@ -82,7 +83,7 @@ public class MailCmd extends TASPCommand {
                 sender.sendMessage(c1() + " * Mail for " + ((Player) sender).getDisplayName() + c1() + " * ");
                 if (mailz.isEmpty()) {
                     sender.sendMessage(c3() + " * You have no mail.");
-                    return;
+                    return CommandResponse.SUCCESS;
                 }
                 for (int i = 0; i < min(5, mailz.size() - multi * 5); i++) {
                     Map<String, String> z = mailz.get(i + multi * 5);
@@ -106,11 +107,12 @@ public class MailCmd extends TASPCommand {
 
                     }
                 }
-                return;
-            case "read":
+                return CommandResponse.SUCCESS;
+            }
+            case "read": {
                 if (args.length != 2) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
 
                 int g;
@@ -118,13 +120,13 @@ public class MailCmd extends TASPCommand {
                     g = parseInt(args[1]);
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
                 g--;
                 List<Map<String, String>> mails = Mail.fetch(get((Player) sender));
                 if (g < 0 || g >= mails.size()) {
                     Message.Mail.Error.sendMailNotFoundMessage(sender);
-                    return;
+                    return CommandResponse.FAILURE;
                 }
                 Map<String, String> mel = mails.get(g);
                 try {
@@ -148,13 +150,14 @@ public class MailCmd extends TASPCommand {
                     Mail.setRead(mel);
                 } catch (ParseException e) {
                     sender.sendMessage(err() + "There was a problem fetching your mail.  Try again later.");
-                    return;
+                    return CommandResponse.FAILURE;
                 }
-                return;
-            case "delete":
+                return CommandResponse.SUCCESS;
+            }
+            case "delete": {
                 if (args.length != 2) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
 
                 int g2;
@@ -162,20 +165,23 @@ public class MailCmd extends TASPCommand {
                     g2 = parseInt(args[1]);
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
                 g2--;
                 List<Map<String, String>> mails2 = Mail.fetch(get((Player) sender));
                 if (g2 < 0 || g2 >= mails2.size()) {
                     Message.Mail.Error.sendMailNotFoundMessage(sender);
-                    return;
+                    return CommandResponse.FAILURE;
                 }
                 Map<String, String> m1 = mails2.get(g2);
                 Mail.delete(m1);
                 Message.Mail.sendDeletedMessage(sender);
-                break;
-            default:
+                return CommandResponse.SUCCESS;
+            }
+            default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
+            }
         }
     }
 

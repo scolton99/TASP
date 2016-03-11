@@ -45,21 +45,23 @@ public class TASPCmd extends TASPCommand {
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length == 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         switch (args[0]) {
-            case "reload":
+            case "reload": {
                 reload();
                 sender.sendMessage(c3() + "" + ITALIC + "TASP" + RESET + "" + c4() + " reloaded.");
                 break;
-            case "config":
+            }
+            case "config": {
                 sender.sendMessage(err() + "Sorry, this feature is not yet implemented.");
                 break;
-            case "deleteconfig":
+            }
+            case "deleteconfig": {
                 File f = new File(dataFolder().getAbsolutePath() + separator + "config.yml");
                 boolean deleted = f.delete();
                 if (deleted) {
@@ -68,17 +70,18 @@ public class TASPCmd extends TASPCommand {
                 } else {
                     sender.sendMessage(err() + "Main configuration file could not be deleted.  No changes were made.");
                 }
-                return;
-            case "resetplayer":
+                return CommandResponse.SUCCESS;
+            }
+            case "resetplayer": {
                 if (args.length != 2) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
 
                 Player p = getPlayer(args[1]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
 
                 Person pa = get(p);
@@ -86,13 +89,18 @@ public class TASPCmd extends TASPCommand {
                 if (pa.resetData()) {
                     sender.sendMessage(c3() + "Player " + c4() + p.getDisplayName() + c3() + "'s data was reset.");
                 }
-                return;
-            case "deletemail":
+                return CommandResponse.SUCCESS;
+            }
+            case "deletemail": {
                 sender.sendMessage(err() + "Sorry, this feature is not yet implemented.");
                 break;
-            default:
+            }
+            default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
+            }
         }
+        return CommandResponse.SUCCESS;
     }
 
     @Override

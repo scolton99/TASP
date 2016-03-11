@@ -1,8 +1,8 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Entity.Person;
@@ -31,11 +31,13 @@ public class HelpmeCmd extends TASPCommand {
     }
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof ConsoleCommandSender;
 
         String msg = Command.combineArgs(args);
         Bukkit.getPluginManager().callEvent(new PersonHelpmeEvent(Person.get((Player)sender), msg));
+
+        return CommandResponse.SUCCESS;
     }
 
 }

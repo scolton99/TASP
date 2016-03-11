@@ -38,10 +38,10 @@ public class FlyCmd extends TASPCommand {
      * {@inheritDoc}
      */
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -50,7 +50,7 @@ public class FlyCmd extends TASPCommand {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -59,10 +59,11 @@ public class FlyCmd extends TASPCommand {
                 p.setAllowFlight(true);
                 p.setFlying(!p.isFlying());
                 sendFlyingMessage(sender, p.isFlying(), p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

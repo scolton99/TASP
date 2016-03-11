@@ -1,9 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
@@ -26,13 +26,15 @@ public class JumpCmd extends TASPCommand {
     private final String permission = "tasp.jump";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
         Player p = (Player) sender;
         Location l = p.getTargetBlock((Set<Material>)null, 10000).getLocation();
         l.setY(l.getY() + 1.0D);
         p.teleport(l);
+
+        return CommandResponse.SUCCESS;
     }
 
 }

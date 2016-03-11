@@ -27,18 +27,18 @@ public class UnblockCmd extends TASPCommand {
     private final String permission = "tasp.block";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         if (args.length != 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = getPlayer(args[0]);
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         Person ps = get(p);
@@ -48,10 +48,11 @@ public class UnblockCmd extends TASPCommand {
             pa.unblockPlayer(ps);
         else {
             sendNotBlockedMessage(sender, ps);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         sendUnblockedMessage(sender, ps);
+        return CommandResponse.SUCCESS;
     }
 
 }

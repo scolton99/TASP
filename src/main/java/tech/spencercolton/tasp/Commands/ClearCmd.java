@@ -29,10 +29,10 @@ public class ClearCmd extends TASPCommand {
     private final String permission = "tasp.clear";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 1 && sender instanceof ConsoleCommandSender) {
             Command.sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -41,7 +41,7 @@ public class ClearCmd extends TASPCommand {
                 p = Bukkit.getPlayer(args[0]);
                 if (p == null) {
                     Command.sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -57,10 +57,11 @@ public class ClearCmd extends TASPCommand {
                 }
                 p.getInventory().clear();
                 Message.Clear.sendClearMessage(sender, count, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

@@ -29,10 +29,10 @@ public class ExplodeCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender) {
             sendConsoleError(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         float z = 4.0F;
@@ -46,17 +46,19 @@ public class ExplodeCmd extends TASPCommand {
                     z *= g;
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             case 0: {
                 Player p = (Player) sender;
                 World w = p.getWorld();
                 Location l = p.getLocation();
                 w.createExplosion(l.getX(), l.getY(), l.getZ(), z, false, b);
-                return;
+                return CommandResponse.SUCCESS;
             }
-            default:
+            default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
+            }
         }
     }
 

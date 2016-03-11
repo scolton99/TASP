@@ -30,21 +30,23 @@ public class TeleportRequestCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         if (args.length != 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = getPlayer(args[0]);
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         getServer().getPluginManager().callEvent(new PersonTeleportEvent((Player) sender, p, false, true));
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

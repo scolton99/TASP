@@ -25,11 +25,13 @@ public class CraftCmd extends TASPCommand {
     private final String permission = "tasp.craft";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
         Player p = (Player) sender;
         p.openWorkbench(null, true);
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

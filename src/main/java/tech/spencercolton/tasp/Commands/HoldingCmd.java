@@ -32,7 +32,7 @@ public class HoldingCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
         ItemStack i = ((Player) sender).getItemInHand();
         Material m = i.getType();
@@ -48,6 +48,8 @@ public class HoldingCmd extends TASPCommand {
         String names = Command.listToCSV(item.getNames());
 
         Message.Holding.sendHoldingMessage(sender, id, damage, names);
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

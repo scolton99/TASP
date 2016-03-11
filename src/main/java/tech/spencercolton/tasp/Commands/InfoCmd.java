@@ -38,17 +38,16 @@ public class InfoCmd extends TASPCommand {
     private final Map<String, String> strs = new HashMap<>();
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
-
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 1) {
             sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = getPlayer(args[0]);
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         Person pers = get(p);
@@ -107,7 +106,7 @@ public class InfoCmd extends TASPCommand {
 
         if (!this.containsSupportedOptions()) {
             sender.sendMessage(err() + "This command has been disabled.");
-            return;
+            return CommandResponse.FAILURE;
         }
 
         sender.sendMessage(msg);
@@ -118,6 +117,8 @@ public class InfoCmd extends TASPCommand {
                 sender.sendMessage(g);
             }
         });
+
+        return CommandResponse.SUCCESS;
     }
 
     private boolean containsSupportedOptions() {

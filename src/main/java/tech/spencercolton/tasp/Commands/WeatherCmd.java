@@ -35,10 +35,10 @@ public class WeatherCmd extends TASPCommand {
     private final String permission = "tasp.weather";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length > 3) {
             sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -53,7 +53,7 @@ public class WeatherCmd extends TASPCommand {
                     time = parseInt(args[2]);
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 2: {
@@ -63,7 +63,7 @@ public class WeatherCmd extends TASPCommand {
                         time = parseInt(args[1]);
                     } catch (NumberFormatException e) {
                         sendGenericSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 } else {
                     switch (args[1].toLowerCase()) {
@@ -84,7 +84,7 @@ public class WeatherCmd extends TASPCommand {
                         }
                         default: {
                             sendGenericSyntaxError(sender, this);
-                            return;
+                            return CommandResponse.SYNTAX;
                         }
                     }
                 }
@@ -111,7 +111,7 @@ public class WeatherCmd extends TASPCommand {
                             }
                             default: {
                                 sendGenericSyntaxError(sender, this);
-                                return;
+                                return CommandResponse.SYNTAX;
                             }
                         }
                     }
@@ -134,14 +134,14 @@ public class WeatherCmd extends TASPCommand {
                         }
                         default: {
                             sendGenericSyntaxError(sender, this);
-                            return;
+                            return CommandResponse.SYNTAX;
                         }
                     }
                 } else {
                     w = getWorld(args[0]);
                     if (w == null) {
                         sendWorldMessage(sender, args[0]);
-                        return;
+                        return CommandResponse.WORLD;
                     }
                 }
             }
@@ -151,14 +151,14 @@ public class WeatherCmd extends TASPCommand {
                         if (w == null)
                             w = getWorlds().get(0);
                         sendConsoleWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), w);
-                        return;
+                        return CommandResponse.SUCCESS;
                     } else {
                         assert sender instanceof Player;
                         if (w == null)
                             w = ((Player) sender).getWorld();
                         Location l = ((Player) sender).getLocation();
                         sendWeatherReport(sender, w.hasStorm(), w.getWeatherDuration(), w.getTemperature(l.getBlockX(), l.getBlockZ()), w.getHumidity(l.getBlockX(), l.getBlockZ()), w);
-                        return;
+                        return CommandResponse.SUCCESS;
                     }
                 } else {
                     if (sender instanceof ConsoleCommandSender) {
@@ -176,6 +176,7 @@ public class WeatherCmd extends TASPCommand {
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

@@ -32,10 +32,10 @@ public class AntidoteCmd extends TASPCommand {
     private final String consoleSyntax = "/antidote <player>";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length == 0 && sender instanceof ConsoleCommandSender) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.FAILURE;
         }
         Player p = null;
         switch (args.length) {
@@ -43,7 +43,7 @@ public class AntidoteCmd extends TASPCommand {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -53,10 +53,11 @@ public class AntidoteCmd extends TASPCommand {
                     p.removePotionEffect(g.getType());
                 }
                 sendAntidoteMessage(sender, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

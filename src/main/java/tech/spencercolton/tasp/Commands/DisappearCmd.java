@@ -28,12 +28,12 @@ public class DisappearCmd extends TASPCommand {
     private final String permission = "tasp.disappear";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
         if(args.length > 1) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player pl;
@@ -42,7 +42,7 @@ public class DisappearCmd extends TASPCommand {
             pl = Bukkit.getPlayer(args[0]);
             if(pl == null) {
                 Command.sendPlayerMessage(sender, args[0]);
-                return;
+                return CommandResponse.PLAYER;
             }
         } else {
             pl = (Player)sender;
@@ -56,6 +56,8 @@ public class DisappearCmd extends TASPCommand {
             pl.addPotionEffect(p);
             Message.Disappear.sendDisappearMessage(sender, "invisible", pl);
         }
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

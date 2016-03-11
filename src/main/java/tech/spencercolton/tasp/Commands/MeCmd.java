@@ -22,10 +22,12 @@ public class MeCmd extends TASPCommand {
     private static final String name = "me";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         String msg = combineArgs(args);
 
         broadcastMessage(c1() + " * " + c2() + getDisplayName(sender) + c1() + " " + msg);
+
+        return CommandResponse.SUCCESS;
     }
 
 }

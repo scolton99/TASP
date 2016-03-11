@@ -27,7 +27,7 @@ public class AFKCmd extends TASPCommand {
     private final String permission = "tasp.afk";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 0) {
             sendConsoleSyntaxError(sender, this);
         }
@@ -37,19 +37,20 @@ public class AFKCmd extends TASPCommand {
                 Person p = get(getPlayer(args[0]));
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
                 sender.sendMessage(c2() + p.getPlayer().getDisplayName() + c1() + " is " + (!p.isAfk() ? "not " : "") + "AFK.");
-                return;
+                return CommandResponse.SUCCESS;
             }
             case 0: {
                 Person pers = get((Player) sender);
                 pers.setAfk(!pers.isAfk());
                 broadcastAFKMessage(pers.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

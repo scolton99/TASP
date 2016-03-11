@@ -26,10 +26,10 @@ public class GodCmd extends TASPCommand {
     private final String permission = "tasp.god";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Person p = null;
@@ -38,7 +38,7 @@ public class GodCmd extends TASPCommand {
                 p = get(getPlayer(args[0]));
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -46,10 +46,11 @@ public class GodCmd extends TASPCommand {
                     p = get((Player) sender);
                 p.setGod(!p.isGod());
                 sendGodMessage(sender, p.isGod(), p.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

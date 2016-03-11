@@ -28,10 +28,10 @@ public class FeedCmd extends TASPCommand {
     private final String consoleSyntax = "/feed <player> [amount]";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if ((args.length == 0 || args.length > 2) && sender instanceof ConsoleCommandSender) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Integer amount = null;
@@ -51,7 +51,7 @@ public class FeedCmd extends TASPCommand {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -69,10 +69,11 @@ public class FeedCmd extends TASPCommand {
                 p.setSaturation(20.0F);
 
                 sendFedMessage(sender, amount, p.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.FAILURE;
             }
         }
     }

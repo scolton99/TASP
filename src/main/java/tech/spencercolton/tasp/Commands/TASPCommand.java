@@ -28,7 +28,7 @@ public abstract class TASPCommand {
      * @param sender To be supplied by the {@link Command class}
      * @param args   To be supplied by the {@link Command class}
      */
-    public abstract void execute(CommandSender sender, String... args);
+    public abstract CommandResponse execute(CommandSender sender, String... args);
 
     /**
      * Returns the command's expected in-game syntax in the form a human-readable {@code String}.

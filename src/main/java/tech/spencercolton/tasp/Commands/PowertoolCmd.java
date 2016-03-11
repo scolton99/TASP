@@ -32,10 +32,10 @@ public class PowertoolCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender) {
             sendConsoleError(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         Person p = get((Player) sender);
@@ -45,13 +45,13 @@ public class PowertoolCmd extends TASPCommand {
             case 0: {
                 p.clearPowertool(m);
                 sendRemovedPowertoolsMessage(sender, m);
-                break;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 String cmdLine = combineArgs(args);
                 p.setPowertool(m, cmdLine);
                 sendPowertoolEnabledMessage(sender, m, cmdLine);
-                break;
+                return CommandResponse.SUCCESS;
             }
         }
     }

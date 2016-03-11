@@ -27,14 +27,16 @@ public class SpawnCmd extends TASPCommand {
     private final String permission = "tasp.spawn";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
         assert sender instanceof Player;
 
         getPluginManager().callEvent(new PersonTeleportEvent(get((Player) sender), ((Player) sender).getWorld().getSpawnLocation()));
+
+        return CommandResponse.SUCCESS;
     }
 
 }

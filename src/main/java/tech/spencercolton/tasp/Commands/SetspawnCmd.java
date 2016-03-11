@@ -26,12 +26,12 @@ public class SetspawnCmd extends TASPCommand {
     private final String permission = "tasp.setspawn";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         assert (sender instanceof ConsoleCommandSender || sender instanceof Player);
 
         if (sender instanceof ConsoleCommandSender && args.length != 4) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Integer x = null, y = null, z = null;
@@ -45,16 +45,16 @@ public class SetspawnCmd extends TASPCommand {
                     z = parseInt(args[2]);
                     if (w == null) {
                         sendWorldMessage(sender, args[3]);
-                        return;
+                        return CommandResponse.WORLD;
                     }
                     if (sender instanceof ConsoleCommandSender) {
                         w.setSpawnLocation(x, y, z);
                         sendSpawnSetMessage(sender, x, y, z, w.getName());
-                        return;
+                        return CommandResponse.SUCCESS;
                     }
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 3: {
@@ -65,7 +65,7 @@ public class SetspawnCmd extends TASPCommand {
                     z = parseInt(args[2]);
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SUCCESS;
                 }
             }
             case 0: {
@@ -80,10 +80,11 @@ public class SetspawnCmd extends TASPCommand {
 
                 w.setSpawnLocation(x, y, z);
                 sendSpawnSetMessage(sender, x, y, z, w.getName());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

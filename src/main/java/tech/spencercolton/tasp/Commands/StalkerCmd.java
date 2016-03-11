@@ -29,10 +29,10 @@ public class StalkerCmd extends TASPCommand {
     private final String consoleSyntax = "/stalker <person>";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Person p = null;
@@ -41,7 +41,7 @@ public class StalkerCmd extends TASPCommand {
                 p = get(getPlayer(args[0]));
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -51,10 +51,11 @@ public class StalkerCmd extends TASPCommand {
                 }
                 p.setStalker(!p.isStalker());
                 sendStalkerMessage(sender, p.isStalker(), p.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

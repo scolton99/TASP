@@ -27,14 +27,14 @@ public class SetwarpCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
 
         if(args.size() != 1) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Location l = ((Player)sender).getLocation();
@@ -44,6 +44,8 @@ public class SetwarpCmd extends TASPCommand {
         } else {
             Message.Setwarp.Error.warpAlreadyExists(sender);
         }
+
+        return CommandResponse.SUCCESS;
     }
 
 }

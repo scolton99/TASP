@@ -32,24 +32,25 @@ public class TeleportDenyCommand extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         if (args.length != 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Person p = get((Player) sender);
         if (p.getLastTeleportRequester() == null) {
             sendNoTeleportRequestsMessage(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         Person pa = p.getLastTeleportRequester();
         p.clearTeleportRequests();
 
         sendTeleportDenyMessage(pa.getPlayer(), p.getPlayer());
+        return CommandResponse.SUCCESS;
     }
 
     @Override

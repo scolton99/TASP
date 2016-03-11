@@ -4,8 +4,6 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.PlayerInventory;
 import tech.spencercolton.tasp.TASP;
 
@@ -30,12 +28,12 @@ public class InvspyCmd extends TASPCommand {
     private final String permission = "tasp.invspy";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
         if (args.length != 1) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player) sender;
@@ -43,7 +41,7 @@ public class InvspyCmd extends TASPCommand {
 
         if (o == null) {
             Command.sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         PlayerInventory i = o.getInventory();
@@ -53,6 +51,8 @@ public class InvspyCmd extends TASPCommand {
         if(!p.hasPermission(permission + ".edit")) {
             TASP.getOpenImmutableInventories().add(i);
         }
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

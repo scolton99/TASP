@@ -29,7 +29,7 @@ public class TopCmd extends TASPCommand {
     private final String permission = "tasp.top";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         Player p = (Player) sender;
@@ -41,9 +41,10 @@ public class TopCmd extends TASPCommand {
             Block b = w.getBlockAt(x, y, z);
             if (b.getType() != AIR) {
                 getPluginManager().callEvent(new PersonTeleportEvent(get(p), new Location(w, l.getX(), b.getY() + 1, l.getZ(), l.getYaw(), l.getPitch())));
-                return;
+                break;
             }
         }
+        return CommandResponse.SUCCESS;
     }
 
 }

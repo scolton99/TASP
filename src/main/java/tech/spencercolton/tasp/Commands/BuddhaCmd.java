@@ -30,10 +30,10 @@ public class BuddhaCmd extends TASPCommand {
     private final String consoleSyntax = "/buddha <player>";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
         Person p = null;
 
@@ -42,7 +42,7 @@ public class BuddhaCmd extends TASPCommand {
                 p = get(getPlayer(args[0]));
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -52,10 +52,11 @@ public class BuddhaCmd extends TASPCommand {
 
                 p.setBuddha(!p.isBuddha());
                 sendBuddhaMessage(sender, p.isBuddha(), p.getPlayer());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

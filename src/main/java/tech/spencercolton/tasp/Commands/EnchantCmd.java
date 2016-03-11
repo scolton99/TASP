@@ -1,8 +1,7 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import lombok.Getter;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,14 +27,14 @@ public class EnchantCmd extends TASPCommand {
     private final String permission = "tasp.enchant";
 
     @Override
-    public void execute(CommandSender sender, String... argsg) {
+    public CommandResponse execute(CommandSender sender, String... argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
 
         if(args.size() < 1 || args.size() > 2) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player)sender;
@@ -48,7 +47,7 @@ public class EnchantCmd extends TASPCommand {
                     level = Integer.parseInt(args.get(1));
                     if(level > 10 || level <= 0) {
                         Message.Enchant.Error.sendLevelOOBMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 } catch (NumberFormatException g) {
                     Command.sendSyntaxError(sender, this);
@@ -58,7 +57,7 @@ public class EnchantCmd extends TASPCommand {
                 e = Enchantment.getByName(args.get(0).toUpperCase().replace(' ', '_'));
                 if(e == null) {
                     Message.Enchant.Error.sendEnchantmentNotFoundMessage(sender, args.get(0));
-                    return;
+                    return CommandResponse.FAILURE;
                 }
 
                 if(level == null)
@@ -68,10 +67,11 @@ public class EnchantCmd extends TASPCommand {
                 p.setItemInHand(i);
 
                 Message.Enchant.sendEnchantedMessage(sender, e.getName().toLowerCase().replace('_', ' '), level, i.getType().toString().toLowerCase());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

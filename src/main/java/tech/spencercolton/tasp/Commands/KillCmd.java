@@ -24,10 +24,10 @@ public class KillCmd extends TASPCommand {
     private final String permission = "tasp.kill";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             Command.sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -36,7 +36,7 @@ public class KillCmd extends TASPCommand {
                 p = Bukkit.getPlayer(args[0]);
                 if (p == null) {
                     Command.sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 0: {
@@ -46,10 +46,11 @@ public class KillCmd extends TASPCommand {
                 }
 
                 p.damage(10000.0D);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

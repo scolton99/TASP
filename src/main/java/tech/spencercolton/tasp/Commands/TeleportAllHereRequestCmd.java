@@ -32,16 +32,18 @@ public class TeleportAllHereRequestCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
         if (args.length != 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Person p = get((Player) sender);
 
         getServer().getPluginManager().callEvent(new PersonTeleportAllHereEvent(p, true));
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

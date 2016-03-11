@@ -9,9 +9,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import tech.spencercolton.tasp.Commands.Command;
+import tech.spencercolton.tasp.Communication.Client;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Listeners.*;
-import tech.spencercolton.tasp.Messenger.PlayerCommunicator;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.*;
 
@@ -47,6 +47,11 @@ public class TASP extends JavaPlugin {
     public static CommandSender consoleLast;
 
     @Getter
+    private static Client router;
+    @Getter
+    private static boolean commActive;
+
+    @Getter
     @Setter
     private static String helpMeRcvPrivilege;
 
@@ -67,9 +72,6 @@ public class TASP extends JavaPlugin {
         this.saveDefaultConfig();
         this.reloadConfig();
 
-        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new PlayerCommunicator());
-
         Config.loadConfig(this.getConfig());
         dataFolder = this.getDataFolder();
 
@@ -79,6 +81,9 @@ public class TASP extends JavaPlugin {
         this.initCommands();
         this.initListeners();
         Entities.initEntities();
+
+        router = new Client(this.getLogger());
+
         File f = new File(dataFolder().getAbsolutePath() + File.separator + "players" + File.separator);
         if (f.mkdirs()) {
             Bukkit.getLogger().info("Directories were created for TASP.");

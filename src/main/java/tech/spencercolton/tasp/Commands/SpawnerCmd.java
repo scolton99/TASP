@@ -1,10 +1,10 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Entities;
@@ -31,7 +31,7 @@ public class SpawnerCmd extends TASPCommand {
     private final String permission = "tasp.spawner";
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
@@ -48,14 +48,14 @@ public class SpawnerCmd extends TASPCommand {
                         delay = Integer.parseInt(args.get(1));
                     } catch (NumberFormatException e) {
                         Command.sendSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 }
                 case 1: {
                     EntityType et = Entities.getEntityType(args.get(0));
                     if(!Entities.isAllowed(et) || et == null) {
                         Command.sendInvalidEntityMessage(sender, args.get(0));
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                     cs.setSpawnedType(et);
                     cs.setCreatureTypeByName(et.toString());
@@ -64,8 +64,10 @@ public class SpawnerCmd extends TASPCommand {
                 }
             }
 
+            return CommandResponse.SUCCESS;
         } else {
             Message.Spawner.Error.sendNotSpawnerMessage(sender);
+            return CommandResponse.FAILURE;
         }
     }
 

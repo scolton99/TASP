@@ -29,14 +29,16 @@ public class BackCmd extends TASPCommand {
     private final String permission = "tasp.teleport.back";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         Person p = get((Player) sender);
         if (p.getLastLocation() == null) {
             Message.Back.Error.sendNoBackMessage(sender);
+            return CommandResponse.FAILURE;
         } else {
             getPluginManager().callEvent(new PersonTeleportEvent(p, p.getLastLocation()));
+            return CommandResponse.SUCCESS;
         }
     }
 

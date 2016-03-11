@@ -27,12 +27,12 @@ public class TeleportLocation extends TASPCommand {
     private final String permission = "tasp.teleport.location";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert sender instanceof Player;
 
         if (args.length < 3 || args.length > 4) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -42,7 +42,7 @@ public class TeleportLocation extends TASPCommand {
                 w = Bukkit.getWorld(args[3]);
                 if (w == null) {
                     Command.sendWorldMessage(sender, args[3]);
-                    return;
+                    return CommandResponse.WORLD;
                 }
             }
             case 3: {
@@ -52,16 +52,17 @@ public class TeleportLocation extends TASPCommand {
                     z = Integer.parseInt(args[2]);
                 } catch (NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
                 if (w == null)
                     w = ((Player) sender).getWorld();
                 Location l = new Location(w, x, y, z);
                 Bukkit.getPluginManager().callEvent(new PersonTeleportEvent(Person.get((Player) sender), l));
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

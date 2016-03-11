@@ -29,10 +29,10 @@ public class GamemodeCmd extends TASPCommand {
     private final String permission = "tasp.gamemode";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 2) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -41,7 +41,7 @@ public class GamemodeCmd extends TASPCommand {
                 p = getPlayer(args[1]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 1: {
@@ -68,14 +68,15 @@ public class GamemodeCmd extends TASPCommand {
                     }
                     default: {
                         sendGamemodeNotFoundMessage(sender, args[0]);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 }
                 sendGamemodeMessage(sender, p.getGameMode().toString().toLowerCase(), p);
-                break;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

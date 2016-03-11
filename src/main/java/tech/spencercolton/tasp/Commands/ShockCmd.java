@@ -31,10 +31,10 @@ public class ShockCmd extends TASPCommand {
     private final String consoleSyntax = "/shock <player>";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Location l = null;
@@ -44,7 +44,7 @@ public class ShockCmd extends TASPCommand {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
                 l = p.getLocation();
             }
@@ -55,10 +55,11 @@ public class ShockCmd extends TASPCommand {
                     l = p.getTargetBlock((Set<Material>) null, 1000).getLocation();
                 l.getWorld().strikeLightning(l);
                 sendShockMessage(sender, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

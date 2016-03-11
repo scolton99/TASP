@@ -84,10 +84,10 @@ public class SetspeedCmd extends TASPCommand {
     private static final float CONVERSION_FACTOR = 50.0F;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender && args.length != 2) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -97,7 +97,7 @@ public class SetspeedCmd extends TASPCommand {
                 p = getPlayer(args[1]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 1: {
@@ -105,7 +105,7 @@ public class SetspeedCmd extends TASPCommand {
                     walkSpeed = parseFloat(args[0]);
                     if (walkSpeed <= 0.0F || walkSpeed > MAX_SPEED) {
                         sendSpeedOOBMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                     flySpeed = walkSpeed / 2.0F;
 
@@ -134,10 +134,11 @@ public class SetspeedCmd extends TASPCommand {
                 p.setWalkSpeed(walkSpeed);
 
                 sendSpeedMessage(sender, walkSpeed * CONVERSION_FACTOR, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

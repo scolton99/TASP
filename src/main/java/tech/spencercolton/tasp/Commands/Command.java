@@ -1,6 +1,5 @@
 package tech.spencercolton.tasp.Commands;
 
-import org.bukkit.block.Sign;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
@@ -24,7 +23,7 @@ import java.util.regex.Pattern;
 public class Command implements CommandExecutor {
 
     /**
-     * {@code HashMap} mapping familiar plugin names to their classes.
+     * {@code ConcurrentHashMap} mapping familiar plugin names to their classes.
      * <p>
      * Populated when the Command is instantiated.
      * </p>
@@ -58,7 +57,7 @@ public class Command implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
         String s = cmd.getName();
 
-        TASPCommand c = this.getCommand(s.toLowerCase());
+        TASPCommand c = getCommand(s.toLowerCase());
         if (c == null)
             return false;
 
@@ -238,7 +237,7 @@ public class Command implements CommandExecutor {
         s.sendMessage(Config.err() + "You do not have permission to do that.");
     }
 
-    private TASPCommand getCommand(String s) {
+    public static TASPCommand getCommand(String s) {
         return cmds.get(s);
     }
 

@@ -34,12 +34,12 @@ public class PotionCmd extends TASPCommand {
     private final String consoleSyntax = "/potion <potion> <player> [strength] [duration]";
 
     @Override
-    public void execute(CommandSender sender, String... rargs) {
+    public CommandResponse execute(CommandSender sender, String... rargs) {
         List<String> args = processQuotedArguments(rargs);
 
         if (args.size() == 0 || (sender instanceof ConsoleCommandSender && (args.size() < 2 || args.size() > 4))) {
             sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Potions po;
@@ -52,7 +52,7 @@ public class PotionCmd extends TASPCommand {
                     duration = parseInt(args.get(3));
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 3: {
@@ -60,14 +60,14 @@ public class PotionCmd extends TASPCommand {
                     strength = parseInt(args.get(2));
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 2: {
                 p = getPlayer(args.get(1));
                 if (p == null) {
                     sendPlayerMessage(sender, args.get(1));
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 1: {
@@ -76,7 +76,7 @@ public class PotionCmd extends TASPCommand {
                 po = getByName(args.get(0));
                 if (po == null) {
                     sendPotionNotRecognizedMessage(sender, args.get(0));
-                    return;
+                    return CommandResponse.FAILURE;
                 }
                 if (strength == null)
                     strength = DEFAULT_STRENGTH;
@@ -85,10 +85,11 @@ public class PotionCmd extends TASPCommand {
                 PotionEffect pe = new PotionEffect(po.getSpigotPotion(), duration, strength);
                 p.addPotionEffect(pe, true);
                 sendPotionMessage(sender, pe, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

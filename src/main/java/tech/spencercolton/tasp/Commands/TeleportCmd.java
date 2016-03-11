@@ -30,12 +30,12 @@ public class TeleportCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         assert !(sender instanceof ConsoleCommandSender);
 
         if (args.length != 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player) sender;
@@ -43,10 +43,12 @@ public class TeleportCmd extends TASPCommand {
 
         if (other == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         getServer().getPluginManager().callEvent(new PersonTeleportEvent(p, other));
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

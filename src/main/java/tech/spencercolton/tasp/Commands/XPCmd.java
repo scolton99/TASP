@@ -31,9 +31,10 @@ public class XPCmd extends TASPCommand {
     private final String permission = "tasp.xp";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length > 3 || args.length < 1) {
             sendGenericSyntaxError(sender, this);
+            return CommandResponse.SYNTAX;
         }
 
         Integer amount = null;
@@ -44,14 +45,14 @@ public class XPCmd extends TASPCommand {
                     amount = parseInt(args[2]);
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 2: {
                 p = getPlayer(args[1]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[1]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 1: {
@@ -59,41 +60,44 @@ public class XPCmd extends TASPCommand {
                     case "give": {
                         if (p == null || amount == null) {
                             sendGenericSyntaxError(sender, this);
-                            return;
+                            return CommandResponse.SYNTAX;
                         }
                         p.giveExp(amount);
                         sendIncreasedMessage(sender, amount, p.getTotalExperience(), p);
-                        return;
+                        return CommandResponse.SUCCESS;
                     }
                     case "take": {
                         if (p == null || amount == null) {
                             sendGenericSyntaxError(sender, this);
-                            return;
+                            return CommandResponse.SYNTAX;
                         }
                         p.setTotalExperience(p.getTotalExperience() - amount);
                         sendDecreasedMessage(sender, amount, p.getTotalExperience(), p);
-                        return;
+                        return CommandResponse.SUCCESS;
                     }
                     case "check": {
                         if (p == null) {
                             sendGenericSyntaxError(sender, this);
-                            return;
+                            return CommandResponse.SYNTAX;
                         }
                         float amt = p.getTotalExperience();
                         sendXPMessage(sender, amt, p);
-                        break;
+                        return CommandResponse.SUCCESS;
                     }
                     default: {
                         p = getPlayer(args[0]);
                         if (p == null) {
                             sendPlayerMessage(sender, args[0]);
-                            return;
+                            return CommandResponse.PLAYER;
                         }
                         sendXPMessage(sender, p.getTotalExperience(), p);
+                        return CommandResponse.SUCCESS;
                     }
                 }
             }
         }
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

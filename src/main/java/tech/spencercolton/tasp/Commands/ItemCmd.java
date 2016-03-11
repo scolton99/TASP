@@ -27,7 +27,7 @@ public class ItemCmd extends TASPCommand {
     private final String permission = "tasp.give";
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert !(sender instanceof ConsoleCommandSender);
 
         List<String> args = Command.processQuotedArguments(argsg);
@@ -41,7 +41,7 @@ public class ItemCmd extends TASPCommand {
                     amount = Integer.parseInt(args.get(1));
                 } catch (NumberFormatException e) {
                     Command.sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 1: {
@@ -50,15 +50,17 @@ public class ItemCmd extends TASPCommand {
                     a = IDs.getByIdDamage(args.get(0));
                     if(a == null) {
                         Command.sendItemNotFoundMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 }
                 damage = a.getDamage();
                 ItemStack b = new ItemStack(a.getMaterial(), amount, damage);
                 p.getInventory().addItem(b);
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendSyntaxError(sender, this);
+                return CommandResponse.FAILURE;
             }
         }
     }

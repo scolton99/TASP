@@ -26,15 +26,15 @@ public class HomeCmd extends TASPCommand {
     private final String permission = "tasp.home";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender) {
             sendConsoleError(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         if (args.length != 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player) sender;
@@ -45,14 +45,17 @@ public class HomeCmd extends TASPCommand {
 
         if (l == null) {
             Message.Home.Error.sendNoHomeMessage(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         if (l.getWorld().equals(p.getWorld())) {
             p.teleport(l);
         } else {
             Message.Home.Error.sendWorldMessage(sender);
+            return CommandResponse.WORLD;
         }
+
+        return CommandResponse.SUCCESS;
     }
 
 }

@@ -25,10 +25,10 @@ public class HealCmd extends TASPCommand {
     private final String permission = "tasp.heal";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && (args.length < 1 || args.length > 2)) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -39,7 +39,7 @@ public class HealCmd extends TASPCommand {
                     amount = parseDouble(args[1]);
                     if (amount < 0.0D) {
                         sendNegativeMessage(sender);
-                        return;
+                        return CommandResponse.FAILURE;
                     }
                 } catch (NumberFormatException e) {
                     sendGenericSyntaxError(sender, this);
@@ -49,7 +49,7 @@ public class HealCmd extends TASPCommand {
                 p = getPlayer(args[0]);
                 if (p == null) {
                     sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 0: {
@@ -59,10 +59,11 @@ public class HealCmd extends TASPCommand {
                     amount = p.getMaxHealth() - p.getHealth();
                 p.setHealth(p.getHealth() + amount);
                 sendHealedMessage(sender, amount, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

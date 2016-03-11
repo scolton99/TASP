@@ -31,11 +31,11 @@ public class TeleportAcceptCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         Person p = get((Player) sender);
         if (p.getLastTeleportRequester() == null) {
             p.getPlayer().sendMessage(err() + "You have no existing teleport requests.");
-            return;
+            return CommandResponse.FAILURE;
         }
 
         Person pa = p.getLastTeleportRequester();
@@ -43,6 +43,8 @@ public class TeleportAcceptCmd extends TASPCommand {
 
         PersonTeleportEvent e = (p.isLastTeleportHere() ? new PersonTeleportEvent(p.getPlayer(), pa.getPlayer(), true, false) : new PersonTeleportEvent(pa.getPlayer(), p.getPlayer(), false, false));
         getServer().getPluginManager().callEvent(e);
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

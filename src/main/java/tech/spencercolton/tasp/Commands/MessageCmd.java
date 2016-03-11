@@ -25,10 +25,10 @@ public class MessageCmd extends TASPCommand {
     private static final String name = "msg";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length < 2) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         CommandSender p;
@@ -39,12 +39,14 @@ public class MessageCmd extends TASPCommand {
 
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         String msg = combineArgs(1, args);
 
         getServer().getPluginManager().callEvent(new PersonSendMessageEvent(sender, p, msg));
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

@@ -1,9 +1,9 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.ColorChat;
@@ -29,10 +29,10 @@ public class NickCmd extends TASPCommand {
     private final String permission = "tasp.nickname";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 2 && sender instanceof ConsoleCommandSender) {
             Command.sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = null;
@@ -42,7 +42,7 @@ public class NickCmd extends TASPCommand {
                 p = Bukkit.getPlayer(args[1]);
                 if (p == null) {
                     Command.sendPlayerMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.PLAYER;
                 }
             }
             case 1: {
@@ -57,17 +57,18 @@ public class NickCmd extends TASPCommand {
                 if(name.equalsIgnoreCase("@@RESET@@")) {
                     p.setDisplayName(p.getName());
                     Message.Nick.sendNickMessage(sender, p.getName(), p);
-                    return;
+                    return CommandResponse.SUCCESS;
                 }
 
                 String nick = ColorChat.color(name) + ChatColor.RESET;
 
                 p.setDisplayName(nick);
                 Message.Nick.sendNickMessage(sender, nick, p);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 Command.sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

@@ -35,7 +35,7 @@ public class ShootCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String[] argc) {
+    public CommandResponse execute(CommandSender sender, String[] argc) {
         List<String> args = processQuotedArguments(argc);
         args = removeSpaces(args.toArray(new String[args.size()]));
 
@@ -43,7 +43,7 @@ public class ShootCmd extends TASPCommand {
 
         if (args.size() != 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player) sender;
@@ -56,12 +56,13 @@ public class ShootCmd extends TASPCommand {
 
         if (!isValidEntityName(args.get(0)) || !isAllowed(args.get(0)) || a == null) {
             sender.sendMessage(err() + "That is not a recognized entity name.");
-            return;
+            return CommandResponse.FAILURE;
         }
 
         Entity g = w.spawnEntity(start, a);
         g.setVelocity(j);
         new EntityCannon(g);
+        return CommandResponse.SUCCESS;
     }
 
 }

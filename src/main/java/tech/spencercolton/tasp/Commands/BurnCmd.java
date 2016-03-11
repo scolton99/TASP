@@ -31,16 +31,16 @@ public class BurnCmd extends TASPCommand {
     private static final int DEFAULT = getInt("default-burn-time") * TICKS_PER_SECOND;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length == 0 || args.length > 2) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = getPlayer(args[0]);
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         int x;
@@ -49,11 +49,11 @@ public class BurnCmd extends TASPCommand {
                 x = parseInt(args[1]) * TICKS_PER_SECOND;
                 if (x < 0) {
                     sender.sendMessage(err() + "Amount must be positive.");
-                    return;
+                    return CommandResponse.FAILURE;
                 }
             } catch (NumberFormatException e) {
                 sendSyntaxError(sender, this);
-                return;
+                return CommandResponse.SYNTAX;
             }
         } else {
             x = DEFAULT;
@@ -62,6 +62,7 @@ public class BurnCmd extends TASPCommand {
         p.setFireTicks(x + p.getFireTicks());
 
         sendFireMessage(sender, x / TICKS_PER_SECOND, p);
+        return CommandResponse.SUCCESS;
     }
 
     @Override

@@ -30,10 +30,10 @@ public class ReplyCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length == 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         CommandSender last;
@@ -45,12 +45,14 @@ public class ReplyCmd extends TASPCommand {
 
         if (last == null) {
             Message.Reply.Error.sendNoLastMessage(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         List<String> argz = new ArrayList<>(asList(args));
         argz.add(0, last.getName());
         new MessageCmd().execute(sender, argz.toArray(new String[argz.size()]));
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class KillallCmd extends TASPCommand {
     private final String permission = "tasp.killall";
 
     @Override
-    public void execute(CommandSender sender, String... argsg) {
+    public CommandResponse execute(CommandSender sender, String... argsg) {
         List<String> args = processQuotedArguments(argsg);
         args = removeSpaces(args.toArray(new String[args.size()]));
 
@@ -54,21 +54,21 @@ public class KillallCmd extends TASPCommand {
                         distance = parseInt(args.get(1));
                     } catch (NumberFormatException e) {
                         sendSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 } else {
                     assert sender instanceof ConsoleCommandSender;
                     w = getWorld(args.get(1));
                     if (w == null) {
                         sendConsoleSyntaxError(sender, this);
-                        return;
+                        return CommandResponse.SYNTAX;
                     }
                 }
             }
             case 1: {
                 if (!killAllowed(args.get(0))) {
                     sendInvalidEntityMessage(sender, args.get(0));
-                    return;
+                    return CommandResponse.FAILURE;
                 }
                 et = args.get(0);
             }
@@ -114,10 +114,11 @@ public class KillallCmd extends TASPCommand {
                     }
                 }
                 sendCountMessage(sender, count, w.getName());
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendGenericSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

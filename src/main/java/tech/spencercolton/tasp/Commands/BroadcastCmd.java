@@ -25,13 +25,14 @@ public class BroadcastCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length == 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         getServer().getPluginManager().callEvent(new TASPBroadcastEvent(sender, combineArgs(args)));
+        return CommandResponse.SUCCESS;
     }
 
 

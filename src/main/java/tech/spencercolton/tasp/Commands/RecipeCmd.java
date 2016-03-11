@@ -1,21 +1,19 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.FurnaceBurnEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
-import org.bukkit.material.MaterialData;
 import tech.spencercolton.tasp.Enums.IDs;
 import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.Message;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Spencer Colton
@@ -35,14 +33,14 @@ public class RecipeCmd extends TASPCommand {
     private final String permission = "tasp.recipe";
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
 
         if(args.size() != 1 && args.size() != 2) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = (Player) sender;
@@ -58,7 +56,7 @@ public class RecipeCmd extends TASPCommand {
                 start--;
             } catch (NumberFormatException e) {
                 Command.sendSyntaxError(sender, this);
-                return;
+                return CommandResponse.SYNTAX;
             }
         }
 
@@ -73,7 +71,7 @@ public class RecipeCmd extends TASPCommand {
 
                 if(id == null) {
                     Command.sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
 
                 if(damage == null)
@@ -82,12 +80,12 @@ public class RecipeCmd extends TASPCommand {
                 item = IDs.getByIdDamage(id, damage);
                 if(item == null) {
                     Command.sendItemNotFoundMessage(sender);
-                    return;
+                    return CommandResponse.FAILURE;
                 }
 
             } catch(NumberFormatException e) {
                 Command.sendItemNotFoundMessage(sender);
-                return;
+                return CommandResponse.FAILURE;
             }
         }
 
@@ -98,12 +96,12 @@ public class RecipeCmd extends TASPCommand {
 
         if(recipes.isEmpty()) {
             Message.Recipe.Error.sendNoRecipesMessage(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         if(start > recipes.size()) {
             Message.Recipe.Error.sendNoOOBError(sender, recipes.size());
-            return;
+            return CommandResponse.FAILURE;
         }
 
         Recipe r = recipes.get(start);
@@ -194,6 +192,8 @@ public class RecipeCmd extends TASPCommand {
                 i.setItem(2, result);
             }
         }
+
+        return CommandResponse.SUCCESS;
     }
 
 }

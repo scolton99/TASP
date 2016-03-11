@@ -28,14 +28,16 @@ public class PowertoolToggleCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (args.length != 0) {
             sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         sendToggledMessage(sender, togglePowertools());
         broadcastToggledMessage(sender, powertoolsEnabled());
+
+        return CommandResponse.SUCCESS;
     }
 
     @Override

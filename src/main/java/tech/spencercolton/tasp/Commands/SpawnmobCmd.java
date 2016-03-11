@@ -34,7 +34,7 @@ public class SpawnmobCmd extends TASPCommand {
     private final String consoleSyntax = null;
 
     @Override
-    public void execute(CommandSender sender, String... gargs) {
+    public CommandResponse execute(CommandSender sender, String... gargs) {
         assert sender instanceof Player;
         List<String> args = processQuotedArguments(gargs);
 
@@ -45,7 +45,7 @@ public class SpawnmobCmd extends TASPCommand {
                     amount = parseInt(args.get(1));
                 } catch (NumberFormatException e) {
                     sendSyntaxError(sender, this);
-                    return;
+                    return CommandResponse.SYNTAX;
                 }
             }
             case 1: {
@@ -54,7 +54,7 @@ public class SpawnmobCmd extends TASPCommand {
                 EntityType e = getEntityType(args.get(0));
                 if (e == null || !isAllowed(e)) {
                     sendInvalidEntityMessage(sender, args.get(0));
-                    return;
+                    return CommandResponse.FAILURE;
                 }
 
                 Location l = ((Player) sender).getTargetBlock((Set<Material>) null, 1000).getLocation();
@@ -63,10 +63,11 @@ public class SpawnmobCmd extends TASPCommand {
                     l.getWorld().spawnEntity(l, e);
                 }
                 sendSpawnmobMessage(sender, e, amount);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }

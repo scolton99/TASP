@@ -38,21 +38,21 @@ public class BlockCmd extends TASPCommand {
     private final String permission = "tasp.block";
 
     @Override
-    public void execute(CommandSender sender, String... args) {
+    public CommandResponse execute(CommandSender sender, String... args) {
         if (sender instanceof ConsoleCommandSender) {
             sendConsoleError(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         if (args.length != 1) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = getPlayer(args[0]);
         if (p == null) {
             sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         Person ps = get(p);
@@ -60,17 +60,18 @@ public class BlockCmd extends TASPCommand {
 
         if (ps.equals(pa)) {
             sendSelfMessage(sender);
-            return;
+            return CommandResponse.FAILURE;
         }
 
         if (!pa.isPlayerBlocked(ps))
             pa.blockPlayer(ps);
         else {
             sendAlreadyBlockedMessage(sender, ps.getPlayer());
-            return;
+            return CommandResponse.FAILURE;
         }
 
         sendBlockedMessage(sender, ps.getPlayer());
+        return CommandResponse.SUCCESS;
     }
 
 }

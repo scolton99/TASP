@@ -25,10 +25,10 @@ public class SrvInfoCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 0) {
             sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         sender.sendMessage(c1() + "This server is running " + c3() + getServer().getVersion() + c1() + " (" +
@@ -37,6 +37,7 @@ public class SrvInfoCmd extends TASPCommand {
         sender.sendMessage(c1() + " * Whitelist: " + (getServer().hasWhitelist() ? c3() : c4()) + Boolean.toString(getServer().hasWhitelist()));
         sender.sendMessage(c1() + " * Online Mode: " + (getServer().getOnlineMode() ? c3() : c4()) + Boolean.toString(getServer().getOnlineMode()));
         sender.sendMessage(c1() + " * Flight Allowed: " + (getServer().getAllowFlight() ? c3() : c4()) + Boolean.toString(getServer().getAllowFlight()));
+        return CommandResponse.SUCCESS;
     }
 
 }

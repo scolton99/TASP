@@ -1,10 +1,10 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.ColorChat;
 import tech.spencercolton.tasp.Util.Message;
@@ -30,14 +30,14 @@ public class SignCmd extends TASPCommand {
     private final String permission = "tasp.signedit";
 
     @Override
-    public void execute(CommandSender sender, String[] argsg) {
+    public CommandResponse execute(CommandSender sender, String[] argsg) {
         assert sender instanceof Player;
 
         List<String> args = Command.processQuotedArguments(argsg);
 
         if(args.size() < 1 || args.size() > 4) {
             Command.sendSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Block b = ((Player)sender).getTargetBlock((Set<Material>) null, 10000);
@@ -52,6 +52,8 @@ public class SignCmd extends TASPCommand {
         } else {
             Message.Sign.Error.sendNotSignMessage(sender);
         }
+
+        return CommandResponse.SUCCESS;
     }
 
 }

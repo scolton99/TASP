@@ -1,8 +1,8 @@
 package tech.spencercolton.tasp.Commands;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 import tech.spencercolton.tasp.Util.Config;
 
@@ -24,16 +24,18 @@ public class KickCmd extends TASPCommand {
     private final String consoleSyntax = syntax;
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
+        // TODO: Make this work with db
+
         if(args.length == 0) {
             Command.sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player o = Bukkit.getPlayer(args[0]);
         if(o == null) {
             Command.sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         if(args.length >= 2) {
@@ -46,12 +48,11 @@ public class KickCmd extends TASPCommand {
             o.kickPlayer(s);
             if(Config.getBoolean("broadcast-kicks"))
                 Bukkit.broadcastMessage(Config.c3() + o.getDisplayName() + Config.c4() + " was kicked from the server.");
-            return;
+            return CommandResponse.SUCCESS;
         }
 
         o.kickPlayer("Kicked!");
-
-
+        return CommandResponse.SUCCESS;
     }
 
 }

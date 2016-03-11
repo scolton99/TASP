@@ -24,22 +24,24 @@ public class SuCmd extends TASPCommand {
     private final String permission = "tasp.su";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length < 2) {
             Command.sendGenericSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         Player p = Bukkit.getPlayer(args[0]);
         if (p == null) {
             Command.sendPlayerMessage(sender, args[0]);
-            return;
+            return CommandResponse.PLAYER;
         }
 
         String cmdLine = Command.combineArgs(1, args);
 
         p.performCommand(cmdLine);
         Message.Su.sendSuMessage(sender, cmdLine, p);
+
+        return CommandResponse.SUCCESS;
     }
 
 }

@@ -33,10 +33,10 @@ public class DropsCmd extends TASPCommand {
     private final String consoleSyntax = "/drops <world>";
 
     @Override
-    public void execute(CommandSender sender, String[] args) {
+    public CommandResponse execute(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
-            return;
+            return CommandResponse.SYNTAX;
         }
 
         World w = null;
@@ -45,7 +45,7 @@ public class DropsCmd extends TASPCommand {
                 w = getWorld(args[0]);
                 if (w == null) {
                     sendWorldMessage(sender, args[0]);
-                    return;
+                    return CommandResponse.WORLD;
                 }
             }
             case 0: {
@@ -61,10 +61,11 @@ public class DropsCmd extends TASPCommand {
                     }
                 }
                 sendDropsMessage(sender, i);
-                return;
+                return CommandResponse.SUCCESS;
             }
             default: {
                 sendSyntaxError(sender, this);
+                return CommandResponse.SYNTAX;
             }
         }
     }
