@@ -62,6 +62,10 @@ public class Client extends Thread {
                         send_pwd();
                         break;
                     }
+                    case "NIC": {
+                        send_nic();
+                        break;
+                    }
                     case "PWA": {
                         this.actionEnabled = true;
                         break;
@@ -145,6 +149,17 @@ public class Client extends Thread {
         } catch (IOException e) {
 
         }
+    }
+
+    private void send_nic() {
+        if(!input.equals("NIC"))
+            return;
+
+        String nick = Config.getString("router-client-name");
+
+        out.println(nick);
+
+        return;
     }
 
     public void queueMessage(tech.spencercolton.tasp.Communication.Message m) {

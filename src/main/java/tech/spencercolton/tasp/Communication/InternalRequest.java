@@ -57,6 +57,11 @@ public class InternalRequest {
         if(parts.get(2).equals("ERR")) {
             invoker.sendMessage(Config.err() + "Sorry, the network encountered an error while processing your command.");
             invoker.sendMessage(Config.err() + "Most likely, if your command involved a player, that player isn't on the network.");
+            requests.remove(this);
+            return;
+        } else if (parts.get(2).equals("RNA")) {
+            invoker.sendMessage(Config.err() + "Unable to find that player.");
+            requests.remove(this);
             return;
         }
 

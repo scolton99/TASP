@@ -28,8 +28,9 @@ public class AFKCmd extends TASPCommand {
 
     @Override
     public CommandResponse execute(CommandSender sender, String... args) {
-        if (sender instanceof ConsoleCommandSender && args.length != 0) {
+        if (sender instanceof ConsoleCommandSender && args.length != 1) {
             sendConsoleSyntaxError(sender, this);
+            return CommandResponse.SYNTAX;
         }
 
         switch (args.length) {

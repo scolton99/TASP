@@ -23,13 +23,17 @@ public abstract class RequestHandler {
         CommandResponse res = r.getType().getLogic().execute(sender, args.toArray(new String[args.size()]));
 
         switch (res) {
-            case WORLD:
-            case FAILURE:
             case SUCCESS: {
                 r.respond(new Message(MessageResponseType.SUCCESS, r.getUid(), sender.getOutput()));
+                break;
+            }
+            case WORLD:
+            case FAILURE: {
+                r.respond(new Message(MessageResponseType.FAILURE, r.getUid(), sender.getOutput()));
             }
             case PLAYER: {
                 r.na();
+                break;
             }
         }
     }
