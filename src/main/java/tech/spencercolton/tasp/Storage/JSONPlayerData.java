@@ -82,9 +82,6 @@ class JSONPlayerData implements PlayerDataProvider {
     }
 
     @Override
-    public Object get(String s) { return this.data.get(s); }
-
-    @Override
     public Boolean getBoolean(String s) {
         return !(this.data.get(s) == null || !((boolean) this.data.get(s)));
     }
@@ -105,13 +102,6 @@ class JSONPlayerData implements PlayerDataProvider {
     @Override
     public Integer getInt(String s) {
         return (int) this.data.get(s);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public void put(String s, Object o) {
-        this.data.put(s, o);
-        this.writeData();
     }
 
     @Override

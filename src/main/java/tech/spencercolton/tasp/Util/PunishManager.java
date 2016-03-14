@@ -23,7 +23,7 @@ public class PunishManager {
     }
 
     public static Punishment genPunishment(PunishType pt, int duration) {
-
+        return null;
     }
 
 }

@@ -28,21 +28,6 @@ class DatabasePlayerData implements PlayerDataProvider {
     }
 
     @Override
-    public Object get(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
-            if (rs.next()) {
-                return rs.getObject("value");
-            } else {
-                return null;
-            }
-        } catch (SQLException e) {
-            Bukkit.getLogger().severe("Unable to fetch data for player " + p.getName() + " from the database.");
-            return null;
-        }
-    }
-
-    @Override
     public Integer getInt(String path) {
         try {
             ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
@@ -118,27 +103,6 @@ class DatabasePlayerData implements PlayerDataProvider {
         } catch (SQLException|IOException|ClassNotFoundException e) {
             Bukkit.getLogger().severe("Unable to fetch data for player " + p.getName() + " from the database.");
             return null;
-        }
-    }
-
-    @Override
-    public void put(String path, Object o) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "' AND `uid`='" + p.getUid() + "'");
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
-
-            oos.writeObject(o);
-            String fin = baos.toString();
-
-            if(!rs.next()) {
-                getConn().createStatement().executeUpdate("INSERT INTO `users` (`key`,`value`) VALUES ('" + path + "', '" + fin + "')");
-            } else {
-                getConn().createStatement().executeUpdate("UPDATE `users` SET `value`='" + fin + "' WHERE `uid`='" + p.getUid() + "' AND `key`='" + path + "'");
-            }
-        } catch (SQLException|IOException e) {
-            Bukkit.getLogger().severe("Unable to fetch data for player " + p.getName() + " from the database.");
         }
     }
 

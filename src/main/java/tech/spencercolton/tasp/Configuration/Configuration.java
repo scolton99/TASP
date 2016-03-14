@@ -8,10 +8,10 @@ import java.util.Map;
  */
 public interface Configuration {
 
-    int getInt(String path);
+    Integer getInt(String path);
     String getString(String path);
-    boolean getBoolean(String path);
-    List<String> getStringList(String path);
+    Boolean getBoolean(String path);
+    List getList(String path);
     Map getMap(String path);
 
 }

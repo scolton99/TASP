@@ -155,7 +155,10 @@ router-port: 1717
 
 # Besides these configuration options, you can set the server to ask for configuration
 # from a database rather than from configuration files so that TASP can operate
-# similarly across instances.
+# similarly across instances.  THIS ALSO APPLIES TO PLAYER DATA FILES!
+# NOTE: If you have already run the server with this set to 'false' and your player data
+# is stored in separate 'JSON' files, there is currently no automated way to transfer player
+# data.  This features is coming soon.
 use-config-database: true
 
 # Set this to true if your configuration database is separate from the punishment database.
@@ -339,6 +342,7 @@ broadcast-teleport-toggle: true
 
 # If this is set to true, all users will be able to see when a user has been kicked.
 broadcast-kicks: true
+
 # ---------------------------------------------------------------------------------------
 # |                                MESSAGE CUSTOMIZATION                                |
 # ---------------------------------------------------------------------------------------

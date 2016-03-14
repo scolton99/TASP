@@ -34,10 +34,11 @@ public class InfoCmd extends TASPCommand {
     @Getter
     private final String consoleSyntax = "/info <player>";
 
-    private final List<String> incls = getListString("info-includes");
+    private final List incls = getList("info-includes");
     private final Map<String, String> strs = new HashMap<>();
 
     @Override
+    @SuppressWarnings("unchecked")
     public CommandResponse execute(CommandSender sender, String[] args) {
         if (args.length != 1) {
             sendGenericSyntaxError(sender, this);
@@ -111,7 +112,7 @@ public class InfoCmd extends TASPCommand {
 
         sender.sendMessage(msg);
 
-        incls.stream().forEach(s -> {
+        ((List<String>)incls).stream().forEach(s -> {
             String g = strs.get(s);
             if (g != null) {
                 sender.sendMessage(g);
@@ -121,9 +122,10 @@ public class InfoCmd extends TASPCommand {
         return CommandResponse.SUCCESS;
     }
 
+    @SuppressWarnings("unchecked")
     private boolean containsSupportedOptions() {
         for (int i = 0; i < incls.size(); i++) {
-            incls.set(i, incls.get(i).toUpperCase());
+            incls.set(i, ((String)incls.get(i)).toUpperCase());
         }
         for (String s : strs.keySet()) {
             if (incls.contains(s))

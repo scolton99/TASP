@@ -16,22 +16,10 @@ import java.util.Map;
  */
 public class PlayerData {
 
-    /**
-     * The object holding the player's data.
-     */
     private PlayerDataProvider data;
 
-    /**
-     * The {@link Person} for whom this object holds data.
-     */
     private final Person p;
 
-    /**
-     * Constructs a new PlayerData object by loading data for the player from the player's JSON file, or creating a new
-     * JSON file in the case that it doesn't exist.
-     *
-     * @param p The {@link Person} for whom this object holds data.
-     */
     public PlayerData(Person p) {
         this.p = p;
 

@@ -8,14 +8,12 @@ import java.util.Map;
  */
 interface PlayerDataProvider {
 
-    Object get(String path);
     Integer getInt(String path);
     Boolean getBoolean(String path);
     String getString(String path);
     Map getMap(String path);
     List getList(String path);
 
-    void put(String path, Object set);
     void setString(String path, String set);
     void setInt(String path, Integer set);
     void setMap(String path, Map set);

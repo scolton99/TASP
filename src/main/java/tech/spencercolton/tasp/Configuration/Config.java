@@ -1,6 +1,5 @@
 package tech.spencercolton.tasp.Configuration;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import tech.spencercolton.tasp.Enums.ConfigType;
 
@@ -22,7 +21,7 @@ public class Config {
                 break;
             }
             case YAML: {
-                s = new YAMLConfiguration(Bukkit.getPluginManager().getPlugin("TASP").getConfig());
+                s = new YAMLConfiguration();
                 break;
             }
         }
@@ -87,8 +86,8 @@ public class Config {
         return s.getBoolean(path);
     }
 
-    public static List<String> getListString(String path) {
-        return s.getStringList(path);
+    public static List getList(String path) {
+        return s.getList(path);
     }
 
     public static int afkTime() {
