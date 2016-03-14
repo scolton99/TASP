@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import static java.lang.Integer.*;
 import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Configuration.Config.*;
 import static tech.spencercolton.tasp.Util.Message.Burn.*;
 
 /**

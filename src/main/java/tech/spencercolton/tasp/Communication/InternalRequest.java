@@ -2,7 +2,7 @@ package tech.spencercolton.tasp.Communication;
 
 import lombok.Getter;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 
 import java.util.ArrayList;
 import java.util.List;

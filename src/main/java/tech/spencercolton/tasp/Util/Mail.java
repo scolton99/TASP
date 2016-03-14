@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.TASP;
 

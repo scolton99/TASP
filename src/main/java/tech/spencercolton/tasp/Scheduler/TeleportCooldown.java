@@ -2,7 +2,7 @@ package tech.spencercolton.tasp.Scheduler;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 
 import java.util.HashMap;
 

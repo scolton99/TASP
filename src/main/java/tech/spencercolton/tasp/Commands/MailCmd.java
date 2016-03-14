@@ -24,7 +24,7 @@ import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.*;
 import static tech.spencercolton.tasp.Util.ChatFilter.*;
 import static tech.spencercolton.tasp.Util.ColorChat.*;
-import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Configuration.Config.*;
 
 /**
  * @author Spencer Colton

@@ -4,7 +4,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -6,7 +6,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.scheduler.BukkitTask;
 import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 public class MoveListener implements Listener {

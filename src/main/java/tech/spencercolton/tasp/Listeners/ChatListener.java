@@ -7,7 +7,7 @@ import tech.spencercolton.tasp.Entity.Person;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.ChatFilter;
 import tech.spencercolton.tasp.Util.ColorChat;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 public class ChatListener implements Listener {

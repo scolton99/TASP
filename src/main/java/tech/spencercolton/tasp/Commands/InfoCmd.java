@@ -16,7 +16,7 @@ import static java.util.Collections.*;
 import static org.bukkit.Bukkit.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.get;
-import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Configuration.Config.*;
 
 /**
  * @author Spencer Colton

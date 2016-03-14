@@ -4,7 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import tech.spencercolton.tasp.Entity.Person;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 import java.util.HashMap;

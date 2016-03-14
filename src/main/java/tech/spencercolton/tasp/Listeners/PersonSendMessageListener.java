@@ -10,7 +10,7 @@ import tech.spencercolton.tasp.Events.PersonSendMessageEvent;
 import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Util.ChatFilter;
 import tech.spencercolton.tasp.Util.ColorChat;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 import java.util.List;

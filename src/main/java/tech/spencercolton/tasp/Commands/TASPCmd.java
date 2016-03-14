@@ -14,7 +14,7 @@ import static tech.spencercolton.tasp.Commands.Command.*;
 import static tech.spencercolton.tasp.Entity.Person.*;
 import static tech.spencercolton.tasp.TASP.*;
 import static tech.spencercolton.tasp.TASP.reload;
-import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Configuration.Config.*;
 
 public class TASPCmd extends TASPCommand {
 

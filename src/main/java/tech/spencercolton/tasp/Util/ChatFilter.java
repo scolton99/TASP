@@ -1,6 +1,7 @@
 package tech.spencercolton.tasp.Util;
 
 import org.bukkit.ChatColor;
+import tech.spencercolton.tasp.Configuration.Config;
 
 import java.util.List;
 import java.util.regex.Pattern;

@@ -12,8 +12,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tech.spencercolton.tasp.TASP;
-import tech.spencercolton.tasp.Util.Config;
-import tech.spencercolton.tasp.Util.PlayerData;
+import tech.spencercolton.tasp.Configuration.Config;
+import tech.spencercolton.tasp.Storage.PlayerData;
 
 import java.io.File;
 import java.io.FileReader;
@@ -85,7 +85,6 @@ public class Person {
         this.uid = p.getUniqueId();
         this.data = new PlayerData(this);
         this.data.setString("lastName", p.getName());
-        writeData();
         people.add(this);
         UIDpeople.put(this.uid, this);
     }
@@ -121,13 +120,6 @@ public class Person {
 
     public String getName() {
         return this.getPlayer().getName();
-    }
-
-    /**
-     * Writes this person's data to file.
-     */
-    public void save() {
-        this.data.writeData();
     }
 
     /**
@@ -173,7 +165,7 @@ public class Person {
         m.put("pitch", Float.toString(l.getPitch()));
         m.put("yaw", Float.toString(l.getYaw()));
 
-        this.data.setObject("home", m);
+        this.data.setMap("home", m);
     }
 
     public List<String> getBlockedPlayers() {
@@ -218,7 +210,7 @@ public class Person {
             list = new ArrayList<>(z);
         list.add(cmdLine);
         map.put(m.name().toLowerCase(), list);
-        this.data.setObject("powertools", map);
+        this.data.setMap("powertools", map);
     }
 
     public List<String> getPowertool(Material m) {
@@ -239,10 +231,6 @@ public class Person {
     public static void unloadPerson(Person a) {
         people.remove(a);
         UIDpeople.remove(a.getUid());
-    }
-
-    public void writeData() {
-        this.data.writeData();
     }
 
     /* */
@@ -393,7 +381,7 @@ public class Person {
         xyz.put("z", Integer.toString(l.getBlockZ()));
 
         m.put(w.getUID().toString(), xyz);
-        this.data.setObject("lastLocs", m);
+        this.data.setMap("lastLocs", m);
     }
 
     @SuppressWarnings("unchecked")

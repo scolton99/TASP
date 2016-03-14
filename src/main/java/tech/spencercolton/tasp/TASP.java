@@ -4,19 +4,25 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 import tech.spencercolton.tasp.Commands.Command;
 import tech.spencercolton.tasp.Communication.Client;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Enums.ConfigType;
 import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +64,8 @@ public class TASP extends JavaPlugin {
     @Getter
     public static final List<Inventory> openImmutableInventories = new ArrayList<>();
 
+    private FileConfiguration conf;
+
     @Override
     public void onEnable() {
         this.getLogger().info("Loading TASP plugin...");
@@ -72,7 +80,11 @@ public class TASP extends JavaPlugin {
         this.saveDefaultConfig();
         this.reloadConfig();
 
-        Config.loadConfig(this.getConfig());
+        if (this.getConfig().getBoolean("use-config-database"))
+            Config.loadConfig(ConfigType.MYSQL);
+        else
+            Config.loadConfig(ConfigType.YAML);
+
         dataFolder = this.getDataFolder();
 
         State.initStates();
@@ -97,9 +109,7 @@ public class TASP extends JavaPlugin {
     }
 
     @Override
-    public void onDisable() {
-        Person.getPeople().stream().forEach(Person::writeData);
-    }
+    public void onDisable() {}
 
     private void initCommands() {
         Command c = new Command();
@@ -194,6 +204,7 @@ public class TASP extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PersonHelpmeListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PersonPunishListener(), this);
     }
 
     public static File dataFolder() {
@@ -222,7 +233,10 @@ public class TASP extends JavaPlugin {
     public static void reloadTASPConfig() {
         Bukkit.getPluginManager().getPlugin("TASP").saveDefaultConfig();
         Bukkit.getPluginManager().getPlugin("TASP").reloadConfig();
-        Config.loadConfig(Bukkit.getPluginManager().getPlugin("TASP").getConfig());
+        if (Bukkit.getPluginManager().getPlugin("TASP").getConfig().getBoolean("use-config-database"))
+            Config.loadConfig(ConfigType.MYSQL);
+        else
+            Config.loadConfig(ConfigType.YAML);
     }
 
     public static boolean powertoolsEnabled() {
@@ -241,6 +255,15 @@ public class TASP extends JavaPlugin {
 
     public static boolean isTeleportEnabled() {
         return State.getBoolean("teleport");
+    }
+
+    public static Connection getConfigDb() {
+        try {
+            return DriverManager.getConnection("jdbc:mysql://" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-host") + ":" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getInt("config-database-port") + "/" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-db"), Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-username"), Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-password"));
+        } catch (SQLException e) {
+            Bukkit.getLogger().severe("TASP failed to make a connection to the database for configuration.  Please check your settings.");
+            return null;
+        }
     }
 
 }

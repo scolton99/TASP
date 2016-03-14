@@ -87,13 +87,137 @@ color-code: '&'
 # this number will be limited to this number.
 spawnmob-limit: 500
 
+
+# ---------------------------------------------------------------------------------------
+# |                                    Router Settings                                  |
+# ---------------------------------------------------------------------------------------
+# TASP has the option for being used on more complex servers such as server networks that
+# run BungeeCord (though this is not required; any two servers can be linked through an
+# instance of TASPRouter).  For most people, these settings can be safely ignored,
+# because improperly setting these options may result in the server being rendered
+# inoperable.
+
+# Enable or disable the linking of TASP instances
+router-enabled: false
+
+# TASP commands are divided into three groups: singular, global, and universal.
+# Singular commands are commands that don't affect other players or the world at large,
+# they only affect the person that runs the command.
+# Global commands are commands that can affect up to everyone on that server, but cannot
+# have any effect on other servers in the network.
+# Universal commands can and often do have effects on other players in the network.
+
+# Singular Commands:
+# back, craft, drops, enchant, explode, holding, home, item, jump, killall, powertool
+# recipe, sethome, setspawn, setwarp, shoot, sign, spawn, spawner, spawnmob, top, xyz
+
+# Global Commands:
+# me, mute, srvinfo, stahp, tploc, time, weather
+
+# Universal Commands:
+# block, helpme, info, invspy, kick, mail, message, nick, ptt, r, su, tpa, tp, tpd, tphere
+# tprhere, tpr, tpt, unblock, world
+
+# This is not all of the commands.  Many commands fall under "dual-modality," meaning that
+# they can act either as a Global command or as a Universal command.  These include:
+# afk, antidote, broadcast, buddha, burn, clear, disappear, feed, fly, fom, gamemode,
+# god, heal, hurt, kill, potion, setspeed, shock, stalker, starve, tasp, tpahere, tpar,
+# warp, warps, xp
+
+# To further customize the experience of having two server interconnected, server owners
+# are able to choose the mode that this server will run in.  There are currently three
+# options:
+# 'seamless':  The server will any requests for resources not available on this server,
+# such as players, and those server respond appropriately. All dual-modality commands
+# will run as 'universal.'
+# 'independent': The server will still be connected to the router, but some requests that
+# could be handled network-level will be handled locally.  All dual-modality commands
+# will run as 'global.'
+integration-level: seamless
+
+# Set the name of this server so that players can be routed between servers using commands.
+# If this server is part of a BungeeCord network, it is strongly recommended that this
+# server's name be set to the same name as how it identifies on the network.
+router-client-name: TASPServer1
+
+# To prevent any malicious third-parties from viewing what goes on on the servers, it is
+# required that each client have a password that is defined in the config.yml file of the
+# TASPRouter server.  Furthermore, this password has to align with an IP address.  Enter
+# the password that has been set for the server at this IP here.
+# PLEASE CHANGE THIS PASSWORD!
+router-password: password
+
+# Give an IP address or domain name pointing to the active instance of TASPRouter.
+router-host: localhost
+
+# Provide the port that the TASPRouter instance is listening on.
+router-port: 1717
+
+# Besides these configuration options, you can set the server to ask for configuration
+# from a database rather than from configuration files so that TASP can operate
+# similarly across instances.
+use-config-database: true
+
+# Set this to true if your configuration database is separate from the punishment database.
+# This setting must be true if punishments are stored via JSON.
+separate-config-database: false
+
+# The following five settings are ignored if the above setting is "false"
+config-database-username: tasp
+config-database-password: password
+config-database-host: localhost
+config-database-port: 3306
+config-database-db: tasp_config
+
+
+# ---------------------------------------------------------------------------------------
+# |                                  Punishment Settings                                |
+# ---------------------------------------------------------------------------------------
+# TASP has a built-in punishment system that works on bans, temporary bans, kicks, and
+# muting.
+# How should these punishments be dealt?  There are two options: one commmand, 'punish',
+# that leaves little choice to moderaters.  The punish command works by allowing the
+# punisher to specify only a player and a reason in the form "/punish <player> <reason>".
+# In the configuration, you, the server owner, can specify a list of reasons such as
+# "hackusations," "advertising," or "disrespect."  Attached to each of these is a default
+# punishment, therefore the moderators have little thinking to do.
+# punishment-method: punish
+
+# This arrangement, however, is not appealing to all servers.  Many would prefer to afford
+# their moderators a bit more say in the matter.  In this case, the standard commands can
+# be applied (/ban, /kick, /gmute, etc.)
+punishment-method: standard
+
+# How should punishments be stored?  For most servers, punishments can be stored in a JSON
+# file easily.  However, for networked servers, it is necessary that punishments be stored
+# in a database (the server will fail to start if this is improperly configured).
+punishment-storage: JSON
+# punishment-storage: database
+
+# For database-based storage:
+punishment-database-host: localhost
+punishment-database-port: 3306
+punishment-database-username: tasp
+punishment-database-password: password
+punishment-database-db: tasp_punishments
+
+# Here are the owner-defined punishments.  Only apply if punishment-method is set to "punish"
+punishments:
+  DISRESPECT: [kick, mute 30]
+  RACISM: [kick, mute 30]
+  DEATH_THREATS: [mute 10080, mute inf]
+  INAPPROPRIATE_COMMENTS: [mute 20]
+  HACKUSATIONS: [mute 10]
+  SPAMMING: [mute 10, mute 30, mute 60]
+  ADVERTISEMENT: [mute inf]
+
 # ---------------------------------------------------------------------------------------
 # |                                 Chat Filter Settings                                |
 # ---------------------------------------------------------------------------------------
 # TASP has a built-in (albeit primitive) chat filter.  The filter operates on private messages, mails, and the public
 # chat.
 chat-filter: true
-bad-words: [fuck, bitch, nigger, shit, ass, faggot, fag, fagot, fuk, fuc, n00b, noob, n0ob, no0b, $hit, $h1t, fagg0t, a$$, cunt, pussy, pu$$y, cock, c0ck, cok, c0k, coc, c0c, slut, whore, wh0re]
+bad-words: [fuck, bitch, nigger, shit, ass, faggot, fag, fagot, f@g, fuk, fuc, n00b, noob, n0ob, no0b, $hit, $h1t, fagg0t, a$$, cunt, pussy, pu$$y, cock, c0ck, cok, c0k, coc, c0c, slut, whore, wh0re]
 
 # This is the character that bad words will be replaced with when the chat is filtered
 filter-character: '*'
@@ -101,6 +225,7 @@ filter-character: '*'
 # If this is set to true, bad-words will be obfuscated instead of replaced with the "filter-character".  If you're
 # not sure what obfuscation is, look up "Formatting Codes" on the MinecraftWiki.
 obfuscate-bad-words: true
+
 
 # ---------------------------------------------------------------------------------------
 # |                                Teleportation Settings                               |
@@ -112,6 +237,7 @@ teleport-cooldown: 5
 # How long should a player have to accept or deny a standing teleportation request before the request expires (seconds)?
 # Default: 15 seconds
 teleport-request-time-limit: 15
+
 
 # ---------------------------------------------------------------------------------------
 # |                              TRANSPARENCY CONFIGURATION                             |
@@ -410,7 +536,7 @@ command-message-text:
   # {4}: The temperature
   # {5}: The humidity
   # {6}: The world
-  weather: "{0}It is currently {1}{2}{0} in {1}{6}{0}, and it will likely remain this way for {1}{3}{0} seconds.  {1}{4}{0}\u00B0F, {1}{5}{0}% humidity."
+  weather: '{0}It is currently {1}{2}{0} in {1}{6}{0}, and it will likely remain this way for {1}{3}{0} seconds.  {1}{4}{0}\u00B0F, {1}{5}{0} humidity.'
   # {2}: The type of weather
   # {3}: The duration of the weather
   # {4}: The world

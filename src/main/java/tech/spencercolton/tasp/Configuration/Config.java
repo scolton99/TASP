@@ -1,17 +1,31 @@
-package tech.spencercolton.tasp.Util;
+package tech.spencercolton.tasp.Configuration;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
+import tech.spencercolton.tasp.Enums.ConfigType;
 
 import java.util.List;
+import java.util.Map;
 
 public class Config {
 
     private static final int TICKS_PER_MINUTE = 1200;
-    private static FileConfiguration s;
+    private static Configuration s;
 
-    public static void loadConfig(FileConfiguration s1) {
-        s = s1;
+    private static ConfigType type;
+
+    public static void loadConfig(ConfigType types) {
+        type = types;
+        switch (type) {
+            case MYSQL: {
+                s = new DatabaseConfiguration();
+                break;
+            }
+            case YAML: {
+                s = new YAMLConfiguration(Bukkit.getPluginManager().getPlugin("TASP").getConfig());
+                break;
+            }
+        }
     }
 
     public static ChatColor c1() {
@@ -78,7 +92,7 @@ public class Config {
     }
 
     public static int afkTime() {
-        return TICKS_PER_MINUTE * (int) s.get("afk-timeout");
+        return TICKS_PER_MINUTE * s.getInt("afk-timeout");
     }
 
     public static int getInt(String path) {
@@ -123,6 +137,14 @@ public class Config {
 
     public static int teleportRequestLimit() {
         return s.getInt("teleport-request-time-limit") * 1000;
+    }
+
+    public static Map getMap(String path) {
+        return s.getMap(path);
+    }
+
+    public static boolean configDatabase() {
+        return s.getBoolean("use-config-database");
     }
 
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 
 /**
  * @author Spencer Colton
@@ -18,7 +18,7 @@ public class KickCmd extends TASPCommand {
     private static final String name = "kick";
 
     @Getter
-    private final String permission = "tasp.kick";
+    private final String permission = "tasp.punish.kick";
 
     @Getter
     private final String consoleSyntax = syntax;

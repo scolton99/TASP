@@ -3,7 +3,7 @@ package tech.spencercolton.tasp.Commands;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Warp;
 
 import java.util.List;

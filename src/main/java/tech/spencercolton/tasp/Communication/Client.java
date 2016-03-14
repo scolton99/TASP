@@ -1,6 +1,6 @@
 package tech.spencercolton.tasp.Communication;
 
-import tech.spencercolton.tasp.Util.*;
+import tech.spencercolton.tasp.Configuration.Config;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import tech.spencercolton.tasp.Events.TASPBroadcastEvent;
 import tech.spencercolton.tasp.Util.ChatFilter;
 import tech.spencercolton.tasp.Util.ColorChat;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 
 /**
  * @author Spencer Colton

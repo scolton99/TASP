@@ -10,7 +10,7 @@ import tech.spencercolton.tasp.Events.PersonTeleportAllHereEvent;
 import tech.spencercolton.tasp.Events.PersonTeleportEvent;
 import tech.spencercolton.tasp.Scheduler.TeleportCooldown;
 import tech.spencercolton.tasp.TASP;
-import tech.spencercolton.tasp.Util.Config;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.Util.Message;
 
 /**

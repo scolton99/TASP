@@ -4,13 +4,13 @@ import org.bukkit.Bukkit;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.spencercolton.tasp.Configuration.Config;
 import tech.spencercolton.tasp.TASP;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * @author Spencer Colton

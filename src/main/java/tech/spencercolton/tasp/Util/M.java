@@ -1,5 +1,7 @@
 package tech.spencercolton.tasp.Util;
 
+import tech.spencercolton.tasp.Configuration.Config;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

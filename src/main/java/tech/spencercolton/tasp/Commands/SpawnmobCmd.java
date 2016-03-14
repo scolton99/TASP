@@ -12,7 +12,7 @@ import java.util.Set;
 
 import static java.lang.Integer.*;
 import static tech.spencercolton.tasp.Commands.Command.*;
-import static tech.spencercolton.tasp.Util.Config.*;
+import static tech.spencercolton.tasp.Configuration.Config.*;
 import static tech.spencercolton.tasp.Util.Entities.*;
 import static tech.spencercolton.tasp.Util.Message.Spawnmob.*;
 
