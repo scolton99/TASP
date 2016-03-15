@@ -1,6 +1,8 @@
 package tech.spencercolton.tasp.Storage;
 
+import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -20,24 +22,45 @@ import java.util.UUID;
 /**
  * @author Spencer Colton
  */
-class JSONPlayerData implements PlayerDataProvider {
+public class JSONPlayerData implements PlayerDataProvider {
 
     private JSONObject data;
 
-    private final Person p;
+    private final UUID u;
 
-    JSONPlayerData(Person p) {
-        this.p = p;
+    @Getter
+    private boolean valid;
 
-        if (dataExists(p.getUid())) {
+    public JSONPlayerData(UUID u) {
+        this.u = u;
+
+        if (dataExists(u)) {
             this.data = loadData();
+            this.valid = true;
         } else {
             this.genData();
+            this.valid = true;
+        }
+    }
+
+    public JSONPlayerData(UUID u, boolean load) {
+        this.u = u;
+
+        if (dataExists(u)) {
+            this.data = loadData();
+            this.valid = true;
+        } else {
+            if (load && Bukkit.getPlayer(u) != null) {
+                this.genData();
+                this.valid = true;
+            } else {
+                this.valid = false;
+            }
         }
     }
 
     private JSONObject loadData() {
-        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json");
+        File f = new File(TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.u.toString() + ".json");
         assert f.exists();
 
         JSONParser p = new JSONParser();
@@ -59,10 +82,14 @@ class JSONPlayerData implements PlayerDataProvider {
     @SuppressWarnings("unchecked")
     private void genData() {
         this.data = new JSONObject();
-        this.data.put("lastName", this.p.getName());
-        this.data.put("UUID", this.p.getUid().toString());
+        Player p = Bukkit.getPlayer(u);
+
+        assert p != null;
+
+        this.data.put("lastName", p.getName());
+        this.data.put("UUID", this.u.toString());
         this.data.put("firstSeen", new Date().toString());
-        this.data.put("lastIP", this.p.getPlayer().getAddress().getHostString());
+        this.data.put("lastIP", p.getAddress().getHostString());
         this.writeData();
     }
 
@@ -73,12 +100,12 @@ class JSONPlayerData implements PlayerDataProvider {
             f.close();
         } catch (IOException e) {
             e.printStackTrace();
-            Bukkit.getLogger().warning(Config.err() + "Couldn't write player data for player " + this.p.getName() + " with filename " + this.getPlayerDataPath());
+            Bukkit.getLogger().warning(Config.err() + "Couldn't write player data for player " + Person.getMostRecentName(u) + " with filename " + this.getPlayerDataPath());
         }
     }
 
     private String getPlayerDataPath() {
-        return TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + this.p.getUid() + ".json";
+        return TASP.dataFolder().getAbsolutePath() + File.separator + "players" + File.separator + u.toString() + ".json";
     }
 
     @Override

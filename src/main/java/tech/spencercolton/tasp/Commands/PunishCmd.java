@@ -4,7 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Events.PersonPunishEvent;
 import tech.spencercolton.tasp.Util.PunishManager;
 import tech.spencercolton.tasp.Util.Punishment;
 
@@ -38,14 +38,14 @@ public class PunishCmd extends TASPCommand {
             return CommandResponse.PLAYER;
         }
 
-        Person p = Person.get(pa);
-        assert p != null;
-
         Punishment punishment = PunishManager.getDefault(args[1]);
 
         if (punishment == null) {
-
+            Command.sendGenericSyntaxError(sender, this);
+            return CommandResponse.SYNTAX;
         }
+
+        Bukkit.getPluginManager().callEvent(new PersonPunishEvent(sender, pa, punishment));
 
         return CommandResponse.SUCCESS;
     }

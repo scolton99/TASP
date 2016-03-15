@@ -26,8 +26,8 @@ class DatabaseConfiguration implements Configuration {
 
     @Override
     public Integer getInt(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
+        try (Connection c = getConn()) {
+            ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
             if (rs.next()) {
                 return rs.getInt("value");
             } else {
@@ -41,8 +41,8 @@ class DatabaseConfiguration implements Configuration {
 
     @Override
     public String getString(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
+        try (Connection c = getConn()) {
+            ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
             if (rs.next()) {
                 return rs.getString("value");
             } else {
@@ -56,8 +56,8 @@ class DatabaseConfiguration implements Configuration {
 
     @Override
     public Boolean getBoolean(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
+        try (Connection c = getConn()) {
+            ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
             if (rs.next()) {
                 return rs.getBoolean("value");
             } else {
@@ -71,8 +71,8 @@ class DatabaseConfiguration implements Configuration {
 
     @Override
     public List getList(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
+        try (Connection c = getConn()) {
+            ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
             if (rs.next()) {
                 String s = rs.getString("value");
                 ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)));
@@ -88,8 +88,8 @@ class DatabaseConfiguration implements Configuration {
 
     @Override
     public Map getMap(String path) {
-        try {
-            ResultSet rs = getConn().createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
+        try (Connection c = getConn()) {
+            ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `key`='" + path + "'");
             if (rs.next()) {
                 String s = rs.getString("value");
                 ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(s.getBytes(StandardCharsets.UTF_8)));

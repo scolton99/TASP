@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -18,13 +19,17 @@ import tech.spencercolton.tasp.Listeners.*;
 import tech.spencercolton.tasp.Scheduler.AFKTimer;
 import tech.spencercolton.tasp.Util.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.ObjectOutputStream;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Main class for the TASP plugin.
@@ -66,6 +71,8 @@ public class TASP extends JavaPlugin {
 
     private FileConfiguration conf;
 
+    private static DateFormat df = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+
     @Override
     public void onEnable() {
         this.getLogger().info("Loading TASP plugin...");
@@ -77,7 +84,7 @@ public class TASP extends JavaPlugin {
             this.getLogger().warning("Failed to enable metrics for TASP.");
         }
 
-        this.saveDefaultConfig();
+        this.saveCustomConfig();
         this.reloadConfig();
 
         if (this.getConfig().getBoolean("use-config-database"))
@@ -93,6 +100,7 @@ public class TASP extends JavaPlugin {
         this.initCommands();
         this.initListeners();
         Entities.initEntities();
+        PunishManager.init();
 
         router = new Client(this.getLogger());
 
@@ -262,6 +270,53 @@ public class TASP extends JavaPlugin {
             return DriverManager.getConnection("jdbc:mysql://" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-host") + ":" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getInt("config-database-port") + "/" + Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-db"), Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-username"), Bukkit.getPluginManager().getPlugin("TASP").getConfig().getString("config-database-password"));
         } catch (SQLException e) {
             Bukkit.getLogger().severe("TASP failed to make a connection to the database for configuration.  Please check your settings.");
+            return null;
+        }
+    }
+
+    private void saveCustomConfig() {
+        saveDefaultConfig();
+
+        if(this.getConfig().getBoolean("use-config-database")) {
+            try (Connection c = getConfigDb()) {
+                assert c != null;
+                ResultSet rs = c.createStatement().executeQuery("SELECT * FROM `config`");
+
+                if (!rs.next()) {
+                    FileConfiguration fc = this.getConfig();
+                    Configuration cx = fc.getDefaults();
+                    Map<String, Object> vals = cx.getDefaultSection().getValues(true);
+
+                    for (String s : vals.keySet()) {
+                        PreparedStatement ps = c.prepareStatement("INSERT INTO `config` (`key`,`value`) VALUES ('?', '?'");
+                        ps.setString(1, s);
+
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        ObjectOutputStream oos = new ObjectOutputStream(baos);
+                        oos.writeObject(vals.get(s));
+
+                        ps.setString(2, baos.toString());
+                        ps.executeUpdate();
+                    }
+                }
+            } catch (SQLException|IOException e) {
+                this.getLogger().severe("Unable to save or load configuration from the database");
+            }
+        }
+    }
+
+    public static String formatDate(Date d) {
+        return df.format(d);
+    }
+
+    public static String formatDate(Timestamp d) {
+        return df.format(new Date(d.getTime()));
+    }
+
+    public static Timestamp parseDate (String s) {
+        try {
+            return new Timestamp(df.parse(s).getTime());
+        } catch (ParseException e) {
             return null;
         }
     }

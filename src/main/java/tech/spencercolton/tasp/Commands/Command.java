@@ -336,4 +336,8 @@ public class Command implements CommandExecutor {
         sender.sendMessage(Config.err() + "Sorry, couldn't find that item.");
     }
 
+    public static void sendStorageMessage(CommandSender sender) {
+        sender.sendMessage(Config.err() + "An error with the internal storage system for TASP occurred.");
+    }
+
 }

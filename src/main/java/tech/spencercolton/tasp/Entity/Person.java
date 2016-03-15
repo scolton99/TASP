@@ -11,13 +11,16 @@ import org.bukkit.entity.Player;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.spencercolton.tasp.TASP;
 import tech.spencercolton.tasp.Configuration.Config;
-import tech.spencercolton.tasp.Storage.PlayerData;
+import tech.spencercolton.tasp.TASP;
+import tech.spencercolton.tasp.Util.PlayerData;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -83,7 +86,7 @@ public class Person {
      */
     public Person(Player p) {
         this.uid = p.getUniqueId();
-        this.data = new PlayerData(this);
+        this.data = new PlayerData(this.getUid());
         this.data.setString("lastName", p.getName());
         people.add(this);
         UIDpeople.put(this.uid, this);
@@ -126,7 +129,7 @@ public class Person {
      * Reads this person's data from file and overwrites the ephemeral data.
      */
     public void reloadData() {
-        this.data = new PlayerData(this);
+        this.data = new PlayerData(this.getUid());
     }
 
     /**
@@ -299,7 +302,7 @@ public class Person {
             return false;
         }
         if (f.delete()) {
-            this.data = new PlayerData(this);
+            this.data = new PlayerData(this.getUid());
             return true;
         } else {
             return false;
@@ -357,12 +360,27 @@ public class Person {
     }
 
     public static String getMostRecentName(UUID u) {
-        try {
-            FileReader a = new FileReader(new File(TASP.dataFolder() + File.separator + "players" + File.separator + u.toString() + ".json"));
-            JSONObject e = (JSONObject) new JSONParser().parse(a);
-            return (String) e.get("lastName");
-        } catch (IOException | ParseException e) {
-            return null;
+        if (!Config.configDatabase()) {
+            try {
+                FileReader a = new FileReader(new File(TASP.dataFolder() + File.separator + "players" + File.separator + u.toString() + ".json"));
+                JSONObject e = (JSONObject) new JSONParser().parse(a);
+                return (String) e.get("lastName");
+            } catch (IOException|ParseException e) {
+                return null;
+            }
+        } else {
+            try (Connection c = TASP.getConfigDb()) {
+                assert c != null;
+                ResultSet rs = c.createStatement().executeQuery("SELECT `value` FROM `users` WHERE `uid`='" + u.toString() + "' AND `key`='lastName'");
+
+                if(rs.next()) {
+                    return rs.getString("value");
+                } else {
+                    return null;
+                }
+            } catch (SQLException e) {
+                return null;
+            }
         }
     }
 

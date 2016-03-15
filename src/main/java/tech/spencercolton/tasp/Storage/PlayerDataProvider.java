@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @author Spencer Colton
  */
-interface PlayerDataProvider {
+public interface PlayerDataProvider {
 
     Integer getInt(String path);
     Boolean getBoolean(String path);
@@ -19,5 +19,7 @@ interface PlayerDataProvider {
     void setMap(String path, Map set);
     void setList(String path, List set);
     void setBoolean(String path, Boolean set);
+
+    boolean isValid();
 
 }

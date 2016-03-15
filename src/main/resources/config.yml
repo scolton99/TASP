@@ -161,10 +161,6 @@ router-port: 1717
 # data.  This features is coming soon.
 use-config-database: true
 
-# Set this to true if your configuration database is separate from the punishment database.
-# This setting must be true if punishments are stored via JSON.
-separate-config-database: false
-
 # The following five settings are ignored if the above setting is "false"
 config-database-username: tasp
 config-database-password: password
@@ -197,22 +193,15 @@ punishment-method: standard
 punishment-storage: JSON
 # punishment-storage: database
 
-# For database-based storage:
-punishment-database-host: localhost
-punishment-database-port: 3306
-punishment-database-username: tasp
-punishment-database-password: password
-punishment-database-db: tasp_punishments
-
 # Here are the owner-defined punishments.  Only apply if punishment-method is set to "punish"
 punishments:
-  DISRESPECT: [kick, mute 30]
-  RACISM: [kick, mute 30]
-  DEATH_THREATS: [mute 10080, mute inf]
-  INAPPROPRIATE_COMMENTS: [mute 20]
-  HACKUSATIONS: [mute 10]
-  SPAMMING: [mute 10, mute 30, mute 60]
-  ADVERTISEMENT: [mute inf]
+  DISRESPECT: ['kick Disrespect.', 'mute 30']
+  RACISM: ['kick Racism.', 'mute 30']
+  DEATH_THREATS: ['mute 10080', 'mute inf']
+  INAPPROPRIATE_COMMENTS: ['mute 20']
+  HACKUSATIONS: ['mute 10']
+  SPAMMING: ['mute 10', 'mute 30', 'mute 60']
+  ADVERTISEMENT: ['mute inf']
 
 # ---------------------------------------------------------------------------------------
 # |                                 Chat Filter Settings                                |

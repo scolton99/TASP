@@ -1,10 +1,13 @@
-package tech.spencercolton.tasp.Storage;
+package tech.spencercolton.tasp.Util;
 
 import tech.spencercolton.tasp.Configuration.Config;
-import tech.spencercolton.tasp.Entity.Person;
+import tech.spencercolton.tasp.Storage.DatabasePlayerData;
+import tech.spencercolton.tasp.Storage.JSONPlayerData;
+import tech.spencercolton.tasp.Storage.PlayerDataProvider;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * This class is designed to hold data about a player or person.  The data is read from JSON files stored in a
@@ -18,15 +21,15 @@ public class PlayerData {
 
     private PlayerDataProvider data;
 
-    private final Person p;
+    private final UUID u;
 
-    public PlayerData(Person p) {
-        this.p = p;
+    public PlayerData(UUID u) {
+        this.u = u;
 
         if (Config.configDatabase()) {
-            this.data = new DatabasePlayerData(this.p);
+            this.data = new DatabasePlayerData(this.u);
         } else {
-            this.data = new JSONPlayerData(this.p);
+            this.data = new JSONPlayerData(this.u);
         }
     }
 

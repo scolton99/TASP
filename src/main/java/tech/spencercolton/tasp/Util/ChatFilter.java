@@ -11,7 +11,8 @@ import java.util.regex.Pattern;
  */
 public class ChatFilter {
 
-    private static final List<String> filteredWords = Config.getListString("bad-words");
+    @SuppressWarnings("unchecked")
+    private static final List<String> filteredWords = Config.getList("bad-words");
 
     public static String filter(String s) {
         if (!Config.filterChat())
